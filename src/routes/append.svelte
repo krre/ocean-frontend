@@ -2,6 +2,15 @@
 	<title>Добавить манделу</title>
 </svelte:head>
 
-<h1>Добавить</h1>
+<script>
+	import * as sapper from '@sapper/app' 
 
-Скоро всё будет...
+	function append() {
+		sapper.goto('/')
+	}
+</script>
+
+<h1>Добавить манделу</h1>
+
+<input type="text">
+<button on:click={append}>Добавить</button>
