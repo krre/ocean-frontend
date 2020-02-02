@@ -20,6 +20,16 @@
 	let description = '';
 
 	async function append()  {
+		if (!title) {
+			alert("Заголовок не заполнен!")
+			return
+		}
+
+		if (!description) {
+			alert("Описание не заполнено!")
+			return
+		}
+
 		const topic = {
 			title: title,
 			description: description
