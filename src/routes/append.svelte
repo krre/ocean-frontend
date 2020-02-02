@@ -5,8 +5,11 @@
 <script>
 	import * as sapper from '@sapper/app' 
 
-	function append() {
-		sapper.goto('/')
+	async function append()  {
+		const response = await fetch('http://localhost:11000/append');
+		const result = await response.text();
+		console.log(result);
+		// sapper.goto('/');
 	}
 </script>
 
