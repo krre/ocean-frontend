@@ -1,62 +1,59 @@
-<svelte:head>
-	<title>Добавить манделу</title>
-</svelte:head>
-
-<style>
-	.column {
-		display: grid;
-		grid-gap: 10px;
-	}
-
-	.append-item {
-		margin-top: 10px
-	}
-</style>
-
 <script>
-	import * as sapper from '@sapper/app' 
+    import * as sapper from "@sapper/app";
 
-	let title = '';
-	let description = '';
+    let title = "";
+    let description = "";
 
-	async function append()  {
-		if (!title) {
-			alert("Заголовок не заполнен!")
-			return
-		}
+    async function append() {
+        if (!title) {
+            alert("Заголовок не заполнен!");
+            return;
+        }
 
-		if (!description) {
-			alert("Описание не заполнено!")
-			return
-		}
+        if (!description) {
+            alert("Описание не заполнено!");
+            return;
+        }
 
-		const topic = {
-			title: title,
-			description: description
-		};
+        let request = {};
+        request.method = "topic.create";
+        request.id = "42";
+        request.params = {
+            title: title,
+            description: description
+        };
 
-		const response = await fetch('http://localhost:11000/append', {
-			method: 'POST',
-			headers: {
-				'Accept': 'application/json',
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify(topic)
-		});
+        const response = await fetch("http://localhost:21000/dive", {
+            method: "POST",
+            body: JSON.stringify(request)
+        });
 
-		const result = await response.text();
-		console.log(result);
-		// sapper.goto('/');
-	}
+        const result = await response.text();
+        console.log(result);
+    }
 </script>
 
+<style>
+    .column {
+        display: grid;
+        grid-gap: 10px;
+    }
+
+    .append-item {
+        margin-top: 10px;
+    }
+</style>
+
+<svelte:head>
+    <title>Добавить манделу</title>
+</svelte:head>
 <h1>Добавить манделу</h1>
 
 <div class="column">
-	Заголовок:
-	<input bind:value={title} type="text">
-	Описание:
-	<textarea rows="10" bind:value={description}></textarea>
+    Заголовок:
+    <input bind:value={title} type="text" />
+    Описание:
+    <textarea rows="10" bind:value={description} />
 </div>
 
 <button class="append-item" on:click={append}>Отправить</button>
