@@ -5,8 +5,8 @@
     let topics = [];
 
     onMount(async () => {
-        const result = await sendRequest(new Request("topic.get"));
-        console.log(result);
+        topics = await sendRequest(new Request("topic.get"));
+        console.log(topics);
     });
 </script>
 
