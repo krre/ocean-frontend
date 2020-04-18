@@ -7,7 +7,6 @@
 
     onMount(async () => {
         topics = await sendRequest(new Request("topic.get"));
-        console.log(topics);
     });
 </script>
 
