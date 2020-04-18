@@ -21,5 +21,9 @@
 
 <h1>Каталог</h1>
 {#each topics as topic}
-    <p>{formatDateTime(topic.create_ts)} | {topic.title}</p>
+    <p>
+        <a href="topic/{topic.id}">
+            {formatDateTime(topic.create_ts)} | {topic.title}
+        </a>
+    </p>
 {/each}
