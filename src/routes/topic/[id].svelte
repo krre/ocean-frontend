@@ -5,7 +5,9 @@
     export async function preload(page, session) {
         const { id } = page.params;
 
-        let topics = await sendRequest(new Request("topic.get", { id: id }));
+        let topics = await sendRequest(
+            new Request("topic.get", { id: Number(id) })
+        );
         const topic = topics[0];
 
         return { topic };
