@@ -1,5 +1,6 @@
 <script>
     import { Request } from "../js/json-rpc.js";
+    import { sendRequest } from "../js/net.js";
 
     let title = "";
     let description = "";
@@ -20,14 +21,7 @@
             description: description
         };
 
-        let request = new Request("topic.create", params);
-
-        const response = await fetch("http://localhost:21000/dive", {
-            method: "POST",
-            body: request.toString()
-        });
-
-        const result = await response.json();
+        const result = await sendRequest(new Request("topic.create", params));
         console.log(result);
     }
 </script>
