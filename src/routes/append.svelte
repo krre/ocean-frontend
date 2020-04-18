@@ -15,12 +15,13 @@
             return;
         }
 
-        let request = {};
-        request.method = "topic.create";
-        request.id = "42";
-        request.params = {
-            title: title,
-            description: description
+        let request = {
+            method: "topic.create",
+            id: "42",
+            params: {
+                title: title,
+                description: description
+            }
         };
 
         const response = await fetch("http://localhost:21000/dive", {
