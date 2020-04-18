@@ -1,16 +1,14 @@
 <script>
     import { onMount } from "svelte";
+    import { Request } from "../js/json-rpc.js";
     let topics = [];
 
     onMount(async () => {
-        let request = {
-            method: "topic.get",
-            id: "42"
-        };
+        let request = new Request("topic.get");
 
         const response = await fetch("http://localhost:21000/dive", {
             method: "POST",
-            body: JSON.stringify(request)
+            body: request.toString()
         });
 
         topics = await response.json();

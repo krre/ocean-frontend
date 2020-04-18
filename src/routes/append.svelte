@@ -1,5 +1,5 @@
 <script>
-    import * as sapper from "@sapper/app";
+    import { Request } from "../js/json-rpc.js";
 
     let title = "";
     let description = "";
@@ -15,21 +15,19 @@
             return;
         }
 
-        let request = {
-            method: "topic.create",
-            id: "42",
-            params: {
-                title: title,
-                description: description
-            }
+        const params = {
+            title: title,
+            description: description
         };
+
+        let request = new Request("topic.create", params);
 
         const response = await fetch("http://localhost:21000/dive", {
             method: "POST",
-            body: JSON.stringify(request)
+            body: request.toString()
         });
 
-        const result = await response.text();
+        const result = await response.json();
         console.log(result);
     }
 </script>
