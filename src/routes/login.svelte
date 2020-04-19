@@ -1,4 +1,6 @@
 <script>
+    import * as sapper from "@sapper/app";
+
     let id = "";
     let password = "";
     let save = true;
@@ -15,6 +17,10 @@
         }
 
         console.log("login", id, password, save);
+    }
+
+    function register() {
+        sapper.goto("register");
     }
 </script>
 
@@ -40,5 +46,5 @@
         <input type="checkbox" checked="true" bind:checked={save} />
     </label>
     <button on:click={login}>Войти</button>
-    <button>Регистрация</button>
+    <button on:click={register}>Регистрация</button>
 </div>
