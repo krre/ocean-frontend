@@ -1,13 +1,26 @@
 <script>
+    import * as sapper from "@sapper/app";
     import { onMount } from "svelte";
     import { Request } from "../js/json-rpc.js";
     import { sendRequest } from "../js/net.js";
     import { formatDateTime } from "../js/utils.js";
+
     let topics = [];
+    let selected = [];
 
     onMount(async () => {
         topics = await sendRequest(new Request("topic.get"));
     });
+
+    async function remove() {
+        if (selected.length) {
+            await sendRequest(new Request("topic.remove", { id: selected }));
+            topics = topics.filter(function(topic) {
+                return selected.indexOf(topic.id) === -1;
+            });
+            selected = [];
+        }
+    }
 </script>
 
 <style>
@@ -19,8 +32,10 @@
 </svelte:head>
 
 <h1>Каталог</h1>
+<button on:click={remove}>Удалить</button>
 {#each topics as topic}
     <p>
+        <input type="checkbox" bind:group={selected} value={topic.id} />
         <a href="topic/{topic.id}">
             {formatDateTime(topic.create_ts)} | {topic.title}
         </a>
