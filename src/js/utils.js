@@ -4,7 +4,7 @@ export function formatDateTime(date) {
 
 export function formatDate(date) {
     const d = new Date(date);
-    return ("0" + d.getDay()).slice(-2) + "." + ("0" + d.getMonth()).slice(-2) + "." + d.getFullYear();
+    return ("0" + d.getDate()).slice(-2) + "." + ("0" + (d.getMonth() + 1)).slice(-2) + "." + d.getFullYear();
 }
 
 export function formatTime(date) {
