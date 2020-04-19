@@ -3,7 +3,7 @@
     let password1 = "";
     let password2 = "";
 
-    async function register() {
+    async function signup() {
         if (!password1) {
             alert("Первый пароль не заполнен!");
             return;
@@ -19,7 +19,7 @@
             return;
         }
 
-        console.log("register", name, password1);
+        console.log("signup", name, password1);
     }
 </script>
 
@@ -44,5 +44,5 @@
     <input type="password" bind:value={password1} />
     Пароль (ещё раз):
     <input type="password" bind:value={password2} />
-    <button on:click={register}>Зарегистрироваться</button>
+    <button on:click={signup}>Зарегистрироваться</button>
 </div>

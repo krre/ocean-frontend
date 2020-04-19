@@ -18,7 +18,7 @@
             <a href="about">О сайте</a>
         </li>
         <li>
-            <a href="login">Войти</a>
+            <a href="signin">Войти</a>
         </li>
     </ul>
 </nav>

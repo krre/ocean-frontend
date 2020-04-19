@@ -5,7 +5,7 @@
     let password = "";
     let save = true;
 
-    async function login() {
+    async function signin() {
         if (!id) {
             alert("Идентификатор не заполнен!");
             return;
@@ -16,11 +16,11 @@
             return;
         }
 
-        console.log("login", id, password, save);
+        console.log("signin", id, password, save);
     }
 
-    function register() {
-        sapper.goto("register");
+    function signup() {
+        sapper.goto("signup");
     }
 </script>
 
@@ -45,6 +45,6 @@
         Запомнить
         <input type="checkbox" checked="true" bind:checked={save} />
     </label>
-    <button on:click={login}>Войти</button>
-    <button on:click={register}>Регистрация</button>
+    <button on:click={signin}>Войти</button>
+    <button on:click={signup}>Регистрация</button>
 </div>
