@@ -31,7 +31,7 @@
         };
 
         const result = await sendRequest(new Request("user.create", params));
-        console.log("id", result.id);
+        console.log("id", result.id, "token", result.token);
         sapper.goto("/");
     }
 </script>
