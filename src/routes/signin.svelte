@@ -7,17 +7,9 @@
     let password = "";
     let save = true;
 
+    $: signinButtonEnabled = id && password;
+
     async function signin() {
-        if (!id) {
-            alert("Идентификатор не заполнен!");
-            return;
-        }
-
-        if (!password) {
-            alert("Пароль не заполнен!");
-            return;
-        }
-
         console.log("signin", id, password, save);
 
         const params = {
@@ -61,6 +53,6 @@
         Запомнить
         <input type="checkbox" checked="true" bind:checked={save} />
     </label>
-    <button on:click={signin}>Войти</button>
+    <button on:click={signin} disabled={!signinButtonEnabled}>Войти</button>
     <button on:click={signup}>Регистрация</button>
 </div>
