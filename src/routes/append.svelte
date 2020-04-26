@@ -6,17 +6,9 @@
     let title = "";
     let description = "";
 
+    $: buttonEnabled = title && description;
+
     async function append() {
-        if (!title) {
-            alert("Заголовок не заполнен!");
-            return;
-        }
-
-        if (!description) {
-            alert("Описание не заполнено!");
-            return;
-        }
-
         const params = {
             title: title,
             description: description
@@ -50,4 +42,6 @@
     <textarea rows="10" bind:value={description} />
 </div>
 
-<button class="append-item" on:click={append}>Отправить</button>
+<button class="append-item" on:click={append} disabled={!buttonEnabled}>
+    Отправить
+</button>
