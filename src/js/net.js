@@ -1,5 +1,5 @@
 export async function sendRequest(request) {
-    const response = await fetch("http://localhost:21000/dive", {
+    const response = await fetch("http://localhost:21000/api", {
         method: "POST",
         body: request.toString()
     });
