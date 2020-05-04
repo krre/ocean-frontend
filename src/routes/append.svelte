@@ -11,7 +11,8 @@
     async function append() {
         const params = {
             title: title,
-            description: description
+            description: description,
+            user_id: 1
         };
 
         const result = await sendRequest(new Request("topic.create", params));
