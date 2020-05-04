@@ -1,5 +1,5 @@
 export async function sendRequest(request) {
-    const response = await fetch("http://localhost:21000/api", {
+    const response = await fetch(process.env.OCEAN_API_URL, {
         method: "POST",
         body: request.toString()
     });
@@ -13,6 +13,4 @@ export async function sendRequest(request) {
     if (json.result) {
         return json.result
     }
-
-    return
 }
