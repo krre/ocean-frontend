@@ -32,7 +32,11 @@
 </svelte:head>
 
 <h1>Каталог</h1>
-<button on:click={remove}>Удалить</button>
+
+{#if topics.length}
+    <button on:click={remove}>Удалить</button>
+{/if}
+
 {#each topics as topic}
     <p>
         <input type="checkbox" bind:group={selected} value={topic.id} />
