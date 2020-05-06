@@ -12,9 +12,9 @@
         topics = await sendRequest(new Request("topic.get"));
     });
 
-    async function remove() {
+    async function deleteTopic() {
         if (selected.length) {
-            await sendRequest(new Request("topic.remove", { id: selected }));
+            await sendRequest(new Request("topic.delete", { id: selected }));
             topics = topics.filter(function(topic) {
                 return selected.indexOf(topic.id) === -1;
             });
@@ -34,7 +34,7 @@
 <h1>Каталог</h1>
 
 {#if topics.length}
-    <button on:click={remove}>Удалить</button>
+    <button on:click={deleteTopic}>Удалить</button>
 {/if}
 
 {#each topics as topic}
