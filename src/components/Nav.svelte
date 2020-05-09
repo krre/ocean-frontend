@@ -7,18 +7,8 @@
 </style>
 
 <nav>
-    <ul>
-        <li>
-            <a href=".">Каталог</a>
-        </li>
-        <li>
-            <a href="append">Добавить</a>
-        </li>
-        <li>
-            <a href="about">О сайте</a>
-        </li>
-        <li>
-            <a href="signin">Войти</a>
-        </li>
-    </ul>
+    <a href=".">Каталог</a>
+    <a href="append">Добавить</a>
+    <a href="about">О сайте</a>
+    <a href="signin">Войти</a>
 </nav>
