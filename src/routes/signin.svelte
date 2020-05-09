@@ -44,6 +44,8 @@
     <title>Войти</title>
 </svelte:head>
 
+<h1>Войти</h1>
+
 <div class="form">
     Идентификатор:
     <input type="number" bind:value={id} />
