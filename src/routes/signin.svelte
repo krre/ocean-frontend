@@ -53,7 +53,7 @@
     <input type="password" bind:value={password} />
     <label>
         Запомнить
-        <input type="checkbox" checked="true" bind:checked={save} />
+        <input type="checkbox" bind:checked={save} />
     </label>
     <button on:click={signin} disabled={!signinButtonEnabled}>Войти</button>
     <button on:click={signup}>Регистрация</button>
