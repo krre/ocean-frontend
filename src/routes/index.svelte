@@ -5,10 +5,13 @@
     import { sendRequest } from "../js/net.js";
     import { formatDateTime } from "../js/utils.js";
 
+    const { page, session } = sapper.stores();
+
     let topics = [];
     let selected = [];
 
     onMount(async () => {
+        console.log("session", $session.user);
         topics = await sendRequest(new Request("topic.get"));
     });
 

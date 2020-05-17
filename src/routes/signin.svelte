@@ -2,6 +2,9 @@
     import * as sapper from "@sapper/app";
     import { Request } from "../js/json-rpc.js";
     import { sendRequest } from "../js/net.js";
+    import { post } from "utils.js";
+
+    const { session } = sapper.stores();
 
     let id = 0;
     let password = "";
@@ -22,7 +25,9 @@
         if (result.message) {
             alert(result.message);
         } else {
-            console.log("token", result.token);
+            const user = { token: result.token, id: id };
+            await post("auth/login", user);
+            $session.user = user;
             sapper.goto("/");
         }
     }
