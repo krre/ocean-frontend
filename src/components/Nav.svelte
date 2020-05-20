@@ -1,6 +1,6 @@
 <script>
     import { stores } from "@sapper/app";
-    const { page, session } = stores();
+    const { session } = stores();
 </script>
 
 <style>
@@ -12,7 +12,7 @@
     <a href="append">Добавить</a>
     <a href="about">О сайте</a>
     {#if $session.user}
-        <a href="signin">Выйти</a>
+        <a href="signout">Выйти</a>
     {:else}
         <a href="signin">Войти</a>
     {/if}
