@@ -1,11 +1,11 @@
 <script>
-    import * as sapper from "@sapper/app";
+    import { stores } from "@sapper/app";
     import { onMount } from "svelte";
     import { Request } from "../js/json-rpc.js";
     import { sendRequest } from "../js/net.js";
     import { formatDateTime } from "../js/utils.js";
 
-    const { page, session } = sapper.stores();
+    const { session } = stores();
 
     let topics = [];
     let selected = [];
