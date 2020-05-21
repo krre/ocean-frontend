@@ -26,7 +26,11 @@
             alert(result.message);
         } else {
             const user = { token: result.token, id: id };
-            await post("auth/login", user);
+
+            if (save) {
+                await post("auth/login", user);
+            }
+
             $session.user = user;
             sapper.goto("/");
         }
