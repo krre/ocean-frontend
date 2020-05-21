@@ -36,13 +36,15 @@
 
 <h1>Каталог</h1>
 
-{#if topics.length}
+{#if topics.length && $session.user}
     <button on:click={deleteTopic}>Удалить</button>
 {/if}
 
 {#each topics as topic}
     <p>
-        <input type="checkbox" bind:group={selected} value={topic.id} />
+        {#if $session.user}
+            <input type="checkbox" bind:group={selected} value={topic.id} />
+        {/if}
         <a href="topic/{topic.id}">
             {formatDateTime(topic.create_ts)} | {topic.title}
         </a>
