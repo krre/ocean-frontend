@@ -1,10 +1,10 @@
 <script>
-    import * as sapper from "@sapper/app";
+    import { goto, stores } from "@sapper/app";
     import { Request } from "../js/json-rpc.js";
     import { sendRequest } from "../js/net.js";
     import { post } from "utils.js";
 
-    const { session } = sapper.stores();
+    const { session } = stores();
 
     let id = 0;
     let password = "";
@@ -32,12 +32,8 @@
             }
 
             $session.user = user;
-            sapper.goto("/");
+            goto("/");
         }
-    }
-
-    function signup() {
-        sapper.goto("signup");
     }
 </script>
 
@@ -65,5 +61,4 @@
         <input type="checkbox" bind:checked={save} />
     </label>
     <button on:click={signin} disabled={!signinButtonEnabled}>Войти</button>
-    <button on:click={signup}>Регистрация</button>
 </div>

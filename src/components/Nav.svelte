@@ -20,5 +20,6 @@
         <a href="signout">Выйти</a>
     {:else}
         <a href="signin">Войти</a>
+        <a href="signup">Регистрация</a>
     {/if}
 </nav>
