@@ -21,6 +21,7 @@
 
     export let user;
     $: name = user.name;
+    $: id = user.id;
 </script>
 
 <style>
@@ -37,6 +38,8 @@
 
 <h1>Профиль</h1>
 <div class="form">
+    Идентификатор:
+    <input bind:value={id} readonly />
     Имя:
     <input bind:value={name} />
 </div>
