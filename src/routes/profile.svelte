@@ -1,11 +1,8 @@
 <script context="module">
-    import { Request } from "json-rpc.js";
-    import { sendRequest } from "net.js";
+    import { send } from "net.js";
 
     export async function preload(page, session) {
-        let users = await sendRequest(
-            new Request("user.get", { token: session.user.token })
-        );
+        let users = await send("user.get", { token: session.user.token });
 
         const user = users[0];
         console.log(user);
@@ -40,7 +37,7 @@
             }
         }
 
-        const result = await sendRequest(new Request("user.update", params));
+        const result = await send("user.update", params);
         password1 = "";
         password2 = "";
         console.log(result);

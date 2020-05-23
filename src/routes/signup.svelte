@@ -1,7 +1,6 @@
 <script>
     import * as sapper from "@sapper/app";
-    import { Request } from "json-rpc.js";
-    import { sendRequest } from "net.js";
+    import { send } from "net.js";
 
     let name = "";
     let password1 = "";
@@ -22,7 +21,7 @@
             password: password1
         };
 
-        const result = await sendRequest(new Request("user.create", params));
+        const result = await send("user.create", params);
         console.log("id", result.id, "token", result.token);
         sapper.goto("/");
     }

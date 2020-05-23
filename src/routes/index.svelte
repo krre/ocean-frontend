@@ -1,8 +1,7 @@
 <script>
     import { stores } from "@sapper/app";
     import { onMount } from "svelte";
-    import { Request } from "json-rpc.js";
-    import { sendRequest } from "net.js";
+    import { send } from "net.js";
     import { formatDateTime } from "utils.js";
 
     const { session } = stores();
@@ -12,12 +11,12 @@
 
     onMount(async () => {
         console.log("session", $session.user);
-        topics = await sendRequest(new Request("topic.get"));
+        topics = await send("topic.get");
     });
 
     async function deleteTopic() {
         if (selected.length) {
-            await sendRequest(new Request("topic.delete", { id: selected }));
+            await send("topic.delete", { id: selected });
             topics = topics.filter(function(topic) {
                 return selected.indexOf(topic.id) === -1;
             });

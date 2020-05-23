@@ -1,7 +1,6 @@
 <script>
     import { goto, stores } from "@sapper/app";
-    import { Request } from "json-rpc.js";
-    import { sendRequest } from "net.js";
+    import { send } from "net.js";
     import { post } from "utils.js";
 
     const { session } = stores();
@@ -20,7 +19,7 @@
             password: password
         };
 
-        const result = await sendRequest(new Request("user.auth", params));
+        const result = await send("user.auth", params);
 
         if (result.message) {
             alert(result.message);

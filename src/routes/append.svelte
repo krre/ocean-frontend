@@ -1,7 +1,6 @@
 <script>
     import * as sapper from "@sapper/app";
-    import { Request } from "json-rpc.js";
-    import { sendRequest } from "net.js";
+    import { send } from "net.js";
 
     let title = "";
     let description = "";
@@ -15,7 +14,7 @@
             user_id: 1
         };
 
-        const result = await sendRequest(new Request("topic.create", params));
+        const result = await send("topic.create", params);
         sapper.goto("/");
     }
 </script>
