@@ -1,6 +1,6 @@
 <script>
     import { goto, stores } from "@sapper/app";
-    import { Request } from "../js/json-rpc.js";
+    import { Request } from "json-rpc.js";
     import { sendRequest } from "net.js";
     import { post } from "utils.js";
 

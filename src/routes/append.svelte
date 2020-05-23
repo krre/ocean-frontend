@@ -1,6 +1,6 @@
 <script>
     import * as sapper from "@sapper/app";
-    import { Request } from "../js/json-rpc.js";
+    import { Request } from "json-rpc.js";
     import { sendRequest } from "net.js";
 
     let title = "";
