@@ -1,6 +1,6 @@
 <script context="module">
     import { Request } from "../../js/json-rpc.js";
-    import { sendRequest } from "../../js/net.js";
+    import { sendRequest } from "net.js";
 
     export async function preload(page, session) {
         const { id } = page.params;

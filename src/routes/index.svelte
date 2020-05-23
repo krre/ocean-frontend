@@ -2,7 +2,7 @@
     import { stores } from "@sapper/app";
     import { onMount } from "svelte";
     import { Request } from "../js/json-rpc.js";
-    import { sendRequest } from "../js/net.js";
+    import { sendRequest } from "net.js";
     import { formatDateTime } from "utils.js";
 
     const { session } = stores();
