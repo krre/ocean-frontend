@@ -10,7 +10,6 @@
     let selected = [];
 
     onMount(async () => {
-        console.log("session", $session.user);
         topics = await send("topic.get");
     });
 

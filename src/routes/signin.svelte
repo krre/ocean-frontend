@@ -12,8 +12,6 @@
     $: signinButtonEnabled = id && password;
 
     async function signin() {
-        console.log("signin", id, password, save);
-
         const params = {
             id: id,
             password: password

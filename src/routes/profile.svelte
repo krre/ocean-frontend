@@ -5,7 +5,6 @@
         let users = await send("user.get", { token: session.user.token });
 
         const user = users[0];
-        console.log(user);
 
         return { user };
     }
@@ -40,7 +39,6 @@
         const result = await send("user.update", params);
         password1 = "";
         password2 = "";
-        console.log(result);
     }
 </script>
 

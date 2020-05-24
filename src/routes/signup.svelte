@@ -14,15 +14,12 @@
             return;
         }
 
-        console.log("signup", name, password1);
-
         const params = {
             name: name,
             password: password1
         };
 
         const result = await send("user.create", params);
-        console.log("id", result.id, "token", result.token);
         sapper.goto("/");
     }
 </script>
