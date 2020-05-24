@@ -3,29 +3,21 @@
 
     export async function preload(page, session) {
         let users = await send("user.get", { token: session.user.token });
-
         const user = users[0];
-
         return { user };
     }
 </script>
 
 <script>
-    import { stores } from "@sapper/app";
-
-    const { session } = stores();
-
     export let user;
-    $: name = user.name;
-    $: id = user.id;
 
     let password1;
     let password2;
 
     async function update() {
         const params = {};
-        params.id = id;
-        params.name = name;
+        params.id = user.id;
+        params.name = user.name;
 
         if (password1 || password2) {
             if (password1 !== password2) {
@@ -57,9 +49,9 @@
 <h1>Профиль</h1>
 <div class="form">
     Идентификатор:
-    <input bind:value={id} readonly />
+    <input value={user.id} readonly />
     Имя:
-    <input bind:value={name} />
+    <input bind:value={user.name} />
     Пароль:
     <input type="password" bind:value={password1} />
     Пароль (ещё раз):
