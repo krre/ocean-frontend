@@ -17,14 +17,8 @@
             password: password
         };
 
-        const response = await send("user.auth", params);
-
-        if (response.error) {
-            console.error(response.error);
-            return;
-        }
-
-        const user = { token: response.result.token, id: id };
+        const result = await send("user.auth", params);
+        const user = { token: result.token, id: id };
 
         if (save) {
             await post("auth/login", user);

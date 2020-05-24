@@ -10,23 +10,12 @@
     let selected = [];
 
     onMount(async () => {
-        const response = await send("topic.get");
-
-        if (response.result) {
-            topics = response.result;
-        } else {
-            console.error(response.error);
-        }
+        topics = await send("topic.get");
     });
 
     async function deleteTopic() {
         if (selected.length) {
-            const response = await send("topic.delete", { id: selected });
-
-            if (response.error) {
-                console.error(response.error);
-                return;
-            }
+            await send("topic.delete", { id: selected });
 
             topics = topics.filter(function(topic) {
                 return selected.indexOf(topic.id) === -1;

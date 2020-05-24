@@ -19,13 +19,8 @@
             password: password1
         };
 
-        const response = await send("user.create", params);
-
-        if (response.error) {
-            console.error(response.error);
-        } else {
-            sapper.goto("/");
-        }
+        await send("user.create", params);
+        sapper.goto("/");
     }
 </script>
 
