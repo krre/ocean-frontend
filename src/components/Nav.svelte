@@ -13,7 +13,6 @@
         <a href="append">Добавить</a>
     {/if}
     <a href="help">Справка</a>
-    <a href="about">О сайте</a>
     {#if $session.user}
         <a href="profile">Профиль</a>
     {/if}

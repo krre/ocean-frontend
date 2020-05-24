@@ -1,10 +1,30 @@
+<script>
+    import { stores } from "@sapper/app";
+    const { page } = stores();
+</script>
+
 <svelte:head>
     <title>Справка</title>
 </svelte:head>
 
 <h1>Справка</h1>
 
-<h2>Термины</h2>
+<div>
+    <a href="{$page.path}#about">О сайте</a>
+</div>
+<div>
+    <a href="{$page.path}#termins">Термины</a>
+</div>
+<div>
+    <a href="{$page.path}#categories">Категории мандельских аномалий</a>
+</div>
+<div>
+    <a href="{$page.path}#links">Полезные ссылки</a>
+</div>
+
+<h2 id="about">О сайте</h2>
+
+<h2 id="termins">Термины</h2>
 <ul>
     <li>
         мандела (женского рода) - конкретный факт об изменении реальности.
@@ -32,3 +52,7 @@
         свои остатки.
     </li>
 </ul>
+
+<h2 id="categories">Категории мандельских аномалий</h2>
+
+<h2 id="links">Полезные ссылки</h2>
