@@ -1,6 +1,9 @@
 <script>
     import * as sapper from "@sapper/app";
     import { send } from "net.js";
+    import OperationResult from "../components/OperationResult.svelte";
+
+    $: error = "";
 
     let name = "";
     let password1 = "";
@@ -10,7 +13,7 @@
 
     async function signup() {
         if (password1 !== password2) {
-            alert("Пароли не совпадают!");
+            error = "Пароли не совпадают!";
             return;
         }
 
@@ -45,6 +48,7 @@
     <input type="password" bind:value={password1} />
     Пароль (ещё раз):
     <input type="password" bind:value={password2} />
+    <OperationResult {error} />
     <button on:click={signup} disabled={!singupButtonEnabled}>
         Зарегистрироваться
     </button>
