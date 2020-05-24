@@ -1,6 +1,10 @@
 <script>
     export let success;
     export let error;
+
+    $: if (success) {
+        error = "";
+    }
 </script>
 
 <style>
