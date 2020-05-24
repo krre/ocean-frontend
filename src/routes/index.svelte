@@ -33,7 +33,7 @@
     <title>Океан. Каталог фактов эффекта Манделы</title>
 </svelte:head>
 
-<h1>Каталог</h1>
+<h1>Каталог мандел</h1>
 
 {#if topics.length && $session.user}
     <button on:click={deleteTopic}>Удалить</button>
