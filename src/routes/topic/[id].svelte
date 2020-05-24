@@ -4,8 +4,14 @@
     export async function preload(page, session) {
         const { id } = page.params;
 
-        let topics = await send("topic.get", { id: Number(id) });
-        const topic = topics[0];
+        let response = await send("topic.get", { id: Number(id) });
+
+        if (response.error) {
+            console.error(response.error);
+            return;
+        }
+
+        const topic = response.result[0];
 
         return { topic };
     }

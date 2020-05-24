@@ -2,8 +2,14 @@
     import { send } from "net.js";
 
     export async function preload(page, session) {
-        let users = await send("user.get", { token: session.user.token });
-        const user = users[0];
+        const response = await send("user.get", { token: session.user.token });
+
+        if (response.error) {
+            console.error(response.error);
+            return;
+        }
+
+        const user = response.result[0];
         return { user };
     }
 </script>
@@ -28,7 +34,13 @@
             }
         }
 
-        const result = await send("user.update", params);
+        const response = await send("user.update", params);
+
+        if (response.error) {
+            console.error(response.error);
+            return;
+        }
+
         password1 = "";
         password2 = "";
     }

@@ -14,8 +14,13 @@
             user_id: 1
         };
 
-        const result = await send("topic.create", params);
-        sapper.goto("/");
+        const response = await send("topic.create", params);
+
+        if (response.error) {
+            console.error(response.error);
+        } else {
+            sapper.goto("/");
+        }
     }
 </script>
 

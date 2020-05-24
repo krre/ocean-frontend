@@ -17,20 +17,21 @@
             password: password
         };
 
-        const result = await send("user.auth", params);
+        const response = await send("user.auth", params);
 
-        if (result.message) {
-            alert(result.message);
-        } else {
-            const user = { token: result.token, id: id };
-
-            if (save) {
-                await post("auth/login", user);
-            }
-
-            $session.user = user;
-            goto("/");
+        if (response.error) {
+            console.error(response.error);
+            return;
         }
+
+        const user = { token: response.result.token, id: id };
+
+        if (save) {
+            await post("auth/login", user);
+        }
+
+        $session.user = user;
+        goto("/");
     }
 </script>
 
