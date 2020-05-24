@@ -1,5 +1,6 @@
 <script context="module">
-    import { send } from "net.js";
+    import { send, errorMessage } from "net.js";
+    import OperationResult from "../components/OperationResult.svelte";
 
     export async function preload(page, session) {
         const result = await send("user.get", { token: session.user.token });
@@ -11,6 +12,9 @@
 <script>
     export let user;
 
+    $: success = "";
+    $: error = "";
+
     let password1;
     let password2;
 
@@ -21,17 +25,21 @@
 
         if (password1 || password2) {
             if (password1 !== password2) {
-                alert("Пароли не совпадают!");
+                error = "Пароли не совпадают!";
                 return;
             } else {
                 params.password = password1;
             }
         }
 
-        await send("user.update", params);
-
-        password1 = "";
-        password2 = "";
+        try {
+            await send("user.update", params);
+            password1 = "";
+            password2 = "";
+            success = "Профиль успешно обновлён";
+        } catch (e) {
+            error = errorMessage(e.code);
+        }
     }
 </script>
 
@@ -57,5 +65,6 @@
     <input type="password" bind:value={password1} />
     Пароль (ещё раз):
     <input type="password" bind:value={password2} />
+    <OperationResult {error} {success} />
     <button on:click={update}>Сохранить</button>
 </div>
