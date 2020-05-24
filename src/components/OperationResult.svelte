@@ -9,7 +9,7 @@
 
 <style>
     .success {
-        color: steelblue;
+        color: green;
     }
 
     .error {
