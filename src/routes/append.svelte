@@ -14,7 +14,7 @@
             user_id: 1
         };
 
-        const response = await send("topic.create", params);
+        await send("topic.create", params);
 
         if (response.error) {
             console.error(response.error);
