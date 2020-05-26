@@ -1,7 +1,7 @@
 <script>
     import * as sapper from "@sapper/app";
     import { send } from "net.js";
-    import OperationResult from "../components/OperationResult.svelte";
+    import OperationResult from "../../components/OperationResult.svelte";
 
     $: error = "";
 
