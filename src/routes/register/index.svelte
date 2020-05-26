@@ -22,8 +22,10 @@
             password: password1
         };
 
-        await send("user.create", params);
-        sapper.goto("/");
+        let result = await send("user.create", params);
+        // let result = {};
+        // result.id = 42;
+        sapper.goto("/register/user" + result.id);
     }
 </script>
 
