@@ -23,8 +23,6 @@
         };
 
         let result = await send("user.create", params);
-        // let result = {};
-        // result.id = 42;
         sapper.goto("/register/user" + result.id);
     }
 </script>
