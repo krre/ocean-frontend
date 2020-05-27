@@ -39,13 +39,24 @@
     <button on:click={deleteTopic}>Удалить</button>
 {/if}
 
-{#each topics as topic}
+<!-- {#each topics as topic}
     <p>
         {#if $session.user}
             <input type="checkbox" bind:group={selected} value={topic.id} />
         {/if}
         <a href="topic/{topic.id}">
             {formatDateTime(topic.create_ts)} | {topic.title}
+        </a>
+    </p>
+{/each} -->
+
+{#each topics as topic}
+    <p>
+        {#if $session.user}
+            <input type="checkbox" bind:group={selected} value={topic[0]} />
+        {/if}
+        <a href="topic/{topic[0]}">
+            {formatDateTime(topic[2])} | {topic[1]} | {topic[3]}
         </a>
     </p>
 {/each}
