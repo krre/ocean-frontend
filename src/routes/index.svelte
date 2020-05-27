@@ -10,7 +10,7 @@
     let selected = [];
 
     onMount(async () => {
-        topics = await send("topic.get");
+        topics = await send("topic.getAll");
     });
 
     async function deleteTopic() {
