@@ -3,7 +3,7 @@
     import OperationResult from "../components/OperationResult.svelte";
 
     export async function preload(page, session) {
-        const result = await send("user.get", { token: session.user.token });
+        const result = await send("user.getOne", { token: session.user.token });
         const user = result[0];
         return { user };
     }
