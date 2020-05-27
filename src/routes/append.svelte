@@ -1,6 +1,8 @@
 <script>
-    import * as sapper from "@sapper/app";
+    import { goto, stores } from "@sapper/app";
     import { send } from "net.js";
+
+    const { session } = stores();
 
     let title = "";
     let description = "";
@@ -11,11 +13,11 @@
         const params = {
             title: title,
             description: description,
-            user_id: 1
+            user_id: $session.user.id
         };
 
         await send("topic.create", params);
-        sapper.goto("/");
+        goto("/");
     }
 </script>
 
