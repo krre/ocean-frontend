@@ -1,5 +1,5 @@
 <script>
-    import * as sapper from "@sapper/app";
+    import { goto } from "@sapper/app";
     import { send } from "net.js";
     import OperationResult from "../../components/OperationResult.svelte";
 
@@ -23,7 +23,7 @@
         };
 
         let result = await send("user.create", params);
-        sapper.goto("/register/user" + result.id);
+        goto("/register/user" + result.id);
     }
 </script>
 
