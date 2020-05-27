@@ -56,7 +56,8 @@
             <input type="checkbox" bind:group={selected} value={topic[0]} />
         {/if}
         <a href="topic/{topic[0]}">
-            {formatDateTime(topic[2])} | {topic[1]} | {topic[3]}
+            {formatDateTime(topic[2])} | {topic[1]} |
+            {#if topic[3]}{topic[3]}{:else}Конспиролог{/if}
         </a>
     </p>
 {/each}
