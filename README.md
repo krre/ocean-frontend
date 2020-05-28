@@ -1,2 +1,2 @@
 # Ocean
-Frontend for Ocean project
+Frontend for [Ocean](http://ocean-mandela.org) project
