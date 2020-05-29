@@ -14,14 +14,16 @@
     });
 
     async function deleteTopic() {
-        if (selected.length) {
-            await send("topic.delete", { id: selected });
+        if (!selected.length) return;
 
-            topics = topics.filter(function(topic) {
-                return selected.indexOf(topic.id) === -1;
-            });
-            selected = [];
-        }
+        await send("topic.delete", { id: selected });
+
+        topics = topics.filter(function(topic) {
+            // TODO: Change on topic.id when has topic object instead array.
+            return selected.indexOf(topic[0]) === -1;
+        });
+        selected = [];
+        console.log(topics);
     }
 </script>
 
