@@ -1,6 +1,6 @@
 <script>
-    export let success;
-    export let error;
+    export let success = "";
+    export let error = "";
 
     $: if (success) {
         error = "";
