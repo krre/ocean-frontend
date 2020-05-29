@@ -2,7 +2,7 @@
     import { stores } from "@sapper/app";
     import { onMount } from "svelte";
     import { send } from "net.js";
-    import { formatDateTime } from "utils.js";
+    import { formatDateTime, zeroLeading } from "utils.js";
 
     const { session } = stores();
 
@@ -56,7 +56,8 @@
             <input type="checkbox" bind:group={selected} value={topic[0]} />
         {/if}
         <a href="topic/{topic[0]}">
-            {formatDateTime(topic[2])} | {topic[1]} |
+            {zeroLeading(topic[0], 5)} | {formatDateTime(topic[2])} | {topic[1]}
+            |
             {#if topic[3]}{topic[3]}{:else}Конспиролог{/if}
         </a>
     </p>
