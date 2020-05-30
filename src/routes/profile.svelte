@@ -90,7 +90,7 @@
 
 <h1>Профиль</h1>
 <div class="form">
-    <div>Идентификатор:</div>
+    <div>ЧЗ:</div>
     <div>{user.id}</div>
     <AccountMode bind:code />
     {#if code === consts.UserAccount}

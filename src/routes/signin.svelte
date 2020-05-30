@@ -50,7 +50,7 @@
 <h1>Войти</h1>
 
 <div class="form">
-    Идентификатор:
+    ЧЗ:
     <input type="number" bind:value={id} />
     Пароль:
     <input type="password" bind:value={password} />
