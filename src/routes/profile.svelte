@@ -33,8 +33,8 @@
             return;
         }
 
-        params.name = code === consts.UserAccount ? user.name : "";
-        params.code = code;
+        params.name = code === consts.ConspiratorAccount ? "" : user.name;
+        params.code = user.code === consts.AdminAccount ? user.code : code;
 
         try {
             await send("user.update", params);
@@ -91,8 +91,10 @@
 <div class="form">
     <div>ЧЗ:</div>
     <div>{user.id}</div>
-    <AccountMode bind:code bind:initCode={user.code} />
-    {#if code === consts.UserAccount}
+    {#if user.code !== consts.AdminAccount}
+        <AccountMode bind:code bind:initCode={user.code} />
+    {/if}
+    {#if code !== consts.ConspiratorAccount}
         Имя:
         <input bind:value={user.name} />
     {/if}
