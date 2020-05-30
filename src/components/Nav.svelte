@@ -9,9 +9,7 @@
 
 <nav>
     <a href=".">Каталог</a>
-    {#if $session.user}
-        <a href="append">Добавить</a>
-    {/if}
+    <a href="append">Добавить</a>
     <a href="help">Справка</a>
     {#if $session.user}
         <a href="profile">Профиль</a>
