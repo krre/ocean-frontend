@@ -44,9 +44,11 @@
         try {
             await send("user.update", params);
 
+            $session.user.name = params.name;
+            $session.user.code = params.code;
+
             if (code === consts.ConspiratorAccount) {
                 user.name = "";
-                $session.user.name = "";
             }
 
             successProfile = "Профиль успешно обновлён";

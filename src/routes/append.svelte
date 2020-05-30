@@ -12,10 +12,10 @@
 
     if (!$session.user) {
         userName = consts.AccountModeNames[consts.FierceAccount];
-    } else if ($session.user.code === consts.UserAccount) {
+    } else if ($session.user.code !== consts.ConspiratorAccount) {
         userName = $session.user.name;
     } else {
-        userName = consts.AccountModeNames[$session.user.code];
+        userName = consts.AccountModeNames[consts.ConspiratorAccount];
     }
 
     $: buttonEnabled = title && description;
