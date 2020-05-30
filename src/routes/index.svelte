@@ -62,7 +62,11 @@
         <a href="topic/{topic[0]}">
             {zeroLeading(topic[0], 5)} | {formatDateTime(topic[2])} | {topic[1]}
             |
-            {#if topic[3]}{topic[3]}{:else}Конспиролог{/if}
+            {#if topic[3]}
+                {topic[3]}
+            {:else if topic[4] === consts.FierceAccountId}
+                {consts.AccountModeNames[consts.FierceAccount]}
+            {:else}{consts.AccountModeNames[consts.ConspiratorAccount]}{/if}
         </a>
     </p>
 {/each}
