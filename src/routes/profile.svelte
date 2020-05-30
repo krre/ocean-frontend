@@ -1,6 +1,8 @@
 <script context="module">
+    import * as consts from "consts.js";
     import { send, errorMessage } from "net.js";
     import OperationResult from "../components/OperationResult.svelte";
+    import AccountMode from "../components/AccountMode.svelte";
 
     export async function preload(page, session) {
         const result = await send("user.getOne", { token: session.user.token });
@@ -12,8 +14,13 @@
 <script>
     export let user;
 
-    $: success = "";
-    $: error = "";
+    $: successProfile = "";
+    $: errorProfile = "";
+
+    $: successPassword = "";
+    $: errorPassword = "";
+
+    $: code = consts.UserAccount;
 
     let password1;
     let password2;
@@ -21,24 +28,50 @@
     async function update() {
         const params = {};
         params.id = user.id;
-        params.name = user.name;
 
-        if (password1 || password2) {
-            if (password1 !== password2) {
-                error = "Пароли не совпадают!";
-                return;
-            } else {
-                params.password = password1;
-            }
+        if (code === consts.UserAccount && !user.name) {
+            error = "Введите имя";
+            return;
         }
+
+        params.name = code === consts.UserAccount ? user.name : "";
+        params.code = code;
 
         try {
             await send("user.update", params);
+
+            if (code === consts.ConspiratorAccount) {
+                user.name = "";
+            }
+
+            successProfile = "Профиль успешно обновлён";
+        } catch (e) {
+            errorProfile = errorMessage(e.code);
+        }
+    }
+
+    async function changePassword() {
+        if (!password1 || !password2) {
+            errorPassword = "Введите пароль";
+            return;
+        }
+
+        if (password1 !== password2) {
+            errorPassword = "Пароли не совпадают!";
+            return;
+        }
+
+        const params = {};
+        params.id = user.id;
+        params.password = password1;
+
+        try {
+            await send("user.changePassword", params);
             password1 = "";
             password2 = "";
-            success = "Профиль успешно обновлён";
+            successPassword = "Пароль успешно изменён";
         } catch (e) {
-            error = errorMessage(e.code);
+            errorPassword = errorMessage(e.code);
         }
     }
 </script>
@@ -57,14 +90,21 @@
 
 <h1>Профиль</h1>
 <div class="form">
-    Идентификатор:
-    <input value={user.id} readonly />
-    Имя:
-    <input bind:value={user.name} />
+    <div>Идентификатор:</div>
+    <div>{user.id}</div>
+    <AccountMode bind:code />
+    {#if code === consts.UserAccount}
+        Имя:
+        <input bind:value={user.name} />
+    {/if}
+    <OperationResult bind:success={successProfile} bind:error={errorProfile} />
+    <button on:click={update}>Сохранить</button>
     Пароль:
     <input type="password" bind:value={password1} />
     Пароль (ещё раз):
     <input type="password" bind:value={password2} />
-    <OperationResult {error} {success} />
-    <button on:click={update}>Сохранить</button>
+    <OperationResult
+        bind:success={successPassword}
+        bind:error={errorPassword} />
+    <button on:click={changePassword}>Изменить</button>
 </div>
