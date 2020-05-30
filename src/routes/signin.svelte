@@ -8,7 +8,6 @@
 
     let id = 0;
     let password = "";
-    let save = true;
 
     $: signinButtonEnabled = id && password;
     $: error = "";
@@ -23,9 +22,7 @@
             const result = await send("user.auth", params);
             const user = { token: result.token, id: id };
 
-            if (save) {
-                await post("auth/login", user);
-            }
+            await post("auth/login", user);
 
             $session.user = user;
             goto("/");
@@ -54,11 +51,6 @@
     <input type="number" bind:value={id} />
     Пароль:
     <input type="password" bind:value={password} />
-    <label>
-        Запомнить
-        <input type="checkbox" bind:checked={save} />
-    </label>
-
     <OperationResult {error} />
     <button on:click={signin} disabled={!signinButtonEnabled}>Войти</button>
 </div>
