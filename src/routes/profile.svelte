@@ -1,8 +1,5 @@
 <script context="module">
-    import * as consts from "consts.js";
-    import { send, errorMessage } from "net.js";
-    import OperationResult from "../components/OperationResult.svelte";
-    import AccountMode from "../components/AccountMode.svelte";
+    import { send } from "net.js";
 
     export async function preload(page, session) {
         const user = await send("user.getOne", { token: session.user.token });
@@ -11,6 +8,14 @@
 </script>
 
 <script>
+    import * as consts from "consts.js";
+    import { errorMessage } from "net.js";
+    import { stores } from "@sapper/app";
+    import OperationResult from "../components/OperationResult.svelte";
+    import AccountMode from "../components/AccountMode.svelte";
+
+    const { session } = stores();
+
     export let user;
 
     $: successProfile = "";
@@ -41,6 +46,7 @@
 
             if (code === consts.ConspiratorAccount) {
                 user.name = "";
+                $session.user.name = "";
             }
 
             successProfile = "Профиль успешно обновлён";
