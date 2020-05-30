@@ -6,7 +6,7 @@
     import AccountMode from "../../components/AccountMode.svelte";
 
     $: error = "";
-    $: code = consts.UserAccount;
+    $: code = "";
 
     let name = "";
     let password1 = "";
@@ -22,7 +22,7 @@
         }
 
         const params = {
-            name: name,
+            name: code === consts.ConspiratorAccount ? "" : name,
             password: password1,
             code: code
         };
