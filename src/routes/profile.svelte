@@ -5,8 +5,7 @@
     import AccountMode from "../components/AccountMode.svelte";
 
     export async function preload(page, session) {
-        const result = await send("user.getOne", { token: session.user.token });
-        const user = result[0];
+        const user = await send("user.getOne", { token: session.user.token });
         return { user };
     }
 </script>
