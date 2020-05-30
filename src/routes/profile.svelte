@@ -19,7 +19,7 @@
     $: successPassword = "";
     $: errorPassword = "";
 
-    $: code = consts.UserAccount;
+    $: code = "";
 
     let password1;
     let password2;
@@ -29,7 +29,7 @@
         params.id = user.id;
 
         if (code === consts.UserAccount && !user.name) {
-            error = "Введите имя";
+            errorProfile = "Введите имя";
             return;
         }
 
@@ -91,7 +91,7 @@
 <div class="form">
     <div>ЧЗ:</div>
     <div>{user.id}</div>
-    <AccountMode bind:code />
+    <AccountMode bind:code bind:initCode={user.code} />
     {#if code === consts.UserAccount}
         Имя:
         <input bind:value={user.name} />

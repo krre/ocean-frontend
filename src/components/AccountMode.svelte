@@ -1,6 +1,7 @@
 <script>
     import * as consts from "consts.js";
     export let code;
+    export let initCode = consts.UserAccount;
     let selected;
 
     $: {
@@ -10,11 +11,13 @@
     let modes = [
         {
             code: consts.UserAccount,
-            name: "Пользователь"
+            name: "Пользователь",
+            current: initCode === consts.UserAccount ? "true" : ""
         },
         {
             code: consts.ConspiratorAccount,
-            name: "Конспиролог"
+            name: "Конспиролог",
+            current: initCode === consts.ConspiratorAccount ? "true" : ""
         }
     ];
 </script>
@@ -22,6 +25,6 @@
 Тип учётной записи:
 <select bind:value={selected}>
     {#each modes as mode}
-        <option value={mode}>{mode.name}</option>
+        <option value={mode} selected={mode.current}>{mode.name}</option>
     {/each}
 </select>
