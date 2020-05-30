@@ -11,12 +11,12 @@
     let modes = [
         {
             code: consts.UserAccount,
-            name: "Пользователь",
+            name: consts.AccountModeNames[consts.UserAccount],
             current: initCode === consts.UserAccount ? "true" : ""
         },
         {
             code: consts.ConspiratorAccount,
-            name: "Конспиролог",
+            name: consts.AccountModeNames[consts.ConspiratorAccount],
             current: initCode === consts.ConspiratorAccount ? "true" : ""
         }
     ];
