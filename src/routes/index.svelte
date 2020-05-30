@@ -1,10 +1,13 @@
 <script>
+    import * as consts from "consts.js";
     import { stores } from "@sapper/app";
     import { onMount } from "svelte";
     import { send } from "net.js";
     import { formatDateTime, zeroLeading } from "utils.js";
 
     const { session } = stores();
+
+    $: admin = $session.user && $session.user.code === consts.AdminAccount;
 
     let topics = [];
     let selected = [];
@@ -23,7 +26,6 @@
             return selected.indexOf(topic[0]) === -1;
         });
         selected = [];
-        console.log(topics);
     }
 </script>
 
@@ -37,7 +39,7 @@
 
 <h1>Каталог мандел</h1>
 
-{#if topics.length && $session.user}
+{#if topics.length && admin}
     <button on:click={deleteTopic}>Удалить</button>
 {/if}
 
@@ -54,7 +56,7 @@
 
 {#each topics as topic}
     <p>
-        {#if $session.user}
+        {#if admin}
             <input type="checkbox" bind:group={selected} value={topic[0]} />
         {/if}
         <a href="topic/{topic[0]}">
