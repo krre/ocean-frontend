@@ -20,7 +20,7 @@
 
         try {
             const result = await send("user.auth", params);
-            const user = { token: result.token, id: id };
+            const user = { token: result.token, id: id, code: result.code };
 
             await post("auth/login", user);
 
