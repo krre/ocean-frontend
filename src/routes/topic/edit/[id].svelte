@@ -21,7 +21,7 @@
 
     function edit() {
         console.log("edit", id, session, topic);
-        goto("topic/" + id);
+        goto("topic/view/" + id);
     }
 </script>
 
