@@ -13,30 +13,25 @@
 
 <script>
     import { goto } from "@sapper/app";
+    import TopicEditor from "../../../components/TopicEditor.svelte";
 
     export let id;
     export let topic;
     export let session;
 
     function edit() {
-        goto("topic/edit/" + id);
+        console.log("edit", id, session, topic);
+        goto("topic/" + id);
     }
 </script>
 
-<style>
-    .message {
-        white-space: pre-wrap;
-    }
-</style>
-
 <svelte:head>
-    <title>{topic.title}</title>
+    <title>Редактировать манделу</title>
 </svelte:head>
+<h1>Редактировать манделу</h1>
 
-<h1>{topic.title}</h1>
-<div class="message">{topic.description}</div>
-
-{#if session.user && session.user.id === topic.user_id}
-    <br />
-    <button on:click={edit}>Редактировать</button>
-{/if}
+<TopicEditor
+    bind:title={topic.title}
+    bind:description={topic.description}
+    bind:user={session.user}
+    on:click={edit} />
