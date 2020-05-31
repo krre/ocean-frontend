@@ -15,9 +15,15 @@
     export let topic;
 </script>
 
+<style>
+    .message {
+        white-space: pre-wrap;
+    }
+</style>
+
 <svelte:head>
     <title>{topic.title}</title>
 </svelte:head>
 
 <h1>{topic.title}</h1>
-{topic.description}
+<div class="message">{topic.description}</div>
