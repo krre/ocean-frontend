@@ -19,8 +19,15 @@
     export let topic;
     export let session;
 
-    function edit() {
-        console.log("edit", id, session, topic);
+    async function edit() {
+        const params = {
+            id: Number(id),
+            title: topic.title,
+            description: topic.description,
+            user_id: session.user.id
+        };
+
+        await send("topic.update", params);
         goto("topic/view/" + id);
     }
 </script>
