@@ -8,11 +8,13 @@
 
     let title = "";
     let description = "";
+    let links = [];
 
     async function append() {
         const params = {
             title: title,
             description: description,
+            links: links,
             user_id: $session.user ? $session.user.id : consts.FierceAccountId
         };
 
@@ -29,5 +31,6 @@
 <TopicEditor
     bind:title
     bind:description
+    bind:links
     bind:user={$session.user}
     on:click={append} />
