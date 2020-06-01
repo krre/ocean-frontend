@@ -1,8 +1,10 @@
 <script>
     import * as consts from "consts.js";
+    import LinksEditor from "./LinksEditor.svelte";
 
     export let title;
     export let description;
+    export let links = [];
     export let user;
 
     let userName;
@@ -32,6 +34,8 @@
     <input bind:value={title} type="text" />
     Описание:
     <textarea rows="10" bind:value={description} />
+    Ссылки:
+    <LinksEditor bind:links />
     <div>Пользователь: {userName}</div>
 </div>
 
