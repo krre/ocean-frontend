@@ -35,6 +35,13 @@
 
 <h1>{topic.title}</h1>
 <div class="message">{topic.description}</div>
+<br />
+
+{#each topic.links as link}
+    <div>
+        <a href={link}>{link}</a>
+    </div>
+{/each}
 
 {#if session.user && session.user.id === topic.user_id}
     <br />
