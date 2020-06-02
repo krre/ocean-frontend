@@ -55,15 +55,17 @@
 
 {#if topic.videos.length}
     {#each topic.videos as video}
-        <iframe
-            title=""
-            width="420"
-            height="315"
-            src={fixYouTubeLink(video)}
-            frameborder="0"
-            allow="accelerometer; autoplay; encrypted-media; gyroscope;
-            picture-in-picture"
-            allowfullscreen />
+        <div>
+            <iframe
+                title=""
+                width="420"
+                height="315"
+                src={fixYouTubeLink(video)}
+                frameborder="0"
+                allow="accelerometer; autoplay; encrypted-media; gyroscope;
+                picture-in-picture"
+                allowfullscreen />
+        </div>
     {/each}
     <hr />
 {/if}
