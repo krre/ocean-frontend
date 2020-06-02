@@ -21,6 +21,10 @@
     function edit() {
         goto("topic/edit/" + id);
     }
+
+    function fixYouTubeLink(link) {
+        return "https://www.youtube.com/embed/" + link.match(/([^\/]*$)/)[0];
+    }
 </script>
 
 <style>
@@ -38,9 +42,16 @@
 <br />
 
 {#each topic.videos as video}
-    <div>
-        <a href={video}>{video}</a>
-    </div>
+    <iframe
+        title=""
+        width="420"
+        height="315"
+        src={fixYouTubeLink(video)}
+        frameborder="0"
+        allow="accelerometer; autoplay; encrypted-media; gyroscope;
+        picture-in-picture"
+        allowfullscreen />
+    <br />
 {/each}
 
 <br />

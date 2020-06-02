@@ -35,7 +35,7 @@
     <input bind:value={title} type="text" />
     Описание:
     <textarea rows="10" bind:value={description} />
-    Видео:
+    Видео (только YouTube):
     <ListEditor bind:list={videos} />
     Ссылки:
     <ListEditor bind:list={links} />
