@@ -22,8 +22,8 @@
             user_id: $session.user ? $session.user.id : consts.FierceAccountId
         };
 
-        await send("topic.create", params);
-        goto("/");
+        const result = await send("topic.create", params);
+        goto("topic/view/" + result.id);
     }
 </script>
 
