@@ -4,6 +4,7 @@
 
     export let title;
     export let description;
+    export let images = [];
     export let videos = [];
     export let links = [];
     export let user;
@@ -35,6 +36,8 @@
     <input bind:value={title} type="text" />
     Описание:
     <textarea rows="10" bind:value={description} />
+    Изображения:
+    <ListEditor bind:list={images} />
     Видео (только YouTube):
     <ListEditor bind:list={videos} />
     Ссылки:

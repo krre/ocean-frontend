@@ -8,6 +8,7 @@
 
     let title = "";
     let description = "";
+    let images = [];
     let videos = [];
     let links = [];
 
@@ -15,6 +16,7 @@
         const params = {
             title: title,
             description: description,
+            images: images,
             links: links,
             videos: videos,
             user_id: $session.user ? $session.user.id : consts.FierceAccountId
