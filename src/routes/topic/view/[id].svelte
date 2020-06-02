@@ -80,6 +80,5 @@
 {/if}
 
 {#if session.user && session.user.id === topic.user_id}
-    <br />
     <button on:click={edit}>Редактировать</button>
 {/if}
