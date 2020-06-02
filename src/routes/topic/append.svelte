@@ -8,6 +8,7 @@
 
     let title = "";
     let description = "";
+    let videos = [];
     let links = [];
 
     async function append() {
@@ -15,6 +16,7 @@
             title: title,
             description: description,
             links: links,
+            videos: videos,
             user_id: $session.user ? $session.user.id : consts.FierceAccountId
         };
 
@@ -31,6 +33,7 @@
 <TopicEditor
     bind:title
     bind:description
+    bind:videos
     bind:links
     bind:user={$session.user}
     on:click={append} />

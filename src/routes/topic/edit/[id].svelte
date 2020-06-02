@@ -24,6 +24,7 @@
             id: Number(id),
             title: topic.title,
             description: topic.description,
+            videos: topic.videos,
             links: topic.links,
             user_id: session.user.id
         };
@@ -41,6 +42,7 @@
 <TopicEditor
     bind:title={topic.title}
     bind:description={topic.description}
+    bind:videos={topic.videos}
     bind:links={topic.links}
     bind:user={session.user}
     on:click={edit} />

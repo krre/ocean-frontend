@@ -37,6 +37,14 @@
 <div class="message">{topic.description}</div>
 <br />
 
+{#each topic.videos as video}
+    <div>
+        <a href={video}>{video}</a>
+    </div>
+{/each}
+
+<br />
+
 {#each topic.links as link}
     <div>
         <a href={link}>{link}</a>

@@ -1,14 +1,14 @@
 <script>
-    export let links = [];
+    export let list = [];
 
     function append() {
-        links.push("");
-        links = links;
+        list.push("");
+        list = list;
     }
 
     function remove(index) {
-        links.splice(index, 1);
-        links = links;
+        list.splice(index, 1);
+        list = list;
     }
 </script>
 
@@ -28,9 +28,9 @@
     }
 </style>
 
-{#each links as link, i}
+{#each list as link, i}
     <div class="row">
-        <input type="text" bind:value={links[i]} />
+        <input type="text" bind:value={list[i]} />
         <button on:click={() => remove(i)}>Удалить</button>
     </div>
 {/each}

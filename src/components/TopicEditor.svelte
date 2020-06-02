@@ -4,6 +4,7 @@
 
     export let title;
     export let description;
+    export let videos = [];
     export let links = [];
     export let user;
 
@@ -34,8 +35,10 @@
     <input bind:value={title} type="text" />
     Описание:
     <textarea rows="10" bind:value={description} />
+    Видео:
+    <ListEditor bind:list={videos} />
     Ссылки:
-    <ListEditor bind:links />
+    <ListEditor bind:list={links} />
     <div>Пользователь: {userName}</div>
 </div>
 
