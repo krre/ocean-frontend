@@ -41,37 +41,41 @@
 
 {#if topic.description}
     <div class="message">{topic.description}</div>
-    <br />
+    <hr />
 {/if}
 
-{#each topic.images as image}
-    <div>
-        <img alt="" src={image} />
-    </div>
-{/each}
+{#if topic.images.length}
+    {#each topic.images as image}
+        <div>
+            <img alt="" src={image} />
+        </div>
+    {/each}
+    <hr />
+{/if}
 
-{#each topic.videos as video}
-    <iframe
-        title=""
-        width="420"
-        height="315"
-        src={fixYouTubeLink(video)}
-        frameborder="0"
-        allow="accelerometer; autoplay; encrypted-media; gyroscope;
-        picture-in-picture"
-        allowfullscreen />
-    <br />
-{/each}
+{#if topic.videos.length}
+    {#each topic.videos as video}
+        <iframe
+            title=""
+            width="420"
+            height="315"
+            src={fixYouTubeLink(video)}
+            frameborder="0"
+            allow="accelerometer; autoplay; encrypted-media; gyroscope;
+            picture-in-picture"
+            allowfullscreen />
+    {/each}
+    <hr />
+{/if}
 
 {#if topic.links.length}
-    <h4>Ссылки по теме</h4>
+    {#each topic.links as link}
+        <div>
+            <a href={link}>{link}</a>
+        </div>
+    {/each}
+    <hr />
 {/if}
-
-{#each topic.links as link}
-    <div>
-        <a href={link}>{link}</a>
-    </div>
-{/each}
 
 {#if session.user && session.user.id === topic.user_id}
     <br />
