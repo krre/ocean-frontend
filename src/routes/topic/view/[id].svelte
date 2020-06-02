@@ -54,7 +54,9 @@
     <br />
 {/each}
 
-<br />
+{#if topic.links.length}
+    <h4>Ссылки по теме</h4>
+{/if}
 
 {#each topic.links as link}
     <div>
