@@ -41,6 +41,12 @@
 <div class="message">{topic.description}</div>
 <br />
 
+{#each topic.images as image}
+    <div>
+        <img alt="" src={image} />
+    </div>
+{/each}
+
 {#each topic.videos as video}
     <iframe
         title=""
