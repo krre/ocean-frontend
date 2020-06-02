@@ -35,6 +35,7 @@
 <TopicEditor
     bind:title
     bind:description
+    bind:images
     bind:videos
     bind:links
     bind:user={$session.user}
