@@ -38,8 +38,11 @@
 </svelte:head>
 
 <h1>{topic.title}</h1>
-<div class="message">{topic.description}</div>
-<br />
+
+{#if topic.description}
+    <div class="message">{topic.description}</div>
+    <br />
+{/if}
 
 {#each topic.images as image}
     <div>
