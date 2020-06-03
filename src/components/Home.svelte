@@ -16,10 +16,11 @@
     const limit = 5;
 
     $: admin = $session.user && $session.user.code === consts.AdminAccount;
-    $: prevPageLink = `/page/${currentPage - 1}`;
-    $: nextPageLink = `/page/${currentPage + 1}`;
     $: lastPage = totalCount && Math.ceil(totalCount / limit);
     $: currentPage && load();
+    $: prevPageLink = `/page/${currentPage - 1}`;
+    $: nextPageLink = `/page/${currentPage + 1}`;
+    $: lastPageLink = `/page/${lastPage}`;
 
     async function load() {
         const params = {};
@@ -75,12 +76,14 @@
 
 {#if totalCount && totalCount > limit}
     {#if currentPage > 1}
-        <a href={prevPageLink}>Назад</a>
+        <a href="/">Первая</a>
+        <a href={prevPageLink}>Предыдущая</a>
     {/if}
 
     {#if currentPage > 1 && currentPage < lastPage}{currentPage}{/if}
 
     {#if currentPage < lastPage}
-        <a href={nextPageLink}>Вперёд</a>
+        <a href={nextPageLink}>Следующая</a>
+        <a href={lastPageLink}>Последняя</a>
     {/if}
 {/if}
