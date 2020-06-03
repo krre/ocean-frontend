@@ -78,6 +78,8 @@
         <a href={prevPageLink}>Назад</a>
     {/if}
 
+    {#if currentPage > 1 && currentPage < lastPage}{currentPage}{/if}
+
     {#if currentPage < lastPage}
         <a href={nextPageLink}>Вперёд</a>
     {/if}
