@@ -12,9 +12,18 @@
     let topics = [];
     let selected = [];
 
-    onMount(async () => {
-        topics = await send("topic.getAll");
-    });
+    let totalCount;
+    let currentPage = 1;
+    let limit = 5;
+
+    onMount(async () => load());
+
+    async function load() {
+        const params = {};
+        params.limit = limit;
+        params.offset = (currentPage - 1) * limit;
+        topics = await send("topic.getAll", params);
+    }
 
     async function deleteTopic() {
         if (!selected.length) return;
