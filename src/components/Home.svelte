@@ -13,7 +13,7 @@
     let selected = [];
 
     let totalCount;
-    const limit = 5;
+    const limit = 20;
 
     $: admin = $session.user && $session.user.code === consts.AdminAccount;
     $: lastPage = totalCount && Math.ceil(totalCount / limit);
@@ -44,7 +44,17 @@
 </script>
 
 <style>
+    .pagination-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 30px;
+        margin: 0 -5px;
+    }
 
+    .pagination-item {
+        padding: 0 5px;
+    }
 </style>
 
 <svelte:head>
@@ -75,15 +85,17 @@
 {/each}
 
 {#if totalCount && totalCount > limit}
-    {#if currentPage > 1}
-        <a href="/">Первая</a>
-        <a href={prevPageLink}>Предыдущая</a>
-    {/if}
+    <div class="pagination-container">
+        {#if currentPage > 1}
+            <a class="pagination-item" href="/">Первая</a>
+            <a class="pagination-item" href={prevPageLink}>Предыдущая</a>
+        {/if}
 
-    {#if currentPage > 1 && currentPage < lastPage}{currentPage}{/if}
+        <div class="pagination-item">{currentPage}</div>
 
-    {#if currentPage < lastPage}
-        <a href={nextPageLink}>Следующая</a>
-        <a href={lastPageLink}>Последняя</a>
-    {/if}
+        {#if currentPage < lastPage}
+            <a class="pagination-item" href={nextPageLink}>Следующая</a>
+            <a href={lastPageLink}>Последняя</a>
+        {/if}
+    </div>
 {/if}
