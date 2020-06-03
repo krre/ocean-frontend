@@ -19,7 +19,7 @@
     export let session;
 
     function edit() {
-        goto("topic/" + id + "/edit");
+        goto("mandela/" + id + "/edit");
     }
 
     function fixYouTubeLink(link) {

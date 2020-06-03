@@ -23,7 +23,7 @@
         };
 
         const result = await send("topic.create", params);
-        goto("topic/view/" + result.id);
+        goto("mandela/" + result.id);
     }
 </script>
 

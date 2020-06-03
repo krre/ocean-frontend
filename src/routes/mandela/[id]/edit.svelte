@@ -31,7 +31,7 @@
         };
 
         await send("topic.update", params);
-        goto("topic/" + id);
+        goto("mandela/" + id);
     }
 </script>
 
