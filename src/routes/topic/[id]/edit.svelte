@@ -31,7 +31,7 @@
         };
 
         await send("topic.update", params);
-        goto("topic/view/" + id);
+        goto("topic/" + id);
     }
 </script>
 
