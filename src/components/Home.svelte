@@ -7,17 +7,19 @@
 
     const { session } = stores();
 
-    $: admin = $session.user && $session.user.code === consts.AdminAccount;
-
-    export let currentPage = 1;
+    export let currentPage;
 
     let topics = [];
     let selected = [];
 
     let totalCount;
-    let limit = 5;
+    const limit = 5;
 
-    onMount(async () => load());
+    $: admin = $session.user && $session.user.code === consts.AdminAccount;
+    $: prevPageLink = `/page/${currentPage - 1}`;
+    $: nextPageLink = `/page/${currentPage + 1}`;
+    $: lastPage = totalCount && Math.ceil(totalCount / limit);
+    $: currentPage && load();
 
     async function load() {
         const params = {};
@@ -70,3 +72,13 @@
         </a>
     </p>
 {/each}
+
+{#if totalCount && totalCount > limit}
+    {#if currentPage > 1}
+        <a href={prevPageLink}>Назад</a>
+    {/if}
+
+    {#if currentPage < lastPage}
+        <a href={nextPageLink}>Вперёд</a>
+    {/if}
+{/if}
