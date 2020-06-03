@@ -23,7 +23,9 @@
         const params = {};
         params.limit = limit;
         params.offset = (currentPage - 1) * limit;
-        topics = await send("topic.getAll", params);
+        let result = await send("topic.getAll", params);
+        topics = result.topics;
+        totalCount = result.total_count;
     }
 
     async function deleteTopic() {
@@ -32,8 +34,7 @@
         await send("topic.delete", { id: selected });
 
         topics = topics.filter(function(topic) {
-            // TODO: Change on topic.id when has topic object instead array.
-            return selected.indexOf(topic[0]) === -1;
+            return selected.indexOf(topic.id) === -1;
         });
         selected = [];
     }
@@ -53,28 +54,17 @@
     <button on:click={deleteTopic}>Удалить</button>
 {/if}
 
-<!-- {#each topics as topic}
-    <p>
-        {#if $session.user}
-            <input type="checkbox" bind:group={selected} value={topic.id} />
-        {/if}
-        <a href="topic/{topic.id}">
-            {formatDateTime(topic.create_ts)} | {topic.title}
-        </a>
-    </p>
-{/each} -->
-
 {#each topics as topic}
     <p>
         {#if admin}
-            <input type="checkbox" bind:group={selected} value={topic[0]} />
+            <input type="checkbox" bind:group={selected} value={topic.id} />
         {/if}
-        <a href="mandela/{topic[0]}">
-            {zeroLeading(topic[0], 5)} | {formatDateTime(topic[2])} | {topic[1]}
+        <a href="mandela/{topic.id}">
+            {zeroLeading(topic.id, 5)} | {formatDateTime(topic.create_ts)} | {topic.title}
             |
-            {#if topic[3]}
-                {topic[3]}
-            {:else if topic[4] === consts.FierceAccountId}
+            {#if topic.name}
+                {topic.name}
+            {:else if topic.user_id === consts.FierceAccountId}
                 {consts.AccountModeNames[consts.FierceAccount]}
             {:else}{consts.AccountModeNames[consts.ConspiratorAccount]}{/if}
         </a>
