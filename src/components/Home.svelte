@@ -9,7 +9,7 @@
 
     export let currentPage;
 
-    let topics = [];
+    let mandels = [];
     let selected = [];
 
     let totalCount;
@@ -26,18 +26,18 @@
         const params = {};
         params.limit = limit;
         params.offset = (currentPage - 1) * limit;
-        let result = await send("topic.getAll", params);
-        topics = result.topics;
+        let result = await send("mandela.getAll", params);
+        mandels = result.mandels;
         totalCount = result.total_count;
     }
 
-    async function deleteTopic() {
+    async function deleteMandela() {
         if (!selected.length) return;
 
-        await send("topic.delete", { id: selected });
+        await send("mandela.delete", { id: selected });
 
-        topics = topics.filter(function(topic) {
-            return selected.indexOf(topic.id) === -1;
+        mandels = mandels.filter(function(mandela) {
+            return selected.indexOf(mandela.id) === -1;
         });
         selected = [];
     }
@@ -63,21 +63,21 @@
 
 <h1>Каталог мандел</h1>
 
-{#if topics.length && admin}
-    <button on:click={deleteTopic}>Удалить</button>
+{#if mandels.length && admin}
+    <button on:click={deleteMandela}>Удалить</button>
 {/if}
 
-{#each topics as topic}
+{#each mandels as mandela}
     <p>
         {#if admin}
-            <input type="checkbox" bind:group={selected} value={topic.id} />
+            <input type="checkbox" bind:group={selected} value={mandela.id} />
         {/if}
-        <a href="mandela/{topic.id}">
-            {zeroLeading(topic.id, 5)} | {formatDateTime(topic.create_ts)} | {topic.title}
-            |
-            {#if topic.name}
-                {topic.name}
-            {:else if topic.user_id === consts.FierceAccountId}
+        <a href="mandela/{mandela.id}">
+            {zeroLeading(mandela.id, 5)} | {formatDateTime(mandela.create_ts)} |
+            {mandela.title} |
+            {#if mandela.name}
+                {mandela.name}
+            {:else if mandela.user_id === consts.FierceAccountId}
                 {consts.AccountModeNames[consts.FierceAccount]}
             {:else}{consts.AccountModeNames[consts.ConspiratorAccount]}{/if}
         </a>

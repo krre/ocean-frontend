@@ -4,10 +4,10 @@
     export async function preload(page, session) {
         const { id } = page.params;
 
-        let result = await send("topic.getOne", { id: Number(id) });
-        const topic = result[0];
+        let result = await send("mandela.getOne", { id: Number(id) });
+        const mandela = result[0];
 
-        return { id, topic, session };
+        return { id, mandela, session };
     }
 </script>
 
@@ -15,7 +15,7 @@
     import { goto } from "@sapper/app";
 
     export let id;
-    export let topic;
+    export let mandela;
     export let session;
 
     function edit() {
@@ -34,18 +34,18 @@
 </style>
 
 <svelte:head>
-    <title>{topic.title}</title>
+    <title>{mandela.title}</title>
 </svelte:head>
 
-<h1>{topic.title}</h1>
+<h1>{mandela.title}</h1>
 
-{#if topic.description}
-    <div class="message">{topic.description}</div>
+{#if mandela.description}
+    <div class="message">{mandela.description}</div>
     <hr />
 {/if}
 
-{#if topic.images.length}
-    {#each topic.images as image}
+{#if mandela.images.length}
+    {#each mandela.images as image}
         <div>
             <img alt="" src={image} />
         </div>
@@ -53,8 +53,8 @@
     <hr />
 {/if}
 
-{#if topic.videos.length}
-    {#each topic.videos as video}
+{#if mandela.videos.length}
+    {#each mandela.videos as video}
         <div>
             <iframe
                 title=""
@@ -70,8 +70,8 @@
     <hr />
 {/if}
 
-{#if topic.links.length}
-    {#each topic.links as link}
+{#if mandela.links.length}
+    {#each mandela.links as link}
         <div>
             <a href={link}>{link}</a>
         </div>
@@ -79,6 +79,6 @@
     <hr />
 {/if}
 
-{#if session.user && session.user.id === topic.user_id}
+{#if session.user && session.user.id === mandela.user_id}
     <button on:click={edit}>Редактировать</button>
 {/if}

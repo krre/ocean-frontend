@@ -4,33 +4,33 @@
     export async function preload(page, session) {
         const { id } = page.params;
 
-        let result = await send("topic.getOne", { id: Number(id) });
-        const topic = result[0];
+        let result = await send("mandela.getOne", { id: Number(id) });
+        const mandela = result[0];
 
-        return { id, topic, session };
+        return { id, mandela, session };
     }
 </script>
 
 <script>
     import { goto } from "@sapper/app";
-    import TopicEditor from "../../../components/TopicEditor.svelte";
+    import MandelaEditor from "../../../components/MandelaEditor.svelte";
 
     export let id;
-    export let topic;
+    export let mandela;
     export let session;
 
     async function edit() {
         const params = {
             id: Number(id),
-            title: topic.title,
-            description: topic.description,
-            images: topic.images,
-            videos: topic.videos,
-            links: topic.links,
+            title: mandela.title,
+            description: mandela.description,
+            images: mandela.images,
+            videos: mandela.videos,
+            links: mandela.links,
             user_id: session.user.id
         };
 
-        await send("topic.update", params);
+        await send("mandela.update", params);
         goto("mandela/" + id);
     }
 </script>
@@ -40,11 +40,11 @@
 </svelte:head>
 <h1>Редактировать манделу</h1>
 
-<TopicEditor
-    bind:title={topic.title}
-    bind:description={topic.description}
-    bind:images={topic.images}
-    bind:videos={topic.videos}
-    bind:links={topic.links}
+<MandelaEditor
+    bind:title={mandela.title}
+    bind:description={mandela.description}
+    bind:images={mandela.images}
+    bind:videos={mandela.videos}
+    bind:links={mandela.links}
     bind:user={session.user}
     on:click={edit} />

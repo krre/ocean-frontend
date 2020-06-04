@@ -2,7 +2,7 @@
     import * as consts from "consts.js";
     import { goto, stores } from "@sapper/app";
     import { send } from "net.js";
-    import TopicEditor from "../../components/TopicEditor.svelte";
+    import MandelaEditor from "../../components/MandelaEditor.svelte";
 
     const { session } = stores();
 
@@ -22,7 +22,7 @@
             user_id: $session.user ? $session.user.id : consts.FierceAccountId
         };
 
-        const result = await send("topic.create", params);
+        const result = await send("mandela.create", params);
         goto("mandela/" + result.id);
     }
 </script>
@@ -32,7 +32,7 @@
 </svelte:head>
 <h1>Добавить манделу</h1>
 
-<TopicEditor
+<MandelaEditor
     bind:title
     bind:description
     bind:images
