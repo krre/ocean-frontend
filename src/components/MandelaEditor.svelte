@@ -1,5 +1,5 @@
 <script>
-    import * as consts from "consts.js";
+    import * as utils from "utils.js";
     import ListEditor from "./ListEditor.svelte";
 
     export let title;
@@ -9,15 +9,7 @@
     export let links = [];
     export let user;
 
-    let userName;
-
-    if (!user) {
-        userName = consts.AccountModeNames[consts.FierceAccount];
-    } else if (user.code !== consts.ConspiratorAccount) {
-        userName = user.name;
-    } else {
-        userName = consts.AccountModeNames[consts.ConspiratorAccount];
-    }
+    let userName = utils.userName(user);
 </script>
 
 <style>

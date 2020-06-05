@@ -13,6 +13,7 @@
 
 <script>
     import { goto } from "@sapper/app";
+    import Comment from "../../../components/Comment.svelte";
 
     export let id;
     export let mandela;
@@ -81,4 +82,7 @@
 
 {#if session.user && session.user.id === mandela.user_id}
     <button on:click={edit}>Редактировать</button>
+    <p />
 {/if}
+
+<Comment user={session.user} />
