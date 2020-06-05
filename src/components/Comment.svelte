@@ -1,13 +1,28 @@
 <script>
     import * as utils from "utils.js";
+    import { send } from "net.js";
+
     export let user;
-    let comments = [];
-    let comment;
+    export let mandelaId;
+    let messages = [];
+    let message;
     let userName = utils.sessionUserName(user);
 
-    function append() {
-        console.log(comment);
-        comment = "";
+    async function load() {}
+
+    async function append() {
+        console.log(message);
+        const params = {
+            mandela_id: Number(mandelaId),
+            user_id: user.id,
+            message: message
+        };
+
+        console.log(params);
+
+        const result = await send("comment.create", params);
+
+        message = "";
     }
 </script>
 
@@ -24,6 +39,6 @@
 <div>Комментарии</div>
 <br />
 
-<textarea class="area" rows="10" bind:value={comment} />
+<textarea class="area" rows="10" bind:value={message} />
 <div>Пользователь: {userName}</div>
-<button class="send" on:click={append} disabled={!comment}>Отправить</button>
+<button class="send" on:click={append} disabled={!message}>Отправить</button>

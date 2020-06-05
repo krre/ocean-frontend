@@ -85,4 +85,4 @@
     <p />
 {/if}
 
-<Comment user={session.user} />
+<Comment user={session.user} mandelaId={id} />
