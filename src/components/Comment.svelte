@@ -4,24 +4,34 @@
 
     export let user;
     export let mandelaId;
-    let messages = [];
+
+    const limit = 50;
+
+    let comments = [];
     let message;
     let userName = utils.sessionUserName(user);
 
-    async function load() {}
+    $: mandelaId && load();
+
+    async function load() {
+        const params = {
+            mandela_id: Number(mandelaId),
+            limit: limit,
+            offset: 0
+        };
+
+        comments = await send("comment.getAll", params);
+        console.log(comments);
+    }
 
     async function append() {
-        console.log(message);
         const params = {
             mandela_id: Number(mandelaId),
             user_id: user.id,
             message: message
         };
 
-        console.log(params);
-
-        const result = await send("comment.create", params);
-
+        await send("comment.create", params);
         message = "";
     }
 </script>
