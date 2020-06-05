@@ -13,7 +13,7 @@
 
 <style>
     .area {
-        width: 100%;
+        width: 700px;
     }
 
     .send {
