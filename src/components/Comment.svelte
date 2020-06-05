@@ -1,8 +1,9 @@
 <script>
     import * as utils from "utils.js";
     export let user;
+    let comments = [];
     let comment;
-    let userName = utils.userName(user);
+    let userName = utils.sessionUserName(user);
 
     function append() {
         console.log(comment);

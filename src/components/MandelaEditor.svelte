@@ -9,7 +9,7 @@
     export let links = [];
     export let user;
 
-    let userName = utils.userName(user);
+    let userName = utils.sessionUserName(user);
 </script>
 
 <style>
