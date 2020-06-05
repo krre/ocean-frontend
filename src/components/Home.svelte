@@ -3,7 +3,7 @@
     import { stores } from "@sapper/app";
     import { onMount } from "svelte";
     import { send } from "net.js";
-    import { formatDateTime, zeroLeading } from "utils.js";
+    import { formatDateTime, zeroLeading, listUserName } from "utils.js";
 
     const { session } = stores();
 
@@ -74,12 +74,7 @@
         {/if}
         <a href="mandela/{mandela.id}">
             {zeroLeading(mandela.id, 5)} | {formatDateTime(mandela.create_ts)} |
-            {mandela.title} |
-            {#if mandela.name}
-                {mandela.name}
-            {:else if mandela.user_id === consts.FierceAccountId}
-                {consts.AccountModeNames[consts.FierceAccount]}
-            {:else}{consts.AccountModeNames[consts.ConspiratorAccount]}{/if}
+            {mandela.title} | {listUserName(mandela.name, mandela.user_id)}
         </a>
     </p>
 {/each}
