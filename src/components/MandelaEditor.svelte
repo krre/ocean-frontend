@@ -21,7 +21,15 @@
     .append-item {
         margin-top: 10px;
     }
+
+    .rules {
+        margin-bottom: 10px;
+    }
 </style>
+
+<div class="rules">
+    <a href="help#rules">Рекомендуемые правила оформления мандел</a>
+</div>
 
 <div class="column">
     Заголовок:
