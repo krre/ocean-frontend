@@ -9,7 +9,7 @@
     export let mandelaId;
 
     let totalCount;
-    const limit = 50;
+    const limit = 1000; // TODO: When will be added pagination, change on 50
 
     let comments = [];
     let message;
