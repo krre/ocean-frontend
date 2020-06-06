@@ -13,7 +13,7 @@
 
 <script>
     import { goto } from "@sapper/app";
-    import Comment from "../../../components/Comment.svelte";
+    import Comment from "../../../components/comment/Comment.svelte";
 
     export let id;
     export let mandela;

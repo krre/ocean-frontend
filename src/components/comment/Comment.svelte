@@ -2,6 +2,8 @@
     import * as consts from "consts.js";
     import { formatDateTime, listUserName, sessionUserName } from "utils.js";
     import { send } from "net.js";
+    import EditComment from "./EditComment.svelte";
+    import RemoveComment from "./RemoveComment.svelte";
 
     export let user;
     export let mandelaId;
@@ -23,8 +25,16 @@
         };
 
         let result = await send("comment.getAll", params);
-        comments = result.comments;
         totalCount = result.total_count;
+
+        comments = [];
+
+        for (let i = 0; i < result.comments.length; i++) {
+            const comment = result.comments[i];
+            comment.edit = false;
+            comment.remove = false;
+            comments.push(comment);
+        }
     }
 
     async function append() {
@@ -37,6 +47,16 @@
         await send("comment.create", params);
         message = "";
         load();
+    }
+
+    function showEdit(row) {
+        comments[row].edit = true;
+        comments[row].remove = false;
+    }
+
+    function showRemove(row) {
+        comments[row].remove = true;
+        comments[row].edit = false;
     }
 </script>
 
@@ -52,16 +72,43 @@
     .message {
         white-space: pre-wrap;
     }
+
+    .label-link {
+        cursor: pointer;
+    }
 </style>
 
 <div>Комментарии</div>
 <br />
 
-{#each comments as comment}
+{#each comments as comment, i}
     <div>
         {formatDateTime(comment.create_ts)} | {listUserName(comment.user_name, comment.user_id)}
+        {#if user && comment.user_id === user.id}
+            <div>
+                <label class="label-link" on:click={() => showEdit(i)}>
+                    Редактировать
+                </label>
+                |
+                <label class="label-link" on:click={() => showRemove(i)}>
+                    Удалить
+                </label>
+            </div>
+        {/if}
     </div>
     <div class="message">{comment.message}</div>
+
+    {#if comment.edit}
+        <p>
+            <EditComment on:cancel={() => (comment.edit = false)} />
+        </p>
+    {/if}
+
+    {#if comment.remove}
+        <p>
+            <RemoveComment on:cancel={() => (comment.remove = false)} />
+        </p>
+    {/if}
     <br />
 {/each}
 
