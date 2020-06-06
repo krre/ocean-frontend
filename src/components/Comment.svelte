@@ -48,6 +48,10 @@
     .send {
         margin-top: 10px;
     }
+
+    .message {
+        white-space: pre-wrap;
+    }
 </style>
 
 <div>Комментарии</div>
@@ -57,7 +61,7 @@
     <div>
         {formatDateTime(comment.create_ts)} | {listUserName(comment.user_name, comment.user_id)}
     </div>
-    <div>{comment.message}</div>
+    <div class="message">{comment.message}</div>
     <br />
 {/each}
 
