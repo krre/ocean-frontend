@@ -74,7 +74,8 @@
         {/if}
         <a href="mandela/{mandela.id}">
             {zeroLeading(mandela.id, 5)} | {formatDateTime(mandela.create_ts)} |
-            {mandela.title} | {listUserName(mandela.name, mandela.user_id)}
+            {mandela.title} | {listUserName(mandela.name, mandela.user_id)} |
+            Комментариев: {mandela.comment_count}
         </a>
     </p>
 {/each}
