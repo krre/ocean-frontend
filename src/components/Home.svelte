@@ -5,6 +5,10 @@
     import { send } from "net.js";
     import { formatDateTime, zeroLeading, listUserName } from "utils.js";
 
+    onMount(async () => {
+        load();
+    });
+
     const { session } = stores();
 
     export let currentPage;
@@ -17,7 +21,6 @@
 
     $: admin = $session.user && $session.user.code === consts.AdminAccount;
     $: lastPage = totalCount && Math.ceil(totalCount / limit);
-    $: currentPage && load();
     $: prevPageLink = `/page/${currentPage - 1}`;
     $: nextPageLink = `/page/${currentPage + 1}`;
     $: lastPageLink = `/page/${lastPage}`;
