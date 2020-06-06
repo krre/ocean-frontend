@@ -54,6 +54,17 @@
         comments[row].remove = false;
     }
 
+    async function edit(row, message) {
+        const params = {
+            id: comments[row].id,
+            message: message
+        };
+
+        await send("comment.update", params);
+        comments[row].message = message;
+        comments[row].edit = false;
+    }
+
     function showRemove(row) {
         comments[row].remove = true;
         comments[row].edit = false;
@@ -100,7 +111,10 @@
 
     {#if comment.edit}
         <p>
-            <EditComment on:cancel={() => (comment.edit = false)} />
+            <EditComment
+                text={comment.message}
+                on:send={event => edit(i, event.detail.text)}
+                on:cancel={() => (comment.edit = false)} />
         </p>
     {/if}
 

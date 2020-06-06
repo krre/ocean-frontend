@@ -2,11 +2,11 @@
     import { createEventDispatcher } from "svelte";
 
     const dispatch = createEventDispatcher();
-    let message;
+    export let text;
 
     function send() {
         dispatch("send", {
-            message: message
+            text: text
         });
     }
 
@@ -21,7 +21,7 @@
     }
 </style>
 
-<textarea class="area" rows="10" bind:value={message} />
+<textarea class="area" rows="10" bind:value={text} />
 <div>
     <button on:click={send}>Отправить</button>
     <button on:click={cancel}>Отменить</button>
