@@ -1,15 +1,17 @@
 <script>
-    import * as utils from "utils.js";
+    import * as consts from "consts.js";
+    import { formatDateTime, listUserName, sessionUserName } from "utils.js";
     import { send } from "net.js";
 
     export let user;
     export let mandelaId;
 
+    let totalCount;
     const limit = 50;
 
     let comments = [];
     let message;
-    let userName = utils.sessionUserName(user);
+    let userName = sessionUserName(user);
 
     $: mandelaId && load();
 
@@ -20,19 +22,21 @@
             offset: 0
         };
 
-        comments = await send("comment.getAll", params);
-        console.log(comments);
+        let result = await send("comment.getAll", params);
+        comments = result.comments;
+        totalCount = result.total_count;
     }
 
     async function append() {
         const params = {
             mandela_id: Number(mandelaId),
-            user_id: user.id,
+            user_id: user ? user.id : consts.FierceAccountId,
             message: message
         };
 
         await send("comment.create", params);
         message = "";
+        load();
     }
 </script>
 
@@ -48,6 +52,14 @@
 
 <div>Комментарии</div>
 <br />
+
+{#each comments as comment}
+    <div>
+        {formatDateTime(comment.create_ts)} | {listUserName(comment.user_name, comment.user_id)}
+    </div>
+    <div>{comment.message}</div>
+    <br />
+{/each}
 
 <textarea class="area" rows="10" bind:value={message} />
 <div>Пользователь: {userName}</div>
