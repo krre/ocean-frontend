@@ -4,7 +4,7 @@
     const dispatch = createEventDispatcher();
     let message;
 
-    function send() {
+    function confirm() {
         dispatch("confirm");
     }
 

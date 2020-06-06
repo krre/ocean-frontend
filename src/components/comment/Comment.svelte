@@ -69,6 +69,16 @@
         comments[row].remove = true;
         comments[row].edit = false;
     }
+
+    async function deleteComment(row) {
+        const params = {
+            id: comments[row].id
+        };
+
+        await send("comment.delete", params);
+        comments[row].remove = false;
+        comments.splice(row, 1);
+    }
 </script>
 
 <style>
@@ -120,7 +130,9 @@
 
     {#if comment.remove}
         <p>
-            <RemoveComment on:cancel={() => (comment.remove = false)} />
+            <RemoveComment
+                on:confirm={() => deleteComment(i)}
+                on:cancel={() => (comment.remove = false)} />
         </p>
     {/if}
     <br />
