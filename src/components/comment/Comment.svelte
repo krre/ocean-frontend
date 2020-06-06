@@ -105,7 +105,7 @@
 {#each comments as comment, i}
     <div>
         {formatDateTime(comment.create_ts)} | {listUserName(comment.user_name, comment.user_id)}
-        {#if user && comment.user_id === user.id}
+        {#if user && (comment.user_id === user.id || user.id === consts.AdminAccountId)}
             <div>
                 <label class="label-link" on:click={() => showEdit(i)}>
                     Редактировать
