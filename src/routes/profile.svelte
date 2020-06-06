@@ -97,8 +97,7 @@
 
 <h1>Профиль</h1>
 <div class="form">
-    <div>ЧЗ:</div>
-    <div>{user.id}</div>
+    <div>ИД: {user.id}</div>
     {#if user.code !== consts.AdminAccount}
         <AccountMode bind:code bind:initCode={user.code} />
     {/if}

@@ -52,7 +52,7 @@
 <h1>Войти</h1>
 
 <div class="form">
-    ЧЗ:
+    ИД:
     <input type="number" bind:value={id} />
     Пароль:
     <input type="password" bind:value={password} />
