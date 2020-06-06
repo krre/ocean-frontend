@@ -26,8 +26,20 @@
 </div>
 
 <h2 id="about">О сайте</h2>
-Здесь собираются факты об изменениях реальности по версии конспирологов или
-конфабуляции по версии учёных.
+<p>
+    Здесь собираются факты об изменениях реальности по версии конспирологов или
+    конфабуляции по версии учёных и скептиков.
+</p>
+<p>
+    Сайт находится в активной разработке. Блог разработчика, чтобы узнать
+    последние новости о том, как развивается сайт, или пожаловаться на проблемы,
+    можно найти по адресу:
+</p>
+
+<a href="https://krre31.livejournal.com/tag/океан">
+    https://krre31.livejournal.com/tag/океан
+</a>
+
 <h2 id="termins">Термины</h2>
 <ul>
     <li>
@@ -153,3 +165,127 @@
 </ol>
 
 <h2 id="links">Полезные ссылки</h2>
+
+<h3>Энциклопедии</h3>
+<div>
+    <a href="https://ru.wikipedia.org/wiki/Эффект_Манделы">
+        Статья об ЭМ на Википедии
+    </a>
+</div>
+
+<div>
+    <a href="https://mrakopedia.net/wiki/Эффект_Манделы">
+        Статья об ЭМ на Мракопедии
+    </a>
+</div>
+<div>
+    <a href="https://lurkmore.to/Эффект_Манделы">Статья об ЭМ на Лурке</a>
+</div>
+
+<h3>Социальные сети</h3>
+<div>
+    <a href="https://vk.com/mandelaeffect">
+        Группа Сергея Игнатенко в ВК об ЭМ (закрытая)
+    </a>
+</div>
+
+<div>
+    <a href="https://vk.com/effekt_mandely">Группа в ВК об ЭМ (открытая)</a>
+</div>
+
+<h3>Блоги</h3>
+<div>
+    <a href="https://krre.blogspot.com">
+        Старый блог Владимира Зарыпова об ЭМ на blogspot.com (с 2017 г. по 2019
+        г.)
+    </a>
+</div>
+
+<div>
+    <a href="https://krre31.livejournal.com">
+        Новый блог Владимира Зарыпова "Манделы... Они повсюду..." об ЭМ на
+        livejournal.com (с 2019 г. по настоящее время)
+    </a>
+</div>
+
+<div>
+    <a href="https://lyces.livejournal.com">
+        Блог Лукеса "Другой XXI век" для общения на тему ЭФ
+    </a>
+</div>
+
+<div>
+    <a href="https://wariwona.livejournal.com">
+        Блог "Мои манделы" мандельщицы wariwona
+    </a>
+</div>
+
+<div>
+    <a href="https://serg378.livejournal.com">
+        Блог мандельщика serg378 на тему мандельских теорий
+    </a>
+</div>
+
+<div>
+    <a href="https://janakaties.livejournal.com">
+        Блог "В НИКУДА" мандельщицы janakaties
+    </a>
+</div>
+
+<div>
+    <a href="https://nekto-nikto-0.livejournal.com">
+        Блог мандельщика nekto_nikto_0 о медицинских манделах
+    </a>
+</div>
+
+<div>
+    <a href="https://njkntr.livejournal.com">Блог мандельщицы njkntr</a>
+</div>
+
+<h3>YouTube</h3>
+<div>
+    <a href="https://www.youtube.com/channel/UCClHRTECh7Zt47A2XORs9Zg">
+        YouTube-канал "Перпендикулярный мир" Александра Бессонова, на котором
+        много роликов по ЭМ
+    </a>
+</div>
+
+<div>
+    <a href="https://www.youtube.com/channel/UCz7OMKe4XKTvSqvCxQKhuvw">
+        YouTube-канал EYA на тему ЭМ в Библии (англоязычный)
+    </a>
+</div>
+
+<div>
+    <a href="https://www.youtube.com/user/poijkluh">
+        YouTube-канал Curiouser& Curiouser (англоязычный)
+    </a>
+</div>
+
+<div>
+    <a href="https://www.youtube.com/channel/UC5zTBzYzNlg7YsyQFZSrpyw">
+        YouTube-канал Once Upon a Timeline (англоязычный)
+    </a>
+</div>
+
+<h3>Reddit</h3>
+<div>
+    <a href="https://www.reddit.com/r/MandelaEffect">
+        MandelaEffect (англоязычный)
+    </a>
+</div>
+
+<div>
+    <a href="https://www.reddit.com/r/Retconned">Retconned (англоязычный)</a>
+</div>
+
+<h3>Каталоги мандел</h3>
+<div>
+    <a href="http://mandela-ru.wikidot.com">Манделопедия</a>
+</div>
+
+<div>
+    <a href="http://effectmandela.ru">
+        ЭФФЕКТ МАНДЕЛЫ. Сайт об изменение реальности
+    </a>
+</div>
