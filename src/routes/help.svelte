@@ -289,3 +289,18 @@
         ЭФФЕКТ МАНДЕЛЫ. Сайт об изменение реальности
     </a>
 </div>
+
+<h3>Фильмы</h3>
+<div>
+    <a href="https://www.youtube.com/watch?v=_wXMbUC3zwE">
+        АНТИМИР: изменение реальности. Фильм Галины Царёвой / 2018
+        (документальный)
+    </a>
+</div>
+
+<div>
+    <a
+        href="https://www.kinoasic.com/load/fantasticheskie/ehffekt_mandely_the_mandela_effect_2019_onlajn/20-1-0-2199">
+        Эффект Манделы / The Mandela Effect / 2019 (художественный)
+    </a>
+</div>
