@@ -51,6 +51,11 @@
         относящаяся к категории изменений географических карт или ландшафтов.
     </li>
     <li>
+        личная мандела - та, которая приключались с вами, и поэтому о ней не
+        прочитаешь в интернете. Например, изменилось что-то в одежде, в квартире
+        или среди родственников.
+    </li>
+    <li>
         мандельщик - человек, подверженный действию эффекту Манделы, то есть
         тот, кто видит изменения, но при этом не считает, что это конфабуляции.
     </li>
@@ -210,7 +215,7 @@
 
 <div>
     <a href="https://lyces.livejournal.com">
-        Блог Лукеса "Другой XXI век" для общения на тему ЭФ
+        Блог Лукеса "Другой XXI век" для общения на тему ЭМ
     </a>
 </div>
 
@@ -251,20 +256,27 @@
 </div>
 
 <div>
+    <a
+        href="https://www.youtube.com/watch?v=fzK5JPzUtaA&list=PLA7jWfhdkQCdz6fgOZn8YAjqdUzqoO3CM">
+        Плейлист "Теории Заговора и Эффект Манделы" на канале "Gravity Tonya"
+    </a>
+</div>
+
+<div>
     <a href="https://www.youtube.com/channel/UCz7OMKe4XKTvSqvCxQKhuvw">
-        YouTube-канал EYA на тему ЭМ в Библии (англоязычный)
+        YouTube-канал "EYA" на тему ЭМ в Библии (англоязычный)
     </a>
 </div>
 
 <div>
     <a href="https://www.youtube.com/user/poijkluh">
-        YouTube-канал Curiouser& Curiouser (англоязычный)
+        YouTube-канал "Curiouser& Curiouser" (англоязычный)
     </a>
 </div>
 
 <div>
     <a href="https://www.youtube.com/channel/UC5zTBzYzNlg7YsyQFZSrpyw">
-        YouTube-канал Once Upon a Timeline (англоязычный)
+        YouTube-канал "Once Upon a Timeline" (англоязычный)
     </a>
 </div>
 
