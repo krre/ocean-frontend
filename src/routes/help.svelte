@@ -249,9 +249,10 @@
 
 <h3>YouTube</h3>
 <div>
-    <a href="https://www.youtube.com/channel/UCClHRTECh7Zt47A2XORs9Zg">
-        YouTube-канал "Перпендикулярный мир" Александра Бессонова, на котором
-        много роликов по ЭМ
+    <a
+        href="https://www.youtube.com/watch?v=oIPxMiv7UDM&list=PLzoF5ji3elGBAiBIhf1eHgAIgZJ6uiTMD">
+        Плейлист "Эффект манделы. Большая подборка" на канале "Перпендикулярный
+        мир" Александра Бессонова
     </a>
 </div>
 
