@@ -1,14 +1,25 @@
 <script>
+    import * as consts from "consts.js";
     import * as utils from "utils.js";
     import ListEditor from "./ListEditor.svelte";
+    import MandelaTitle from "./MandelaTitle.svelte";
 
-    export let title;
-    export let description;
+    export let titleMode = consts.SimpleTitle;
+    export let title = "";
+    export let where = "";
+    export let before = "";
+    export let after = "";
+    export let description = "";
     export let images = [];
     export let videos = [];
     export let links = [];
     export let user;
 
+    let buttonEnabled;
+
+    $: buttonEnabled =
+        (titleMode === consts.SimpleTitle && title) ||
+        (titleMode === consts.ComplexTitle && where && before && after);
     let userName = utils.sessionUserName(user);
 </script>
 
@@ -32,8 +43,12 @@
 </div>
 
 <div class="column">
-    Заголовок:
-    <input bind:value={title} type="text" />
+    <MandelaTitle
+        bind:title
+        bind:where
+        bind:before
+        bind:after
+        bind:mode={titleMode} />
     Описание:
     <textarea rows="10" bind:value={description} />
     Изображения:
@@ -45,4 +60,6 @@
     <div>Пользователь: {userName}</div>
 </div>
 
-<button class="append-item" on:click disabled={!title}>Отправить</button>
+<button class="append-item" on:click disabled={!buttonEnabled}>
+    Отправить
+</button>

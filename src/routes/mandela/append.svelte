@@ -6,7 +6,11 @@
 
     const { session } = stores();
 
-    let title = "";
+    export let titleMode = consts.SimpleTitle;
+    export let title = "";
+    export let where = "";
+    export let before = "";
+    export let after = "";
     let description = "";
     let images = [];
     let videos = [];
@@ -14,7 +18,11 @@
 
     async function append() {
         const params = {
+            title_mode: titleMode,
             title: title,
+            where: where,
+            before: before,
+            after: after,
             description: description,
             images: images,
             links: links,
@@ -33,7 +41,11 @@
 <h1>Добавить манделу</h1>
 
 <MandelaEditor
+    bind:titleMode
     bind:title
+    bind:where
+    bind:before
+    bind:after
     bind:description
     bind:images
     bind:videos
