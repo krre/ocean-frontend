@@ -8,7 +8,7 @@
 
     export let titleMode = consts.SimpleTitle;
     export let title = "";
-    export let where = "";
+    export let what = "";
     export let before = "";
     export let after = "";
     let description = "";
@@ -20,7 +20,7 @@
         const params = {
             title_mode: titleMode,
             title: title,
-            where: where,
+            what: what,
             before: before,
             after: after,
             description: description,
@@ -43,7 +43,7 @@
 <MandelaEditor
     bind:titleMode
     bind:title
-    bind:where
+    bind:what
     bind:before
     bind:after
     bind:description

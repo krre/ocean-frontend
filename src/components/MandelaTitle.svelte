@@ -1,7 +1,7 @@
 <script>
     import * as consts from "consts.js";
     export let title = "";
-    export let where = "";
+    export let what = "";
     export let before = "";
     export let after = "";
     export let mode = consts.SimpleTitle;
@@ -29,8 +29,8 @@
 {#if mode == consts.SimpleTitle}
     <input bind:value={title} type="text" />
 {:else}
-    Где:
-    <input bind:value={where} type="text" />
+    Что:
+    <input bind:value={what} type="text" />
     Было:
     <input bind:value={before} type="text" />
     Стало:

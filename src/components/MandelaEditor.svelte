@@ -6,7 +6,7 @@
 
     export let titleMode = consts.SimpleTitle;
     export let title = "";
-    export let where = "";
+    export let what = "";
     export let before = "";
     export let after = "";
     export let description = "";
@@ -19,7 +19,7 @@
 
     $: buttonEnabled =
         (titleMode === consts.SimpleTitle && title) ||
-        (titleMode === consts.ComplexTitle && where && before && after);
+        (titleMode === consts.ComplexTitle && what && before && after);
     let userName = utils.sessionUserName(user);
 </script>
 
@@ -45,7 +45,7 @@
 <div class="column">
     <MandelaTitle
         bind:title
-        bind:where
+        bind:what
         bind:before
         bind:after
         bind:mode={titleMode} />
