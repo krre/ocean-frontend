@@ -12,12 +12,18 @@
 </script>
 
 <script>
+    import * as consts from "consts.js";
     import { goto } from "@sapper/app";
     import Comment from "../../../components/comment/Comment.svelte";
 
     export let id;
     export let mandela;
     export let session;
+
+    let title =
+        mandela.title_mode === consts.SimpleTitle
+            ? mandela.title
+            : mandela.what;
 
     function edit() {
         goto("mandela/" + id + "/edit");
@@ -35,10 +41,15 @@
 </style>
 
 <svelte:head>
-    <title>{mandela.title}</title>
+    <title>{title}</title>
 </svelte:head>
 
-<h1>{mandela.title}</h1>
+<h1>{title}</h1>
+
+{#if mandela.title_mode === consts.ComplexTitle}
+    <p>Было: {mandela.before}</p>
+    <p>Стало: {mandela.after}</p>
+{/if}
 
 {#if mandela.description}
     <div class="message">{mandela.description}</div>

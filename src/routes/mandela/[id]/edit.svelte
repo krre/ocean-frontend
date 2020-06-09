@@ -22,7 +22,11 @@
     async function edit() {
         const params = {
             id: Number(id),
+            title_mode: mandela.title_mode,
             title: mandela.title,
+            what: mandela.what,
+            before: mandela.before,
+            after: mandela.after,
             description: mandela.description,
             images: mandela.images,
             videos: mandela.videos,
@@ -41,7 +45,11 @@
 <h1>Редактировать манделу</h1>
 
 <MandelaEditor
+    bind:titleMode={mandela.title_mode}
     bind:title={mandela.title}
+    bind:what={mandela.what}
+    bind:before={mandela.before}
+    bind:after={mandela.after}
     bind:description={mandela.description}
     bind:images={mandela.images}
     bind:videos={mandela.videos}
