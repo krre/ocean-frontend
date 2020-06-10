@@ -19,10 +19,10 @@
     async function append() {
         const params = {
             title_mode: titleMode,
-            title: title,
-            what: what,
-            before: before,
-            after: after,
+            title: titleMode === consts.SimpleTitle ? title : "",
+            what: titleMode === consts.ComplexTitle ? what : "",
+            before: titleMode === consts.ComplexTitle ? before : "",
+            after: titleMode === consts.ComplexTitle ? after : "",
             description: description,
             images: images,
             links: links,

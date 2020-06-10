@@ -12,6 +12,7 @@
 </script>
 
 <script>
+    import * as consts from "consts.js";
     import { goto } from "@sapper/app";
     import MandelaEditor from "../../../components/MandelaEditor.svelte";
 
@@ -23,10 +24,16 @@
         const params = {
             id: Number(id),
             title_mode: mandela.title_mode,
-            title: mandela.title,
-            what: mandela.what,
-            before: mandela.before,
-            after: mandela.after,
+            title:
+                mandela.title_mode === consts.SimpleTitle ? mandela.title : "",
+            what:
+                mandela.title_mode === consts.ComplexTitle ? mandela.what : "",
+            before:
+                mandela.title_mode === consts.ComplexTitle
+                    ? mandela.before
+                    : "",
+            after:
+                mandela.title_mode === consts.ComplexTitle ? mandela.after : "",
             description: mandela.description,
             images: mandela.images,
             videos: mandela.videos,
