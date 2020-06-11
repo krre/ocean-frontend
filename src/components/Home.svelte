@@ -74,6 +74,7 @@
     <p>
         {#if admin}
             <input type="checkbox" bind:group={selected} value={mandela.id} />
+            Уд.
         {/if}
         <a href="mandela/{mandela.id}">
             {zeroLeading(mandela.id, 5)} | {formatDateTime(mandela.create_ts)} |
