@@ -14,7 +14,8 @@
     export let currentPage;
 
     let mandels = [];
-    let selected = [];
+    let selected_delete = [];
+    let selected_mark = [];
 
     let totalCount;
     const limit = 20;
@@ -35,14 +36,18 @@
     }
 
     async function deleteMandela() {
-        if (!selected.length) return;
+        if (!selected_delete.length) return;
 
-        await send("mandela.delete", { id: selected });
+        await send("mandela.delete", { id: selected_delete });
 
         mandels = mandels.filter(function(mandela) {
-            return selected.indexOf(mandela.id) === -1;
+            return selected_delete.indexOf(mandela.id) === -1;
         });
-        selected = [];
+        selected_delete = [];
+    }
+
+    async function mark() {
+        console.log(selected_mark);
     }
 </script>
 
@@ -66,15 +71,31 @@
 
 <h1>Каталог мандел</h1>
 
-{#if mandels.length && admin}
+{#if admin && mandels.length}
     <button on:click={deleteMandela}>Удалить</button>
+{/if}
+
+{#if $session.user}
+    <button on:click={mark} disabled={!selected_mark.length}>
+        Отметить прочитанным
+    </button>
 {/if}
 
 {#each mandels as mandela}
     <p>
         {#if admin}
-            <input type="checkbox" bind:group={selected} value={mandela.id} />
+            <input
+                type="checkbox"
+                bind:group={selected_delete}
+                value={mandela.id} />
             Уд.
+        {/if}
+        {#if $session.user}
+            <input
+                type="checkbox"
+                bind:group={selected_mark}
+                disabled={mandela.mark_id}
+                value={mandela.id} />
         {/if}
         <a href="mandela/{mandela.id}">
             {zeroLeading(mandela.id, 5)} | {formatDateTime(mandela.create_ts)} |
