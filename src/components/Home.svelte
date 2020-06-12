@@ -11,7 +11,6 @@
 
     let mandels = [];
     let selected_delete = [];
-    let selected_mark = [];
 
     let totalCount;
     const limit = 20;
@@ -45,10 +44,6 @@
         });
         selected_delete = [];
     }
-
-    async function mark() {
-        console.log(selected_mark);
-    }
 </script>
 
 <style>
@@ -75,26 +70,12 @@
     <button on:click={deleteMandela}>Удалить</button>
 {/if}
 
-{#if $session.user}
-    <button on:click={mark} disabled={!selected_mark.length}>
-        Отметить прочитанным
-    </button>
-{/if}
-
 {#each mandels as mandela}
     <p>
         {#if admin}
             <input
                 type="checkbox"
                 bind:group={selected_delete}
-                value={mandela.id} />
-            Уд.
-        {/if}
-        {#if $session.user}
-            <input
-                type="checkbox"
-                bind:group={selected_mark}
-                disabled={mandela.mark_id}
                 value={mandela.id} />
         {/if}
         <a href="mandela/{mandela.id}">
