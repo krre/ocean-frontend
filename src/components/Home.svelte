@@ -5,10 +5,6 @@
     import { send } from "net.js";
     import { formatDateTime, zeroLeading, listUserName } from "utils.js";
 
-    onMount(async () => {
-        load();
-    });
-
     const { session } = stores();
 
     export let currentPage;
@@ -25,6 +21,10 @@
     $: prevPageLink = `/page/${currentPage - 1}`;
     $: nextPageLink = `/page/${currentPage + 1}`;
     $: lastPageLink = `/page/${lastPage}`;
+
+    $: if (currentPage && process.browser) {
+        load();
+    }
 
     async function load() {
         const params = {};
