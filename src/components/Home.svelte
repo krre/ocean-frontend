@@ -26,9 +26,15 @@
     }
 
     async function load() {
-        const params = {};
-        params.limit = limit;
-        params.offset = (currentPage - 1) * limit;
+        const params = {
+            limit: limit,
+            offset: (currentPage - 1) * limit
+        };
+
+        if ($session.user) {
+            params.user_id = $session.user.id;
+        }
+
         let result = await send("mandela.getAll", params);
         mandels = result.mandels;
         totalCount = result.total_count;

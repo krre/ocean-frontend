@@ -5,7 +5,15 @@
     export async function preload(page, session) {
         const { id } = page.params;
 
-        let result = await send("mandela.getOne", { id: Number(id) });
+        const params = {
+            id: Number(id)
+        };
+
+        if (session.user) {
+            params.user_id = session.user.id;
+        }
+
+        let result = await send("mandela.getOne", params);
         const mandela = result[0];
 
         return { id, mandela, session };
