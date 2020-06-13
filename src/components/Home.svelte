@@ -11,6 +11,7 @@
 
     let mandels = [];
     let selected_delete = [];
+    let filter = 0;
 
     let totalCount = 0;
     let newCount = 5;
@@ -22,7 +23,7 @@
     $: nextPageLink = `/page/${currentPage + 1}`;
     $: lastPageLink = `/page/${lastPage}`;
 
-    $: if (currentPage && process.browser) {
+    $: if (currentPage && process.browser && filter >= 0) {
         load();
     }
 
@@ -34,6 +35,7 @@
 
         if ($session.user) {
             params.user_id = $session.user.id;
+            params.filter = Number(filter);
         }
 
         let result = await send("mandela.getAll", params);
@@ -94,6 +96,11 @@
     {#if newCount}
         <div class="new">{newCount}</div>
     {:else}{newCount}{/if}
+    | Показать
+    <select bind:value={filter}>
+        <option value="0">Все</option>
+        <option value="1">Новые</option>
+    </select>
 {/if}
 
 {#each mandels as mandela}
