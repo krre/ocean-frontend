@@ -1,5 +1,6 @@
 <script context="module">
     import { send } from "net.js";
+    import { formatDateTime } from "utils.js";
 
     export async function preload(page, session) {
         const { id } = page.params;
@@ -20,6 +21,10 @@
     export let mandela;
     export let session;
 
+    $: if (session.user && mandela && !mandela.mark_ts) {
+        mark();
+    }
+
     let title =
         mandela.title_mode === consts.SimpleTitle
             ? mandela.title
@@ -31,6 +36,17 @@
 
     function fixYouTubeLink(link) {
         return "https://www.youtube.com/embed/" + link.match(/([^\/]*$)/)[0];
+    }
+
+    async function mark() {
+        const params = {
+            id: mandela.id,
+            user_id: session.user.id
+        };
+
+        await send("mandela.mark", params);
+
+        console.log("mark", params);
     }
 </script>
 
@@ -45,6 +61,10 @@
 </svelte:head>
 
 <h1>{title}</h1>
+
+{#if mandela.mark_ts}
+    <p>Просмотрено: {formatDateTime(mandela.mark_ts)}</p>
+{/if}
 
 {#if mandela.title_mode === consts.ComplexTitle}
     <p>Было: {mandela.before}</p>
