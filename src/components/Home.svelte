@@ -12,7 +12,8 @@
     let mandels = [];
     let selected_delete = [];
 
-    let totalCount;
+    let totalCount = 0;
+    let newCount = 5;
     const limit = 20;
 
     $: admin = $session.user && $session.user.code === consts.AdminAccount;
@@ -38,6 +39,7 @@
         let result = await send("mandela.getAll", params);
         mandels = result.mandels;
         totalCount = result.total_count;
+        newCount = result.new_count;
     }
 
     async function deleteMandela() {
@@ -84,6 +86,14 @@
 
 {#if admin && mandels.length}
     <button on:click={deleteMandela}>Удалить</button>
+    |
+{/if}
+Всего мандел: {totalCount}
+{#if $session.user}
+    | Новых:
+    {#if newCount}
+        <div class="new">{newCount}</div>
+    {:else}{newCount}{/if}
 {/if}
 
 {#each mandels as mandela}
