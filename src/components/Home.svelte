@@ -8,20 +8,22 @@
     const { session } = stores();
 
     export let currentPage;
+    export let filter = 0;
 
     let mandels = [];
     let selected_delete = [];
-    let filter = 0;
 
     let totalCount = 0;
-    let newCount = 5;
+    let newCount = 0;
+    let filteredCount = 0;
     const limit = 20;
 
     $: admin = $session.user && $session.user.code === consts.AdminAccount;
-    $: lastPage = totalCount && Math.ceil(totalCount / limit);
-    $: prevPageLink = `/page/${currentPage - 1}`;
-    $: nextPageLink = `/page/${currentPage + 1}`;
-    $: lastPageLink = `/page/${lastPage}`;
+    $: lastPage = filteredCount && Math.ceil(filteredCount / limit);
+    $: prevPageLink = `/page/${currentPage - 1}/${filter}`;
+    $: nextPageLink = `/page/${currentPage + 1}/${filter}`;
+    $: firstPageLink = `/page/1/${filter}`;
+    $: lastPageLink = `/page/${lastPage}/${filter}`;
 
     $: if (currentPage && process.browser && filter >= 0) {
         load();
@@ -42,6 +44,8 @@
         mandels = result.mandels;
         totalCount = result.total_count;
         newCount = result.new_count;
+        filteredCount =
+            Number(filter) === consts.ShowAll ? totalCount : newCount;
     }
 
     async function deleteMandela() {
@@ -98,8 +102,8 @@
     {:else}{newCount}{/if}
     | Показать
     <select bind:value={filter}>
-        <option value="0">Все</option>
-        <option value="1">Новые</option>
+        <option value="0" selected={filter}>Все</option>
+        <option value="1" selected={filter}>Новые</option>
     </select>
 {/if}
 
@@ -129,10 +133,10 @@
     </p>
 {/each}
 
-{#if totalCount && totalCount > limit}
+{#if filteredCount && filteredCount > limit}
     <div class="pagination-container">
         {#if currentPage > 1}
-            <a class="pagination-item" href="/">Первая</a>
+            <a class="pagination-item" href={firstPageLink}>Первая</a>
             <a class="pagination-item" href={prevPageLink}>Предыдущая</a>
         {/if}
 

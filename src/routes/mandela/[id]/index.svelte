@@ -53,8 +53,6 @@
         };
 
         await send("mandela.mark", params);
-
-        console.log("mark", params);
     }
 </script>
 
