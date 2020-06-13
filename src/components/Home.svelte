@@ -58,6 +58,16 @@
     .pagination-item {
         padding: 0 5px;
     }
+
+    .new {
+        color: red;
+        display: inline;
+    }
+
+    .old {
+        color: blue;
+        display: inline;
+    }
 </style>
 
 <svelte:head>
@@ -77,6 +87,13 @@
                 type="checkbox"
                 bind:group={selected_delete}
                 value={mandela.id} />
+        {/if}
+        {#if $session.user}
+            {#if !mandela.mark_ts}
+                <div class="new">Н</div>
+            {:else}
+                <div class="old">С</div>
+            {/if}
         {/if}
         <a href="mandela/{mandela.id}">
             {zeroLeading(mandela.id, 5)} | {formatDateTime(mandela.create_ts)} |
