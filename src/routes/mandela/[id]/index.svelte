@@ -29,6 +29,8 @@
     export let mandela;
     export let session;
 
+    let votes;
+
     $: if (session.user && mandela && !mandela.mark_ts) {
         mark();
     }
@@ -54,11 +56,25 @@
 
         await send("mandela.mark", params);
     }
+
+    async function vote() {
+        const params = {
+            id: mandela.id,
+            user_id: session.user.id,
+            vote: votes - 1
+        };
+
+        await send("mandela.vote", params);
+    }
 </script>
 
 <style>
     .message {
         white-space: pre-wrap;
+    }
+
+    .vote {
+        display: block;
     }
 </style>
 
@@ -120,6 +136,26 @@
 {#if session.user && session.user.id === mandela.user_id}
     <button on:click={edit}>Редактировать</button>
     <p />
+{/if}
+
+{#if session.user}
+    Опрос. Является ли для вас это манделой?
+    <p>
+        <label class="vote">
+            <input type="radio" bind:group={votes} value={1} />
+            Да, это мандела
+        </label>
+        <label class="vote">
+            <input type="radio" bind:group={votes} value={2} />
+            Нет, всегда так было
+        </label>
+        <label class="vote">
+            <input type="radio" bind:group={votes} value={3} />
+            Затрудняюсь ответить
+        </label>
+    </p>
+    <button on:click={vote} disabled={!votes}>Проголосовать</button>
+    <hr />
 {/if}
 
 <Comment user={session.user} mandelaId={id} />
