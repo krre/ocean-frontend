@@ -26,17 +26,15 @@
                 total: 0
             };
 
-            for (let i in result.votes) {
-                const vote = result.votes[i];
-
-                if (vote.vote === consts.VoteYes) {
-                    votes.yes = vote.count;
-                } else if ((vote.vote = consts.VoteNo)) {
-                    votes.no = vote.count;
-                } else if ((vote.vote = consts.VoteNeutral)) {
-                    votes.neutral = vote.count;
+            result.votes.forEach(element => {
+                if (element.vote === consts.VoteYes) {
+                    votes.yes = element.count;
+                } else if (element.vote === consts.VoteNo) {
+                    votes.no = element.count;
+                } else if (element.vote === consts.VoteNeutral) {
+                    votes.neutral = element.count;
                 }
-            }
+            });
 
             votes.total = votes.yes + votes.no + votes.neutral;
         }
@@ -54,6 +52,8 @@
     export let mandela;
     export let votes;
     export let session;
+
+    let voteValue;
 
     const voteYesTitle = "Да, это мандела";
     const voteNoTitle = "Нет, всегда так было";
@@ -89,7 +89,7 @@
         const params = {
             id: mandela.id,
             user_id: session.user.id,
-            vote: votes - 1
+            vote: voteValue - 1
         };
 
         const result = await send("mandela.vote", params);
@@ -179,19 +179,19 @@
         Опрос. Является ли для вас это манделой?
         <p>
             <label class="vote">
-                <input type="radio" bind:group={votes} value={1} />
+                <input type="radio" bind:group={voteValue} value={1} />
                 {voteYesTitle}
             </label>
             <label class="vote">
-                <input type="radio" bind:group={votes} value={2} />
+                <input type="radio" bind:group={voteValue} value={2} />
                 {voteNoTitle}
             </label>
             <label class="vote">
-                <input type="radio" bind:group={votes} value={3} />
+                <input type="radio" bind:group={voteValue} value={3} />
                 {voteNeutralTitle}
             </label>
         </p>
-        <button on:click={vote} disabled={!votes}>Проголосовать</button>
+        <button on:click={vote} disabled={!voteValue}>Проголосовать</button>
     {/if}
     <hr />
 {/if}
