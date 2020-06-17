@@ -5,7 +5,7 @@
         const { id } = page.params;
 
         let result = await send("mandela.getOne", { id: Number(id) });
-        const mandela = result[0];
+        const mandela = result.mandela;
 
         return { id, mandela, session };
     }
