@@ -1,6 +1,6 @@
 <script context="module">
     import { send } from "net.js";
-    import { formatDateTime } from "utils.js";
+    import { formatDateTime, convertVotes } from "utils.js";
 
     export async function preload(page, session) {
         const { id } = page.params;
@@ -19,24 +19,7 @@
         let votes;
 
         if (result.votes) {
-            votes = {
-                yes: 0,
-                no: 0,
-                neutral: 0,
-                total: 0
-            };
-
-            result.votes.forEach(element => {
-                if (element.vote === consts.VoteYes) {
-                    votes.yes = element.count;
-                } else if (element.vote === consts.VoteNo) {
-                    votes.no = element.count;
-                } else if (element.vote === consts.VoteNeutral) {
-                    votes.neutral = element.count;
-                }
-            });
-
-            votes.total = votes.yes + votes.no + votes.neutral;
+            votes = convertVotes(result.votes);
         }
 
         return { id, mandela, votes, session };
@@ -93,6 +76,7 @@
         };
 
         const result = await send("mandela.vote", params);
+        votes = convertVotes(result);
     }
 </script>
 
