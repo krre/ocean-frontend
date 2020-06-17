@@ -14,9 +14,34 @@
         }
 
         let result = await send("mandela.getOne", params);
-        const mandela = result[0];
+        const mandela = result.mandela;
 
-        return { id, mandela, session };
+        let votes;
+
+        if (result.votes) {
+            votes = {
+                yes: 0,
+                no: 0,
+                neutral: 0,
+                total: 0
+            };
+
+            for (let i in result.votes) {
+                const vote = result.votes[i];
+
+                if (vote.vote === consts.VoteYes) {
+                    votes.yes = vote.count;
+                } else if ((vote.vote = consts.VoteNo)) {
+                    votes.no = vote.count;
+                } else if ((vote.vote = consts.VoteNeutral)) {
+                    votes.neutral = vote.count;
+                }
+            }
+
+            votes.total = votes.yes + votes.no + votes.neutral;
+        }
+
+        return { id, mandela, votes, session };
     }
 </script>
 
@@ -27,9 +52,12 @@
 
     export let id;
     export let mandela;
+    export let votes;
     export let session;
 
-    let votes;
+    const voteYesTitle = "Да, это мандела";
+    const voteNoTitle = "Нет, всегда так было";
+    const voteNeutralTitle = "Затрудняюсь ответить";
 
     $: if (session.user && mandela && !mandela.mark_ts) {
         mark();
@@ -64,7 +92,7 @@
             vote: votes - 1
         };
 
-        await send("mandela.vote", params);
+        const result = await send("mandela.vote", params);
     }
 </script>
 
@@ -139,22 +167,32 @@
 {/if}
 
 {#if session.user}
-    Опрос. Является ли для вас это манделой?
-    <p>
-        <label class="vote">
-            <input type="radio" bind:group={votes} value={1} />
-            Да, это мандела
-        </label>
-        <label class="vote">
-            <input type="radio" bind:group={votes} value={2} />
-            Нет, всегда так было
-        </label>
-        <label class="vote">
-            <input type="radio" bind:group={votes} value={3} />
-            Затрудняюсь ответить
-        </label>
-    </p>
-    <button on:click={vote} disabled={!votes}>Проголосовать</button>
+    {#if votes}
+        Результаты опроса
+        <ul>
+            <li>Всего голосов: {votes.total}</li>
+            <li>{voteYesTitle}: {votes.yes}</li>
+            <li>{voteNoTitle}: {votes.no}</li>
+            <li>{voteNeutralTitle}: {votes.neutral}</li>
+        </ul>
+    {:else}
+        Опрос. Является ли для вас это манделой?
+        <p>
+            <label class="vote">
+                <input type="radio" bind:group={votes} value={1} />
+                {voteYesTitle}
+            </label>
+            <label class="vote">
+                <input type="radio" bind:group={votes} value={2} />
+                {voteNoTitle}
+            </label>
+            <label class="vote">
+                <input type="radio" bind:group={votes} value={3} />
+                {voteNeutralTitle}
+            </label>
+        </p>
+        <button on:click={vote} disabled={!votes}>Проголосовать</button>
+    {/if}
     <hr />
 {/if}
 
