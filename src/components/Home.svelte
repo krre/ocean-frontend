@@ -104,6 +104,7 @@
     <select bind:value={filter}>
         <option value="0" selected={filter}>Все</option>
         <option value="1" selected={filter}>Новые</option>
+        <option value="2" selected={filter}>Мои</option>
     </select>
 {/if}
 
