@@ -18,6 +18,7 @@
     let mineCount = 0;
     let currentCount = 0;
     const limit = 20;
+    const zeroLeadingCount = 3;
 
     $: admin = $session.user && $session.user.code === consts.AdminAccount;
     $: lastPage = currentCount && Math.ceil(currentCount / limit);
@@ -132,7 +133,8 @@
             {/if}
         {/if}
         <a href="mandela/{mandela.id}">
-            {zeroLeading(mandela.id, 5)} | {formatDateTime(mandela.create_ts)} |
+            {zeroLeading(mandela.id, zeroLeadingCount)} | {formatDateTime(mandela.create_ts)}
+            |
             {#if mandela.title_mode === consts.SimpleTitle}
                 {mandela.title}
             {:else}{mandela.what}: {mandela.before} / {mandela.after}{/if}
