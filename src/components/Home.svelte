@@ -85,11 +85,15 @@
     .new {
         color: red;
         display: inline;
+        background-color: rgb(255, 247, 230);
+        padding: 0 0.4em;
     }
 
     .old {
-        color: blue;
+        color: rgb(0, 204, 92);
         display: inline;
+        background-color: rgb(255, 247, 230);
+        padding: 0 0.4em;
     }
 </style>
 
