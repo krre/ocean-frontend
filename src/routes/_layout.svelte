@@ -4,6 +4,12 @@
     export let segment;
 </script>
 
+<style>
+    main {
+        padding: 0.5em;
+    }
+</style>
+
 <Nav {segment} />
 
 <main>

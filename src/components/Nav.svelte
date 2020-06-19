@@ -4,7 +4,17 @@
 </script>
 
 <style>
+    nav {
+        background-color: slateblue;
+        padding: 1em;
+    }
 
+    a {
+        text-decoration: none;
+        color: rgb(235, 246, 255);
+        font-size: 1.1em;
+        margin: 0.2em;
+    }
 </style>
 
 <nav>
