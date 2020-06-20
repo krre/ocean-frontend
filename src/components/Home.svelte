@@ -17,7 +17,7 @@
     let newCount = 0;
     let mineCount = 0;
     let currentCount = 0;
-    const limit = 20;
+    const limit = 50;
     const zeroLeadingCount = 3;
 
     $: admin = $session.user && $session.user.code === consts.AdminAccount;
