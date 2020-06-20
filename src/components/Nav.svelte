@@ -20,6 +20,7 @@
 <nav>
     <a href=".">Каталог</a>
     <a href="mandela/append">Добавить</a>
+    <a href="search">Поиск</a>
     <a href="help">Справка</a>
     {#if $session.user}
         <a href="profile">Профиль</a>
