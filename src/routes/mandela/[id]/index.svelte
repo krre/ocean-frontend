@@ -88,6 +88,13 @@
     .vote {
         display: block;
     }
+
+    img {
+        max-width: 100%;
+        max-height: 100vh;
+        width: 900px;
+        height: auto;
+    }
 </style>
 
 <svelte:head>
