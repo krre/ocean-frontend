@@ -95,6 +95,13 @@
         width: 900px;
         height: auto;
     }
+
+    .video {
+        max-width: 100%;
+        max-height: auto;
+        width: 420px;
+        height: 315px;
+    }
 </style>
 
 <svelte:head>
@@ -130,9 +137,8 @@
     {#each mandela.videos as video}
         <div>
             <iframe
+                class="video"
                 title=""
-                width="420"
-                height="315"
                 src={fixYouTubeLink(video)}
                 frameborder="0"
                 allow="accelerometer; autoplay; encrypted-media; gyroscope;
