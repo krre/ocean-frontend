@@ -155,7 +155,9 @@
                 {mandela.title}
             {:else}{mandela.what}: {mandela.before} / {mandela.after}{/if}
             | {listUserName(mandela.user_name, mandela.user_id)} | Комментариев:
-            {mandela.comment_count}
+            {#if mandela.comment_count}
+                <div class="new">{mandela.comment_count}</div>
+            {:else}0{/if}
         </a>
     </div>
 {/each}
