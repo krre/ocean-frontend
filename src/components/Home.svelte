@@ -95,6 +95,20 @@
         background-color: rgb(255, 247, 230);
         padding: 0 0.4em;
     }
+
+    .row {
+        display: block;
+        margin: 0.3em 0;
+    }
+
+    .row-link {
+        text-decoration: none;
+        color: rgb(51, 51, 51);
+    }
+
+    .row-link:hover {
+        text-decoration: underline;
+    }
 </style>
 
 <svelte:head>
@@ -120,7 +134,7 @@
 {/if}
 
 {#each mandels as mandela}
-    <p>
+    <div class="row">
         {#if admin}
             <input
                 type="checkbox"
@@ -134,7 +148,7 @@
                 <div class="old">С</div>
             {/if}
         {/if}
-        <a href="mandela/{mandela.id}">
+        <a class="row-link" href="mandela/{mandela.id}">
             {zeroLeading(mandela.id, zeroLeadingCount)} | {formatDateTime(mandela.create_ts)}
             |
             {#if mandela.title_mode === consts.SimpleTitle}
@@ -143,7 +157,7 @@
             | {listUserName(mandela.user_name, mandela.user_id)} | Комментариев:
             {mandela.comment_count}
         </a>
-    </p>
+    </div>
 {/each}
 
 {#if currentCount && currentCount > limit}
