@@ -2,9 +2,9 @@
     import { send, errorMessage } from "net.js";
     import { makeTitle } from "utils.js";
 
-    const searchId = "0";
-    const searchContent = "1";
-    let searchType = searchId;
+    const searchContent = "0";
+    const searchId = "1";
+    let searchType = searchContent;
     let id;
     let content;
     let mandela;
@@ -62,8 +62,8 @@
     <div class="item">
         Искать по
         <select bind:value={searchType}>
-            <option value={searchId}>Номеру</option>
             <option value={searchContent}>Содержимому</option>
+            <option value={searchId}>Номеру</option>
         </select>
     </div>
     <div class="item">
