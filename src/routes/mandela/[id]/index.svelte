@@ -111,14 +111,20 @@
 <h1>{title}</h1>
 
 <p>
-    Автор: {listUserName(mandela.user_name, mandela.user_id)}
+    Добавлено: {listUserName(mandela.user_name, mandela.user_id)}
     <br />
     Создано: {formatDateTime(mandela.create_ts)}
-    {#if mandela.mark_ts}
+    {#if mandela.create_ts !== mandela.update_ts}
         <br />
-        Просмотрено: {formatDateTime(mandela.mark_ts)}
+        Изменено: {formatDateTime(mandela.update_ts)}
     {/if}
 </p>
+
+{#if mandela.mark_ts}
+    <p>Просмотрено: {formatDateTime(mandela.mark_ts)}</p>
+{/if}
+
+<hr />
 
 {#if mandela.title_mode === consts.ComplexTitle}
     <p>Было: {mandela.before}</p>
