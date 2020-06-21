@@ -111,6 +111,8 @@
 <h1>{title}</h1>
 
 <p>
+    ИД: {mandela.id}
+    <br />
     Добавлено: {listUserName(mandela.user_name, mandela.user_id)}
     <br />
     Создано: {formatDateTime(mandela.create_ts)}
