@@ -1,14 +1,26 @@
 <script>
+    import { send, errorMessage } from "net.js";
+    import { makeTitle } from "utils.js";
+
     const searchId = "0";
     const searchContent = "1";
     let searchType = searchId;
     let id;
+    let mandela;
+    let emptyResult = false;
 
-    function search() {
-        console.log("search", searchType);
+    async function search() {
+        mandela = null;
+        emptyResult = false;
 
-        if (searchType === searchId) {
-            console.log(id);
+        try {
+            if (searchType === searchId) {
+                mandela = await send("search.getById", { id: Number(id) });
+                emptyResult = !mandela;
+                console.log(result);
+            }
+        } catch (e) {
+            console.log(e);
         }
     }
 </script>
@@ -25,9 +37,9 @@
 </style>
 
 <svelte:head>
-    <title>Поиск</title>
+    <title>Поиск мандел</title>
 </svelte:head>
-<h1>Поиск</h1>
+<h1>Поиск мандел</h1>
 
 <div class="container">
     <div class="item">
@@ -46,5 +58,11 @@
 
     <div class="item">
         <button on:click={search}>Найти</button>
+    </div>
+
+    <div class="item">
+        {#if mandela}
+            <a href="/mandela/{id}">{makeTitle(mandela)}</a>
+        {:else if emptyResult}Ничего не найдено{/if}
     </div>
 </div>

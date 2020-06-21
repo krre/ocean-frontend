@@ -3,7 +3,12 @@
     import { stores } from "@sapper/app";
     import { onMount } from "svelte";
     import { send } from "net.js";
-    import { formatDateTime, zeroLeading, listUserName } from "utils.js";
+    import {
+        formatDateTime,
+        zeroLeading,
+        listUserName,
+        makeTitle
+    } from "utils.js";
 
     const { session } = stores();
 
@@ -150,11 +155,8 @@
         {/if}
         <a class="row-link" href="mandela/{mandela.id}">
             {zeroLeading(mandela.id, zeroLeadingCount)} | {formatDateTime(mandela.create_ts)}
-            |
-            {#if mandela.title_mode === consts.SimpleTitle}
-                {mandela.title}
-            {:else}{mandela.what}: {mandela.before} / {mandela.after}{/if}
-            | {listUserName(mandela.user_name, mandela.user_id)} | Комментариев:
+            | {makeTitle(mandela)} | {listUserName(mandela.user_name, mandela.user_id)}
+            | Комментариев:
             {#if mandela.comment_count}
                 <div class="new">{mandela.comment_count}</div>
             {:else}0{/if}
