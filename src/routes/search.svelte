@@ -35,6 +35,11 @@
             console.log(e);
         }
     }
+
+    function mandelaLink(id, mandela) {
+        const title = makeTitle(mandela);
+        return `<a target="_blank" href="/mandela/${id}">${title}</a>`;
+    }
 </script>
 
 <style>
@@ -89,12 +94,10 @@
         {#if emptyResult}
             Ничего не найдено
         {:else if mandela}
-            <a target="_blank" href="/mandela/{id}">{makeTitle(mandela)}</a>
+            {@html mandelaLink(id, mandela)}
         {:else if mandels}
             {#each mandels as mandela}
-                <a target="_blank" href="/mandela/{mandela.id}">
-                    {makeTitle(mandela)}
-                </a>
+                {@html mandelaLink(mandela.id, mandela)}
                 <br />
             {/each}
         {/if}
