@@ -1,5 +1,6 @@
 <script context="module">
     import { send } from "net.js";
+    import { formatDateTime } from "utils.js";
 
     export async function preload(page, session) {
         const user = await send("user.getOne", { token: session.user.token });
@@ -98,6 +99,7 @@
 <h1>Профиль</h1>
 <div class="form">
     <div>ИД: {user.id}</div>
+    <div>Создано: {formatDateTime(user.create_ts)}</div>
     {#if user.code !== consts.AdminAccount}
         <AccountMode bind:code bind:initCode={user.code} />
     {/if}
