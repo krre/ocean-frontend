@@ -1,6 +1,6 @@
 <script context="module">
     import { send } from "net.js";
-    import { formatDateTime, convertVotes } from "utils.js";
+    import { formatDateTime, convertVotes, listUserName } from "utils.js";
 
     export async function preload(page, session) {
         const { id } = page.params;
@@ -110,9 +110,15 @@
 
 <h1>{title}</h1>
 
-{#if mandela.mark_ts}
-    <p>Просмотрено: {formatDateTime(mandela.mark_ts)}</p>
-{/if}
+<p>
+    Автор: {listUserName(mandela.user_name, mandela.user_id)}
+    <br />
+    Создано: {formatDateTime(mandela.create_ts)}
+    {#if mandela.mark_ts}
+        <br />
+        Просмотрено: {formatDateTime(mandela.mark_ts)}
+    {/if}
+</p>
 
 {#if mandela.title_mode === consts.ComplexTitle}
     <p>Было: {mandela.before}</p>
