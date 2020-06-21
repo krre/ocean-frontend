@@ -6,18 +6,30 @@
     const searchContent = "1";
     let searchType = searchId;
     let id;
+    let content;
     let mandela;
+    let mandels;
+    let searchInTitle = true;
+    let searchInDescription = true;
     let emptyResult = false;
 
     async function search() {
         mandela = null;
+        mandels = null;
         emptyResult = false;
 
         try {
             if (searchType === searchId) {
                 mandela = await send("search.getById", { id: Number(id) });
                 emptyResult = !mandela;
-                console.log(result);
+            } else {
+                const params = {
+                    content: content || "",
+                    search_title: searchInTitle,
+                    search_description: searchInDescription
+                };
+                mandels = await send("search.getByContent", params);
+                emptyResult = !mandels.length;
             }
         } catch (e) {
             console.log(e);
@@ -53,7 +65,20 @@
         {#if searchType == searchId}
             Введите номер:
             <input type="number" bind:value={id} />
-        {:else}В разработке{/if}
+        {:else}
+            Введите строку:
+            <input bind:value={content} />
+            <br />
+            <label>
+                <input type="checkbox" bind:checked={searchInTitle} />
+                Искать в заголовке
+            </label>
+            <br />
+            <label>
+                <input type="checkbox" bind:checked={searchInDescription} />
+                Искать в описании
+            </label>
+        {/if}
     </div>
 
     <div class="item">
@@ -61,8 +86,17 @@
     </div>
 
     <div class="item">
-        {#if mandela}
-            <a href="/mandela/{id}">{makeTitle(mandela)}</a>
-        {:else if emptyResult}Ничего не найдено{/if}
+        {#if emptyResult}
+            Ничего не найдено
+        {:else if mandela}
+            <a target="_blank" href="/mandela/{id}">{makeTitle(mandela)}</a>
+        {:else if mandels}
+            {#each mandels as mandela}
+                <a target="_blank" href="/mandela/{mandela.id}">
+                    {makeTitle(mandela)}
+                </a>
+                <br />
+            {/each}
+        {/if}
     </div>
 </div>
