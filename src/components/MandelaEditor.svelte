@@ -13,6 +13,7 @@
     export let images = [];
     export let videos = [];
     export let links = [];
+    export let categories = [];
     export let user;
 
     let buttonEnabled;
@@ -36,6 +37,10 @@
     .rules {
         margin-bottom: 10px;
     }
+
+    .category {
+        display: inline;
+    }
 </style>
 
 <div class="rules">
@@ -57,6 +62,15 @@
     <ListEditor bind:list={videos} />
     Ссылки:
     <ListEditor bind:list={links} />
+    Категории:
+    <div class="category">
+        {#each consts.Categories as category, i}
+            <label>
+                <input type="checkbox" bind:group={categories} value={i} />
+                {category}
+            </label>
+        {/each}
+    </div>
     <div>Пользователь: {userName}</div>
 </div>
 

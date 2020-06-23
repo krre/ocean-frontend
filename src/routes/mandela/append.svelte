@@ -15,6 +15,7 @@
     let images = [];
     let videos = [];
     let links = [];
+    let categories = [];
 
     async function append() {
         const params = {
@@ -25,8 +26,9 @@
             after: titleMode === consts.ComplexTitle ? after : "",
             description: description,
             images: images,
-            links: links,
             videos: videos,
+            links: links,
+            categories: categories,
             user_id: $session.user ? $session.user.id : consts.FierceAccountId
         };
 
@@ -50,5 +52,6 @@
     bind:images
     bind:videos
     bind:links
+    bind:categories
     bind:user={$session.user}
     on:click={append} />

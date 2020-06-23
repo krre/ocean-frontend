@@ -38,8 +38,11 @@
             images: mandela.images,
             videos: mandela.videos,
             links: mandela.links,
+            categories: mandela.categories,
             user_id: session.user.id
         };
+
+        console.log(params);
 
         await send("mandela.update", params);
         goto("mandela/" + id);
@@ -61,5 +64,6 @@
     bind:images={mandela.images}
     bind:videos={mandela.videos}
     bind:links={mandela.links}
+    bind:categories={mandela.categories}
     bind:user={session.user}
     on:click={edit} />
