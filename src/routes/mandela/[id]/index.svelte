@@ -15,6 +15,7 @@
 
         let result = await send("mandela.getOne", params);
         const mandela = result.mandela;
+        const categories = result.categories;
 
         let votes;
 
@@ -22,7 +23,7 @@
             votes = convertVotes(result.votes);
         }
 
-        return { id, mandela, votes, session };
+        return { id, mandela, votes, categories, session };
     }
 </script>
 
@@ -34,6 +35,7 @@
     export let id;
     export let mandela;
     export let votes;
+    export let categories;
     export let session;
 
     let voteValue;
@@ -169,6 +171,12 @@
             <a href={link}>{link}</a>
         </div>
     {/each}
+    <hr />
+{/if}
+
+{#if categories.length}
+    Категории:
+    {#each categories as category}{consts.Categories[category]}&nbsp;{/each}
     <hr />
 {/if}
 
