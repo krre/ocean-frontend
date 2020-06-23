@@ -42,8 +42,6 @@
             user_id: session.user.id
         };
 
-        console.log(params);
-
         await send("mandela.update", params);
         goto("mandela/" + id);
     }
