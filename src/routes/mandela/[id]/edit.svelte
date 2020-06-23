@@ -6,8 +6,9 @@
 
         let result = await send("mandela.getOne", { id: Number(id) });
         const mandela = result.mandela;
+        const categories = result.categories;
 
-        return { id, mandela, session };
+        return { id, mandela, categories, session };
     }
 </script>
 
@@ -18,6 +19,7 @@
 
     export let id;
     export let mandela;
+    export let categories;
     export let session;
 
     async function edit() {
@@ -38,7 +40,7 @@
             images: mandela.images,
             videos: mandela.videos,
             links: mandela.links,
-            categories: mandela.categories,
+            categories: categories,
             user_id: session.user.id
         };
 
@@ -62,6 +64,6 @@
     bind:images={mandela.images}
     bind:videos={mandela.videos}
     bind:links={mandela.links}
-    bind:categories={mandela.categories}
+    bind:categories
     bind:user={session.user}
     on:click={edit} />
