@@ -14,6 +14,7 @@
 
     export let currentPage;
     export let filter = 0;
+    export let currentCategory = 0;
 
     let mandels = [];
     let selected_delete = [];
@@ -22,17 +23,25 @@
     let newCount = 0;
     let mineCount = 0;
     let currentCount = 0;
-    let currentCategory = 0;
-    let allCategories = ["Все"].concat(consts.Categories);
+    let filterCategory = "";
     const limit = 50;
     const zeroLeadingCount = 3;
 
     $: admin = $session.user && $session.user.code === consts.AdminAccount;
     $: lastPage = currentCount && Math.ceil(currentCount / limit);
-    $: prevPageLink = `/page/${currentPage - 1}/${filter}`;
-    $: nextPageLink = `/page/${currentPage + 1}/${filter}`;
-    $: firstPageLink = `/page/1/${filter}`;
-    $: lastPageLink = `/page/${lastPage}/${filter}`;
+    $: {
+        if ($session.user) {
+            filterCategory = `/${filter}`;
+
+            if (Number(filter) === consts.ShowCategory) {
+                filterCategory += `/${currentCategory}`;
+            }
+        }
+    }
+    $: prevPageLink = `/page/${currentPage - 1}` + filterCategory;
+    $: nextPageLink = `/page/${currentPage + 1}` + filterCategory;
+    $: firstPageLink = `/page/1` + filterCategory;
+    $: lastPageLink = `/page/${lastPage}` + filterCategory;
 
     $: if (Number(filter) === consts.ShowAll) {
         currentCount = totalCount;
@@ -54,13 +63,13 @@
     async function load() {
         const params = {
             limit: limit,
-            offset: (currentPage - 1) * limit,
-            category: currentCategory - 1
+            offset: (currentPage - 1) * limit
         };
 
         if ($session.user) {
             params.user_id = $session.user.id;
             params.filter = Number(filter);
+            params.category = currentCategory;
         }
 
         let result = await send("mandela.getAll", params);
@@ -143,13 +152,15 @@
         <option value="0" selected={filter}>Все</option>
         <option value="1" selected={filter}>Новые</option>
         <option value="2" selected={filter}>Мои</option>
+        <option value="3" selected={filter}>Категория</option>
     </select>
-    | Категории
-    <select bind:value={currentCategory}>
-        {#each allCategories as category, i}
-            <option value={i} selected={currentCategory}>{category}</option>
-        {/each}
-    </select>
+    {#if Number(filter) === consts.ShowCategory}
+        <select bind:value={currentCategory}>
+            {#each consts.Categories as category, i}
+                <option value={i} selected={currentCategory}>{category}</option>
+            {/each}
+        </select>
+    {/if}
 {/if}
 
 {#each mandels as mandela}
