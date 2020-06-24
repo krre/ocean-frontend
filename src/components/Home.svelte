@@ -22,6 +22,7 @@
     let totalCount = 0;
     let newCount = 0;
     let mineCount = 0;
+    let categoryCount = 0;
     let currentCount = 0;
     let filterCategory = "";
     const limit = 50;
@@ -30,7 +31,7 @@
     $: admin = $session.user && $session.user.code === consts.AdminAccount;
     $: lastPage = currentCount && Math.ceil(currentCount / limit);
     $: {
-        if ($session.user) {
+        if ($session.user && Number(filter) >= 0) {
             filterCategory = `/${filter}`;
 
             if (Number(filter) === consts.ShowCategory) {
@@ -47,8 +48,10 @@
         currentCount = totalCount;
     } else if (Number(filter) === consts.ShowNew) {
         currentCount = newCount;
-    } else {
+    } else if (Number(filter) === consts.ShowMine) {
         currentCount = mineCount;
+    } else if (Number(filter) === consts.ShowCategory) {
+        currentCount = categoryCount;
     }
 
     $: if (
@@ -77,6 +80,7 @@
         totalCount = result.total_count;
         newCount = result.new_count;
         mineCount = result.mine_count;
+        categoryCount = result.category_count;
     }
 
     async function deleteMandela() {

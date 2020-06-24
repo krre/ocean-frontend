@@ -1,18 +1,10 @@
 <script context="module">
     export function preload({ params }) {
-        const result = {
-            currentPage: +params.page[0]
-        };
+        const currentPage = +params.page[0];
+        const filter = params.page.length == 2 ? +params.page[1] : 0;
+        const currentCategory = params.page.length == 3 ? +params.page[2] : 0;
 
-        if (params.page.length == 2) {
-            result.filter = +params.page[1];
-        }
-
-        if (params.page.length == 3) {
-            result.currentCategory = +params.page[2];
-        }
-
-        return result;
+        return { currentPage, filter, currentCategory };
     }
 </script>
 
