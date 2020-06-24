@@ -22,6 +22,8 @@
     let newCount = 0;
     let mineCount = 0;
     let currentCount = 0;
+    let currentCategory = 0;
+    let allCategories = ["Все"].concat(consts.Categories);
     const limit = 50;
     const zeroLeadingCount = 3;
 
@@ -40,14 +42,20 @@
         currentCount = mineCount;
     }
 
-    $: if (currentPage && process.browser && filter >= 0) {
+    $: if (
+        currentPage &&
+        process.browser &&
+        filter >= 0 &&
+        currentCategory >= 0
+    ) {
         load();
     }
 
     async function load() {
         const params = {
             limit: limit,
-            offset: (currentPage - 1) * limit
+            offset: (currentPage - 1) * limit,
+            category: currentCategory - 1
         };
 
         if ($session.user) {
@@ -135,6 +143,13 @@
         <option value="0" selected={filter}>Все</option>
         <option value="1" selected={filter}>Новые</option>
         <option value="2" selected={filter}>Мои</option>
+        <option value="3" selected={filter}>Категории</option>
+    </select>
+    | Категории
+    <select bind:value={currentCategory}>
+        {#each allCategories as category, i}
+            <option value={i} selected={currentCategory}>{category}</option>
+        {/each}
     </select>
 {/if}
 
