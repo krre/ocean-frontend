@@ -1,7 +1,7 @@
 <script>
     import * as consts from "consts.js";
     import { stores } from "@sapper/app";
-    import { page } from "stores.js";
+    import { page, filter } from "stores.js";
     import { onMount } from "svelte";
     import { send } from "net.js";
     import {
@@ -13,7 +13,6 @@
 
     const { session } = stores();
 
-    export let filter = 0;
     export let currentCategory = 0;
 
     let mandels = [];
@@ -24,33 +23,23 @@
     let mineCount = 0;
     let categoryCount = 0;
     let currentCount = 0;
-    let filterCategory = "";
     const limit = 3;
     const zeroLeadingCount = 3;
 
     $: admin = $session.user && $session.user.code === consts.AdminAccount;
     $: lastPage = currentCount && Math.ceil(currentCount / limit);
-    $: {
-        if ($session.user && Number(filter) >= 0) {
-            filterCategory = `/${filter}`;
 
-            if (Number(filter) === consts.ShowCategory) {
-                filterCategory += `/${currentCategory}`;
-            }
-        }
-    }
-
-    $: if (Number(filter) === consts.ShowAll) {
+    $: if (+$filter === consts.ShowAll) {
         currentCount = totalCount;
-    } else if (Number(filter) === consts.ShowNew) {
+    } else if (+$filter === consts.ShowNew) {
         currentCount = newCount;
-    } else if (Number(filter) === consts.ShowMine) {
+    } else if (+$filter === consts.ShowMine) {
         currentCount = mineCount;
-    } else if (Number(filter) === consts.ShowCategory) {
+    } else if (+$filter === consts.ShowCategory) {
         currentCount = categoryCount;
     }
 
-    $: if ($page && process.browser && filter >= 0 && currentCategory >= 0) {
+    $: if ($page && process.browser && +$filter >= 0 && currentCategory >= 0) {
         load();
     }
 
@@ -62,7 +51,7 @@
 
         if ($session.user) {
             params.user_id = $session.user.id;
-            params.filter = Number(filter);
+            params.filter = +$filter;
             params.category = currentCategory;
         }
 
@@ -168,13 +157,13 @@
         <div class="new">{newCount}</div>
     {:else}{newCount}{/if}
     | Показать
-    <select bind:value={filter}>
-        <option value="0" selected={filter}>Все</option>
-        <option value="1" selected={filter}>Новые</option>
-        <option value="2" selected={filter}>Мои</option>
-        <option value="3" selected={filter}>Категория</option>
+    <select bind:value={$filter}>
+        <option value="0">Все</option>
+        <option value="1">Новые</option>
+        <option value="2">Мои</option>
+        <option value="3">Категория</option>
     </select>
-    {#if Number(filter) === consts.ShowCategory}
+    {#if +$filter === consts.ShowCategory}
         <select bind:value={currentCategory}>
             {#each consts.Categories as category, i}
                 <option value={i} selected={currentCategory}>{category}</option>
