@@ -21,23 +21,30 @@
     let mineCount = 0;
     let categoryCount = 0;
     let currentCount = 0;
+
+    const filters = ["Все", "Новые", "Мои", "Категория"];
+    const showAll = 0;
+    const showNew = 1;
+    const showMine = 2;
+    const showCategory = 3;
+
     const limit = 3;
     const zeroLeadingCount = 3;
 
     $: admin = $session.user && $session.user.code === consts.AdminAccount;
     $: lastPage = currentCount && Math.ceil(currentCount / limit);
 
-    $: if (+$filter === consts.ShowAll) {
+    $: if ($filter === showAll) {
         currentCount = totalCount;
-    } else if (+$filter === consts.ShowNew) {
+    } else if ($filter === showNew) {
         currentCount = newCount;
-    } else if (+$filter === consts.ShowMine) {
+    } else if ($filter === showMine) {
         currentCount = mineCount;
-    } else if (+$filter === consts.ShowCategory) {
+    } else if ($filter === showCategory) {
         currentCount = categoryCount;
     }
 
-    $: if ($page && process.browser && +$filter >= 0 && $category >= 0) {
+    $: if ($page && process.browser && $filter >= 0 && $category >= 0) {
         load();
     }
 
@@ -49,7 +56,7 @@
 
         if ($session.user) {
             params.user_id = $session.user.id;
-            params.filter = +$filter;
+            params.filter = $filter;
             params.category = $category;
         }
 
@@ -156,12 +163,11 @@
     {:else}{newCount}{/if}
     | Показать
     <select bind:value={$filter}>
-        <option value="0">Все</option>
-        <option value="1">Новые</option>
-        <option value="2">Мои</option>
-        <option value="3">Категория</option>
+        {#each filters as filterName, i}
+            <option value={i} selected={$filter}>{filterName}</option>
+        {/each}
     </select>
-    {#if +$filter === consts.ShowCategory}
+    {#if $filter === showCategory}
         <select bind:value={$category}>
             {#each consts.Categories as categoryName, i}
                 <option value={i} selected={$category}>{categoryName}</option>
