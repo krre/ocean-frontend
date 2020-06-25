@@ -21,6 +21,7 @@
     let mineCount = 0;
     let categoryCount = 0;
     let currentCount = 0;
+    let allowLoad = true;
 
     const filters = ["Все", "Новые", "Мои", "Категория"];
     const showAll = 0;
@@ -28,25 +29,35 @@
     const showMine = 2;
     const showCategory = 3;
 
-    const limit = 3;
+    const limit = 50;
     const zeroLeadingCount = 3;
 
     $: admin = $session.user && $session.user.code === consts.AdminAccount;
     $: lastPage = currentCount && Math.ceil(currentCount / limit);
 
-    $: if ($filter === showAll) {
-        currentCount = totalCount;
-    } else if ($filter === showNew) {
-        currentCount = newCount;
-    } else if ($filter === showMine) {
-        currentCount = mineCount;
-    } else if ($filter === showCategory) {
-        currentCount = categoryCount;
+    $: if (process.browser && $filter >= 0) {
+        allowLoad = false;
+        $page = 1;
+        allowLoad = true;
+
+        load();
+
+        if ($filter === showAll) {
+            currentCount = totalCount;
+        } else if ($filter === showNew) {
+            currentCount = newCount;
+        } else if ($filter === showMine) {
+            currentCount = mineCount;
+        } else if ($filter === showCategory) {
+            currentCount = categoryCount;
+        }
     }
 
-    $: if ($page && process.browser && $filter >= 0 && $category >= 0) {
+    $: if (process.browser && $page && $category >= 0 && allowLoad) {
         load();
     }
+
+    function filterLoad() {}
 
     async function load() {
         const params = {
