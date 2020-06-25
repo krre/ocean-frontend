@@ -68,22 +68,6 @@
         categoryCount = result.category_count;
     }
 
-    function goFirstPage() {
-        $page = 1;
-    }
-
-    function goLastPage() {
-        $page = lastPage;
-    }
-
-    function goNextPage() {
-        $page += 1;
-    }
-
-    function goPrevPage() {
-        $page -= 1;
-    }
-
     async function deleteMandela() {
         if (!selected_delete.length) return;
 
@@ -205,15 +189,23 @@
 {#if currentCount && currentCount > limit}
     <div class="pagination-container">
         {#if $page > 1}
-            <label class="label-link" on:click={goFirstPage}>Первая</label>
-            <label class="label-link" on:click={goPrevPage}>Предыдущая</label>
+            <label class="label-link" on:click={() => ($page = 1)}>
+                Первая
+            </label>
+            <label class="label-link" on:click={() => ($page -= 1)}>
+                Предыдущая
+            </label>
         {/if}
 
         <div class="pagination-item">{$page}</div>
 
         {#if $page < lastPage}
-            <label class="label-link" on:click={goNextPage}>Следующая</label>
-            <label class="label-link" on:click={goLastPage}>Последняя</label>
+            <label class="label-link" on:click={() => ($page += 1)}>
+                Следующая
+            </label>
+            <label class="label-link" on:click={() => ($page = lastPage)}>
+                Последняя
+            </label>
         {/if}
     </div>
 {/if}
