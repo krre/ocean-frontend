@@ -1,7 +1,7 @@
 <script>
     import * as consts from "consts.js";
     import { stores } from "@sapper/app";
-    import { page, filter } from "stores.js";
+    import { page, filter, category } from "stores.js";
     import { onMount } from "svelte";
     import { send } from "net.js";
     import {
@@ -12,8 +12,6 @@
     } from "utils.js";
 
     const { session } = stores();
-
-    export let currentCategory = 0;
 
     let mandels = [];
     let selected_delete = [];
@@ -39,7 +37,7 @@
         currentCount = categoryCount;
     }
 
-    $: if ($page && process.browser && +$filter >= 0 && currentCategory >= 0) {
+    $: if ($page && process.browser && +$filter >= 0 && $category >= 0) {
         load();
     }
 
@@ -52,7 +50,7 @@
         if ($session.user) {
             params.user_id = $session.user.id;
             params.filter = +$filter;
-            params.category = currentCategory;
+            params.category = $category;
         }
 
         let result = await send("mandela.getAll", params);
@@ -164,9 +162,9 @@
         <option value="3">Категория</option>
     </select>
     {#if +$filter === consts.ShowCategory}
-        <select bind:value={currentCategory}>
-            {#each consts.Categories as category, i}
-                <option value={i} selected={currentCategory}>{category}</option>
+        <select bind:value={$category}>
+            {#each consts.Categories as categoryName, i}
+                <option value={i} selected={$category}>{categoryName}</option>
             {/each}
         </select>
     {/if}
