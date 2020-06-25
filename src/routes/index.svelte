@@ -21,7 +21,6 @@
     let mineCount = 0;
     let categoryCount = 0;
     let currentCount = 0;
-    let allowLoad = true;
 
     const filters = ["Все", "Новые", "Мои", "Категория"];
     const showAll = 0;
@@ -35,29 +34,9 @@
     $: admin = $session.user && $session.user.code === consts.AdminAccount;
     $: lastPage = currentCount && Math.ceil(currentCount / limit);
 
-    $: if (process.browser && $filter >= 0) {
-        allowLoad = false;
-        $page = 1;
-        allowLoad = true;
-
-        load();
-
-        if ($filter === showAll) {
-            currentCount = totalCount;
-        } else if ($filter === showNew) {
-            currentCount = newCount;
-        } else if ($filter === showMine) {
-            currentCount = mineCount;
-        } else if ($filter === showCategory) {
-            currentCount = categoryCount;
-        }
-    }
-
-    $: if (process.browser && $page && $category >= 0 && allowLoad) {
+    $: if (process.browser && $page && $filter >= 0 && $category >= 0) {
         load();
     }
-
-    function filterLoad() {}
 
     async function load() {
         const params = {
@@ -77,6 +56,16 @@
         newCount = result.new_count;
         mineCount = result.mine_count;
         categoryCount = result.category_count;
+
+        if ($filter === showAll) {
+            currentCount = totalCount;
+        } else if ($filter === showNew) {
+            currentCount = newCount;
+        } else if ($filter === showMine) {
+            currentCount = mineCount;
+        } else if ($filter === showCategory) {
+            currentCount = categoryCount;
+        }
     }
 
     async function deleteMandela() {
