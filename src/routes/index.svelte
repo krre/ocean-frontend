@@ -1,7 +1,7 @@
 <script>
     import * as consts from "consts.js";
     import { stores } from "@sapper/app";
-    import { page, filter, category } from "stores.js";
+    import { page, filter, category, sort } from "stores.js";
     import { send } from "net.js";
     import {
         formatDateTime,
@@ -28,13 +28,21 @@
     const showMine = 2;
     const showCategory = 3;
 
+    const sorts = ["Манделам", "Комментариям"];
+
     const limit = 50;
     const zeroLeadingCount = 3;
 
     $: admin = $session.user && $session.user.code === consts.AdminAccount;
     $: lastPage = currentCount && Math.ceil(currentCount / limit);
 
-    $: if (process.browser && $page >= 1 && $filter >= 0 && $category >= 0) {
+    $: if (
+        process.browser &&
+        $page >= 1 &&
+        $filter >= 0 &&
+        $category >= 0 &&
+        $sort >= 0
+    ) {
         load();
     }
 
@@ -45,6 +53,7 @@
         }
 
         const params = {
+            sort: $sort,
             limit: limit,
             offset: ($page - 1) * limit
         };
@@ -164,7 +173,12 @@
         </select>
     {/if}
 {/if}
-
+| Сортировать по:
+<select bind:value={$sort}>
+    {#each sorts as sortName, i}
+        <option value={i} selected={$sort}>{sortName}</option>
+    {/each}
+</select>
 {#each mandels as mandela}
     <div class="row">
         {#if admin}

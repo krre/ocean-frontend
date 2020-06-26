@@ -1,12 +1,13 @@
 <script>
     import { goto, stores } from "@sapper/app";
-    import { page, filter, category } from "stores.js";
+    import { page, filter, category, sort } from "stores.js";
     const { session } = stores();
 
     function home() {
         $page = 1;
         $filter = 0;
         $category = 0;
+        $sort = 0;
         goto(".");
     }
 </script>
