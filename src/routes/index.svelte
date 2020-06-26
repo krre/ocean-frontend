@@ -21,6 +21,7 @@
     let mineCount = 0;
     let categoryCount = 0;
     let currentCount = 0;
+    let prevFilter = 0;
 
     const filters = ["Все", "Новые", "Мои", "Категория"];
     const showAll = 0;
@@ -34,11 +35,16 @@
     $: admin = $session.user && $session.user.code === consts.AdminAccount;
     $: lastPage = currentCount && Math.ceil(currentCount / limit);
 
-    $: if (process.browser && $page && $filter >= 0 && $category >= 0) {
+    $: if (process.browser && $page >= 1 && $filter >= 0 && $category >= 0) {
         load();
     }
 
     async function load() {
+        if ($filter !== prevFilter) {
+            prevFilter = $filter;
+            $page = 1;
+        }
+
         const params = {
             limit: limit,
             offset: ($page - 1) * limit
