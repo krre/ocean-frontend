@@ -1,6 +1,14 @@
 <script>
-    import { stores } from "@sapper/app";
+    import { goto, stores } from "@sapper/app";
+    import { page, filter, category } from "stores.js";
     const { session } = stores();
+
+    function home() {
+        $page = 1;
+        $filter = 0;
+        $category = 0;
+        goto(".");
+    }
 </script>
 
 <style>
@@ -9,7 +17,8 @@
         padding: 1em;
     }
 
-    a {
+    .link {
+        cursor: pointer;
         text-decoration: none;
         color: rgb(235, 246, 255);
         font-size: 1.1em;
@@ -18,17 +27,19 @@
 </style>
 
 <nav>
-    <a href=".">Каталог</a>
-    <a href="mandela/append">Добавить</a>
-    <a href="search">Поиск</a>
-    <a href="help">Справка</a>
+    <label class="link" on:click={home}>Каталог</label>
+    <label class="link" on:click={() => goto('mandela/append')}>Добавить</label>
+    <label class="link" on:click={() => goto('search')}>Поиск</label>
+    <label class="link" on:click={() => goto('help')}>Справка</label>
     {#if $session.user}
-        <a href="profile">Профиль</a>
+        <label class="link" on:click={() => goto('profile')}>Профиль</label>
     {/if}
     {#if $session.user}
-        <a href="signout">Выйти</a>
+        <label class="link" on:click={() => goto('signout')}>Выйти</label>
     {:else}
-        <a href="signin">Войти</a>
-        <a href="register">Регистрация</a>
+        <label class="link" on:click={() => goto('signin')}>Войти</label>
+        <label class="link" on:click={() => goto('register')}>
+            Регистрация
+        </label>
     {/if}
 </nav>
