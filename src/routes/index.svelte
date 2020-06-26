@@ -2,7 +2,6 @@
     import * as consts from "consts.js";
     import { stores } from "@sapper/app";
     import { page, filter, category } from "stores.js";
-    import { onMount } from "svelte";
     import { send } from "net.js";
     import {
         formatDateTime,
