@@ -1,28 +1,35 @@
 <script>
     import * as consts from "consts.js";
-    import { rating } from "stores.js";
+    import { stores } from "@sapper/app";
+    import { vote } from "stores.js";
     import { send } from "net.js";
+    import { makeTitle } from "utils.js";
 
-    const ratings = [
+    const { session } = stores();
+
+    const votes = [
         consts.VoteYesTitle,
         consts.VoteNoTitle,
         consts.VoteNeutralTitle
     ];
 
-    let mandels;
+    let mandels = [];
 
-    $: if (process.browser && $rating >= 0) {
+    $: if (process.browser && $vote >= 0) {
         load();
     }
 
     async function load() {
         const params = {
-            rating: $rating
+            vote: $vote
         };
 
         mandels = await send("rating.getAll", params);
+    }
 
-        console.log(params);
+    function mandelaLink(id, mandela) {
+        const title = makeTitle(mandela);
+        return `<a class="row-link" href="/mandela/${id}">${title}</a>`;
     }
 </script>
 
@@ -31,9 +38,15 @@
 </svelte:head>
 
 <h1>Рейтинг</h1>
-<p>Показаны будут только те манделы, за которые вы проголосовали.</p>
-<select bind:value={$rating}>
-    {#each ratings as ratingName, i}
-        <option value={i} selected={$rating}>{ratingName}</option>
+<select bind:value={$vote}>
+    {#each votes as voteName, i}
+        <option value={i} selected={$vote}>{voteName}</option>
     {/each}
 </select>
+
+<p />
+
+{#each mandels as mandela}
+    {@html mandelaLink(mandela.id, mandela)}
+    <br />
+{/each}

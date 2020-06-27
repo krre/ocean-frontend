@@ -31,9 +31,7 @@
     <label class="link" on:click={home}>Каталог</label>
     <label class="link" on:click={() => goto('mandela/append')}>Добавить</label>
     <label class="link" on:click={() => goto('search')}>Поиск</label>
-    {#if $session.user}
-        <label class="link" on:click={() => goto('rating')}>Рейтинг</label>
-    {/if}
+    <label class="link" on:click={() => goto('rating')}>Рейтинг</label>
     <label class="link" on:click={() => goto('help')}>Справка</label>
     {#if $session.user}
         <label class="link" on:click={() => goto('profile')}>Профиль</label>

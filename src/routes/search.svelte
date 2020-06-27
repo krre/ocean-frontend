@@ -38,7 +38,7 @@
 
     function mandelaLink(id, mandela) {
         const title = makeTitle(mandela);
-        return `<a target="_blank" href="/mandela/${id}">${title}</a>`;
+        return `<a target="_blank" class="row-link" href="/mandela/${id}">${title}</a>`;
     }
 </script>
 

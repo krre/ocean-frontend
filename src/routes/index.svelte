@@ -134,15 +134,6 @@
         display: block;
         margin: 0.3em 0;
     }
-
-    .row-link {
-        text-decoration: none;
-        color: rgb(51, 51, 51);
-    }
-
-    .row-link:hover {
-        text-decoration: underline;
-    }
 </style>
 
 <svelte:head>
