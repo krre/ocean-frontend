@@ -27,9 +27,10 @@
         mandels = await send("rating.getAll", params);
     }
 
-    function mandelaLink(id, mandela) {
+    function mandelaLink(id, mandela, i) {
         const title = makeTitle(mandela);
-        return `<a class="row-link" href="/mandela/${id}">${title}</a>`;
+        return `<a class="row-link" href="/mandela/${id}">${i +
+            1}. ${title} - ${mandela.count}</a>`;
     }
 </script>
 
@@ -46,7 +47,7 @@
 
 <p />
 
-{#each mandels as mandela}
-    {@html mandelaLink(mandela.id, mandela)}
+{#each mandels as mandela, i}
+    {@html mandelaLink(mandela.id, mandela, i)}
     <br />
 {/each}
