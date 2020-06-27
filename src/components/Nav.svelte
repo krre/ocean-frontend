@@ -8,7 +8,6 @@
         $filter = 0;
         $category = 0;
         $sort = 0;
-        goto(".");
     }
 </script>
 
@@ -18,8 +17,7 @@
         padding: 1em;
     }
 
-    .link {
-        cursor: pointer;
+    a {
         text-decoration: none;
         color: rgb(235, 246, 255);
         font-size: 1.1em;
@@ -28,20 +26,18 @@
 </style>
 
 <nav>
-    <label class="link" on:click={home}>Каталог</label>
-    <label class="link" on:click={() => goto('mandela/append')}>Добавить</label>
-    <label class="link" on:click={() => goto('search')}>Поиск</label>
-    <label class="link" on:click={() => goto('rating')}>Рейтинг</label>
-    <label class="link" on:click={() => goto('help')}>Справка</label>
+    <a on:click={() => home()} href=".">Каталог</a>
+    <a href="mandela/append">Добавить</a>
+    <a href="search">Поиск</a>
+    <a href="rating">Рейтинг</a>
+    <a href="help">Справка</a>
     {#if $session.user}
-        <label class="link" on:click={() => goto('profile')}>Профиль</label>
+        <a href="profile">Профиль</a>
     {/if}
     {#if $session.user}
-        <label class="link" on:click={() => goto('signout')}>Выйти</label>
+        <a href="signout">Выйти</a>
     {:else}
-        <label class="link" on:click={() => goto('signin')}>Войти</label>
-        <label class="link" on:click={() => goto('register')}>
-            Регистрация
-        </label>
+        <a href="signin">Войти</a>
+        <a href="register">Регистрация</a>
     {/if}
 </nav>
