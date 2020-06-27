@@ -150,7 +150,7 @@
     {#if newCount}
         <div class="new">{newCount}</div>
     {:else}{newCount}{/if}
-    | Показать
+    | Показать:
     <select bind:value={$filter}>
         {#each filters as filterName, i}
             <option value={i} selected={$filter}>{filterName}</option>
