@@ -40,10 +40,6 @@
 
     let voteValue;
 
-    const voteYesTitle = "Да, это мандела";
-    const voteNoTitle = "Нет, всегда так было";
-    const voteNeutralTitle = "Затрудняюсь ответить";
-
     $: if (session.user && mandela && !mandela.mark_ts) {
         mark();
     }
@@ -190,24 +186,24 @@
         Результаты опроса
         <ul>
             <li>Всего голосов: {votes.total}</li>
-            <li>{voteYesTitle}: {votes.yes}</li>
-            <li>{voteNoTitle}: {votes.no}</li>
-            <li>{voteNeutralTitle}: {votes.neutral}</li>
+            <li>{consts.VoteYesTitle}: {votes.yes}</li>
+            <li>{consts.VoteNoTitle}: {votes.no}</li>
+            <li>{consts.VoteNeutralTitle}: {votes.neutral}</li>
         </ul>
     {:else}
         Опрос. Является ли для вас это манделой?
         <p>
             <label class="vote">
                 <input type="radio" bind:group={voteValue} value={1} />
-                {voteYesTitle}
+                {consts.VoteYesTitle}
             </label>
             <label class="vote">
                 <input type="radio" bind:group={voteValue} value={2} />
-                {voteNoTitle}
+                {consts.VoteNoTitle}
             </label>
             <label class="vote">
                 <input type="radio" bind:group={voteValue} value={3} />
-                {voteNeutralTitle}
+                {consts.VoteNeutralTitle}
             </label>
         </p>
         <button on:click={vote} disabled={!voteValue}>Проголосовать</button>
