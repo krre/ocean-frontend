@@ -7,12 +7,6 @@
 
     const { session } = stores();
 
-    const votes = [
-        consts.VoteYesTitle,
-        consts.VoteNoTitle,
-        consts.VoteNeutralTitle
-    ];
-
     let mandels = [];
 
     $: if (process.browser && $vote >= 0) {
@@ -40,7 +34,7 @@
 
 <h1>Рейтинг</h1>
 <select bind:value={$vote}>
-    {#each votes as voteName, i}
+    {#each consts.Votes as voteName, i}
         <option value={i} selected={$vote}>{voteName}</option>
     {/each}
 </select>

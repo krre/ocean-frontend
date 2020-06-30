@@ -1,6 +1,6 @@
 <script context="module">
     import { send } from "net.js";
-    import { formatDateTime, convertVotes, listUserName } from "utils.js";
+    import { formatDateTime, listUserName } from "utils.js";
 
     export async function preload(page, session) {
         const { id } = page.params;
@@ -16,14 +16,18 @@
         let result = await send("mandela.getOne", params);
         const mandela = result.mandela;
         const categories = result.categories;
+        const votes = result.votes;
+        const vote = result.vote;
 
-        let votes;
+        let totalVotes = 0;
 
-        if (result.votes) {
-            votes = convertVotes(result.votes);
+        if (votes) {
+            for (let i in votes) {
+                totalVotes += votes[i].count;
+            }
         }
 
-        return { id, mandela, votes, categories, session };
+        return { id, mandela, votes, vote, totalVotes, categories, session };
     }
 </script>
 
@@ -35,10 +39,12 @@
     export let id;
     export let mandela;
     export let votes;
+    export let vote;
+    export let totalVotes = 0;
     export let categories;
     export let session;
 
-    let voteValue;
+    let voteValue = -1;
 
     $: if (session.user && mandela && !mandela.mark_ts) {
         mark();
@@ -66,15 +72,29 @@
         await send("mandela.mark", params);
     }
 
-    async function vote() {
+    async function castVote() {
         const params = {
             id: mandela.id,
             user_id: session.user.id,
-            vote: voteValue - 1
+            vote: voteValue
         };
 
-        const result = await send("mandela.vote", params);
-        votes = convertVotes(result);
+        votes = await send("mandela.vote", params);
+        vote = voteValue;
+
+        for (let i in votes) {
+            totalVotes += votes[i].count;
+        }
+    }
+
+    function getVoteCount(vote) {
+        for (let i in votes) {
+            if (votes[i].vote === vote) {
+                return votes[i].count;
+            }
+        }
+
+        return 0;
     }
 </script>
 
@@ -182,30 +202,27 @@
 
 {#if session.user}
     {#if votes}
-        Результаты опроса
+        Результаты опроса:
         <ul>
-            <li>Всего голосов: {votes.total}</li>
-            <li>{consts.VoteYesTitle}: {votes.yes}</li>
-            <li>{consts.VoteNoTitle}: {votes.no}</li>
-            <li>{consts.VoteNeutralTitle}: {votes.neutral}</li>
+            {#each consts.Votes as voteName, i}
+                <li>{voteName}: {getVoteCount(i)}</li>
+            {/each}
         </ul>
+        <div>Всего голосов: {totalVotes}</div>
+        <div>Выбрано: {consts.Votes[vote]}</div>
     {:else}
-        Опрос. Является ли для вас это манделой?
+        Является ли для вас это манделой?
         <p>
-            <label class="vote">
-                <input type="radio" bind:group={voteValue} value={1} />
-                {consts.VoteYesTitle}
-            </label>
-            <label class="vote">
-                <input type="radio" bind:group={voteValue} value={2} />
-                {consts.VoteNoTitle}
-            </label>
-            <label class="vote">
-                <input type="radio" bind:group={voteValue} value={3} />
-                {consts.VoteNeutralTitle}
-            </label>
+            {#each consts.Votes as voteName, i}
+                <label class="vote">
+                    <input type="radio" bind:group={voteValue} value={i} />
+                    {voteName}
+                </label>
+            {/each}
         </p>
-        <button on:click={vote} disabled={!voteValue}>Проголосовать</button>
+        <button on:click={castVote} disabled={voteValue < 0}>
+            Проголосовать
+        </button>
     {/if}
     <hr />
 {/if}
