@@ -109,7 +109,8 @@
 
     img {
         max-width: 100%;
-        width: 900px;
+        max-height: 100vh;
+        width: auto;
         height: auto;
     }
 
