@@ -45,6 +45,7 @@
     export let session;
 
     let voteValue = -1;
+    let editVote = false;
 
     $: if (session.user && mandela && !mandela.mark_ts) {
         mark();
@@ -81,6 +82,8 @@
 
         votes = await send("mandela.vote", params);
         vote = voteValue;
+        editVote = false;
+        totalVotes = 0;
 
         for (let i in votes) {
             totalVotes += votes[i].count;
@@ -202,7 +205,7 @@
 {/if}
 
 {#if session.user}
-    {#if votes}
+    {#if votes && !editVote}
         Результаты опроса:
         <ul>
             {#each consts.Votes as voteName, i}
@@ -211,6 +214,9 @@
         </ul>
         <div>Всего голосов: {totalVotes}</div>
         <div>Выбрано: {consts.Votes[vote]}</div>
+        <p>
+            <button on:click={() => (editVote = true)}>Изменить выбор</button>
+        </p>
     {:else}
         Является ли для вас это манделой?
         <p>
