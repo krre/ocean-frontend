@@ -18,7 +18,7 @@
             vote: $vote
         };
 
-        mandels = await send("rating.getAll", params);
+        mandels = await send("rating.getMandels", params);
     }
 
     function mandelaLink(id, mandela, i) {
