@@ -34,7 +34,10 @@
 <script>
     import * as consts from "consts.js";
     import { goto } from "@sapper/app";
+    import { stores } from "@sapper/app";
     import Comment from "../../../components/comment/Comment.svelte";
+
+    const { page } = stores();
 
     export let id;
     export let mandela;
@@ -99,6 +102,19 @@
 
         return 0;
     }
+
+    function url() {
+        return "http://" + $page.host + $page.path;
+    }
+
+    function copyLink(params) {
+        navigator.clipboard.writeText(url());
+    }
+
+    function copyCode(params) {
+        const code = `<a href="${url()}">Океан. Мандела №${id}</a>`;
+        navigator.clipboard.writeText(code);
+    }
 </script>
 
 <style>
@@ -146,6 +162,9 @@
 {#if mandela.mark_ts}
     <p>Просмотрено: {formatDateTime(mandela.mark_ts)}</p>
 {/if}
+
+<button on:click={copyLink}>Скопировать ссылку</button>
+<button on:click={copyCode}>Скопировать код ссылки</button>
 
 <hr />
 
