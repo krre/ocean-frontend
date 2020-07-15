@@ -163,8 +163,8 @@
     <p>Просмотрено: {formatDateTime(mandela.mark_ts)}</p>
 {/if}
 
-<button on:click={copyLink}>Скопировать ссылку</button>
-<button on:click={copyCode}>Скопировать код ссылки</button>
+<!-- <button on:click={copyLink}>Скопировать ссылку</button>
+<button on:click={copyCode}>Скопировать код ссылки</button> -->
 
 <hr />
 
