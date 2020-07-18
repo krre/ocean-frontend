@@ -1,6 +1,6 @@
 <script context="module">
     import { send } from "net.js";
-    import { formatDateTime } from "utils.js";
+    import { formatDateTime, createToken } from "utils.js";
 
     export async function preload(page, session) {
         const user = await send("user.getOne", { token: session.user.token });
@@ -71,7 +71,7 @@
 
         const params = {};
         params.id = user.id;
-        params.password = password1;
+        params.token = createToken(user.id, password1);
 
         try {
             await send("user.changePassword", params);

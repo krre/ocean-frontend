@@ -2,6 +2,7 @@
     import * as consts from "consts.js";
     import { goto } from "@sapper/app";
     import { send } from "net.js";
+    import { createToken } from "utils.js";
     import OperationResult from "../../components/OperationResult.svelte";
     import AccountMode from "../../components/AccountMode.svelte";
 
@@ -30,7 +31,7 @@
 
         params = {};
         params.id = result.id;
-        params.password = password1;
+        params.token = createToken(result.id, password1);
 
         await send("user.changePassword", params);
 
