@@ -21,13 +21,19 @@
             return;
         }
 
-        const params = {
+        let params = {
             name: code === consts.ConspiratorAccount ? "" : name,
-            password: password1,
             code: code
         };
 
         let result = await send("user.create", params);
+
+        params = {};
+        params.id = result.id;
+        params.password = password1;
+
+        await send("user.changePassword", params);
+
         goto("/register/user" + result.id);
     }
 </script>
