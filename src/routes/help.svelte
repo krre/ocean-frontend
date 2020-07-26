@@ -13,6 +13,11 @@
     <a href="{$page.path}#about">О сайте</a>
 </div>
 <div>
+    <a href="{$page.path}#bot">
+        Подписка на уведомления о новых манделах через Telegram Bot
+    </a>
+</div>
+<div>
     <a href="{$page.path}#termins">Термины</a>
 </div>
 <div>
@@ -39,6 +44,11 @@
 <a href="https://krre31.livejournal.com/tag/океан">
     https://krre31.livejournal.com/tag/океан
 </a>
+
+<h2 id="bot">Подписка на уведомления о новых манделах через Telegram Bot</h2>
+<a href="https://t.me/OceanMandelaBot?start">Открыть Telegram для подписки</a>
+<br />
+<a href="https://krre31.livejournal.com/52669.html">О Telegram-боте Океана</a>
 
 <h2 id="termins">Термины</h2>
 <ul>
