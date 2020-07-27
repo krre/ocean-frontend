@@ -12,22 +12,27 @@
 <div>
     <a href="{$page.path}#about">О сайте</a>
 </div>
-<div>
-    <a href="{$page.path}#bot">
-        Подписка на уведомления о новых манделах через Telegram Bot
-    </a>
-</div>
+
 <div>
     <a href="{$page.path}#termins">Термины</a>
 </div>
+
 <div>
     <a href="{$page.path}#research">Исследования наших участников</a>
 </div>
+
 <div>
     <a href="{$page.path}#rules">Рекомендуемые правила оформления мандел</a>
 </div>
+
 <div>
     <a href="{$page.path}#links">Полезные ссылки</a>
+</div>
+
+<div>
+    <a href="https://t.me/OceanMandela">
+        Telegram канал с уведомлениями о новых манделах и комментариях
+    </a>
 </div>
 
 <h2 id="about">О сайте</h2>
@@ -44,11 +49,6 @@
 <a href="https://krre31.livejournal.com/tag/океан">
     https://krre31.livejournal.com/tag/океан
 </a>
-
-<h2 id="bot">Подписка на уведомления о новых манделах через Telegram Bot</h2>
-<a href="https://t.me/OceanMandelaBot?start">Открыть Telegram для подписки</a>
-<br />
-<a href="https://krre31.livejournal.com/52795.html">О Telegram-боте Океана</a>
 
 <h2 id="termins">Термины</h2>
 <ul>
