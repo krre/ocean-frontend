@@ -108,13 +108,13 @@
         {formatDateTime(comment.create_ts)} | {listUserName(comment.user_name, comment.user_id)}
         {#if user && (comment.user_id === user.id || user.id === consts.AdminAccountId)}
             <div>
-                <label class="label-link" on:click={() => showEdit(i)}>
+                <div class="label-link" on:click={() => showEdit(i)}>
                     Редактировать
-                </label>
+                </div>
                 |
-                <label class="label-link" on:click={() => showRemove(i)}>
+                <div class="label-link" on:click={() => showRemove(i)}>
                     Удалить
-                </label>
+                </div>
             </div>
         {/if}
     </div>

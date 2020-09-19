@@ -199,23 +199,21 @@
 {#if currentCount && currentCount > limit}
     <div class="pagination-container">
         {#if $page > 1}
-            <label class="label-link" on:click={() => ($page = 1)}>
-                Первая
-            </label>
-            <label class="label-link" on:click={() => ($page -= 1)}>
+            <div class="label-link" on:click={() => ($page = 1)}>Первая</div>
+            <div class="label-link" on:click={() => ($page -= 1)}>
                 Предыдущая
-            </label>
+            </div>
         {/if}
 
         <div class="pagination-item">{$page}</div>
 
         {#if $page < lastPage}
-            <label class="label-link" on:click={() => ($page += 1)}>
+            <div class="label-link" on:click={() => ($page += 1)}>
                 Следующая
-            </label>
-            <label class="label-link" on:click={() => ($page = lastPage)}>
+            </div>
+            <div class="label-link" on:click={() => ($page = lastPage)}>
                 Последняя
-            </label>
+            </div>
         {/if}
     </div>
 {/if}
