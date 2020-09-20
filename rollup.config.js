@@ -40,7 +40,7 @@ export default {
 				dedupe: ['svelte']
 			}),
 			commonjs(),
-			typescript({ sourceMap: !production, inlineSources: true }),
+			typescript({ sourceMap: !production, inlineSources: !production }),
 
 			legacy && babel({
 				extensions: ['.js', '.mjs', '.html', '.svelte'],
@@ -85,7 +85,7 @@ export default {
 				dedupe: ['svelte']
 			}),
 			commonjs(),
-			typescript({ sourceMap: !production, inlineSources: true })
+			typescript({ sourceMap: !production, inlineSources: !production })
 		],
 		external: Object.keys(pkg.dependencies).concat(
 			require('module').builtinModules || Object.keys(process.binding('natives'))
