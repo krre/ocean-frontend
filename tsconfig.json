@@ -1,7 +1,4 @@
 {
-    "compilerOptions": {
-        "sourceMap": true
-    },
     "extends": "@tsconfig/svelte/tsconfig.json",
     "include": [
         "src/**/*",
