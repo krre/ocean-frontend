@@ -12,7 +12,6 @@ import typescript from '@rollup/plugin-typescript';
 const mode = process.env.NODE_ENV;
 const dev = mode === 'development';
 const legacy = !!process.env.SAPPER_LEGACY_BUILD;
-const production = !process.env.ROLLUP_WATCH;
 
 const onwarn = (warning, onwarn) =>
 	(warning.code === 'MISSING_EXPORT' && /'preload'/.test(warning.message)) ||
