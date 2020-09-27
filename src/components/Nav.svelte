@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
     import { goto, stores } from "@sapper/app";
     import { page, filter, category, sort } from "stores.js";
     const { session } = stores();
@@ -31,13 +31,8 @@
     <a href="search">Поиск</a>
     <a href="rating">Рейтинг</a>
     <a href="help">Справка</a>
-    {#if $session.user}
-        <a href="profile">Профиль</a>
-    {/if}
+    {#if $session.user}<a href="profile">Профиль</a>{/if}
     {#if $session.user}
         <a href="signout">Выйти</a>
-    {:else}
-        <a href="signin">Войти</a>
-        <a href="register">Регистрация</a>
-    {/if}
+    {:else}<a href="signin">Войти</a> <a href="register">Регистрация</a>{/if}
 </nav>

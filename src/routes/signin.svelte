@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
     import { goto, stores } from "@sapper/app";
     import { send, errorMessage } from "net.js";
     import { post, createToken } from "utils.js";
@@ -17,7 +17,7 @@
 
         const params = {
             id: id,
-            token: token
+            token: token,
         };
 
         try {
@@ -26,7 +26,7 @@
                 token: token,
                 id: id,
                 code: result.code,
-                name: result.name
+                name: result.name,
             };
 
             await post("auth/login", user);
@@ -54,10 +54,7 @@
 <h1>Войти</h1>
 
 <div class="form">
-    ИД:
-    <input type="number" bind:value={id} />
-    Пароль:
-    <input type="password" bind:value={password} />
+    ИД: <input type="number" bind:value={id} /> Пароль: <input type="password" bind:value={password} />
     <OperationResult {error} />
     <button on:click={signin} disabled={!signinButtonEnabled}>Войти</button>
 </div>

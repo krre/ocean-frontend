@@ -1,4 +1,4 @@
-<script context="module">
+<script context="module" lang="ts">
     import { send } from "net.js";
     import { formatDateTime, listUserName } from "utils.js";
 
@@ -6,7 +6,7 @@
         const { id } = page.params;
 
         const params = {
-            id: Number(id)
+            id: Number(id),
         };
 
         if (session.user) {
@@ -31,7 +31,7 @@
     }
 </script>
 
-<script>
+<script lang="ts">
     import * as consts from "consts.js";
     import { goto } from "@sapper/app";
     import { stores } from "@sapper/app";
@@ -70,7 +70,7 @@
     async function mark() {
         const params = {
             id: mandela.id,
-            user_id: session.user.id
+            user_id: session.user.id,
         };
 
         await send("mandela.mark", params);
@@ -80,7 +80,7 @@
         const params = {
             id: mandela.id,
             user_id: session.user.id,
-            vote: voteValue
+            vote: voteValue,
         };
 
         votes = await send("mandela.vote", params);
@@ -149,13 +149,10 @@
 
 <p>
     ИД: {mandela.id}
-    <br />
-    Добавлено: {listUserName(mandela.user_name, mandela.user_id)}
-    <br />
-    Создано: {formatDateTime(mandela.create_ts)}
+    <br /> Добавлено: {listUserName(mandela.user_name, mandela.user_id)}
+    <br /> Создано: {formatDateTime(mandela.create_ts)}
     {#if mandela.create_ts !== mandela.update_ts}
-        <br />
-        Изменено: {formatDateTime(mandela.update_ts)}
+        <br /> Изменено: {formatDateTime(mandela.update_ts)}
     {/if}
 </p>
 
@@ -180,9 +177,7 @@
 
 {#if mandela.images.length}
     {#each mandela.images as image}
-        <div>
-            <img alt="" src={image} />
-        </div>
+        <div><img alt="" src={image} /></div>
     {/each}
     <hr />
 {/if}
@@ -205,16 +200,13 @@
 
 {#if mandela.links.length}
     {#each mandela.links as link}
-        <div>
-            <a href={link}>{link}</a>
-        </div>
+        <div><a href={link}>{link}</a></div>
     {/each}
     <hr />
 {/if}
 
 {#if categories.length}
-    Категории:
-    {#each categories as category}{consts.Categories[category]}&nbsp;{/each}
+    Категории: {#each categories as category}{consts.Categories[category]}&nbsp;{/each}
     <hr />
 {/if}
 

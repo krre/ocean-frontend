@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
     import * as consts from "consts.js";
     export let title = "";
     export let what = "";
@@ -10,7 +10,7 @@
 
     let modes = [
         { name: "Простой заголовок", current: mode === consts.SimpleTitle },
-        { name: "Сложный заголовок", current: mode === consts.ComplexTitle }
+        { name: "Сложный заголовок", current: mode === consts.ComplexTitle },
     ];
 </script>
 
@@ -29,10 +29,7 @@
 {#if mode == consts.SimpleTitle}
     <input bind:value={title} type="text" />
 {:else}
-    Что:
-    <input bind:value={what} type="text" />
-    Было:
-    <input bind:value={before} type="text" />
-    Стало:
-    <input bind:value={after} type="text" />
+    Что: <input bind:value={what} type="text" /> Было: <input
+        bind:value={before}
+        type="text" /> Стало: <input bind:value={after} type="text" />
 {/if}

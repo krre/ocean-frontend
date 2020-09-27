@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
     import { onMount } from "svelte";
     import { send } from "net.js";
     import * as consts from "consts.js";

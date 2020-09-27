@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
     import * as consts from "consts.js";
     import { formatDateTime, listUserName, sessionUserName } from "utils.js";
     import { send } from "net.js";

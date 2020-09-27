@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
     import * as consts from "consts.js";
     import { goto, stores } from "@sapper/app";
     import { send } from "net.js";
@@ -29,7 +29,7 @@
             videos: videos,
             links: links,
             categories: categories,
-            user_id: $session.user ? $session.user.id : consts.FierceAccountId
+            user_id: $session.user ? $session.user.id : consts.FierceAccountId,
         };
 
         const result = await send("mandela.create", params);

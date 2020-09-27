@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
     import * as consts from "consts.js";
     import { stores } from "@sapper/app";
     import { page, filter, category, sort } from "stores.js";
@@ -7,7 +7,7 @@
         formatDateTime,
         zeroLeading,
         listUserName,
-        makeTitle
+        makeTitle,
     } from "utils.js";
 
     const { session } = stores();
@@ -55,7 +55,7 @@
         const params = {
             sort: $sort,
             limit: limit,
-            offset: ($page - 1) * limit
+            offset: ($page - 1) * limit,
         };
 
         if ($session.user) {
@@ -87,7 +87,7 @@
 
         await send("mandela.delete", { id: selected_delete });
 
-        mandels = mandels.filter(function(mandela) {
+        mandels = mandels.filter(function (mandela) {
             return selected_delete.indexOf(mandela.id) === -1;
         });
         selected_delete = [];
@@ -141,17 +141,12 @@
 </svelte:head>
 
 {#if admin && mandels.length}
-    <button on:click={deleteMandela}>Удалить</button>
-    |
-{/if}
-Всего мандел: {totalCount}
+    <button on:click={deleteMandela}>Удалить</button> |
+{/if} Всего мандел: {totalCount}
 {#if $session.user}
-    | Новых:
-    {#if newCount}
+    | Новых: {#if newCount}
         <div class="new">{newCount}</div>
-    {:else}{newCount}{/if}
-    | Показать:
-    <select bind:value={$filter}>
+    {:else}{newCount}{/if} | Показать: <select bind:value={$filter}>
         {#each filters as filterName, i}
             <option value={i} selected={$filter}>{filterName}</option>
         {/each}
@@ -163,9 +158,7 @@
             {/each}
         </select>
     {/if}
-{/if}
-| Сортировать по:
-<select bind:value={$sort}>
+{/if} | Сортировать по: <select bind:value={$sort}>
     {#each sorts as sortName, i}
         <option value={i} selected={$sort}>{sortName}</option>
     {/each}
@@ -188,8 +181,7 @@
         <a class="row-link" href="mandela/{mandela.id}">
             {zeroLeading(mandela.id, zeroLeadingCount)} | {formatDateTime(mandela.create_ts)}
             | {makeTitle(mandela)} | {listUserName(mandela.user_name, mandela.user_id)}
-            | Комментариев:
-            {#if mandela.comment_count}
+            | Комментариев: {#if mandela.comment_count}
                 <div class="new">{mandela.comment_count}</div>
             {:else}0{/if}
         </a>

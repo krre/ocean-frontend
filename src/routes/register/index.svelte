@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
     import * as consts from "consts.js";
     import { goto } from "@sapper/app";
     import { send } from "net.js";
@@ -24,7 +24,7 @@
 
         let params = {
             name: code === consts.ConspiratorAccount ? "" : name,
-            code: code
+            code: code,
         };
 
         let result = await send("user.create", params);
@@ -55,14 +55,10 @@
 
 <div class="form">
     <AccountMode bind:code />
-    {#if code === consts.UserAccount}
-        Имя:
-        <input bind:value={name} />
-    {/if}
-    Пароль:
-    <input type="password" bind:value={password1} />
-    Пароль (ещё раз):
-    <input type="password" bind:value={password2} />
+    {#if code === consts.UserAccount}Имя: <input bind:value={name} />{/if} Пароль:
+    <input type="password" bind:value={password1} /> Пароль (ещё раз): <input
+        type="password"
+        bind:value={password2} />
     <OperationResult {error} />
     <button on:click={signup} disabled={!singupButtonEnabled}>
         Зарегистрироваться

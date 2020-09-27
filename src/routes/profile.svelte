@@ -1,4 +1,4 @@
-<script context="module">
+<script context="module" lang="ts">
     import { send } from "net.js";
     import { formatDateTime, createToken } from "utils.js";
 
@@ -8,7 +8,7 @@
     }
 </script>
 
-<script>
+<script lang="ts">
     import * as consts from "consts.js";
     import { errorMessage } from "net.js";
     import { stores } from "@sapper/app";
@@ -104,15 +104,14 @@
         <AccountMode bind:code bind:initCode={user.code} />
     {/if}
     {#if code !== consts.ConspiratorAccount}
-        Имя:
-        <input bind:value={user.name} />
+        Имя: <input bind:value={user.name} />
     {/if}
     <OperationResult bind:success={successProfile} bind:error={errorProfile} />
-    <button on:click={update}>Сохранить</button>
-    Пароль:
-    <input type="password" bind:value={password1} />
-    Пароль (ещё раз):
-    <input type="password" bind:value={password2} />
+    <button on:click={update}>Сохранить</button> Пароль: <input
+        type="password"
+        bind:value={password1} /> Пароль (ещё раз): <input
+        type="password"
+        bind:value={password2} />
     <OperationResult
         bind:success={successPassword}
         bind:error={errorPassword} />

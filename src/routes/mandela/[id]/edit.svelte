@@ -1,4 +1,4 @@
-<script context="module">
+<script context="module" lang="ts">
     import { send } from "net.js";
 
     export async function preload(page, session) {
@@ -12,7 +12,7 @@
     }
 </script>
 
-<script>
+<script lang="ts">
     import * as consts from "consts.js";
     import { goto } from "@sapper/app";
     import MandelaEditor from "../../../components/MandelaEditor.svelte";
@@ -41,7 +41,7 @@
             videos: mandela.videos,
             links: mandela.links,
             categories: categories,
-            user_id: session.user.id
+            user_id: session.user.id,
         };
 
         await send("mandela.update", params);
