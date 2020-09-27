@@ -21,7 +21,7 @@
         const params = {
             mandela_id: Number(mandelaId),
             limit: limit,
-            offset: 0
+            offset: 0,
         };
 
         let result = await send("comment.getAll", params);
@@ -41,7 +41,7 @@
         const params = {
             mandela_id: Number(mandelaId),
             user_id: user ? user.id : consts.FierceAccountId,
-            message: message
+            message: message,
         };
 
         await send("comment.create", params);
@@ -57,7 +57,7 @@
     async function edit(row, message) {
         const params = {
             id: comments[row].id,
-            message: message
+            message: message,
         };
 
         await send("comment.update", params);
@@ -72,7 +72,7 @@
 
     async function deleteComment(row) {
         const params = {
-            id: comments[row].id
+            id: comments[row].id,
         };
 
         await send("comment.delete", params);
@@ -108,13 +108,13 @@
         {formatDateTime(comment.create_ts)} | {listUserName(comment.user_name, comment.user_id)}
         {#if user && (comment.user_id === user.id || user.id === consts.AdminAccountId)}
             <div>
-                <div class="label-link" on:click={() => showEdit(i)}>
-                    Редактировать
-                </div>
-                |
-                <div class="label-link" on:click={() => showRemove(i)}>
+                <span
+                    class="label-link"
+                    on:click={() => showEdit(i)}>Редактировать</span> | <span
+                    class="label-link"
+                    on:click={() => showRemove(i)}>
                     Удалить
-                </div>
+                </span>
             </div>
         {/if}
     </div>
@@ -124,7 +124,7 @@
         <p>
             <EditComment
                 text={comment.message}
-                on:send={event => edit(i, event.detail.text)}
+                on:send={(event) => edit(i, event.detail.text)}
                 on:cancel={() => (comment.edit = false)} />
         </p>
     {/if}
