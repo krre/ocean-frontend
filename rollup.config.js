@@ -15,6 +15,7 @@ const legacy = !!process.env.SAPPER_LEGACY_BUILD;
 const onwarn = (warning, onwarn) =>
 	(warning.code === 'MISSING_EXPORT' && /'preload'/.test(warning.message)) ||
 	(warning.code === 'CIRCULAR_DEPENDENCY' && /[/\\]@sapper[/\\]/.test(warning.message)) ||
+	(warning.code === 'THIS_IS_UNDEFINED') ||
 	onwarn(warning);
 
 export default {
@@ -74,6 +75,9 @@ export default {
 
 		preserveEntrySignatures: 'strict',
 		onwarn,
+		// onwarn: function (warning) {
+		// 	console.warn(warning);
+		// }
 	},
 
 	serviceworker: {
