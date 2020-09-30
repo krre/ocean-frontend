@@ -1,7 +1,7 @@
 <script lang="ts">
     import * as consts from "consts";
     import { stores } from "@sapper/app";
-    import { vote } from "stores.js";
+    import { vote } from "stores";
     import { send } from "net.js";
     import { makeTitle } from "utils.js";
 
