@@ -1,5 +1,5 @@
 <script lang="ts">
-    import * as consts from "consts.js";
+    import * as consts from "consts";
     import { stores } from "@sapper/app";
     import { vote } from "stores.js";
     import { send } from "net.js";
@@ -15,7 +15,7 @@
 
     async function load() {
         const params = {
-            vote: $vote,
+            vote: $vote
         };
 
         mandels = await send("rating.getMandels", params);
@@ -23,9 +23,8 @@
 
     function mandelaLink(id, mandela, i) {
         const title = makeTitle(mandela);
-        return `<a class="row-link" href="/mandela/${id}">${
-            i + 1
-        }. ${title} - ${mandela.count}</a>`;
+        return `<a class="row-link" href="/mandela/${id}">${i +
+            1}. ${title} - ${mandela.count}</a>`;
     }
 </script>
 

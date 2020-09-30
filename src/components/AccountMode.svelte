@@ -1,5 +1,5 @@
 <script lang="ts">
-    import * as consts from "consts.js";
+    import * as consts from "consts";
     export let code;
     export let initCode = consts.UserAccount;
     let selected;
@@ -12,17 +12,18 @@
         {
             code: consts.UserAccount,
             name: consts.AccountModeNames[consts.UserAccount],
-            current: initCode === consts.UserAccount ? "true" : "",
+            current: initCode === consts.UserAccount ? "true" : ""
         },
         {
             code: consts.ConspiratorAccount,
             name: consts.AccountModeNames[consts.ConspiratorAccount],
-            current: initCode === consts.ConspiratorAccount ? "true" : "",
-        },
+            current: initCode === consts.ConspiratorAccount ? "true" : ""
+        }
     ];
 </script>
 
-Тип учётной записи: <select bind:value={selected}>
+Тип учётной записи:
+<select bind:value={selected}>
     {#each modes as mode}
         <option value={mode} selected={mode.current}>{mode.name}</option>
     {/each}

@@ -1,5 +1,5 @@
 <script lang="ts">
-    import * as consts from "consts.js";
+    import * as consts from "consts";
     import * as utils from "utils.js";
     import ListEditor from "./ListEditor.svelte";
     import MandelaTitle from "./MandelaTitle.svelte";
@@ -54,7 +54,9 @@
         bind:before
         bind:after
         bind:mode={titleMode} />
-    Описание: <textarea rows="10" bind:value={description} /> Изображения:
+    Описание:
+    <textarea rows="10" bind:value={description} />
+    Изображения:
     <ListEditor bind:list={images} />
     Видео (только YouTube):
     <ListEditor bind:list={videos} />
