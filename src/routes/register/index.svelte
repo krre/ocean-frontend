@@ -2,7 +2,7 @@
     import * as consts from "consts";
     import { goto } from "@sapper/app";
     import { send } from "net";
-    import { createToken } from "utils.js";
+    import { createToken } from "utils";
     import OperationResult from "../../components/OperationResult.svelte";
     import AccountMode from "../../components/AccountMode.svelte";
 

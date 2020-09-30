@@ -1,6 +1,6 @@
 <script context="module" lang="ts">
     import { send } from "net";
-    import { formatDateTime, listUserName } from "utils.js";
+    import { formatDateTime, listUserName } from "utils";
 
     export async function preload(page, session) {
         const { id } = page.params;

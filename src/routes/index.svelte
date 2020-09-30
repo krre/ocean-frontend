@@ -8,7 +8,7 @@
         zeroLeading,
         listUserName,
         makeTitle
-    } from "utils.js";
+    } from "utils";
 
     const { session } = stores();
 

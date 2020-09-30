@@ -1,6 +1,6 @@
 <script lang="ts">
     import * as consts from "consts";
-    import * as utils from "utils.js";
+    import * as utils from "utils";
     import ListEditor from "./ListEditor.svelte";
     import MandelaTitle from "./MandelaTitle.svelte";
 

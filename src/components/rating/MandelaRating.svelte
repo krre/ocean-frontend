@@ -3,7 +3,7 @@
     import { stores } from "@sapper/app";
     import { vote } from "stores";
     import { send } from "net";
-    import { makeTitle } from "utils.js";
+    import { makeTitle } from "utils";
 
     const { session } = stores();
 

@@ -1,6 +1,6 @@
 <script context="module" lang="ts">
     import { send } from "net";
-    import { formatDateTime, createToken } from "utils.js";
+    import { formatDateTime, createToken } from "utils";
 
     export async function preload(page, session) {
         const user = await send("user.getOne", { token: session.user.token });
