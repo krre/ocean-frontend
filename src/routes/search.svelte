@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { send } from "net";
+    import { send } from "network";
     import { makeTitle } from "utils";
 
     const searchContent = "0";

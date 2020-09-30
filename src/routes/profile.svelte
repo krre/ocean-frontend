@@ -1,5 +1,5 @@
 <script context="module" lang="ts">
-    import { send } from "net";
+    import { send } from "network";
     import { formatDateTime, createToken } from "utils";
 
     export async function preload(page, session) {
@@ -10,7 +10,7 @@
 
 <script lang="ts">
     import * as consts from "consts";
-    import { errorMessage } from "net";
+    import { errorMessage } from "network";
     import { stores } from "@sapper/app";
     import OperationResult from "../components/OperationResult.svelte";
     import AccountMode from "../components/AccountMode.svelte";

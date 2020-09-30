@@ -1,6 +1,6 @@
 <script lang="ts">
     import { onMount } from "svelte";
-    import { send } from "net";
+    import { send } from "network";
     import * as consts from "consts";
 
     onMount(async () => {

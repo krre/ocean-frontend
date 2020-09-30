@@ -1,7 +1,7 @@
 <script lang="ts">
     import * as consts from "consts";
     import { formatDateTime, listUserName, sessionUserName } from "utils";
-    import { send } from "net";
+    import { send } from "network";
     import EditComment from "./EditComment.svelte";
     import RemoveComment from "./RemoveComment.svelte";
 

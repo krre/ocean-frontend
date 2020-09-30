@@ -1,5 +1,5 @@
 <script context="module" lang="ts">
-    import { send } from "net";
+    import { send } from "network";
     import { formatDateTime, listUserName } from "utils";
 
     export async function preload(page, session) {

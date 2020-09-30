@@ -1,6 +1,6 @@
 <script lang="ts">
     import { goto, stores } from "@sapper/app";
-    import { send, errorMessage } from "net";
+    import { send, errorMessage } from "network";
     import { post, createToken } from "utils";
     import OperationResult from "../components/OperationResult.svelte";
 
