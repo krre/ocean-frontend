@@ -2,7 +2,7 @@
     import * as consts from "consts";
     import { stores } from "@sapper/app";
     import { page, filter, category, sort } from "stores";
-    import { send } from "net.js";
+    import { send } from "net";
     import {
         formatDateTime,
         zeroLeading,

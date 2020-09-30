@@ -1,7 +1,7 @@
 <script lang="ts">
     import * as consts from "consts";
     import { goto } from "@sapper/app";
-    import { send } from "net.js";
+    import { send } from "net";
     import { createToken } from "utils.js";
     import OperationResult from "../../components/OperationResult.svelte";
     import AccountMode from "../../components/AccountMode.svelte";

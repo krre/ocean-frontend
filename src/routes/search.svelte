@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { send, errorMessage } from "net.js";
+    import { send, errorMessage } from "net";
     import { makeTitle } from "utils.js";
 
     const searchContent = "0";
@@ -26,7 +26,7 @@
                 const params = {
                     content: content || "",
                     search_title: searchInTitle,
-                    search_description: searchInDescription,
+                    search_description: searchInDescription
                 };
                 mandels = await send("search.getByContent", params);
                 emptyResult = !mandels.length;
@@ -60,29 +60,35 @@
 
 <div class="container">
     <div class="item">
-        Искать по <select bind:value={searchType}>
+        Искать по
+        <select bind:value={searchType}>
             <option value={searchContent}>Содержимому</option>
             <option value={searchId}>Номеру</option>
         </select>
     </div>
     <div class="item">
         {#if searchType == searchId}
-            Введите номер: <input type="number" bind:value={id} />
+            Введите номер:
+            <input type="number" bind:value={id} />
         {:else}
-            Введите строку: <input bind:value={content} />
+            Введите строку:
+            <input bind:value={content} />
             <br />
             <label>
-                <input type="checkbox" bind:checked={searchInTitle} /> Искать в заголовке
+                <input type="checkbox" bind:checked={searchInTitle} />
+                Искать в заголовке
             </label>
             <br />
             <label>
-                <input type="checkbox" bind:checked={searchInDescription} /> Искать
-                в описании
+                <input type="checkbox" bind:checked={searchInDescription} />
+                Искать в описании
             </label>
         {/if}
     </div>
 
-    <div class="item"><button on:click={search}>Найти</button></div>
+    <div class="item">
+        <button on:click={search}>Найти</button>
+    </div>
 
     <div class="item">
         {#if emptyResult}

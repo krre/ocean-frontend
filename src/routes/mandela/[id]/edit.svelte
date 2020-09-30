@@ -1,5 +1,5 @@
 <script context="module" lang="ts">
-    import { send } from "net.js";
+    import { send } from "net";
 
     export async function preload(page, session) {
         const { id } = page.params;

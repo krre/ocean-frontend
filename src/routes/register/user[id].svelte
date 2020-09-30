@@ -1,6 +1,4 @@
 <script context="module" lang="ts">
-    import { send } from "net.js";
-
     export async function preload(page, session) {
         const { id } = page.params;
 
@@ -22,4 +20,6 @@
 <p>Используйте его совместно с вашим паролем, чтобы входить на сайт.</p>
 Если вы потеряете ИД или пароль, то не сможете их восставить, и вам придётся
 регистрироваться заново.
-<p><a href="signin">Войти</a></p>
+<p>
+    <a href="signin">Войти</a>
+</p>

@@ -1,11 +1,11 @@
 <script context="module" lang="ts">
-    import { send } from "net.js";
+    import { send } from "net";
     import { formatDateTime, listUserName } from "utils.js";
 
     export async function preload(page, session) {
         const { id } = page.params;
 
-        const params = {
+        const params: any = {
             id: Number(id)
         };
 

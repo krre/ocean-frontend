@@ -2,7 +2,7 @@
     import * as consts from "consts";
     import { stores } from "@sapper/app";
     import { vote } from "stores";
-    import { send } from "net.js";
+    import { send } from "net";
     import { makeTitle } from "utils.js";
 
     const { session } = stores();

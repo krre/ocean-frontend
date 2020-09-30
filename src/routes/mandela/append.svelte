@@ -1,7 +1,7 @@
 <script lang="ts">
     import * as consts from "consts";
     import { goto, stores } from "@sapper/app";
-    import { send } from "net.js";
+    import { send } from "net";
     import MandelaEditor from "../../components/MandelaEditor.svelte";
 
     const { session } = stores();
