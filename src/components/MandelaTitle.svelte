@@ -1,5 +1,5 @@
-<script>
-    import * as consts from "consts.js";
+<script lang="ts">
+    import * as consts from "consts";
     export let title = "";
     export let what = "";
     export let before = "";

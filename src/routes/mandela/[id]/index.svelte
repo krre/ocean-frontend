@@ -1,11 +1,11 @@
-<script context="module">
-    import { send } from "net.js";
-    import { formatDateTime, listUserName } from "utils.js";
+<script context="module" lang="ts">
+    import { send } from "network";
+    import { formatDateTime, listUserName } from "utils";
 
     export async function preload(page, session) {
         const { id } = page.params;
 
-        const params = {
+        const params: any = {
             id: Number(id)
         };
 
@@ -31,8 +31,8 @@
     }
 </script>
 
-<script>
-    import * as consts from "consts.js";
+<script lang="ts">
+    import * as consts from "consts";
     import { goto } from "@sapper/app";
     import { stores } from "@sapper/app";
     import Comment from "../../../components/comment/Comment.svelte";

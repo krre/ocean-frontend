@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
     export let status;
     export let error;
 
@@ -6,7 +6,6 @@
 </script>
 
 <style>
-
 </style>
 
 <svelte:head>

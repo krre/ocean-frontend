@@ -1,6 +1,6 @@
-<script>
+<script lang="ts">
     import { goto, stores } from "@sapper/app";
-    import { post } from "utils.js";
+    import { post } from "utils";
 
     const { session } = stores();
 

@@ -1,6 +1,6 @@
-<script>
-    import { send, errorMessage } from "net.js";
-    import { makeTitle } from "utils.js";
+<script lang="ts">
+    import { send } from "network";
+    import { makeTitle } from "utils";
 
     const searchContent = "0";
     const searchId = "1";

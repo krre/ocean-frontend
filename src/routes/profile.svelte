@@ -1,6 +1,6 @@
-<script context="module">
-    import { send } from "net.js";
-    import { formatDateTime, createToken } from "utils.js";
+<script context="module" lang="ts">
+    import { send } from "network";
+    import { formatDateTime, createToken } from "utils";
 
     export async function preload(page, session) {
         const user = await send("user.getOne", { token: session.user.token });
@@ -8,9 +8,9 @@
     }
 </script>
 
-<script>
-    import * as consts from "consts.js";
-    import { errorMessage } from "net.js";
+<script lang="ts">
+    import * as consts from "consts";
+    import { errorMessage } from "network";
     import { stores } from "@sapper/app";
     import OperationResult from "../components/OperationResult.svelte";
     import AccountMode from "../components/AccountMode.svelte";

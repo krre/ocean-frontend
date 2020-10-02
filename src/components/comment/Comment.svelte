@@ -1,7 +1,7 @@
-<script>
-    import * as consts from "consts.js";
-    import { formatDateTime, listUserName, sessionUserName } from "utils.js";
-    import { send } from "net.js";
+<script lang="ts">
+    import * as consts from "consts";
+    import { formatDateTime, listUserName, sessionUserName } from "utils";
+    import { send } from "network";
     import EditComment from "./EditComment.svelte";
     import RemoveComment from "./RemoveComment.svelte";
 
@@ -108,13 +108,13 @@
         {formatDateTime(comment.create_ts)} | {listUserName(comment.user_name, comment.user_id)}
         {#if user && (comment.user_id === user.id || user.id === consts.AdminAccountId)}
             <div>
-                <div class="label-link" on:click={() => showEdit(i)}>
+                <span class="label-link" on:click={() => showEdit(i)}>
                     Редактировать
-                </div>
+                </span>
                 |
-                <div class="label-link" on:click={() => showRemove(i)}>
+                <span class="label-link" on:click={() => showRemove(i)}>
                     Удалить
-                </div>
+                </span>
             </div>
         {/if}
     </div>

@@ -1,6 +1,4 @@
-<script context="module">
-    import { send } from "net.js";
-
+<script context="module" lang="ts">
     export async function preload(page, session) {
         const { id } = page.params;
 
@@ -8,7 +6,7 @@
     }
 </script>
 
-<script>
+<script lang="ts">
     export let id;
 </script>
 

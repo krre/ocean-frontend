@@ -1,14 +1,14 @@
-<script>
-    import * as consts from "consts.js";
+<script lang="ts">
+    import * as consts from "consts";
     import { stores } from "@sapper/app";
-    import { page, filter, category, sort } from "stores.js";
-    import { send } from "net.js";
+    import { page, filter, category, sort } from "stores";
+    import { send } from "network";
     import {
         formatDateTime,
         zeroLeading,
         listUserName,
         makeTitle
-    } from "utils.js";
+    } from "utils";
 
     const { session } = stores();
 

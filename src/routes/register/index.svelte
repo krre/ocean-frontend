@@ -1,8 +1,8 @@
-<script>
-    import * as consts from "consts.js";
+<script lang="ts">
+    import * as consts from "consts";
     import { goto } from "@sapper/app";
-    import { send } from "net.js";
-    import { createToken } from "utils.js";
+    import { send } from "network";
+    import { createToken } from "utils";
     import OperationResult from "../../components/OperationResult.svelte";
     import AccountMode from "../../components/AccountMode.svelte";
 
@@ -22,7 +22,7 @@
             return;
         }
 
-        let params = {
+        let params: any = {
             name: code === consts.ConspiratorAccount ? "" : name,
             code: code
         };

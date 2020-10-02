@@ -1,5 +1,5 @@
-<script>
-    import * as consts from "consts.js";
+<script lang="ts">
+    import * as consts from "consts";
     export let code;
     export let initCode = consts.UserAccount;
     let selected;

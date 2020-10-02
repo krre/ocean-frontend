@@ -1,5 +1,5 @@
-<script context="module">
-    import { send } from "net.js";
+<script context="module" lang="ts">
+    import { send } from "network";
 
     export async function preload(page, session) {
         const { id } = page.params;
@@ -12,8 +12,8 @@
     }
 </script>
 
-<script>
-    import * as consts from "consts.js";
+<script lang="ts">
+    import * as consts from "consts";
     import { goto } from "@sapper/app";
     import MandelaEditor from "../../../components/MandelaEditor.svelte";
 

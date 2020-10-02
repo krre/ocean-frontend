@@ -1,6 +1,6 @@
-<script>
+<script lang="ts">
     import { goto, stores } from "@sapper/app";
-    import { page, filter, category, sort } from "stores.js";
+    import { page, filter, category, sort } from "stores";
     const { session } = stores();
 
     function home() {

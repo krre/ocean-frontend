@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
     import { createEventDispatcher } from "svelte";
 
     const dispatch = createEventDispatcher();
@@ -6,7 +6,7 @@
 
     function send() {
         dispatch("send", {
-            text: text
+            text: text,
         });
     }
 

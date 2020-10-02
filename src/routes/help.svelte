@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
     import { stores } from "@sapper/app";
     const { page } = stores();
 </script>
@@ -9,25 +9,17 @@
 
 <h1>Справка</h1>
 
-<div>
-    <a href="{$page.path}#about">О сайте</a>
-</div>
+<div><a href="{$page.path}#about">О сайте</a></div>
 
-<div>
-    <a href="{$page.path}#termins">Термины</a>
-</div>
+<div><a href="{$page.path}#termins">Термины</a></div>
 
-<div>
-    <a href="{$page.path}#research">Исследования наших участников</a>
-</div>
+<div><a href="{$page.path}#research">Исследования наших участников</a></div>
 
 <div>
     <a href="{$page.path}#rules">Рекомендуемые правила оформления мандел</a>
 </div>
 
-<div>
-    <a href="{$page.path}#links">Полезные ссылки</a>
-</div>
+<div><a href="{$page.path}#links">Полезные ссылки</a></div>
 
 <div>
     <a href="https://t.me/OceanMandela">
@@ -94,15 +86,13 @@
     <li>
         <a href="https://mandelafx.livejournal.com/906.html">
             Категории мандельских аномалий
-        </a>
-        - попытка систематизации наблюдаемых аномалий, выполненная Владимиром
+        </a> - попытка систематизации наблюдаемых аномалий, выполненная Владимиром
         Зарыповым.
     </li>
     <li>
         <a href="/download/Основы манделоведения (по Зарыпову).docx">
             Основы манделоведения
-        </a>
-        - учебное пособие, составленное Заинтересованным скептиком.
+        </a> - учебное пособие, составленное Заинтересованным скептиком.
     </li>
 </ul>
 
@@ -128,10 +118,7 @@
                 версию факта. В Стало - как официально есть сейчас.
                 <h4>Пример</h4>
                 <p>
-                    Что: Прощальная речь Ельцина
-                    <br />
-                    Было: Я устал, я ухожу
-                    <br />
+                    Что: Прощальная речь Ельцина <br /> Было: Я устал, я ухожу <br />
                     Стало: Я ухожу
                 </p>
                 <p>В каталоге такой заголовок будет показан в виде:</p>
@@ -270,9 +257,7 @@
     </a>
 </div>
 
-<div>
-    <a href="https://njkntr.livejournal.com">Блог мандельщицы njkntr</a>
-</div>
+<div><a href="https://njkntr.livejournal.com">Блог мандельщицы njkntr</a></div>
 
 <h3>YouTube</h3>
 <div>
@@ -320,9 +305,7 @@
 </div>
 
 <h3>Каталоги мандел</h3>
-<div>
-    <a href="http://mandela-ru.wikidot.com">Манделопедия</a>
-</div>
+<div><a href="http://mandela-ru.wikidot.com">Манделопедия</a></div>
 
 <div>
     <a href="http://effectmandela.ru">
