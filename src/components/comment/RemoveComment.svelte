@@ -2,7 +2,6 @@
     import { createEventDispatcher } from "svelte";
 
     const dispatch = createEventDispatcher();
-    let message;
 
     function confirm() {
         dispatch("confirm");

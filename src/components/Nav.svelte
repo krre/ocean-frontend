@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { goto, stores } from "@sapper/app";
+    import { stores } from "@sapper/app";
     import { page, filter, category, sort } from "stores";
     const { session } = stores();
 
