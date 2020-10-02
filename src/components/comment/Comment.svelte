@@ -6,20 +6,20 @@
     import RemoveComment from "./RemoveComment.svelte";
 
     export let user;
-    export let mandelaId;
+    export let mandelaId: number;
 
-    let totalCount;
+    let totalCount: number;
     const limit = 1000; // TODO: When will be added pagination, change on 50
 
     let comments = [];
-    let message;
+    let message: string;
     let userName = sessionUserName(user);
 
     $: mandelaId && load();
 
     async function load() {
         const params = {
-            mandela_id: Number(mandelaId),
+            mandela_id: +mandelaId,
             limit: limit,
             offset: 0
         };
@@ -39,7 +39,7 @@
 
     async function append() {
         const params = {
-            mandela_id: Number(mandelaId),
+            mandela_id: +mandelaId,
             user_id: user ? user.id : consts.FierceAccountId,
             message: message
         };
@@ -49,14 +49,14 @@
         load();
     }
 
-    function showEdit(row) {
+    function showEdit(row: number) {
         comments[row].edit = true;
         comments[row].remove = false;
     }
 
-    async function edit(row, message) {
+    async function edit(row: number, message: string) {
         const params = {
-            id: comments[row].id,
+            id: +comments[row].id,
             message: message
         };
 
@@ -65,12 +65,12 @@
         comments[row].edit = false;
     }
 
-    function showRemove(row) {
+    function showRemove(row: number) {
         comments[row].remove = true;
         comments[row].edit = false;
     }
 
-    async function deleteComment(row) {
+    async function deleteComment(row: number) {
         const params = {
             id: comments[row].id
         };

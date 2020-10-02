@@ -1,6 +1,6 @@
 <script lang="ts">
     import * as consts from "consts";
-    export let code;
+    export let code: string;
     export let initCode = consts.UserAccount;
     let selected;
 
@@ -12,12 +12,12 @@
         {
             code: consts.UserAccount,
             name: consts.AccountModeNames[consts.UserAccount],
-            current: initCode === consts.UserAccount ? "true" : ""
+            current: initCode === consts.UserAccount
         },
         {
             code: consts.ConspiratorAccount,
             name: consts.AccountModeNames[consts.ConspiratorAccount],
-            current: initCode === consts.ConspiratorAccount ? "true" : ""
+            current: initCode === consts.ConspiratorAccount
         }
     ];
 </script>

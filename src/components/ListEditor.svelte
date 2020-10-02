@@ -6,7 +6,7 @@
         list = list;
     }
 
-    function remove(index) {
+    function remove(index: number) {
         list.splice(index, 1);
         list = list;
     }
@@ -28,7 +28,7 @@
     }
 </style>
 
-{#each list as link, i}
+{#each list as _, i}
     <div class="row">
         <input type="text" bind:value={list[i]} />
         <button on:click={() => remove(i)}>Удалить</button>

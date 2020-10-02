@@ -6,7 +6,7 @@
         const { id } = page.params;
 
         const params: any = {
-            id: Number(id)
+            id: +id
         };
 
         if (session.user) {
@@ -39,7 +39,7 @@
 
     const { page } = stores();
 
-    export let id;
+    export let id: number;
     export let mandela;
     export let votes;
     export let vote;

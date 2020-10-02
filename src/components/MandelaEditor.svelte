@@ -16,11 +16,14 @@
     export let categories = [];
     export let user;
 
-    let buttonEnabled;
+    let buttonEnabled: boolean;
 
     $: buttonEnabled =
-        (titleMode === consts.SimpleTitle && title) ||
-        (titleMode === consts.ComplexTitle && what && before && after);
+        (titleMode === consts.SimpleTitle && title.length > 0) ||
+        (titleMode === consts.ComplexTitle &&
+            what.length > 0 &&
+            before.length > 0 &&
+            after.length > 0);
     let userName = utils.sessionUserName(user);
 </script>
 
