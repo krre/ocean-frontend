@@ -26,13 +26,13 @@
                 const params = {
                     content: content || "",
                     search_title: searchInTitle,
-                    search_description: searchInDescription
+                    search_description: searchInDescription,
                 };
                 mandels = await send("search.getByContent", params);
                 emptyResult = !mandels.length;
             }
         } catch (e) {
-            console.log(e);
+            console.error(e);
         }
     }
 
@@ -86,9 +86,7 @@
         {/if}
     </div>
 
-    <div class="item">
-        <button on:click={search}>Найти</button>
-    </div>
+    <div class="item"><button on:click={search}>Найти</button></div>
 
     <div class="item">
         {#if emptyResult}

@@ -2,7 +2,7 @@
     "compilerOptions": {
         "types": [
             "node"
-        ]
+        ],
     },
     "extends": "@tsconfig/svelte/tsconfig.json",
     "include": [
