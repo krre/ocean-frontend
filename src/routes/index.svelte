@@ -53,7 +53,12 @@
 
     $: admin = user && user.code === consts.AdminAccount;
 
-    $: if (nonReactive.pageInit && filter >= 0 && category >= 0 && sort >= 0) {
+    $: if (nonReactive.pageInit && filter >= 0 && category >= 0) {
+        pageNo = 1;
+        goto(makeLink(pageNo));
+    }
+
+    $: if (nonReactive.pageInit && sort >= 0) {
         goto(makeLink(pageNo));
     }
 
