@@ -2,9 +2,7 @@
     import MandelaRating from "../components/rating/MandelaRating.svelte";
     import UserRating from "../components/rating/UserRating.svelte";
 
-    const MandelaType = 0;
-    const UserType = 1;
-    let type = MandelaType;
+    let type = 0;
 </script>
 
 <svelte:head>
@@ -19,7 +17,7 @@
 
 <p />
 
-{#if type === MandelaType}
+{#if type === 0}
     <MandelaRating />
 {:else}
     <UserRating />
