@@ -6,7 +6,7 @@
 
     const { session } = stores();
 
-    export let titleMode = consts.SimpleTitle;
+    export let titleMode = consts.Mandela.Title.Simple;
     export let title = "";
     export let what = "";
     export let before = "";
@@ -20,16 +20,18 @@
     async function append() {
         const params = {
             title_mode: titleMode,
-            title: titleMode === consts.SimpleTitle ? title : "",
-            what: titleMode === consts.ComplexTitle ? what : "",
-            before: titleMode === consts.ComplexTitle ? before : "",
-            after: titleMode === consts.ComplexTitle ? after : "",
+            title: titleMode === consts.Mandela.Title.Simple ? title : "",
+            what: titleMode === consts.Mandela.Title.Complex ? what : "",
+            before: titleMode === consts.Mandela.Title.Complex ? before : "",
+            after: titleMode === consts.Mandela.Title.Complex ? after : "",
             description: description,
             images: images,
             videos: videos,
             links: links,
             categories: categories,
-            user_id: $session.user ? $session.user.id : consts.FierceAccountId
+            user_id: $session.user
+                ? $session.user.id
+                : consts.Account.Id.Fierce,
         };
 
         const result = await send("mandela.create", params);

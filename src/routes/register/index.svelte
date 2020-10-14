@@ -14,7 +14,7 @@
     let password2 = "";
 
     $: singupButtonEnabled =
-        password1 && password2 && (code === consts.UserAccount ? name : true);
+        password1 && password2 && (code === consts.Account.User ? name : true);
 
     async function signup() {
         if (password1 !== password2) {
@@ -23,8 +23,8 @@
         }
 
         let params: any = {
-            name: code === consts.ConspiratorAccount ? "" : name,
-            code: code
+            name: code === consts.Account.Conspirator ? "" : name,
+            code: code,
         };
 
         let result = await send("user.create", params);
@@ -55,10 +55,7 @@
 
 <div class="form">
     <AccountMode bind:code />
-    {#if code === consts.UserAccount}
-        Имя:
-        <input bind:value={name} />
-    {/if}
+    {#if code === consts.Account.User}Имя: <input bind:value={name} />{/if}
     Пароль:
     <input type="password" bind:value={password1} />
     Пароль (ещё раз):

@@ -27,21 +27,27 @@
             id: Number(id),
             title_mode: mandela.title_mode,
             title:
-                mandela.title_mode === consts.SimpleTitle ? mandela.title : "",
+                mandela.title_mode === consts.Mandela.Title.Simple
+                    ? mandela.title
+                    : "",
             what:
-                mandela.title_mode === consts.ComplexTitle ? mandela.what : "",
+                mandela.title_mode === consts.Mandela.Title.Complex
+                    ? mandela.what
+                    : "",
             before:
-                mandela.title_mode === consts.ComplexTitle
+                mandela.title_mode === consts.Mandela.Title.Complex
                     ? mandela.before
                     : "",
             after:
-                mandela.title_mode === consts.ComplexTitle ? mandela.after : "",
+                mandela.title_mode === consts.Mandela.Title.Complex
+                    ? mandela.after
+                    : "",
             description: mandela.description,
             images: mandela.images,
             videos: mandela.videos,
             links: mandela.links,
             categories: categories,
-            user_id: session.user.id
+            user_id: session.user.id,
         };
 
         await send("mandela.update", params);

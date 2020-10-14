@@ -51,7 +51,7 @@
 
     const nonReactive = new NonReactive();
 
-    $: admin = user && user.code === consts.AdminAccount;
+    $: admin = user && user.code === consts.Account.Admin;
 
     $: if (nonReactive.pageInit && filter >= 0 && category >= 0) {
         pageNo = 1;

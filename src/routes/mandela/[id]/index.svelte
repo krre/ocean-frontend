@@ -6,7 +6,7 @@
         const { id } = page.params;
 
         const params: any = {
-            id: +id
+            id: +id,
         };
 
         if (session.user) {
@@ -55,7 +55,7 @@
     }
 
     let title =
-        mandela.title_mode === consts.SimpleTitle
+        mandela.title_mode === consts.Mandela.Title.Simple
             ? mandela.title
             : mandela.what;
 
@@ -70,7 +70,7 @@
     async function mark() {
         const params = {
             id: mandela.id,
-            user_id: session.user.id
+            user_id: session.user.id,
         };
 
         await send("mandela.mark", params);
@@ -80,7 +80,7 @@
         const params = {
             id: mandela.id,
             user_id: session.user.id,
-            vote: voteValue
+            vote: voteValue,
         };
 
         votes = await send("mandela.vote", params);
@@ -148,14 +148,18 @@
 <h1>{title}</h1>
 
 <p>
-    ИД: {mandela.id}
+    ИД:
+    {mandela.id}
     <br />
-    Добавлено: {listUserName(mandela.user_name, mandela.user_id)}
+    Добавлено:
+    {listUserName(mandela.user_name, mandela.user_id)}
     <br />
-    Создано: {formatDateTime(mandela.create_ts)}
+    Создано:
+    {formatDateTime(mandela.create_ts)}
     {#if mandela.create_ts !== mandela.update_ts}
         <br />
-        Изменено: {formatDateTime(mandela.update_ts)}
+        Изменено:
+        {formatDateTime(mandela.update_ts)}
     {/if}
 </p>
 
@@ -168,7 +172,7 @@
 
 <hr />
 
-{#if mandela.title_mode === consts.ComplexTitle}
+{#if mandela.title_mode === consts.Mandela.Title.Complex}
     <p>Было: {mandela.before}</p>
     <p>Стало: {mandela.after}</p>
 {/if}
@@ -180,9 +184,7 @@
 
 {#if mandela.images.length}
     {#each mandela.images as image}
-        <div>
-            <img alt="" src={image} />
-        </div>
+        <div><img alt="" src={image} /></div>
     {/each}
     <hr />
 {/if}
@@ -205,9 +207,7 @@
 
 {#if mandela.links.length}
     {#each mandela.links as link}
-        <div>
-            <a href={link}>{link}</a>
-        </div>
+        <div><a href={link}>{link}</a></div>
     {/each}
     <hr />
 {/if}

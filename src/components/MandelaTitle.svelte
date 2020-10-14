@@ -4,13 +4,19 @@
     export let what = "";
     export let before = "";
     export let after = "";
-    export let mode = consts.SimpleTitle;
+    export let mode = consts.Mandela.Title.Simple;
 
     let selected;
 
     let modes = [
-        { name: "Простой заголовок", current: mode === consts.SimpleTitle },
-        { name: "Сложный заголовок", current: mode === consts.ComplexTitle }
+        {
+            name: "Простой заголовок",
+            current: mode === consts.Mandela.Title.Simple,
+        },
+        {
+            name: "Сложный заголовок",
+            current: mode === consts.Mandela.Title.Complex,
+        },
     ];
 </script>
 
@@ -26,7 +32,7 @@
     {/each}
 </select>
 
-{#if mode == consts.SimpleTitle}
+{#if mode == consts.Mandela.Title.Simple}
     <input bind:value={title} type="text" />
 {:else}
     Что:

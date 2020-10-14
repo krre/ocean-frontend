@@ -21,7 +21,7 @@
         const params = {
             mandela_id: +mandelaId,
             limit: limit,
-            offset: 0
+            offset: 0,
         };
 
         let result = await send("comment.getAll", params);
@@ -40,8 +40,8 @@
     async function append() {
         const params = {
             mandela_id: +mandelaId,
-            user_id: user ? user.id : consts.FierceAccountId,
-            message: message
+            user_id: user ? user.id : consts.Account.Id.Fierce,
+            message: message,
         };
 
         await send("comment.create", params);
@@ -57,7 +57,7 @@
     async function edit(row: number, message: string) {
         const params = {
             id: +comments[row].id,
-            message: message
+            message: message,
         };
 
         await send("comment.update", params);
@@ -72,7 +72,7 @@
 
     async function deleteComment(row: number) {
         const params = {
-            id: comments[row].id
+            id: comments[row].id,
         };
 
         await send("comment.delete", params);
@@ -105,8 +105,10 @@
 
 {#each comments as comment, i}
     <div>
-        {formatDateTime(comment.create_ts)} | {listUserName(comment.user_name, comment.user_id)}
-        {#if user && (comment.user_id === user.id || user.id === consts.AdminAccountId)}
+        {formatDateTime(comment.create_ts)}
+        |
+        {listUserName(comment.user_name, comment.user_id)}
+        {#if user && (comment.user_id === user.id || user.id === consts.Account.Id.Admin)}
             <div>
                 <span class="label-link" on:click={() => showEdit(i)}>
                     Редактировать
@@ -124,7 +126,7 @@
         <p>
             <EditComment
                 text={comment.message}
-                on:send={event => edit(i, event.detail.text)}
+                on:send={(event) => edit(i, event.detail.text)}
                 on:cancel={() => (comment.edit = false)} />
         </p>
     {/if}

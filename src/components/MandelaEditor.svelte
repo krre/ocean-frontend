@@ -4,7 +4,7 @@
     import ListEditor from "./ListEditor.svelte";
     import MandelaTitle from "./MandelaTitle.svelte";
 
-    export let titleMode = consts.SimpleTitle;
+    export let titleMode = consts.Mandela.Title.Simple;
     export let title = "";
     export let what = "";
     export let before = "";
@@ -19,8 +19,8 @@
     let buttonEnabled: boolean;
 
     $: buttonEnabled =
-        (titleMode === consts.SimpleTitle && title.length > 0) ||
-        (titleMode === consts.ComplexTitle &&
+        (titleMode === consts.Mandela.Title.Simple && title.length > 0) ||
+        (titleMode === consts.Mandela.Title.Complex &&
             what.length > 0 &&
             before.length > 0 &&
             after.length > 0);

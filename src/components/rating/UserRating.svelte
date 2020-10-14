@@ -14,7 +14,7 @@
 
 {#each users as user, i}
     {i + 1}.
-    {user.name || consts.AccountModeNames[consts.ConspiratorAccount]}
+    {user.name || consts.Account.ModeNames[consts.Account.Conspirator]}
     -
     {user.count}
     <br />

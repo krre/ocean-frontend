@@ -25,7 +25,7 @@
         }
 
         const query = params.toString();
-        const resQuery = consts.RatingRoute + (query ? "?" + query : "");
+        const resQuery = consts.Route.Rating + (query ? "?" + query : "");
         goto(resQuery);
     }
 

@@ -1,24 +1,24 @@
 <script lang="ts">
     import * as consts from "consts";
     export let code: string;
-    export let initCode = consts.UserAccount;
+    export let initCode = consts.Account.User;
     let selected;
 
     $: {
-        code = selected ? selected.code : consts.UserAccount;
+        code = selected ? selected.code : consts.Account.User;
     }
 
     let modes = [
         {
-            code: consts.UserAccount,
-            name: consts.AccountModeNames[consts.UserAccount],
-            current: initCode === consts.UserAccount
+            code: consts.Account.User,
+            name: consts.Account.ModeNames[consts.Account.User],
+            current: initCode === consts.Account.User,
         },
         {
-            code: consts.ConspiratorAccount,
-            name: consts.AccountModeNames[consts.ConspiratorAccount],
-            current: initCode === consts.ConspiratorAccount
-        }
+            code: consts.Account.Conspirator,
+            name: consts.Account.ModeNames[consts.Account.Conspirator],
+            current: initCode === consts.Account.Conspirator,
+        },
     ];
 </script>
 

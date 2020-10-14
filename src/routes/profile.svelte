@@ -34,13 +34,13 @@
         const params = {};
         params.id = user.id;
 
-        if (code === consts.UserAccount && !user.name) {
+        if (code === consts.Account.User && !user.name) {
             errorProfile = "Введите имя";
             return;
         }
 
-        params.name = code === consts.ConspiratorAccount ? "" : user.name;
-        params.code = user.code === consts.AdminAccount ? user.code : code;
+        params.name = code === consts.Account.Conspirator ? "" : user.name;
+        params.code = user.code === consts.Account.Admin ? user.code : code;
 
         try {
             await send("user.update", params);
@@ -48,7 +48,7 @@
             $session.user.name = params.name;
             $session.user.code = params.code;
 
-            if (code === consts.ConspiratorAccount) {
+            if (code === consts.Account.Conspirator) {
                 user.name = "";
             }
 
@@ -100,10 +100,10 @@
 <div class="form">
     <div>ИД: {user.id}</div>
     <div>Создано: {formatDateTime(user.create_ts)}</div>
-    {#if user.code !== consts.AdminAccount}
+    {#if user.code !== consts.Account.Admin}
         <AccountMode bind:code bind:initCode={user.code} />
     {/if}
-    {#if code !== consts.ConspiratorAccount}
+    {#if code !== consts.Account.Conspirator}
         Имя:
         <input bind:value={user.name} />
     {/if}

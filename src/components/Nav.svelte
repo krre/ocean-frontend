@@ -20,15 +20,15 @@
 
 <nav>
     <a href=".">Каталог</a>
-    <a href={consts.MandelaRoute + '/' + consts.AppendRoute}>Добавить</a>
-    <a href={consts.SearchRoute}>Поиск</a>
-    <a href={consts.RatingRoute}>Рейтинг</a>
-    <a href={consts.HelpRoute}>Справка</a>
-    {#if $session.user}<a href={consts.ProfileRoute}>Профиль</a>{/if}
+    <a href={consts.Route.Mandela + '/' + consts.Route.Append}>Добавить</a>
+    <a href={consts.Route.Search}>Поиск</a>
+    <a href={consts.Route.Rating}>Рейтинг</a>
+    <a href={consts.Route.Help}>Справка</a>
+    {#if $session.user}<a href={consts.Route.Profile}>Профиль</a>{/if}
     {#if $session.user}
-        <a href={consts.SignoutRoute}>Выйти</a>
+        <a href={consts.Route.Signout}>Выйти</a>
     {:else}
-        <a href={consts.SigninRoute}>Войти</a>
-        <a href={consts.RegisterRoute}>Регистрация</a>
+        <a href={consts.Route.Signin}>Войти</a>
+        <a href={consts.Route.Register}>Регистрация</a>
     {/if}
 </nav>
