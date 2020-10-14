@@ -1,6 +1,7 @@
 <script lang="ts">
     import MandelaRating from "../components/rating/MandelaRating.svelte";
     import UserRating from "../components/rating/UserRating.svelte";
+    import * as consts from "consts";
     import { goto, stores } from "@sapper/app";
 
     const { page } = stores();
@@ -24,7 +25,7 @@
         }
 
         const query = params.toString();
-        const resQuery = "rating" + (query ? "?" + query : "");
+        const resQuery = consts.RatingRoute + (query ? "?" + query : "");
         goto(resQuery);
     }
 
