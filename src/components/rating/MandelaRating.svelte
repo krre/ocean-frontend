@@ -84,7 +84,7 @@
     function mandelaLink(id: number, mandela, i: number) {
         const title = makeTitle(mandela);
         return `<a class="row-link" href="/mandela/${id}">${
-            i + 1
+            i + 1 + (pageNo - 1) * pageLimit
         }. ${title} - ${mandela.count}</a>`;
     }
 </script>
