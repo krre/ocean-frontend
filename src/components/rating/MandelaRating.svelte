@@ -19,7 +19,7 @@
     let nextPageLink: string;
     let prevPageLink: string;
 
-    const pageLimit = 10;
+    const pageLimit = 50;
 
     class NonReactive {
         pageInit = false;
@@ -69,7 +69,9 @@
             offset: (pageNo - 1) * pageLimit,
         };
 
-        mandels = await send("rating.getMandels", params);
+        let result = await send("rating.getMandels", params);
+        mandels = result.mandels;
+        currentCount = result.total_count;
 
         lastPage = Math.ceil(currentCount / pageLimit);
 
