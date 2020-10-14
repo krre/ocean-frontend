@@ -8,6 +8,7 @@
         listUserName,
         makeTitle,
     } from "utils";
+    import Pagination from "../components/Pagination.svelte";
 
     const { page, session } = stores();
     const user = $session.user;
@@ -151,24 +152,6 @@
 </script>
 
 <style>
-    .pagination-container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-top: 30px;
-        margin: 0 -5px;
-    }
-
-    .pagination-item {
-        padding: 0 5px;
-        text-decoration: none;
-        color: rgb(51, 51, 51);
-    }
-
-    .pagination-item:hover {
-        text-decoration: underline;
-    }
-
     .new {
         color: red;
         display: inline;
@@ -257,18 +240,12 @@
     </div>
 {/each}
 
-{#if currentCount && currentCount > pageLimit}
-    <div class="pagination-container">
-        {#if pageNo > 1}
-            <a class="pagination-item" href={firstPageLink}>Первая</a>
-            <a class="pagination-item" href={prevPageLink}>Предыдущая</a>
-        {/if}
-
-        <div class="pagination-item">{pageNo}</div>
-
-        {#if pageNo < lastPage}
-            <a class="pagination-item" href={nextPageLink}>Следующая</a>
-            <a class="pagination-item" href={lastPageLink}>Последняя</a>
-        {/if}
-    </div>
-{/if}
+<Pagination
+    {currentCount}
+    {pageLimit}
+    {pageNo}
+    {lastPage}
+    {firstPageLink}
+    {prevPageLink}
+    {nextPageLink}
+    {lastPageLink} />
