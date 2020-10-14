@@ -180,13 +180,15 @@
     <button on:click={deleteMandela}>Удалить</button>
     |
 {/if}
-Всего мандел:
+Всего:
 {totalCount}
 {#if user}
     | Новых:
     {#if newCount}
         <div class="new">{newCount}</div>
     {:else}{newCount}{/if}
+    | Моих:
+    {mineCount}
     | Показать:
     <select bind:value={filter}>
         {#each filters as filterName, i}
