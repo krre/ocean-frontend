@@ -3,11 +3,23 @@
     import { goto, stores } from "@sapper/app";
     import { send } from "network";
     import { makeTitle } from "utils";
+    import Pagination from "../Pagination.svelte";
 
     const { page } = stores();
 
     let mandels = [];
     let vote = 0;
+
+    let pageNo = 1;
+    let currentCount = 0;
+    let lastPage = 0;
+
+    let firstPageLink: string;
+    let lastPageLink: string;
+    let nextPageLink: string;
+    let prevPageLink: string;
+
+    const pageLimit = 10;
 
     class NonReactive {
         pageInit = false;
@@ -20,15 +32,8 @@
     const nonReactive = new NonReactive();
 
     $: if (nonReactive.pageInit && vote >= 0) {
-        const params = new URLSearchParams();
-
-        if (vote) {
-            params.append("vote", vote.toString());
-        }
-
-        const query = params.toString();
-        const resQuery = consts.Route.Rating + (query ? "?" + query : "");
-        goto(resQuery);
+        pageNo = 1;
+        goto(makeLink(pageNo));
     }
 
     $: if (process.browser && $page.query) {
@@ -37,16 +42,41 @@
         nonReactive.setPageInit();
     }
 
+    function makeLink(page: number): string {
+        const params = new URLSearchParams();
+
+        if (page > 1) {
+            params.append("page", page.toString());
+        }
+
+        if (vote) {
+            params.append("vote", vote.toString());
+        }
+
+        const query = params.toString();
+        return consts.Route.Rating + (query ? "?" + query : "");
+    }
+
     function assignQuery() {
+        pageNo = +$page.query.page || 1;
         vote = +$page.query.vote || 0;
     }
 
     async function load() {
         const params = {
             vote: vote,
+            limit: pageLimit,
+            offset: (pageNo - 1) * pageLimit,
         };
 
         mandels = await send("rating.getMandels", params);
+
+        lastPage = Math.ceil(currentCount / pageLimit);
+
+        firstPageLink = makeLink(1);
+        lastPageLink = makeLink(lastPage);
+        nextPageLink = makeLink(pageNo + 1);
+        prevPageLink = makeLink(pageNo - 1);
     }
 
     function mandelaLink(id: number, mandela, i: number) {
@@ -69,3 +99,13 @@
     {@html mandelaLink(mandela.id, mandela, i)}
     <br />
 {/each}
+
+<Pagination
+    {currentCount}
+    {pageLimit}
+    {pageNo}
+    {lastPage}
+    {firstPageLink}
+    {prevPageLink}
+    {nextPageLink}
+    {lastPageLink} />
