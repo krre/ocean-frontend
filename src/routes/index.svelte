@@ -22,6 +22,7 @@
     let totalCount = 0;
     let newCount = 0;
     let mineCount = 0;
+    let pollCount = 0;
     let categoryCount = 0;
 
     let selected_delete = [];
@@ -33,11 +34,12 @@
     let nextPageLink: string;
     let prevPageLink: string;
 
-    const filters = ["Все", "Новые", "Мои", "Категория"];
+    const filters = ["Все", "Новые", "Мои", "Опросы", "Категория"];
     const showAll = 0;
     const showNew = 1;
     const showMine = 2;
-    const showCategory = 3;
+    const showPoll = 3;
+    const showCategory = 4;
     const sorts = ["Манделам", "Комментариям"];
     const zeroLeadingCount = 3;
     const pageLimit = 50;
@@ -94,6 +96,7 @@
         totalCount = result.total_count;
         newCount = result.new_count;
         mineCount = result.mine_count;
+        pollCount = result.poll_count;
         categoryCount = result.category_count;
 
         if (filter === showAll) {
@@ -102,6 +105,8 @@
             currentCount = newCount;
         } else if (filter === showMine) {
             currentCount = mineCount;
+        } else if (filter === showPoll) {
+            currentCount = pollCount;
         } else if (filter === showCategory) {
             currentCount = categoryCount;
         }
@@ -189,6 +194,10 @@
     {:else}{newCount}{/if}
     | Моих:
     {mineCount}
+    | Опросов:
+    {#if pollCount}
+        <div class="new">{pollCount}</div>
+    {:else}{pollCount}{/if}
     | Показать:
     <select bind:value={filter}>
         {#each filters as filterName, i}
