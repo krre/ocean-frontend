@@ -23,6 +23,7 @@
     <a href={consts.Route.Mandela + '/' + consts.Route.Append}>Добавить</a>
     <a href={consts.Route.Search}>Поиск</a>
     <a href={consts.Route.Rating}>Рейтинг</a>
+    <a href={consts.Route.Forum}>Форум</a>
     <a href={consts.Route.Help}>Справка</a>
     {#if $session.user}<a href={consts.Route.Profile}>Профиль</a>{/if}
     {#if $session.user}
