@@ -5,6 +5,13 @@
 </script>
 
 <style>
+    :global(body) {
+        margin: 0;
+        font-family: Roboto, -apple-system, BlinkMacSystemFont, Segoe UI, Oxygen,
+            Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+        font-size: 90%;
+    }
+
     main {
         padding: 0.5em;
     }
