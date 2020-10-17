@@ -1,6 +1,7 @@
 <script context="module" lang="ts">
     import { send } from "network";
     import { formatDateTime, listUserName } from "utils";
+    import * as route from "route";
 
     export async function preload(page, session) {
         const { id } = page.params;
@@ -60,7 +61,7 @@
             : mandela.what;
 
     function edit() {
-        goto("mandela/" + id + "/edit");
+        goto(route.Mandela.Edit(id));
     }
 
     function fixYouTubeLink(link) {

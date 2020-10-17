@@ -1,6 +1,6 @@
 <script lang="ts">
     import { stores } from "@sapper/app";
-    import * as consts from "consts";
+    import * as route from "route";
     const { session } = stores();
 </script>
 
@@ -20,16 +20,16 @@
 
 <nav>
     <a href=".">Каталог</a>
-    <a href={consts.Route.Mandela + '/' + consts.Route.Append}>Добавить</a>
-    <a href={consts.Route.Search}>Поиск</a>
-    <a href={consts.Route.Rating}>Рейтинг</a>
-    <a href={consts.Route.Forum}>Форум</a>
-    <a href={consts.Route.Help}>Справка</a>
-    {#if $session.user}<a href={consts.Route.Profile}>Профиль</a>{/if}
+    <a href={route.Mandela.Append}>Добавить</a>
+    <a href={route.Search}>Поиск</a>
+    <a href={route.Rating}>Рейтинг</a>
+    <a href={route.Forum.Root}>Форум</a>
+    <a href={route.Help}>Справка</a>
+    {#if $session.user}<a href={route.Profile}>Профиль</a>{/if}
     {#if $session.user}
-        <a href={consts.Route.Signout}>Выйти</a>
+        <a href={route.Signout}>Выйти</a>
     {:else}
-        <a href={consts.Route.Signin}>Войти</a>
-        <a href={consts.Route.Register}>Регистрация</a>
+        <a href={route.Signin}>Войти</a>
+        <a href={route.Register}>Регистрация</a>
     {/if}
 </nav>

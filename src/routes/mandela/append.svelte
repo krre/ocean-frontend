@@ -1,5 +1,6 @@
 <script lang="ts">
     import * as consts from "consts";
+    import * as route from "route";
     import { goto, stores } from "@sapper/app";
     import { send } from "network";
     import MandelaEditor from "../../components/MandelaEditor.svelte";
@@ -35,7 +36,7 @@
         };
 
         const result = await send("mandela.create", params);
-        goto("mandela/" + result.id);
+        goto(route.Mandela.Id(result.id));
     }
 </script>
 

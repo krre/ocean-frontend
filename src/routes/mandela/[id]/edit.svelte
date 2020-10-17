@@ -1,5 +1,6 @@
 <script context="module" lang="ts">
     import { send } from "network";
+    import * as route from "route";
 
     export async function preload(page, session) {
         const { id } = page.params;
@@ -51,7 +52,7 @@
         };
 
         await send("mandela.update", params);
-        goto("mandela/" + id);
+        goto(route.Mandela.Id(id));
     }
 </script>
 

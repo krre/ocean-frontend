@@ -1,5 +1,6 @@
 <script lang="ts">
     import * as consts from "consts";
+    import * as route from "route";
     import { goto, stores } from "@sapper/app";
     import { send } from "network";
     import { makeTitle } from "utils";
@@ -54,7 +55,7 @@
         }
 
         const query = params.toString();
-        return consts.Route.Rating + (query ? "?" + query : "");
+        return route.Rating + (query ? "?" + query : "");
     }
 
     function assignQuery() {
