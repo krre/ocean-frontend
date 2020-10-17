@@ -1,5 +1,6 @@
 <script lang="ts">
     import * as consts from "consts";
+    import * as method from "method";
     import { formatDateTime, listUserName, sessionUserName } from "utils";
     import { send } from "network";
     import EditComment from "./EditComment.svelte";
@@ -24,7 +25,7 @@
             offset: 0,
         };
 
-        let result = await send("comment.getAll", params);
+        let result = await send(method.Comment.GetAll, params);
         totalCount = result.total_count;
 
         comments = [];
@@ -44,7 +45,7 @@
             message: message,
         };
 
-        await send("comment.create", params);
+        await send(method.Comment.Create, params);
         message = "";
         load();
     }
@@ -60,7 +61,7 @@
             message: message,
         };
 
-        await send("comment.update", params);
+        await send(method.Comment.Update, params);
         comments[row].message = message;
         comments[row].edit = false;
     }
@@ -75,7 +76,7 @@
             id: comments[row].id,
         };
 
-        await send("comment.delete", params);
+        await send(method.Comment.Delete, params);
         comments[row].remove = false;
         comments.splice(row, 1);
     }

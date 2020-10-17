@@ -1,4 +1,5 @@
 <script lang="ts">
+    import * as method from "method";
     import { goto, stores } from "@sapper/app";
     import { send, errorMessage } from "network";
     import { post, createToken } from "utils";
@@ -17,16 +18,16 @@
 
         const params = {
             id: id,
-            token: token
+            token: token,
         };
 
         try {
-            const result = await send("user.auth", params);
+            const result = await send(method.User.Auth, params);
             const user = {
                 token: token,
                 id: id,
                 code: result.code,
-                name: result.name
+                name: result.name,
             };
 
             await post("auth/login", user);

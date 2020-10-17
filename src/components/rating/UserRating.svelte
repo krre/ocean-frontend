@@ -2,9 +2,10 @@
     import { onMount } from "svelte";
     import { send } from "network";
     import * as consts from "consts";
+    import * as method from "method";
 
     onMount(async () => {
-        users = await send("rating.getUsers");
+        users = await send(method.Rating.GetUsers);
     });
 
     let users = [];

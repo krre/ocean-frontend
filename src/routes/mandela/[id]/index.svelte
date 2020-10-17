@@ -2,6 +2,7 @@
     import { send } from "network";
     import { formatDateTime, listUserName } from "utils";
     import * as route from "route";
+    import * as method from "method";
 
     export async function preload(page, session) {
         const { id } = page.params;
@@ -14,7 +15,7 @@
             params.user_id = session.user.id;
         }
 
-        let result = await send("mandela.getOne", params);
+        let result = await send(method.Mandela.GetOne, params);
         const mandela = result.mandela;
         const categories = result.categories;
         const votes = result.votes;
@@ -74,7 +75,7 @@
             user_id: session.user.id,
         };
 
-        await send("mandela.mark", params);
+        await send(method.Mandela.Mark, params);
     }
 
     async function castVote() {
@@ -84,7 +85,7 @@
             vote: voteValue,
         };
 
-        votes = await send("mandela.vote", params);
+        votes = await send(method.Mandela.Vote, params);
         vote = voteValue;
         editVote = false;
         totalVotes = 0;

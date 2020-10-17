@@ -1,6 +1,7 @@
 <script lang="ts">
     import * as consts from "consts";
     import * as route from "route";
+    import * as method from "method";
     import { goto, stores } from "@sapper/app";
     import { send } from "network";
     import { makeTitle } from "utils";
@@ -70,7 +71,7 @@
             offset: (pageNo - 1) * pageLimit,
         };
 
-        let result = await send("rating.getMandels", params);
+        let result = await send(method.Rating.GetMandels, params);
         mandels = result.mandels;
         currentCount = result.total_count;
 
@@ -84,7 +85,7 @@
 
     function mandelaLink(id: number, mandela, i: number) {
         const title = makeTitle(mandela);
-        return `<a class="row-link" href="/mandela/${id}">${
+        return `<a class="row-link" href=${route.Mandela.Id(id)}>${
             i + 1 + (pageNo - 1) * pageLimit
         }. ${title} - ${mandela.count}</a>`;
     }

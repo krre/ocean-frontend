@@ -30,6 +30,6 @@
         <a href={route.Signout}>Выйти</a>
     {:else}
         <a href={route.Signin}>Войти</a>
-        <a href={route.Register}>Регистрация</a>
+        <a href={route.Register.Root}>Регистрация</a>
     {/if}
 </nav>

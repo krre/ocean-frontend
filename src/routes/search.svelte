@@ -1,6 +1,7 @@
 <script lang="ts">
     import { send } from "network";
     import { makeTitle } from "utils";
+    import * as method from "method";
 
     const searchContent = "0";
     const searchId = "1";
@@ -20,7 +21,7 @@
 
         try {
             if (searchType === searchId) {
-                mandela = await send("search.getById", { id: Number(id) });
+                mandela = await send(method.Search.GetById, { id: Number(id) });
                 emptyResult = !mandela;
             } else {
                 const params = {
@@ -28,7 +29,7 @@
                     search_title: searchInTitle,
                     search_description: searchInDescription,
                 };
-                mandels = await send("search.getByContent", params);
+                mandels = await send(method.Search.GetByContent, params);
                 emptyResult = !mandels.length;
             }
         } catch (e) {

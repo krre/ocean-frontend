@@ -1,5 +1,7 @@
 <script lang="ts">
     import * as consts from "consts";
+    import * as method from "method";
+    import * as route from "route";
     import { send } from "network";
     import { goto, stores } from "@sapper/app";
     import {
@@ -91,7 +93,7 @@
             params.category = category;
         }
 
-        let result = await send("mandela.getAll", params);
+        let result = await send(method.Mandela.GetAll, params);
         mandels = result.mandels;
         totalCount = result.total_count;
         newCount = result.new_count;
@@ -147,7 +149,7 @@
     async function deleteMandela() {
         if (!selected_delete.length) return;
 
-        await send("mandela.delete", { id: selected_delete });
+        await send(method.Mandela.Delete, { id: selected_delete });
 
         mandels = mandels.filter(function (mandela) {
             return selected_delete.indexOf(mandela.id) === -1;
@@ -235,7 +237,7 @@
                 <div class="old">С</div>
             {/if}
         {/if}
-        <a class="row-link" href="mandela/{mandela.id}">
+        <a class="row-link" href={route.Mandela.Id(mandela.id)}>
             {zeroLeading(mandela.id, zeroLeadingCount)}
             |
             {formatDateTime(mandela.create_ts)}

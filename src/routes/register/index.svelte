@@ -1,5 +1,7 @@
 <script lang="ts">
     import * as consts from "consts";
+    import * as route from "route";
+    import * as method from "method";
     import { goto } from "@sapper/app";
     import { send } from "network";
     import { createToken } from "utils";
@@ -27,15 +29,15 @@
             code: code,
         };
 
-        let result = await send("user.create", params);
+        let result = await send(method.User.Create, params);
 
         params = {};
         params.id = result.id;
         params.token = createToken(result.id, password1);
 
-        await send("user.changePassword", params);
+        await send(method.User.ChangePassword, params);
 
-        goto("/register/user" + result.id);
+        goto(route.Register.UserId(result.id));
     }
 </script>
 

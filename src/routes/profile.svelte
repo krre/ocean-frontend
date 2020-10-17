@@ -1,9 +1,12 @@
 <script context="module" lang="ts">
+    import * as method from "method";
     import { send } from "network";
     import { formatDateTime, createToken } from "utils";
 
     export async function preload(page, session) {
-        const user = await send("user.getOne", { token: session.user.token });
+        const user = await send(method.User.GetOne, {
+            token: session.user.token,
+        });
         return { user };
     }
 </script>
@@ -43,7 +46,7 @@
         params.code = user.code === consts.Account.Admin ? user.code : code;
 
         try {
-            await send("user.update", params);
+            await send(method.User.Update, params);
 
             $session.user.name = params.name;
             $session.user.code = params.code;
@@ -74,7 +77,7 @@
         params.token = createToken(user.id, password1);
 
         try {
-            await send("user.changePassword", params);
+            await send(method.User.ChangePassword, params);
             password1 = "";
             password2 = "";
             successPassword = "Пароль успешно изменён";
