@@ -1,12 +1,9 @@
 <script lang="ts">
-    import * as consts from "consts";
     import * as route from "route";
     import { goto, stores } from "@sapper/app";
+    import Session from "../../components/Session.svelte";
 
-    const { page, session } = stores();
-    const user = $session.user;
-
-    $: admin = user && user.code === consts.Account.Admin;
+    let isAdmin = false;
 
     function append() {
         console.log("append", route.Forum.Category.Append);
@@ -18,4 +15,6 @@
     <title>Форум</title>
 </svelte:head>
 
-{#if admin}<button on:click={append}>Добавить категорию</button>{/if}
+<Session bind:isAdmin />
+
+{#if isAdmin}<button on:click={append}>Добавить категорию</button>{/if}
