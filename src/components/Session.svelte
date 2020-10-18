@@ -3,7 +3,10 @@
     import { stores } from "@sapper/app";
 
     const { session } = stores();
-    export const user = $session.user;
+
+    export let user = null;
     export let isAdmin = false;
-    $: isAdmin = user && user.code === consts.Account.Admin;
+
+    $: isAdmin = user ? user.code === consts.Account.Admin : false;
+    $: user = $session.user;
 </script>

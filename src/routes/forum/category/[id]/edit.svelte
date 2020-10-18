@@ -8,9 +8,7 @@
     let name: string;
     let order: number;
 
-    const action = () => {
-        console.log("edit");
-    };
+    const action = () => {};
 </script>
 
 <Session bind:isAdmin />
