@@ -14,7 +14,7 @@
     const action = async () => {
         const params = {
             name: name,
-            order: order,
+            order_index: order,
         };
 
         await send(method.Forum.Category.Create, params);
