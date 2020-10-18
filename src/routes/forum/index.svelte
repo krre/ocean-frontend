@@ -6,7 +6,6 @@
     let isAdmin = false;
 
     function append() {
-        console.log("append", route.Forum.Category.Append);
         goto(route.Forum.Category.Append);
     }
 </script>
