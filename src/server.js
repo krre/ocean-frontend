@@ -16,7 +16,7 @@ polka() // You can also use Express
 	.use(session({
 		secret: 'conduit',
 		resave: false,
-		saveUninitialized: true,
+		saveUninitialized: false,
 		cookie: {
 			maxAge: 365 * 24 * 60 * 60 * 1000 // 1 year
 		},
