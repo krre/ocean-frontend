@@ -26,16 +26,27 @@
     }
 </script>
 
+<style>
+    .category {
+        margin-top: 0.2em;
+        margin-bottom: 0.2em;
+        padding: 1em;
+        border: 1px solid;
+    }
+</style>
+
 <svelte:head>
     <title>Форум</title>
 </svelte:head>
 
 <Session bind:user bind:isAdmin />
 
+{#each categories as category}
+    <div class="category">
+        <a href={route.Forum.Category.Id(category.id)}>{category.name}</a>
+    </div>
+{/each}
+
 <div>
     {#if isAdmin}<button on:click={append}>Добавить категорию</button>{/if}
 </div>
-
-{#each categories as category}
-    <div>{category.name}</div>
-{/each}
