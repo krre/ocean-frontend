@@ -27,7 +27,9 @@
     export let id: number;
     export let name: string;
 
-    function appendSection() {}
+    function appendSection() {
+        goto(route.Forum.Section.Append(id));
+    }
 
     function edit() {
         goto(route.Forum.Category.Edit(id));
@@ -36,6 +38,6 @@
 
 {name}
 <div>
-    <button on:click={appendSection}> Добавить раздел </button>
-    <button on:click={edit}> Изменить </button>
+    <button on:click={appendSection}>Добавить раздел</button>
+    <button on:click={edit}>Изменить</button>
 </div>
