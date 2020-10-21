@@ -21,16 +21,21 @@
 </script>
 
 <script lang="ts">
-    // export let id: number;
+    import * as route from "route";
+    import { goto } from "@sapper/app";
+
+    export let id: number;
     export let name: string;
 
     function appendSection() {}
 
-    function update() {}
+    function edit() {
+        goto(route.Forum.Category.Edit(id));
+    }
 </script>
 
 {name}
 <div>
     <button on:click={appendSection}> Добавить раздел </button>
-    <button on:click={update}> Изменить </button>
+    <button on:click={edit}> Изменить </button>
 </div>
