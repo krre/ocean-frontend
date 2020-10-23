@@ -20,7 +20,7 @@
             order_index: order,
         };
 
-        // await send(method.Forum.Section.Create, params);
+        await send(method.Forum.Section.Create, params);
         goto(route.Forum.Section.Root);
     };
 </script>
