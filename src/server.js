@@ -8,10 +8,18 @@ import * as sapper from '@sapper/server';
 
 const FileStore = sessionFileStore(session);
 
-const { PORT, NODE_ENV } = process.env;
+const { PORT, NODE_ENV, SSL_KEY, SSL_CERT } = process.env;
 const dev = NODE_ENV === 'development';
 
-polka() // You can also use Express
+const { createServer } = require('https');
+const { readFileSync } = require('fs');
+
+const options = {
+	key: readFileSync(SSL_KEY),
+	cert: readFileSync(SSL_CERT)
+};
+
+const { handler } = polka() // You can also use Express
 	.use(bodyParser.json())
 	.use(session({
 		secret: 'conduit',
@@ -33,6 +41,10 @@ polka() // You can also use Express
 			})
 		})
 	)
-	.listen(PORT, err => {
-		if (err) console.error('error', err);
+	.get('*', (req, res) => {
+		res.end(`POLKA: Hello from ${req.pathname}`);
 	});
+
+createServer(options, handler).listen(PORT, _ => {
+	console.log(`> Running on https://localhost:${PORT}`);
+});
