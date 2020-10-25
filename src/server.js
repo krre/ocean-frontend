@@ -26,7 +26,10 @@ app.use(function (req, res, next) {
 	if (req.secure) {
 		next();
 	} else {
-		res.redirect("https://localhost" + req.url);
+		if (req.headers.host) {
+			const url = 'https://' + req.headers.host.replace(":" + PORT_HTTP, "") + req.url
+			res.redirect(url);
+		}
 	}
 }).use(bodyParser.json())
 	.use(session({
