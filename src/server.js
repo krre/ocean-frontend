@@ -56,8 +56,6 @@ app.use(function (req, res, next) {
 		})
 	);
 
-https.globalAgent.options.ca = require('ssl-root-cas/latest').create();
-
 http.createServer(app).listen(PORT_HTTP, _ => {
 	console.log(`> Running on https://localhost:${PORT_HTTP}`)
 });
