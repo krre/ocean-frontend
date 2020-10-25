@@ -1,5 +1,8 @@
 import sirv from 'sirv';
-import polka from 'polka';
+import express from 'express';
+import http from 'http';
+import https from 'https';
+import fs from 'fs';
 import compression from 'compression';
 import bodyParser from 'body-parser';
 import session from 'express-session';
@@ -10,17 +13,22 @@ const FileStore = sessionFileStore(session);
 
 const { PORT, NODE_ENV, SSL_KEY, SSL_CERT } = process.env;
 const dev = NODE_ENV === 'development';
+const PORT_HTTP = 8080;
 
-const { createServer } = require('https');
-const { readFileSync } = require('fs');
+const app = express();
 
 const options = {
-	key: readFileSync(SSL_KEY),
-	cert: readFileSync(SSL_CERT)
+	key: fs.readFileSync(SSL_KEY),
+	cert: fs.readFileSync(SSL_CERT)
 };
 
-const { handler } = polka() // You can also use Express
-	.use(bodyParser.json())
+app.use(function (req, res, next) {
+	if (req.secure) {
+		next();
+	} else {
+		res.redirect("https://localhost" + req.url);
+	}
+}).use(bodyParser.json())
 	.use(session({
 		secret: 'conduit',
 		resave: false,
@@ -40,11 +48,12 @@ const { handler } = polka() // You can also use Express
 				user: req.session && req.session.user
 			})
 		})
-	)
-	.get('*', (req, res) => {
-		res.end(`POLKA: Hello from ${req.pathname}`);
-	});
+	);
 
-createServer(options, handler).listen(PORT, _ => {
-	console.log(`> Running on https://localhost:${PORT}`);
+http.createServer(app).listen(PORT_HTTP, _ => {
+	console.log(`> Running on https://localhost:${PORT_HTTP}`)
+});
+
+https.createServer(options, app).listen(PORT, _ => {
+	console.log(`> Running on https://localhost:${PORT}`)
 });
