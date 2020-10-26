@@ -43,7 +43,8 @@ app.use(function (req, res, next) {
 			maxAge: 365 * 24 * 60 * 60 * 1000 // 1 year
 		},
 		store: new FileStore({
-			path: '.sessions'
+			path: '.sessions',
+			retries: 0
 		})
 	}))
 	.use(
