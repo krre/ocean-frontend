@@ -2,9 +2,7 @@
     import { setToken } from "network";
 
     export async function preload(page, session) {
-        if (session.user) {
-            setToken(session.user.token);
-        }
+        setToken(session.user ? session.user.token : "");
     }
 </script>
 
