@@ -3,7 +3,7 @@
     import { formatDateTime, createToken } from "utils";
 
     export async function preload(page, session) {
-        const user = await send("user.getOne", { token: session.user.token });
+        const user = await send("user.getOne");
         return { user };
     }
 </script>
