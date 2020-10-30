@@ -9,10 +9,6 @@
             id: +id,
         };
 
-        if (session.user) {
-            params.user_id = session.user.id;
-        }
-
         let result = await send("mandela.getOne", params);
         const mandela = result.mandela;
         const categories = result.categories;
