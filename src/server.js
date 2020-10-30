@@ -58,9 +58,9 @@ app.use(function (req, res, next) {
 	);
 
 http.createServer(app).listen(PORT_HTTP, _ => {
-	console.log(`> Running on https://localhost:${PORT_HTTP}`)
+	console.info(`> Running on https://localhost:${PORT_HTTP}`)
 });
 
 https.createServer(options, app).listen(PORT, _ => {
-	console.log(`> Running on https://localhost:${PORT}`)
+	console.info(`> Running on https://localhost:${PORT}`)
 });
