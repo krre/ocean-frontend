@@ -66,7 +66,6 @@
     async function mark() {
         const params = {
             id: mandela.id,
-            user_id: session.user.id,
         };
 
         await send("mandela.mark", params);
