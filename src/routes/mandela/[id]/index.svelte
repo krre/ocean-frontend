@@ -74,7 +74,6 @@
     async function castVote() {
         const params = {
             id: mandela.id,
-            user_id: session.user.id,
             vote: voteValue,
         };
 
