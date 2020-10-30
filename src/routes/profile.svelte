@@ -1,5 +1,5 @@
 <script context="module" lang="ts">
-    import { send } from "network";
+    import { send, setToken } from "network";
     import { formatDateTime, createToken } from "utils";
 
     export async function preload(page, session) {
@@ -48,10 +48,6 @@
             $session.user.name = params.name;
             $session.user.code = params.code;
 
-            if (code === consts.Account.Conspirator) {
-                user.name = "";
-            }
-
             successProfile = "Профиль успешно обновлён";
         } catch (e) {
             errorProfile = errorMessage(e.code);
@@ -69,12 +65,17 @@
             return;
         }
 
+        const token = createToken(user.id, password1);
+
         const params = {};
         params.id = user.id;
-        params.token = createToken(user.id, password1);
+        params.token = token;
 
         try {
             await send("user.changePassword", params);
+            setToken(token);
+            $session.user.token = token;
+
             password1 = "";
             password2 = "";
             successPassword = "Пароль успешно изменён";
