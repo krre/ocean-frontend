@@ -16,7 +16,6 @@
         const token = createToken(id, password);
 
         const params = {
-            id: id,
             token: token,
         };
 
