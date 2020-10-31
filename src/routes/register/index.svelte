@@ -33,7 +33,7 @@
         params.id = result.id;
         params.token = createToken(result.id, password1);
 
-        await send("user.changePassword", params);
+        await send("user.updateToken", params);
 
         goto("/register/user" + result.id);
     }

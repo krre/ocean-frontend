@@ -72,7 +72,7 @@
         params.token = token;
 
         try {
-            await send("user.changePassword", params);
+            await send("user.updateToken", params);
             setToken(token);
             $session.user.token = token;
 
