@@ -30,11 +30,7 @@
             };
 
             await post("auth/login", user);
-
             $session.user = user;
-            $session.name = result.name;
-            $session.token = token;
-
             setToken(token);
             goto("/");
         } catch (e) {
