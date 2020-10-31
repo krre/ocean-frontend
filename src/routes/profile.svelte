@@ -31,16 +31,15 @@
     let password2;
 
     async function update() {
-        const params = {};
-        params.id = user.id;
-
         if (code === consts.Account.User && !user.name) {
             errorProfile = "Введите имя";
             return;
         }
 
-        params.name = code === consts.Account.Conspirator ? "" : user.name;
-        params.code = user.code === consts.Account.Admin ? user.code : code;
+        const params = {
+            name: code === consts.Account.Conspirator ? "" : user.name,
+            code: user.code === consts.Account.Admin ? user.code : code,
+        };
 
         try {
             await send("user.update", params);
@@ -67,9 +66,9 @@
 
         const token = createToken(user.id, password1);
 
-        const params = {};
-        params.id = user.id;
-        params.token = token;
+        const params = {
+            token: token,
+        };
 
         try {
             await send("user.updateToken", params);
