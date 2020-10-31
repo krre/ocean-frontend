@@ -41,7 +41,6 @@
     async function append() {
         const params = {
             mandela_id: +mandelaId,
-            user_id: user ? user.id : consts.Account.Id.Fierce,
             message: message,
         };
 

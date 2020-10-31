@@ -11,11 +11,7 @@
             id: +id,
         };
 
-        if (session.user) {
-            params.user_id = session.user.id;
-        }
-
-        let result = await send(method.Mandela.GetOne, params);
+        let result = await send("mandela.getOne", params);
         const mandela = result.mandela;
         const categories = result.categories;
         const votes = result.votes;
@@ -72,7 +68,6 @@
     async function mark() {
         const params = {
             id: mandela.id,
-            user_id: session.user.id,
         };
 
         await send(method.Mandela.Mark, params);
@@ -81,7 +76,6 @@
     async function castVote() {
         const params = {
             id: mandela.id,
-            user_id: session.user.id,
             vote: voteValue,
         };
 

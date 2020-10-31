@@ -24,19 +24,19 @@
             return;
         }
 
-        let params: any = {
+        const nextId = await send("user.getNextId");
+        const id = nextId.id;
+
+        let params: object = {
+            id: id,
             name: code === consts.Account.Conspirator ? "" : name,
             code: code,
+            token: createToken(id, password1),
         };
 
         let result = await send(method.User.Create, params);
 
-        params = {};
-        params.id = result.id;
-        params.token = createToken(result.id, password1);
-
-        await send(method.User.ChangePassword, params);
-
+        await send(method.User.Create, params);
         goto(route.Register.UserId(result.id));
     }
 </script>

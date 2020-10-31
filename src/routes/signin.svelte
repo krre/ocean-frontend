@@ -1,7 +1,7 @@
 <script lang="ts">
     import * as method from "method";
     import { goto, stores } from "@sapper/app";
-    import { send, errorMessage } from "network";
+    import { send, setToken, errorMessage } from "network";
     import { post, createToken } from "utils";
     import OperationResult from "../components/OperationResult.svelte";
 
@@ -17,7 +17,6 @@
         const token = createToken(id, password);
 
         const params = {
-            id: id,
             token: token,
         };
 
@@ -31,8 +30,8 @@
             };
 
             await post("auth/login", user);
-
             $session.user = user;
+            setToken(token);
             goto("/");
         } catch (e) {
             error = errorMessage(e.code);

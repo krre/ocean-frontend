@@ -1,3 +1,11 @@
+<script context="module" lang="ts">
+    import { setToken } from "network";
+
+    export async function preload(page, session) {
+        setToken(session.user ? session.user.token : "");
+    }
+</script>
+
 <script lang="ts">
     import Nav from "../components/Nav.svelte";
 

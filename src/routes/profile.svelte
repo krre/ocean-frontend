@@ -1,12 +1,10 @@
 <script context="module" lang="ts">
     import * as method from "method";
-    import { send } from "network";
+    import { send, setToken } from "network";
     import { formatDateTime, createToken } from "utils";
 
     export async function preload(page, session) {
-        const user = await send(method.User.GetOne, {
-            token: session.user.token,
-        });
+        const user = await send(method.User.GetOne);
         return { user };
     }
 </script>
@@ -34,26 +32,21 @@
     let password2;
 
     async function update() {
-        const params = {};
-        params.id = user.id;
-
         if (code === consts.Account.User && !user.name) {
             errorProfile = "Введите имя";
             return;
         }
 
-        params.name = code === consts.Account.Conspirator ? "" : user.name;
-        params.code = user.code === consts.Account.Admin ? user.code : code;
+        const params = {
+            name: code === consts.Account.Conspirator ? "" : user.name,
+            code: user.code === consts.Account.Admin ? user.code : code,
+        };
 
         try {
             await send(method.User.Update, params);
 
             $session.user.name = params.name;
             $session.user.code = params.code;
-
-            if (code === consts.Account.Conspirator) {
-                user.name = "";
-            }
 
             successProfile = "Профиль успешно обновлён";
         } catch (e) {
@@ -72,12 +65,17 @@
             return;
         }
 
-        const params = {};
-        params.id = user.id;
-        params.token = createToken(user.id, password1);
+        const token = createToken(user.id, password1);
+
+        const params = {
+            token: token,
+        };
 
         try {
-            await send(method.User.ChangePassword, params);
+            await send("user.updateToken", params);
+            setToken(token);
+            $session.user.token = token;
+
             password1 = "";
             password2 = "";
             successPassword = "Пароль успешно изменён";

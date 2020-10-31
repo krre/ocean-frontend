@@ -88,7 +88,6 @@
         };
 
         if (user) {
-            params.user_id = user.id;
             params.filter = filter;
             params.category = category;
         }

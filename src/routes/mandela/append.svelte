@@ -31,9 +31,6 @@
             videos: videos,
             links: links,
             categories: categories,
-            user_id: $session.user
-                ? $session.user.id
-                : consts.Account.Id.Fierce,
         };
 
         const result = await send(method.Mandela.Create, params);

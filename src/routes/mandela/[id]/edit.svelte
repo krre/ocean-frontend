@@ -49,7 +49,6 @@
             videos: mandela.videos,
             links: mandela.links,
             categories: categories,
-            user_id: session.user.id,
         };
 
         await send(method.Mandela.Update, params);
