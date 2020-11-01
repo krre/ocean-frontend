@@ -242,10 +242,10 @@
             {makeTitle(mandela)}
             |
             {listUserName(mandela.user_name, mandela.user_id)}
-            | Комментариев:
             {#if mandela.comment_count}
+                | Комментариев:
                 <div class="new">{mandela.comment_count}</div>
-            {:else}0{/if}
+            {/if}
         </a>
     </div>
 {/each}
