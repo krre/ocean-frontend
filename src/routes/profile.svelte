@@ -12,6 +12,7 @@
     import * as consts from "consts";
     import { errorMessage } from "network";
     import { stores } from "@sapper/app";
+    import BoxForm from "../components/BoxForm.svelte";
     import OperationResult from "../components/OperationResult.svelte";
     import AccountMode from "../components/AccountMode.svelte";
 
@@ -84,23 +85,11 @@
     }
 </script>
 
-<style>
-    .form {
-        display: grid;
-        grid-gap: 0.5em;
-        max-width: 400px;
-        margin: auto;
-        padding: 1em;
-        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2),
-            0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    }
-</style>
-
 <svelte:head>
     <title>Профиль</title>
 </svelte:head>
 
-<div class="form">
+<BoxForm>
     <h2>Профиль</h2><span />
     <div>ИД: {user.id}</div>
     <div>Создано: {formatDateTime(user.create_ts)}</div>
@@ -121,4 +110,4 @@
         bind:success={successPassword}
         bind:error={errorPassword} />
     <button on:click={changePassword}>Изменить</button>
-</div>
+</BoxForm>
