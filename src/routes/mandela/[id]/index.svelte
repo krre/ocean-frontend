@@ -112,6 +112,12 @@
 </script>
 
 <style>
+    .grid {
+        display: grid;
+        grid-template-columns: max-content auto;
+        column-gap: 0.5em;
+    }
+
     .message {
         white-space: pre-wrap;
     }
@@ -141,25 +147,23 @@
 
 <h1>{title}</h1>
 
-<p>
-    ИД:
-    {mandela.id}
-    <br />
-    Добавлено:
-    {listUserName(mandela.user_name, mandela.user_id)}
-    <br />
-    Создано:
-    {formatDateTime(mandela.create_ts)}
-    {#if mandela.create_ts !== mandela.update_ts}
-        <br />
-        Изменено:
-        {formatDateTime(mandela.update_ts)}
-    {/if}
-</p>
+<div class="grid">
+    <div>ИД:</div>
+    <div>{mandela.id}</div>
+    <div>Добавлено:</div>
+    <div>{listUserName(mandela.user_name, mandela.user_id)}</div>
+    <div>Создано:</div>
+    <div>{formatDateTime(mandela.create_ts)}</div>
 
-{#if mandela.mark_ts}
-    <p>Просмотрено: {formatDateTime(mandela.mark_ts)}</p>
-{/if}
+    {#if mandela.create_ts !== mandela.update_ts}
+        <div>Изменено:</div>
+        <div>{formatDateTime(mandela.update_ts)}</div>
+    {/if}
+    {#if mandela.mark_ts}
+        <div>Просмотрено:</div>
+        <div>{formatDateTime(mandela.mark_ts)}</div>
+    {/if}
+</div>
 
 <!-- <button on:click={copyLink}>Скопировать ссылку</button>
 <button on:click={copyCode}>Скопировать код ссылки</button> -->
@@ -167,11 +171,16 @@
 <hr />
 
 {#if mandela.title_mode === consts.Mandela.Title.Complex}
-    <p>Было: {mandela.before}</p>
-    <p>Стало: {mandela.after}</p>
+    <div class="grid">
+        <div>Было:</div>
+        <div>{mandela.before}</div>
+        <div>Стало:</div>
+        <div>{mandela.after}</div>
+    </div>
 {/if}
 
 {#if mandela.description}
+    <p />
     <div class="message">{mandela.description}</div>
     <hr />
 {/if}
@@ -213,20 +222,27 @@
 {/if}
 
 {#if session.user && session.user.id === mandela.user_id}
+    <p />
     <button on:click={edit}>Редактировать</button>
     <p />
 {/if}
 
 {#if session.user}
     {#if votes && !editVote}
-        Результаты опроса:
-        <ul>
+        <p>Результаты опроса:</p>
+        <div class="grid" style="margin-left: 1em">
             {#each consts.Votes as voteName, i}
-                <li>{voteName}: {getVoteCount(i)}</li>
+                <div>{voteName}:</div>
+                <div>{getVoteCount(i)}</div>
             {/each}
-        </ul>
-        <div>Всего голосов: {totalVotes}</div>
-        <div>Выбрано: {consts.Votes[vote]}</div>
+        </div>
+        <p />
+        <div class="grid">
+            <div>Всего голосов:</div>
+            <div>{totalVotes}</div>
+            <div>Выбрано:</div>
+            <div>{consts.Votes[vote]}</div>
+        </div>
         <p>
             <button on:click={() => (editVote = true)}>Изменить выбор</button>
         </p>
