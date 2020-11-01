@@ -87,8 +87,12 @@
 <style>
     .form {
         display: grid;
-        grid-gap: 10px;
-        width: 200px;
+        grid-gap: 0.5em;
+        max-width: 400px;
+        margin: auto;
+        padding: 1em;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2),
+            0 6px 20px 0 rgba(0, 0, 0, 0.19);
     }
 </style>
 
@@ -96,8 +100,8 @@
     <title>Профиль</title>
 </svelte:head>
 
-<h1>Профиль</h1>
 <div class="form">
+    <h2>Профиль</h2><span />
     <div>ИД: {user.id}</div>
     <div>Создано: {formatDateTime(user.create_ts)}</div>
     {#if user.code !== consts.Account.Admin}
