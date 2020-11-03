@@ -5,6 +5,7 @@
     import { goto } from "@sapper/app";
     import { send } from "network";
     import { createToken } from "utils";
+    import BoxForm from "../../components/BoxForm.svelte";
     import OperationResult from "../../components/OperationResult.svelte";
     import AccountMode from "../../components/AccountMode.svelte";
 
@@ -41,21 +42,12 @@
     }
 </script>
 
-<style>
-    .form {
-        display: grid;
-        grid-gap: 10px;
-        width: 200px;
-    }
-</style>
-
 <svelte:head>
     <title>Регистрация</title>
 </svelte:head>
 
-<h1>Регистрация</h1>
-
-<div class="form">
+<BoxForm>
+    <h2>Регистрация</h2><span />
     <AccountMode bind:code />
     {#if code === consts.Account.User}Имя: <input bind:value={name} />{/if}
     Пароль:
@@ -66,4 +58,4 @@
     <button on:click={signup} disabled={!singupButtonEnabled}>
         Зарегистрироваться
     </button>
-</div>
+</BoxForm>

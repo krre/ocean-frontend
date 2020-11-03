@@ -3,6 +3,7 @@
     import { goto, stores } from "@sapper/app";
     import { send, setToken, errorMessage } from "network";
     import { post, createToken } from "utils";
+    import BoxForm from "../components/BoxForm.svelte";
     import OperationResult from "../components/OperationResult.svelte";
 
     const { session } = stores();
@@ -39,25 +40,16 @@
     }
 </script>
 
-<style>
-    .form {
-        display: grid;
-        grid-gap: 10px;
-        width: 200px;
-    }
-</style>
-
 <svelte:head>
     <title>Войти</title>
 </svelte:head>
 
-<h1>Войти</h1>
-
-<div class="form">
+<BoxForm>
+    <h2>Войти</h2><span />
     ИД:
     <input type="number" bind:value={id} />
     Пароль:
     <input type="password" bind:value={password} />
     <OperationResult {error} />
     <button on:click={signin} disabled={!signinButtonEnabled}>Войти</button>
-</div>
+</BoxForm>

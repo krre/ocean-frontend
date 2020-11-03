@@ -86,10 +86,10 @@
 </script>
 
 <style>
-    .form {
+    .grid {
         display: grid;
-        grid-gap: 10px;
-        width: 200px;
+        grid-gap: 0.5em;
+        max-width: 250px;
     }
 </style>
 
@@ -97,8 +97,8 @@
     <title>Профиль</title>
 </svelte:head>
 
-<h1>Профиль</h1>
-<div class="form">
+<div class="grid">
+    <h1>Профиль</h1>
     <div>ИД: {user.id}</div>
     <div>Создано: {formatDateTime(user.create_ts)}</div>
     {#if user.code !== consts.Account.Admin}

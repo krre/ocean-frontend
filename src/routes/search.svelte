@@ -37,6 +37,12 @@
         }
     }
 
+    function keyPressed(event: any) {
+        if (event.key == "Enter") {
+            search();
+        }
+    }
+
     function mandelaLink(id, mandela) {
         const title = makeTitle(mandela);
         return `<a target="_blank" class="row-link" href="/mandela/${id}">${title}</a>`;
@@ -70,10 +76,10 @@
     <div class="item">
         {#if searchType == searchId}
             Введите номер:
-            <input type="number" bind:value={id} />
+            <input type="number" bind:value={id} on:keyup={keyPressed} />
         {:else}
             Введите строку:
-            <input bind:value={content} />
+            <input bind:value={content} on:keyup={keyPressed} />
             <br />
             <label>
                 <input type="checkbox" bind:checked={searchInTitle} />
