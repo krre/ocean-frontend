@@ -5,17 +5,15 @@
 </script>
 
 <style>
-    nav {
-        background-color: slateblue;
-        padding: 1em;
-        box-shadow: 0 3px 8px 0px rgba(0, 0, 0, 0.45);
-    }
-
     a {
         text-decoration: none;
         color: rgb(235, 246, 255);
         font-size: 1.1em;
         margin: 0.2em;
+    }
+
+    nav {
+        /* padding: 0 0 auto; */
     }
 </style>
 
