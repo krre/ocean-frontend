@@ -7,9 +7,11 @@
 </script>
 
 <script lang="ts">
-    import Nav from "../components/menu/Nav.svelte";
+    import Navbar from "../components/menu/Navbar.svelte";
+    import Sidebar from "../components/menu/Sidebar.svelte";
 
     export let segment;
+    let open = false;
 </script>
 
 <style>
@@ -25,7 +27,8 @@
     }
 </style>
 
-<Nav {segment} />
+<Sidebar bind:open />
+<Navbar {segment} bind:sidebar={open} />
 
 <main>
     <slot />

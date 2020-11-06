@@ -2,6 +2,8 @@
     import Menu from "./Menu.svelte";
     import Burger from "./Burger.svelte";
     import MediaQuery from "../MediaQuery.svelte";
+
+    export let sidebar = false;
 </script>
 
 <style>
@@ -17,7 +19,7 @@
 <div class="bar">
     <MediaQuery query="(max-width: 768px)" let:matches>
         {#if matches}
-            <Burger />
+            <Burger bind:open={sidebar} />
         {:else}
             <Menu />
         {/if}
