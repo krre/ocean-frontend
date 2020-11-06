@@ -9,11 +9,11 @@
         text-decoration: none;
         color: rgb(235, 246, 255);
         font-size: 1.1em;
-        margin: 0.2em;
+        margin-left: 0.7em;
     }
 
     nav {
-        /* padding: 0 0 auto; */
+        display: flex;
     }
 </style>
 

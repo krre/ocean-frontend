@@ -3,6 +3,12 @@
 </script>
 
 <style>
+    .lines {
+        z-index: 20;
+        color: rgb(235, 246, 255);
+        margin-left: 1em;
+    }
+
     svg {
         min-height: 24px;
         transition: transform 0.3s ease-in-out;
@@ -12,18 +18,6 @@
         stroke: currentColor;
         stroke-width: 3;
         transition: transform 0.3s ease-in-out;
-    }
-
-    button {
-        z-index: 20;
-        background-color: transparent;
-        border: none;
-        color: rgb(235, 246, 255);
-        margin: auto;
-    }
-
-    button:focus {
-        border: none;
     }
 
     .open svg {
@@ -43,10 +37,10 @@
     }
 </style>
 
-<button class:open on:click={() => (open = !open)}>
+<div class="lines" class:open on:click={() => (open = !open)}>
     <svg width="32" height="24">
         <line id="top" x1="0" y1="2" x2="32" y2="2" />
         <line id="middle" x1="0" y1="12" x2="32" y2="12" />
         <line id="bottom" x1="0" y1="22" x2="32" y2="22" />
     </svg>
-</button>
+</div>
