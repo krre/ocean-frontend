@@ -13,6 +13,8 @@
         color: rgb(235, 246, 255);
         font-size: 1.1em;
         margin-left: 0.7em;
+        margin-top: 0.5em;
+        margin-bottom: 0.5em;
     }
 
     nav {
@@ -20,7 +22,7 @@
     }
 </style>
 
-<nav on:click={() => dispatch('itemClicked')}>
+<nav class={$$props.class} on:click={() => dispatch('itemClicked')}>
     <a href=".">Каталог</a>
     <a href={route.Mandela.Append}>Добавить</a>
     <a href={route.Search}>Поиск</a>

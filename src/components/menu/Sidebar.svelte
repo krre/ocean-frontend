@@ -13,11 +13,16 @@
         background-color: slateblue;
     }
 
+    aside :global(.menu) {
+        flex-direction: column;
+        margin-top: 50px;
+    }
+
     .open {
         left: 0;
     }
 </style>
 
 <aside class:open>
-    <Menu on:itemClicked />
+    <Menu class="menu" on:itemClicked />
 </aside>
