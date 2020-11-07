@@ -10,6 +10,7 @@
         listUserName,
         makeTitle,
     } from "utils";
+    import Indicator from "../components/main/Indicator.svelte";
     import Pagination from "../components/Pagination.svelte";
 
     const { page, session } = stores();
@@ -21,6 +22,7 @@
     let sort = 0;
 
     let mandels = [];
+    let categories = ["Все"].concat(consts.Categories);
     let totalCount = 0;
     let newCount = 0;
     let mineCount = 0;
@@ -36,7 +38,6 @@
     let nextPageLink: string;
     let prevPageLink: string;
 
-    const filters = ["Все", "Новые", "Мои", "Опросы", "Категория"];
     const showAll = 0;
     const showNew = 1;
     const showMine = 2;
@@ -57,9 +58,11 @@
     const nonReactive = new NonReactive();
 
     $: admin = user && user.code === consts.Account.Admin;
+    $: filter = category > 0 ? showCategory : showAll;
 
     $: if (nonReactive.pageInit && filter >= 0 && category >= 0) {
         pageNo = 1;
+
         goto(makeLink(pageNo));
     }
 
@@ -89,7 +92,7 @@
 
         if (user) {
             params.filter = filter;
-            params.category = category;
+            params.category = category - 1;
         }
 
         let result = await send(method.Mandela.GetAll, params);
@@ -122,6 +125,10 @@
 
     function makeLink(page: number): string {
         const params = new URLSearchParams();
+
+        if (filter != showCategory && category > 0) {
+            category = 0;
+        }
 
         if (page > 1) {
             params.append("page", page.toString());
@@ -176,50 +183,81 @@
         display: block;
         margin: 0.3em 0;
     }
+
+    .tool-bar {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+    }
+
+    .tool-bar-section {
+        margin-top: 0.6em;
+        margin-bottom: 0.6em;
+    }
+
+    .tool-bar-item {
+        margin-right: 0.4em;
+    }
 </style>
 
 <svelte:head>
     <title>Океан. Каталог фактов эффекта Манделы</title>
 </svelte:head>
 
-Всего:
-{totalCount}
-{#if user}
-    | Новых:
-    {#if newCount}
-        <div class="new">{newCount}</div>
-    {:else}{newCount}{/if}
-    | Моих:
-    {mineCount}
-    | Опросов:
-    {#if pollCount}
-        <div class="new">{pollCount}</div>
-    {:else}{pollCount}{/if}
-    | Показать:
-    <select bind:value={filter}>
-        {#each filters as filterName, i}
-            <option value={i} selected={filter == i}>{filterName}</option>
-        {/each}
-    </select>
-    {#if filter === showCategory}
-        <select bind:value={category}>
-            {#each consts.Categories as categoryName, i}
-                <option value={i} selected={category == i}>
-                    {categoryName}
-                </option>
+<div class="tool-bar">
+    <span class="tool-bar-section">
+        <Indicator
+            title="Всего"
+            count={totalCount}
+            active={filter == showAll}
+            on:clicked={() => (filter = showAll)} />
+        {#if user}
+            <Indicator
+                title="Новые"
+                count={newCount}
+                active={filter == showNew}
+                highlightNew={true}
+                on:clicked={() => (filter = showNew)} />
+
+            <Indicator
+                title="Мои"
+                count={mineCount}
+                active={filter == showMine}
+                on:clicked={() => (filter = showMine)} />
+
+            <Indicator
+                title="Опросы"
+                count={pollCount}
+                highlightNew={true}
+                active={filter == showPoll}
+                on:clicked={() => (filter = showPoll)} />
+        {/if}</span>
+    <span class="tool-bar-section">
+        {#if user}
+            <span class="tool-bar-item">Категория:</span>
+            <select class="tool-bar-item" bind:value={category}>
+                {#each categories as categoryName, i}
+                    <option value={i} selected={category == i}>
+                        {categoryName}
+                    </option>
+                {/each}
+            </select>
+        {/if}
+        <span class="tool-bar-item">Сортировать по:</span>
+        <select bind:value={sort}>
+            {#each sorts as sortName, i}
+                <option value={i} selected={sort == i}>{sortName}</option>
             {/each}
         </select>
-    {/if}
-{/if}
-| Сортировать по:
-<select bind:value={sort}>
-    {#each sorts as sortName, i}
-        <option value={i} selected={sort == i}>{sortName}</option>
-    {/each}
-</select>
+    </span>
+</div>
 
 {#if admin && mandels.length}
-    <div><button on:click={deleteMandela}>Удалить</button></div>
+    <div>
+        <button
+            style="margin-top: 0.5em"
+            on:click={deleteMandela}>Удалить</button>
+    </div>
 {/if}
 
 {#each mandels as mandela}
