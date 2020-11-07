@@ -1,7 +1,10 @@
 <script lang="ts">
     import { stores } from "@sapper/app";
+    import { createEventDispatcher } from "svelte";
     import * as route from "route";
+
     const { session } = stores();
+    const dispatch = createEventDispatcher();
 </script>
 
 <style>
@@ -17,7 +20,7 @@
     }
 </style>
 
-<nav>
+<nav on:click={() => dispatch('itemClicked')}>
     <a href=".">Каталог</a>
     <a href={route.Mandela.Append}>Добавить</a>
     <a href={route.Search}>Поиск</a>

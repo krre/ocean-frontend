@@ -27,7 +27,7 @@
     }
 </style>
 
-<Sidebar bind:open />
+<Sidebar bind:open on:itemClicked={() => (open = false)} />
 <Navbar {segment} bind:sidebar={open} />
 
 <main>

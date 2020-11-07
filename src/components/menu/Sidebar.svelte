@@ -19,5 +19,5 @@
 </style>
 
 <aside class:open>
-    <Menu />
+    <Menu on:itemClicked />
 </aside>
