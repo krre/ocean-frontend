@@ -182,10 +182,6 @@
     <title>Океан. Каталог фактов эффекта Манделы</title>
 </svelte:head>
 
-{#if admin && mandels.length}
-    <button on:click={deleteMandela}>Удалить</button>
-    |
-{/if}
 Всего:
 {totalCount}
 {#if user}
@@ -221,6 +217,11 @@
         <option value={i} selected={sort == i}>{sortName}</option>
     {/each}
 </select>
+
+{#if admin && mandels.length}
+    <div><button on:click={deleteMandela}>Удалить</button></div>
+{/if}
+
 {#each mandels as mandela}
     <div class="row">
         {#if admin}
