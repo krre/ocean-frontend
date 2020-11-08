@@ -188,15 +188,11 @@
         display: flex;
         flex-wrap: wrap;
         align-items: center;
-    }
-
-    .tool-bar-section {
-        margin-top: 0.6em;
-        margin-bottom: 0.6em;
+        /* border: 1px solid; */
     }
 
     .tool-bar-item {
-        margin-right: 0.4em;
+        margin: 0.5em 0.2em;
     }
 </style>
 
@@ -205,45 +201,42 @@
 </svelte:head>
 
 <div class="tool-bar">
-    <span class="tool-bar-section">
+    <Indicator
+        title="Всего"
+        count={totalCount}
+        active={filter == showAll}
+        on:clicked={() => (filter = showAll)} />
+    {#if user}
         <Indicator
-            title="Всего"
-            count={totalCount}
-            active={filter == showAll}
-            on:clicked={() => (filter = showAll)} />
-        {#if user}
-            <Indicator
-                title="Новые"
-                count={newCount}
-                active={filter == showNew}
-                highlightNew={true}
-                on:clicked={() => (filter = showNew)} />
+            title="Новые"
+            count={newCount}
+            active={filter == showNew}
+            highlightNew={true}
+            on:clicked={() => (filter = showNew)} />
 
-            <Indicator
-                title="Мои"
-                count={mineCount}
-                active={filter == showMine}
-                on:clicked={() => (filter = showMine)} />
+        <Indicator
+            title="Мои"
+            count={mineCount}
+            active={filter == showMine}
+            on:clicked={() => (filter = showMine)} />
 
-            <Indicator
-                title="Опросы"
-                count={pollCount}
-                highlightNew={true}
-                active={filter == showPoll}
-                on:clicked={() => (filter = showPoll)} />
-        {/if}</span>
-    <span class="tool-bar-section">
-        {#if user}
-            <span class="tool-bar-item">Категория:</span>
-            <select class="tool-bar-item" bind:value={category}>
+        <Indicator
+            title="Опросы"
+            count={pollCount}
+            highlightNew={true}
+            active={filter == showPoll}
+            on:clicked={() => (filter = showPoll)} />
+        <span class="tool-bar-item">Категория:
+            <select bind:value={category}>
                 {#each categories as categoryName, i}
                     <option value={i} selected={category == i}>
                         {categoryName}
                     </option>
                 {/each}
             </select>
-        {/if}
-        <span class="tool-bar-item">Сортировать по:</span>
+        </span>
+    {/if}
+    <span class="tool-bar-item">Сортировать по:
         <select bind:value={sort}>
             {#each sorts as sortName, i}
                 <option value={i} selected={sort == i}>{sortName}</option>

@@ -11,7 +11,7 @@
 
 <style>
     .cell {
-        padding: 0.4em;
+        padding: 0.3em;
         border: 1px solid rgb(208, 208, 253);
         margin-right: 0.5em;
         cursor: pointer;
