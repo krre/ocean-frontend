@@ -37,10 +37,8 @@
             token: createToken(id, password1),
         };
 
-        let result = await send(method.User.Create, params);
-
         await send(method.User.Create, params);
-        goto(route.Register.UserId(result.id));
+        goto(route.Register.UserId(id));
     }
 </script>
 
