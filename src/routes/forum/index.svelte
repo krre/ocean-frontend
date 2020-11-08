@@ -11,7 +11,7 @@
     let categories = [];
 
     onMount(async () => {
-        const params = {};
+        const params: any = {};
 
         if (user) {
             params.user_id = user.id;
