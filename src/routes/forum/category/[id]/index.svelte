@@ -34,10 +34,19 @@
     function edit() {
         goto(route.Forum.Category.Edit(id));
     }
+
+    async function remove() {
+        const params = {
+            id: +id,
+        };
+        await send(method.Forum.Category.Delete, params);
+        goto(route.Forum.Root);
+    }
 </script>
 
 {name}
 <div>
     <button on:click={append}>Добавить раздел</button>
     <button on:click={edit}>Изменить</button>
+    <button on:click={remove}>Удалить</button>
 </div>
