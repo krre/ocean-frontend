@@ -3,8 +3,10 @@
     import { makeTitle } from "utils";
     import * as method from "method";
 
+    const title = "Поиск мандел";
     const searchContent = "0";
     const searchId = "1";
+
     let searchType = searchContent;
     let id;
     let content;
@@ -61,9 +63,9 @@
 </style>
 
 <svelte:head>
-    <title>Поиск мандел</title>
+    <title>{title}</title>
 </svelte:head>
-<h1>Поиск мандел</h1>
+<h1>{title}</h1>
 
 <div class="container">
     <div class="item">

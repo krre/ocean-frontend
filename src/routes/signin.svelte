@@ -7,6 +7,7 @@
     import OperationResult from "../components/OperationResult.svelte";
 
     const { session } = stores();
+    const title = "Войти";
 
     let id = 0;
     let password = "";
@@ -41,11 +42,11 @@
 </script>
 
 <svelte:head>
-    <title>Войти</title>
+    <title>{title}</title>
 </svelte:head>
 
 <BoxForm>
-    <h2>Войти</h2><span />
+    <h2>{title}</h2><span />
     ИД:
     <input type="number" bind:value={id} />
     Пароль:

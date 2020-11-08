@@ -18,6 +18,7 @@
 
     const { session } = stores();
 
+    const title = "Профиль";
     export let user;
 
     $: successProfile = "";
@@ -94,11 +95,11 @@
 </style>
 
 <svelte:head>
-    <title>Профиль</title>
+    <title>{title}</title>
 </svelte:head>
 
 <div class="grid">
-    <h1>Профиль</h1>
+    <h1>{title}</h1>
     <div>ИД: {user.id}</div>
     <div>Создано: {formatDateTime(user.create_ts)}</div>
     {#if user.code !== consts.Account.Admin}

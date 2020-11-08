@@ -7,6 +7,7 @@
     import MandelaEditor from "../../components/MandelaEditor.svelte";
 
     const { session } = stores();
+    const pageTitle = "Добавить манделу";
 
     export let titleMode = consts.Mandela.Title.Simple;
     export let title = "";
@@ -39,9 +40,10 @@
 </script>
 
 <svelte:head>
-    <title>Добавить манделу</title>
+    <title>{pageTitle}</title>
 </svelte:head>
-<h1>Добавить манделу</h1>
+
+<h1>{pageTitle}</h1>
 
 <MandelaEditor
     bind:titleMode

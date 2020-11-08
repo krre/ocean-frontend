@@ -7,8 +7,8 @@
     import SectionEditor from "../../../../../components/forum/section/SectionEditor.svelte";
 
     const { page } = stores();
-
     const title = "Добавить раздел";
+
     let isAdmin = false;
     let name: string;
     let order: number;
@@ -30,6 +30,7 @@
 <svelte:head>
     <title>{title}</title>
 </svelte:head>
+
 <h1>{title}</h1>
 
 {#if !isAdmin}

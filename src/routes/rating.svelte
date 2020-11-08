@@ -6,6 +6,8 @@
     import { goto, stores } from "@sapper/app";
 
     const { page } = stores();
+    const title = "Рейтинг";
+
     let type = 0;
 
     class NonReactive {
@@ -41,10 +43,10 @@
 </script>
 
 <svelte:head>
-    <title>Рейтинг</title>
+    <title>{title}</title>
 </svelte:head>
 
-<h1>Рейтинг</h1>
+<h1>{title}</h1>
 
 <label> <input type="radio" bind:group={type} value={0} /> Манделы </label>
 
