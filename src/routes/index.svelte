@@ -165,18 +165,15 @@
 </script>
 
 <style>
-    .new {
+    .comments {
         color: red;
         display: inline;
         background-color: rgb(255, 247, 230);
         padding: 0 0.4em;
     }
 
-    .old {
-        color: rgb(0, 204, 92);
-        display: inline;
-        background-color: rgb(255, 247, 230);
-        padding: 0 0.4em;
+    .new-mandela {
+        color: red;
     }
 
     .row {
@@ -261,15 +258,9 @@
                 bind:group={selected_delete}
                 value={mandela.id} />
         {/if}
-        {#if user}
-            {#if !mandela.mark_ts}
-                <div class="new">Н</div>
-            {:else}
-                <div class="old">С</div>
-            {/if}
-        {/if}
         <a class="row-link" href={route.Mandela.Id(mandela.id)}>
-            {zeroLeading(mandela.id, zeroLeadingCount)}
+            <span
+                class:new-mandela={user && !mandela.mark_ts}>{zeroLeading(mandela.id, zeroLeadingCount)}</span>
             |
             {formatDateTime(mandela.create_ts)}
             |
@@ -278,7 +269,7 @@
             {listUserName(mandela.user_name, mandela.user_id)}
             {#if mandela.comment_count}
                 | Комментариев:
-                <div class="new">{mandela.comment_count}</div>
+                <div class="comments">{mandela.comment_count}</div>
             {/if}
         </a>
     </div>
