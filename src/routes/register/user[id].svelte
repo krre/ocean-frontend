@@ -1,25 +1,23 @@
 <script context="module" lang="ts">
     export async function preload(page, session) {
         const { id } = page.params;
-
         return { id };
     }
 </script>
 
 <script lang="ts">
+    const title = "Регистрация окончена";
     export let id;
 </script>
 
 <svelte:head>
-    <title>Регистрация окончена</title>
+    <title>{title}</title>
 </svelte:head>
 
-<h1>Регистрация окончена</h1>
+<h1>{title}</h1>
 <h2>Ваш ИД: {id}</h2>
 
 <p>Используйте его совместно с вашим паролем, чтобы входить на сайт.</p>
 Если вы потеряете ИД или пароль, то не сможете их восставить, и вам придётся
 регистрироваться заново.
-<p>
-    <a href="signin">Войти</a>
-</p>
+<p><a href="signin">Войти</a></p>

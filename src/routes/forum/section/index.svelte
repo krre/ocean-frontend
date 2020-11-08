@@ -6,6 +6,8 @@
     import { goto } from "@sapper/app";
     import Session from "../../../components/Session.svelte";
 
+    const title = "Секции";
+
     let isAdmin = false;
     let user;
     let sections = [];
@@ -36,8 +38,10 @@
 </style>
 
 <svelte:head>
-    <title>Форум</title>
+    <title>{title}</title>
 </svelte:head>
+
+<h1>{title}</h1>
 
 <Session bind:user bind:isAdmin />
 

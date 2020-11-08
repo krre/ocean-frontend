@@ -9,6 +9,8 @@
     import OperationResult from "../../components/OperationResult.svelte";
     import AccountMode from "../../components/AccountMode.svelte";
 
+    const title = "Регистрация";
+
     $: error = "";
     $: code = "";
 
@@ -43,11 +45,11 @@
 </script>
 
 <svelte:head>
-    <title>Регистрация</title>
+    <title>{title}</title>
 </svelte:head>
 
 <BoxForm>
-    <h2>Регистрация</h2><span />
+    <h2>{title}</h2><span />
     <AccountMode bind:code />
     {#if code === consts.Account.User}Имя: <input bind:value={name} />{/if}
     Пароль:

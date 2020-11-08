@@ -19,6 +19,8 @@
     import { goto } from "@sapper/app";
     import MandelaEditor from "../../../components/MandelaEditor.svelte";
 
+    const title = "Редактировать манделу";
+
     export let id;
     export let mandela;
     export let categories;
@@ -57,9 +59,10 @@
 </script>
 
 <svelte:head>
-    <title>Редактировать манделу</title>
+    <title>{title}</title>
 </svelte:head>
-<h1>Редактировать манделу</h1>
+
+<h1>{title}</h1>
 
 <MandelaEditor
     bind:titleMode={mandela.title_mode}

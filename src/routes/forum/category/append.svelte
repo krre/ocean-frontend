@@ -7,6 +7,7 @@
     import CategoryEditor from "../../../components/forum/category/CategoryEditor.svelte";
 
     const title = "Добавить категорию";
+
     let isAdmin = false;
     let name: string;
     let order: number;
