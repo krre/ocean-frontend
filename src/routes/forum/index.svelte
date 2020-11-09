@@ -47,7 +47,9 @@
 
 {#each categories as category}
     <div class="category">
-        <a href={route.Forum.Category.Id(category.id)}>{category.name}</a>
+        {#if isAdmin}
+            <a href={route.Forum.Category.Id(category.id)}>{category.name}</a>
+        {:else}{category.name}{/if}
     </div>
 {/each}
 
