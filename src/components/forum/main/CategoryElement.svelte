@@ -67,7 +67,7 @@
 
     <div class="sections">
         {#each category.sections as section}
-            <SectionElement {section} />
+            <SectionElement {section} {editable} on:removed />
         {/each}
     </div>
 </div>

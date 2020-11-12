@@ -9,7 +9,7 @@
     const { page } = stores();
     const sectionId = +$page.params.id;
 
-    const title = "Секции";
+    const title = "Темы";
 
     let isAdmin = false;
     let user;
@@ -51,6 +51,4 @@
     </div>
 {/each} -->
 
-<div>
-    {#if isAdmin}<button on:click={append}>Добавить топик</button>{/if}
-</div>
+<div><button on:click={append}>Добавить тему</button></div>
