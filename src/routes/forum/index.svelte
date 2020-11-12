@@ -5,6 +5,7 @@
     import { onMount } from "svelte";
     import { goto } from "@sapper/app";
     import Session from "../../components/Session.svelte";
+    import CategoryElement from "../../components/forum/main/CategoryElement.svelte";
 
     const title = "Форум";
 
@@ -20,7 +21,21 @@
         }
 
         const result = await send(method.Forum.GetAll, params);
-        categories = result.categories;
+
+        for (let category of result.categories) {
+            let sections = [];
+
+            for (let section of result.sections) {
+                if (section.category_id === category.id) {
+                    sections.push(section);
+                }
+            }
+
+            category.sections = sections;
+            categories.push(category);
+        }
+
+        categories = categories;
     });
 
     function append() {
@@ -29,12 +44,6 @@
 </script>
 
 <style>
-    .category {
-        margin-top: 0.2em;
-        margin-bottom: 0.2em;
-        padding: 1em;
-        border: 1px solid;
-    }
 </style>
 
 <svelte:head>
@@ -46,11 +55,7 @@
 <Session bind:user bind:isAdmin />
 
 {#each categories as category}
-    <div class="category">
-        {#if isAdmin}
-            <a href={route.Forum.Category.Id(category.id)}>{category.name}</a>
-        {:else}{category.name}{/if}
-    </div>
+    <CategoryElement {category} {isAdmin} />
 {/each}
 
 <div>

@@ -44,7 +44,8 @@
     }
 </script>
 
-{name}
+<h1>{name}</h1>
+
 <div>
     <button on:click={append}>Добавить раздел</button>
     <button on:click={edit}>Изменить</button>
