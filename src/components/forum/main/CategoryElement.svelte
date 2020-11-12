@@ -1,9 +1,14 @@
 <script lang="ts">
     import SectionElement from "./SectionElement.svelte";
     import * as route from "route";
+    import { goto } from "@sapper/app";
 
     export let category: any;
     export let isAdmin: boolean;
+
+    function appendSection() {
+        goto(route.Forum.Section.Append(category.id));
+    }
 </script>
 
 <style>
@@ -28,4 +33,6 @@
     {#each category.sections as section}
         <SectionElement {section} />
     {/each}
+
+    {#if isAdmin}<button on:click={appendSection}>Добавить секцию</button>{/if}
 </div>

@@ -21,7 +21,7 @@
         };
 
         await send(method.Forum.Section.Create, params);
-        goto(route.Forum.Section.Root);
+        goto(route.Forum.Root);
     };
 </script>
 
