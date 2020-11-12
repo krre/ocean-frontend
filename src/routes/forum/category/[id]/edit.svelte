@@ -37,7 +37,7 @@
         };
 
         await send(method.Forum.Category.Update, params);
-        goto(route.Forum.Category.Id(id));
+        goto(route.Forum.Root);
     };
 </script>
 

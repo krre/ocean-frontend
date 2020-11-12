@@ -1,10 +1,27 @@
 <script lang="ts">
+    import { send } from "network";
     import SectionElement from "./SectionElement.svelte";
     import * as route from "route";
+    import * as method from "method";
     import { goto } from "@sapper/app";
+    import { createEventDispatcher } from "svelte";
+
+    const dispatch = createEventDispatcher();
 
     export let category: any;
-    export let isAdmin: boolean;
+    export let editable = false;
+
+    function editCategory() {
+        goto(route.Forum.Category.Edit(category.id));
+    }
+
+    async function removeCategory() {
+        const params = {
+            id: +category.id,
+        };
+        await send(method.Forum.Category.Delete, params);
+        dispatch("removed");
+    }
 
     function appendSection() {
         goto(route.Forum.Section.Append(category.id));
@@ -13,7 +30,7 @@
 
 <style>
     .category {
-        margin: 0.2em 0;
+        margin-bottom: 0.7em;
         border: 1px solid;
     }
 
@@ -21,18 +38,36 @@
         border-bottom: 1px solid;
         padding: 0.7em;
     }
+
+    .sections {
+        min-height: 1.5em;
+    }
+
+    .buttons {
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    button {
+        margin-right: 0.5em;
+    }
 </style>
 
 <div class="category">
     <div class="header">
-        {#if isAdmin}
-            <a href={route.Forum.Category.Id(category.id)}>{category.name}</a>
-        {:else}{category.name}{/if}
+        {category.name}
+        {#if editable}
+            <div class="buttons">
+                <button on:click={appendSection}>Добавить раздел</button>
+                <button on:click={editCategory}>Изменить</button>
+                <button on:click={removeCategory}>Удалить</button>
+            </div>
+        {/if}
     </div>
 
-    {#each category.sections as section}
-        <SectionElement {section} />
-    {/each}
-
-    {#if isAdmin}<button on:click={appendSection}>Добавить секцию</button>{/if}
+    <div class="sections">
+        {#each category.sections as section}
+            <SectionElement {section} />
+        {/each}
+    </div>
 </div>

@@ -10,17 +10,17 @@
     const title = "Форум";
 
     let isAdmin = false;
+    let editable = false;
     let user;
     let categories = [];
 
-    onMount(async () => {
-        const params: any = {};
+    onMount(() => {
+        load();
+    });
 
-        if (user) {
-            params.user_id = user.id;
-        }
-
-        const result = await send(method.Forum.GetAll, params);
+    async function load() {
+        const result = await send(method.Forum.GetAll);
+        categories = [];
 
         for (let category of result.categories) {
             let sections = [];
@@ -36,7 +36,7 @@
         }
 
         categories = categories;
-    });
+    }
 
     function append() {
         goto(route.Forum.Category.Append);
@@ -44,6 +44,11 @@
 </script>
 
 <style>
+    .edit-btn {
+        margin-bottom: 0.5em;
+        display: flex;
+        justify-content: flex-end;
+    }
 </style>
 
 <svelte:head>
@@ -54,10 +59,16 @@
 
 <Session bind:user bind:isAdmin />
 
+{#if isAdmin}
+    <div class="edit-btn">
+        <button on:click={() => (editable = !editable)}> Редактировать </button>
+    </div>
+{/if}
+
 {#each categories as category}
-    <CategoryElement {category} {isAdmin} />
+    <CategoryElement {category} {editable} on:removed={() => load()} />
 {/each}
 
 <div>
-    {#if isAdmin}<button on:click={append}>Добавить категорию</button>{/if}
+    {#if editable}<button on:click={append}>Добавить категорию</button>{/if}
 </div>
