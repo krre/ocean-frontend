@@ -9,7 +9,7 @@
     const { page } = stores();
     const sectionId = +$page.params.id;
 
-    const title = "Темы";
+    let title: string;
 
     let isAdmin = false;
     let user;
@@ -21,6 +21,7 @@
         };
 
         const result = await send(method.Forum.Topic.GetAll, params);
+        title = result.section_name;
     });
 
     function append() {
@@ -51,4 +52,4 @@
     </div>
 {/each} -->
 
-<div><button on:click={append}>Добавить тему</button></div>
+<div><button on:click={append}>Создать тему</button></div>
