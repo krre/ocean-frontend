@@ -18,10 +18,13 @@
     onMount(async () => {
         const params = {
             section_id: sectionId,
+            offset: 0,
+            limit: 1000,
         };
 
         const result = await send(method.Forum.Topic.GetAll, params);
         title = result.section_name;
+        topics = result.topics;
     });
 
     function append() {
@@ -30,12 +33,12 @@
 </script>
 
 <style>
-    /* .category {
+    .topic {
         margin-top: 0.2em;
         margin-bottom: 0.2em;
         padding: 1em;
         border: 1px solid;
-    } */
+    }
 </style>
 
 <svelte:head>
@@ -46,10 +49,9 @@
 
 <Session bind:user bind:isAdmin />
 
-<!-- {#each sections as section}
-    <div class="category">
-        <a href={route.Forum.Section.Id(section.id)}>{section.name}</a>
-    </div>
-{/each} -->
-
 <div><button on:click={append}>Создать тему</button></div>
+{#each topics as topic}
+    <div class="topic">
+        <a href={route.Forum.Topic.Id(topic.id)}>{topic.name}</a>
+    </div>
+{/each}
