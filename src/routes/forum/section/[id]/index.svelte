@@ -5,6 +5,7 @@
     import { onMount } from "svelte";
     import { goto, stores } from "@sapper/app";
     import Session from "../../../../components/Session.svelte";
+    import TopicElement from "../../../../components/forum/topic/TopicElement.svelte";
 
     const { page } = stores();
     const sectionId = +$page.params.id;
@@ -33,12 +34,6 @@
 </script>
 
 <style>
-    .topic {
-        margin-top: 0.2em;
-        margin-bottom: 0.2em;
-        padding: 1em;
-        border: 1px solid;
-    }
 </style>
 
 <svelte:head>
@@ -51,7 +46,5 @@
 
 <div><button on:click={append}>Создать тему</button></div>
 {#each topics as topic}
-    <div class="topic">
-        <a href={route.Forum.Topic.Id(topic.id)}>{topic.name}</a>
-    </div>
+    <TopicElement {topic} />
 {/each}
