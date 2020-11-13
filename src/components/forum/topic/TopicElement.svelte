@@ -1,7 +1,37 @@
 <script lang="ts">
+    import { send } from "network";
     import * as route from "route";
+    import * as method from "method";
+    import * as consts from "consts";
+    import { goto } from "@sapper/app";
+    import { createEventDispatcher } from "svelte";
+    import Session from "../../../components/Session.svelte";
 
-    export let topic;
+    const dispatch = createEventDispatcher();
+
+    export let topic: any;
+    export let editable = true;
+
+    let isAdmin = false;
+    let user;
+
+    $: editable =
+        isAdmin ||
+        (user &&
+            user.code !== consts.Account.Fierce &&
+            user.id === topic.user_id);
+
+    function editTopic() {
+        goto(route.Forum.Topic.Edit(topic.id));
+    }
+
+    async function removeTopic() {
+        const params = {
+            id: +topic.id,
+        };
+        await send(method.Forum.Topic.Delete, params);
+        dispatch("removed");
+    }
 </script>
 
 <style>
@@ -11,8 +41,25 @@
         padding: 1em;
         border: 1px solid;
     }
+
+    .buttons {
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    button {
+        margin-right: 0.5em;
+    }
 </style>
+
+<Session bind:user bind:isAdmin />
 
 <div class="topic">
     <a href={route.Forum.Topic.Id(topic.id)}>{topic.name}</a>
+    {#if editable}
+        <div class="buttons">
+            <button on:click={editTopic}>Изменить</button>
+            <button on:click={removeTopic}>Удалить</button>
+        </div>
+    {/if}
 </div>

@@ -7,6 +7,7 @@
     import TopicEditor from "../../../../../components/forum/topic/TopicEditor.svelte";
 
     const { page } = stores();
+    const sectionId = +$page.params.id;
     const title = "Создать тему";
 
     let isAdmin = false;
@@ -14,12 +15,12 @@
 
     const action = async () => {
         const params = {
-            section_id: +$page.params.id,
+            section_id: sectionId,
             name: name,
         };
 
         const result = await send(method.Forum.Topic.Create, params);
-        goto(route.Forum.Topic.Id(result.id));
+        goto(route.Forum.Section.Id(sectionId));
     };
 </script>
 

@@ -5,13 +5,13 @@
     export async function preload(page, session) {
         const { id } = page.params;
 
-        let result = await send(method.Forum.Section.GetOne, {
-            id: Number(id),
+        let result = await send(method.Forum.Topic.GetOne, {
+            id: +id,
         });
         const name = result.name;
-        const order = result.order_index;
+        const sectionId = result.section_id;
 
-        return { id, name, order };
+        return { id, sectionId, name };
     }
 </script>
 
@@ -19,14 +19,14 @@
     import { goto, stores } from "@sapper/app";
     import * as route from "route";
     import Session from "../../../../components/Session.svelte";
-    import SectionEditor from "../../../../components/forum/section/SectionEditor.svelte";
+    import TopicEditor from "../../../../components/forum/topic/TopicEditor.svelte";
 
     const { page } = stores();
-    const title = "Редактировать раздел";
+    const title = "Редактировать тему";
 
     export let id: number;
+    export let sectionId: number;
     export let name: string;
-    export let order: number;
 
     let isAdmin = false;
 
@@ -34,11 +34,10 @@
         const params = {
             id: +id,
             name: name,
-            order_index: order,
         };
 
-        await send(method.Forum.Section.Update, params);
-        goto(route.Forum.Root);
+        await send(method.Forum.Topic.Update, params);
+        goto(route.Forum.Section.Id(sectionId));
     };
 </script>
 
@@ -53,5 +52,5 @@
 {#if !isAdmin}
     Доступ запрещён
 {:else}
-    <SectionEditor bind:name bind:order {action} />
+    <TopicEditor bind:name {action} />
 {/if}

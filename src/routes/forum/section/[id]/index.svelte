@@ -17,6 +17,10 @@
     let topics = [];
 
     onMount(async () => {
+        load();
+    });
+
+    async function load() {
         const params = {
             section_id: sectionId,
             offset: 0,
@@ -26,7 +30,7 @@
         const result = await send(method.Forum.Topic.GetAll, params);
         title = result.section_name;
         topics = result.topics;
-    });
+    }
 
     function append() {
         goto(route.Forum.Topic.Append(sectionId));
@@ -46,5 +50,5 @@
 
 <div><button on:click={append}>Создать тему</button></div>
 {#each topics as topic}
-    <TopicElement {topic} />
+    <TopicElement {topic} on:removed={() => load()} />
 {/each}
