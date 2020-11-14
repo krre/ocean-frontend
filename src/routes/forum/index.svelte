@@ -44,6 +44,13 @@
 </script>
 
 <style>
+    .warn {
+        color: white;
+        background-color: red;
+        text-align: center;
+        padding: 0.5em 0;
+    }
+
     .edit-btn {
         margin-bottom: 0.5em;
         display: flex;
@@ -54,6 +61,8 @@
 <svelte:head>
     <title>{title}</title>
 </svelte:head>
+
+<div class="warn">Форум находится в разработке, но пользоваться уже можно</div>
 
 <h1>{title}</h1>
 
