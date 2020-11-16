@@ -33,16 +33,34 @@
     let password1: string;
     let password2: string;
 
+    let prevCode: string;
+
+    $: if (user) {
+        setName(user.name);
+    }
+
     $: if (code) {
-        name =
-            code === consts.Account.Conspirator
-                ? consts.Account.ModeNames[consts.Account.Conspirator]
-                : "";
+        if (code === consts.Account.Conspirator) {
+            setName(consts.Account.ModeNames[consts.Account.Conspirator]);
+        }
+
+        if (
+            code == consts.Account.User &&
+            prevCode === consts.Account.Conspirator
+        ) {
+            setName("");
+        }
 
         successProfile = "";
         errorProfile = "";
         successPassword = "";
         errorPassword = "";
+
+        prevCode = code;
+    }
+
+    function setName(value) {
+        name = value;
     }
 
     async function update() {
