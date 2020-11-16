@@ -1,6 +1,7 @@
 <script lang="ts">
     import * as method from "method";
     import { send } from "network";
+    import { sessionUserName } from "utils";
     import { onMount } from "svelte";
     import { stores } from "@sapper/app";
     import Session from "../../../../components/Session.svelte";
@@ -49,6 +50,10 @@
         max-width: 100%;
         width: 700px;
     }
+
+    button {
+        margin-top: 0.5em;
+    }
 </style>
 
 <svelte:head>
@@ -63,4 +68,5 @@
     <PostElement {post} on:removed={() => load()} />
 {/each}
 <textarea class="area" rows="15" bind:value={post} />
+<div>Пользователь: {sessionUserName(user)}</div>
 <div><button on:click={append} disabled={!post}>Отправить</button></div>

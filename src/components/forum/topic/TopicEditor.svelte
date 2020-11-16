@@ -12,5 +12,4 @@
 </style>
 
 <div class="form">Название: <input type="text" bind:value={name} /></div>
-
 <button on:click={action} disabled={!buttonEnabled}>Отправить</button>
