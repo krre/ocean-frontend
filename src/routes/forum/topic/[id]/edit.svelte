@@ -31,13 +31,10 @@
     export let userId: number;
 
     let isAdmin = false;
-    let isFierce = false;
+    let isFierce = true;
     let user;
-    let editable = false;
 
-    $: if (user) {
-        editable = user.id === userId && !isFierce;
-    }
+    $: editable = isAdmin || (user && user.id === userId && !isFierce);
 
     const action = async () => {
         const params = {

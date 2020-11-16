@@ -11,16 +11,13 @@
     const dispatch = createEventDispatcher();
 
     export let topic: any;
-    export let editable = true;
+    export let editable = false;
 
     let isAdmin = false;
+    let isFierce = true;
     let user;
 
-    $: editable =
-        isAdmin ||
-        (user &&
-            user.code !== consts.Account.Fierce &&
-            user.id === topic.user_id);
+    $: editable = isAdmin || (user && user.id === topic.user_id && !isFierce);
 
     function editTopic() {
         goto(route.Forum.Topic.Edit(topic.id));
@@ -53,7 +50,7 @@
     }
 </style>
 
-<Session bind:user bind:isAdmin />
+<Session bind:user bind:isAdmin bind:isFierce />
 
 <div class="topic">
     <a href={route.Forum.Topic.Id(topic.id)}>{topic.name}</a>
