@@ -10,8 +10,9 @@
         });
         const name = result.name;
         const sectionId = result.section_id;
+        const userId = result.user_id;
 
-        return { id, sectionId, name };
+        return { id, sectionId, name, userId };
     }
 </script>
 
@@ -27,8 +28,16 @@
     export let id: number;
     export let sectionId: number;
     export let name: string;
+    export let userId: number;
 
     let isAdmin = false;
+    let isFierce = false;
+    let user;
+    let editable = false;
+
+    $: if (user) {
+        editable = user.id === userId && !isFierce;
+    }
 
     const action = async () => {
         const params = {
@@ -41,7 +50,7 @@
     };
 </script>
 
-<Session bind:isAdmin />
+<Session bind:isAdmin bind:isFierce bind:user />
 
 <svelte:head>
     <title>{title}</title>
@@ -49,7 +58,7 @@
 
 <h1>{title}</h1>
 
-{#if !isAdmin}
+{#if !editable}
     Доступ запрещён
 {:else}
     <TopicEditor bind:name {action} />
