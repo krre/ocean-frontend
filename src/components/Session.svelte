@@ -6,7 +6,7 @@
 
     export let user = null;
     export let isAdmin = false;
-    export let isFierce = false;
+    export let isFierce = true;
 
     $: isAdmin = user ? user.code === consts.Account.Admin : false;
     $: isFierce = user ? user.code === consts.Account.Fierce : false;

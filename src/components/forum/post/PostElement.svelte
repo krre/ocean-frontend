@@ -1,5 +1,6 @@
 <script lang="ts">
     import { send } from "network";
+    import { formatDateTime } from "utils";
     import * as route from "route";
     import * as method from "method";
     import * as consts from "consts";
@@ -10,16 +11,13 @@
     const dispatch = createEventDispatcher();
 
     export let post: any;
-    export let editable = true;
+    export let editable = false;
 
     let isAdmin = false;
+    let isFierce = true;
     let user;
 
-    $: editable =
-        isAdmin ||
-        (user &&
-            user.code !== consts.Account.Fierce &&
-            user.id === post.user_id);
+    $: editable = isAdmin || (user && user.id === post.user_id && !isFierce);
 
     function editTopic() {
         goto(route.Forum.Post.Edit(post.id));
@@ -53,7 +51,7 @@
     }
 </style>
 
-<Session bind:user bind:isAdmin />
+<Session bind:user bind:isAdmin bind:isFierce />
 
 <div class="post">
     {post.post}
