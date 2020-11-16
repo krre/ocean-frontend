@@ -32,7 +32,10 @@
 
         let params: object = {
             id: id,
-            name: code === consts.Account.Conspirator ? "" : name,
+            name:
+                code === consts.Account.Conspirator
+                    ? consts.Account.ModeNames[consts.Account.Conspirator]
+                    : name,
             code: code,
             token: createToken(id, password1),
         };
