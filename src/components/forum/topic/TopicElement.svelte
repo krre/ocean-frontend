@@ -1,5 +1,6 @@
 <script lang="ts">
     import { send } from "network";
+    import { formatDateTime } from "utils";
     import * as route from "route";
     import * as method from "method";
     import * as consts from "consts";
@@ -56,6 +57,8 @@
 
 <div class="topic">
     <a href={route.Forum.Topic.Id(topic.id)}>{topic.name}</a>
+    <br /><br />
+    <div>{topic.user_name} | {formatDateTime(topic.create_ts)}</div>
     {#if editable}
         <div class="buttons">
             <button on:click={editTopic}>Изменить</button>
