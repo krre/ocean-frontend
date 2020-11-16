@@ -21,16 +21,29 @@
     const title = "Профиль";
     export let user;
 
-    $: successProfile = "";
-    $: errorProfile = "";
+    let successProfile: string;
+    let errorProfile: string;
 
-    $: successPassword = "";
-    $: errorPassword = "";
+    let successPassword: string;
+    let errorPassword: string;
 
-    $: code = "";
+    let code: string;
+    let name: string;
 
-    let password1;
-    let password2;
+    let password1: string;
+    let password2: string;
+
+    $: if (code) {
+        name =
+            code === consts.Account.Conspirator
+                ? consts.Account.ModeNames[consts.Account.Conspirator]
+                : "";
+
+        successProfile = "";
+        errorProfile = "";
+        successPassword = "";
+        errorPassword = "";
+    }
 
     async function update() {
         if (code === consts.Account.User && !user.name) {
@@ -39,7 +52,7 @@
         }
 
         const params = {
-            name: code === consts.Account.Conspirator ? "" : user.name,
+            name: name,
             code: user.code === consts.Account.Admin ? user.code : code,
         };
 
@@ -107,10 +120,10 @@
     {/if}
     {#if code !== consts.Account.Conspirator}
         Имя:
-        <input bind:value={user.name} />
+        <input bind:value={name} />
     {/if}
     <OperationResult bind:success={successProfile} bind:error={errorProfile} />
-    <button on:click={update}>Сохранить</button>
+    <button on:click={update} disabled={!name}>Сохранить</button>
     Пароль:
     <input type="password" bind:value={password1} />
     Пароль (ещё раз):

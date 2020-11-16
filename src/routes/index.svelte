@@ -4,12 +4,7 @@
     import * as route from "route";
     import { send } from "network";
     import { goto, stores } from "@sapper/app";
-    import {
-        formatDateTime,
-        zeroLeading,
-        listUserName,
-        makeTitle,
-    } from "utils";
+    import { formatDateTime, zeroLeading, makeTitle } from "utils";
     import Indicator from "../components/main/Indicator.svelte";
     import Pagination from "../components/Pagination.svelte";
 
@@ -266,7 +261,7 @@
             |
             {makeTitle(mandela)}
             |
-            {listUserName(mandela.user_name, mandela.user_id)}
+            {mandela.user_name}
             {#if mandela.comment_count}
                 | Комментариев:
                 <div class="comments">{mandela.comment_count}</div>
