@@ -1,7 +1,7 @@
 <script lang="ts">
     import * as consts from "consts";
     import * as method from "method";
-    import { formatDateTime, listUserName, sessionUserName } from "utils";
+    import { formatDateTime, sessionUserName } from "utils";
     import { send } from "network";
     import EditComment from "./EditComment.svelte";
     import RemoveComment from "./RemoveComment.svelte";
@@ -107,7 +107,7 @@
     <div>
         {formatDateTime(comment.create_ts)}
         |
-        {listUserName(comment.user_name, comment.user_id)}
+        {comment.user_name}
         {#if user && (comment.user_id === user.id || user.id === consts.Account.Id.Admin)}
             <div>
                 <span class="label-link" on:click={() => showEdit(i)}>

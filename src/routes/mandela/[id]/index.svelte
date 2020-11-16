@@ -1,6 +1,6 @@
 <script context="module" lang="ts">
     import { send } from "network";
-    import { formatDateTime, listUserName } from "utils";
+    import { formatDateTime } from "utils";
     import * as route from "route";
     import * as method from "method";
 
@@ -153,7 +153,7 @@
     <div>ИД:</div>
     <div>{mandela.id}</div>
     <div>Добавлено:</div>
-    <div>{listUserName(mandela.user_name, mandela.user_id)}</div>
+    <div>{mandela.user_name}</div>
     <div>Создано:</div>
     <div>{formatDateTime(mandela.create_ts)}</div>
 
