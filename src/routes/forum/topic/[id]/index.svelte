@@ -6,6 +6,7 @@
     import { stores } from "@sapper/app";
     import Session from "../../../../components/Session.svelte";
     import PostElement from "../../../../components/forum/post/PostElement.svelte";
+    import Navigator from "../../../../components/forum/main/Navigator.svelte";
 
     const { page } = stores();
     const topicId = +$page.params.id;
@@ -63,6 +64,7 @@
 <h1>{title}</h1>
 
 <Session bind:user bind:isAdmin />
+<Navigator />
 
 {#each posts as post}
     <PostElement {post} on:removed={() => load()} />
