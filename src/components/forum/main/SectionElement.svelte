@@ -2,6 +2,7 @@
     import { send } from "network";
     import * as route from "route";
     import * as method from "method";
+    import * as dialog from "dialog";
     import { goto } from "@sapper/app";
     import { createEventDispatcher } from "svelte";
 
@@ -15,6 +16,8 @@
     }
 
     async function removeSection() {
+        if (!dialog.remove("Удалить секцию?")) return;
+
         const params = {
             id: +section.id,
         };

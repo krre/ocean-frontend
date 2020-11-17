@@ -17,7 +17,7 @@
     }
 
     async function removeCategory() {
-        if (!dialog.remove("Удалить категорию")) return;
+        if (!dialog.remove("Удалить категорию?")) return;
 
         const params = {
             id: +category.id,

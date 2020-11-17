@@ -3,7 +3,7 @@
     import { formatDateTime } from "utils";
     import * as route from "route";
     import * as method from "method";
-    import * as consts from "consts";
+    import * as dialog from "dialog";
     import { goto } from "@sapper/app";
     import { createEventDispatcher } from "svelte";
     import Session from "../../../components/Session.svelte";
@@ -24,6 +24,8 @@
     }
 
     async function removeTopic() {
+        if (!dialog.remove("Удалить тему?")) return;
+
         const params = {
             id: +topic.id,
         };

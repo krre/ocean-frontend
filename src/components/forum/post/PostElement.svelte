@@ -3,7 +3,7 @@
     import { formatDateTime } from "utils";
     import * as route from "route";
     import * as method from "method";
-    import * as consts from "consts";
+    import * as dialog from "dialog";
     import { goto } from "@sapper/app";
     import { createEventDispatcher } from "svelte";
     import Session from "../../../components/Session.svelte";
@@ -19,11 +19,13 @@
 
     $: editable = isAdmin || (user && user.id === post.user_id && !isFierce);
 
-    function editTopic() {
+    function editPost() {
         goto(route.Forum.Post.Edit(post.id));
     }
 
-    async function removeTopic() {
+    async function removePost() {
+        if (!dialog.remove("Удалить сообщение?")) return;
+
         const params = {
             id: +post.id,
         };
@@ -58,8 +60,8 @@
     {post.post}
     {#if editable}
         <div class="buttons">
-            <button on:click={editTopic}>Изменить</button>
-            <button on:click={removeTopic}>Удалить</button>
+            <button on:click={editPost}>Изменить</button>
+            <button on:click={removePost}>Удалить</button>
         </div>
     {/if}
 </div>
