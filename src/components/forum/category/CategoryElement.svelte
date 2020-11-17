@@ -3,6 +3,7 @@
     import SectionElement from "../main/SectionElement.svelte";
     import * as route from "route";
     import * as method from "method";
+    import * as dialog from "dialog";
     import { goto } from "@sapper/app";
     import { createEventDispatcher } from "svelte";
 
@@ -16,6 +17,8 @@
     }
 
     async function removeCategory() {
+        if (!dialog.remove("Удалить категорию")) return;
+
         const params = {
             id: +category.id,
         };
