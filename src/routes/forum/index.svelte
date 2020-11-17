@@ -5,7 +5,7 @@
     import { onMount } from "svelte";
     import { goto } from "@sapper/app";
     import Session from "../../components/Session.svelte";
-    import CategoryElement from "../../components/forum/main/CategoryElement.svelte";
+    import CategoryElement from "../../components/forum/category/CategoryElement.svelte";
     import Navigator from "../../components/forum/main/Navigator.svelte";
 
     const title = "Форум";

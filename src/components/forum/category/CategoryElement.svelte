@@ -1,6 +1,6 @@
 <script lang="ts">
     import { send } from "network";
-    import SectionElement from "./SectionElement.svelte";
+    import SectionElement from "../main/SectionElement.svelte";
     import * as route from "route";
     import * as method from "method";
     import { goto } from "@sapper/app";
