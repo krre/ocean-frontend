@@ -2,9 +2,9 @@
     import type { PathPart } from "forum";
     import * as route from "route";
 
-    export let category: PathPart;
-    export let section: PathPart;
-    export let topic: PathPart;
+    // export let category: PathPart;
+    // export let section: PathPart;
+    // export let topic: PathPart;
 
     let path: PathPart[];
 
@@ -12,17 +12,17 @@
         path = [];
         path.push({ name: "Форум", route: route.Forum.Root });
 
-        if (category) {
-            path.push(category);
-        }
+        // if (category) {
+        //     path.push(category);
+        // }
 
-        if (section) {
-            path.push(section);
-        }
+        // if (section) {
+        //     path.push(section);
+        // }
 
-        if (topic) {
-            path.push(topic);
-        }
+        // if (topic) {
+        //     path.push(topic);
+        // }
     }
 </script>
 
