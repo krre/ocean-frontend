@@ -4,7 +4,7 @@
 
     const { session } = stores();
 
-    export let user: any;
+    export let user: any = null;
     export let isAdmin = false;
     export let isFierce = true;
 

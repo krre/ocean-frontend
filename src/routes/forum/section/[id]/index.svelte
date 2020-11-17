@@ -4,7 +4,6 @@
     import { send } from "network";
     import { onMount } from "svelte";
     import { goto, stores } from "@sapper/app";
-    import type { PathPart } from "forum";
     import Session from "../../../../components/Session.svelte";
     import TopicElement from "../../../../components/forum/topic/TopicElement.svelte";
     import Navigator from "../../../../components/forum/main/Navigator.svelte";
@@ -17,8 +16,6 @@
     let isAdmin = false;
     let user;
     let topics = [];
-    let navigatorCategory: PathPart;
-    let navigatorSection: PathPart;
 
     onMount(async () => {
         load();
@@ -48,7 +45,7 @@
     <title>{title}</title>
 </svelte:head>
 
-<Navigator category={navigatorCategory} section={navigatorSection} />
+<Navigator />
 
 <Session bind:user bind:isAdmin />
 
