@@ -1,13 +1,28 @@
 <script lang="ts">
-    export let currentCount = 0;
-    export let pageLimit = 0;
-    export let pageNo = 1;
-    export let lastPage = 1;
+    export let baseQuery: URLSearchParams;
+    export let pageQuery: URLSearchParams;
+    export let limit = 0;
+    export let count = 0;
+    export let offset = 1;
 
-    export let firstPageLink: string;
-    export let prevPageLink: string;
-    export let nextPageLink: string;
-    export let lastPageLink: string;
+    $: last = Math.ceil(count / limit);
+    $: pageQuery = query(offset);
+
+    function query(page: number, qry?: URLSearchParams): URLSearchParams {
+        let result = new URLSearchParams(qry);
+
+        if (page <= 1) {
+            return result;
+        }
+
+        result.append("page", page.toString());
+        return result;
+    }
+
+    function makeLink(page: number, qry: URLSearchParams): string {
+        let result = query(page, qry).toString();
+        return result ? "?" + result : "";
+    }
 </script>
 
 <style>
@@ -30,18 +45,24 @@
     }
 </style>
 
-{#if currentCount && currentCount > pageLimit}
+{#if count > limit}
     <div class="pagination-container">
-        {#if pageNo > 1}
-            <a class="pagination-item" href={firstPageLink}>Первая</a>
-            <a class="pagination-item" href={prevPageLink}>Предыдущая</a>
+        {#if offset > 1}
+            <a class="pagination-item" href={makeLink(1, baseQuery)}>Первая</a>
+            <a
+                class="pagination-item"
+                href={makeLink(offset - 1, baseQuery)}>Предыдущая</a>
         {/if}
 
-        <div class="pagination-item">{pageNo}</div>
+        <div class="pagination-item">{offset}</div>
 
-        {#if pageNo < lastPage}
-            <a class="pagination-item" href={nextPageLink}>Следующая</a>
-            <a class="pagination-item" href={lastPageLink}>Последняя</a>
+        {#if offset < last}
+            <a
+                class="pagination-item"
+                href={makeLink(offset + 1, baseQuery)}>Следующая</a>
+            <a
+                class="pagination-item"
+                href={makeLink(last, baseQuery)}>Последняя</a>
         {/if}
     </div>
 {/if}

@@ -26,12 +26,8 @@
 
     let selected_delete = [];
     let currentCount = 0;
-    let lastPage = 0;
-
-    let firstPageLink: string;
-    let lastPageLink: string;
-    let nextPageLink: string;
-    let prevPageLink: string;
+    let baseQuery = new URLSearchParams();
+    let pageQuery = new URLSearchParams();
 
     const showAll = 0;
     const showNew = 1;
@@ -57,12 +53,49 @@
 
     $: if (nonReactive.pageInit && filter >= 0 && category >= 0) {
         pageNo = 1;
-
-        goto(makeLink(pageNo));
+        makeQueryAndGoto(false);
     }
 
     $: if (nonReactive.pageInit && sort >= 0) {
-        goto(makeLink(pageNo));
+        makeQueryAndGoto();
+    }
+
+    function makeQueryAndGoto(usePage: boolean = true) {
+        makeBaseQuery();
+        const gotoQuery = new URLSearchParams(baseQuery);
+
+        if (usePage) {
+            for (let params of pageQuery) {
+                gotoQuery.append(params[0], params[1]);
+            }
+        }
+
+        const queryString = gotoQuery.toString();
+        goto((queryString ? "?" : "") + queryString);
+    }
+
+    function makeBaseQuery() {
+        const params = new URLSearchParams();
+
+        if (sort) {
+            params.append("sort", sort.toString());
+        }
+
+        if (user) {
+            if (filter) {
+                params.append("filter", filter.toString());
+            }
+
+            if (filter != showCategory && category > 0) {
+                category = 0;
+            }
+
+            if (category) {
+                params.append("category", category.toString());
+            }
+        }
+
+        baseQuery = params;
     }
 
     $: if (process.browser && $page.query) {
@@ -109,42 +142,6 @@
         } else if (filter === showCategory) {
             currentCount = categoryCount;
         }
-
-        lastPage = Math.ceil(currentCount / pageLimit);
-
-        firstPageLink = makeLink(1);
-        lastPageLink = makeLink(lastPage);
-        nextPageLink = makeLink(pageNo + 1);
-        prevPageLink = makeLink(pageNo - 1);
-    }
-
-    function makeLink(page: number): string {
-        const params = new URLSearchParams();
-
-        if (filter != showCategory && category > 0) {
-            category = 0;
-        }
-
-        if (page > 1) {
-            params.append("page", page.toString());
-        }
-
-        if (sort) {
-            params.append("sort", sort.toString());
-        }
-
-        if (user) {
-            if (filter) {
-                params.append("filter", filter.toString());
-            }
-
-            if (category) {
-                params.append("category", category.toString());
-            }
-        }
-
-        const query = params.toString();
-        return query ? "?" + query : "";
     }
 
     async function deleteMandela() {
@@ -180,7 +177,6 @@
         display: flex;
         flex-wrap: wrap;
         align-items: center;
-        /* border: 1px solid; */
     }
 
     .tool-bar-item {
@@ -271,11 +267,8 @@
 {/each}
 
 <Pagination
-    {currentCount}
-    {pageLimit}
-    {pageNo}
-    {lastPage}
-    {firstPageLink}
-    {prevPageLink}
-    {nextPageLink}
-    {lastPageLink} />
+    count={currentCount}
+    limit={pageLimit}
+    offset={pageNo}
+    {baseQuery}
+    bind:pageQuery />
