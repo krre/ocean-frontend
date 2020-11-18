@@ -1,4 +1,5 @@
 <script lang="ts">
+    export let baseRoute = "";
     export let baseQuery: URLSearchParams;
     export let pageQuery: URLSearchParams;
     export let limit = 0;
@@ -20,8 +21,8 @@
     }
 
     function makeLink(page: number, qry: URLSearchParams): string {
-        let result = query(page, qry).toString();
-        return result ? "?" + result : "";
+        let params = query(page, qry).toString();
+        return baseRoute + (params ? "?" + params : "");
     }
 </script>
 
