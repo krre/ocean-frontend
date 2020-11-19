@@ -6,6 +6,11 @@
 </script>
 
 <style>
+    .form {
+        display: grid;
+        grid-gap: 0.5em;
+    }
+
     button {
         margin-top: 1em;
     }
