@@ -1,7 +1,7 @@
 <script lang="ts">
     export let baseRoute = "";
-    export let baseQuery: URLSearchParams;
-    export let pageQuery: URLSearchParams;
+    export let baseQuery = new URLSearchParams();
+    export let pageQuery = new URLSearchParams();
     export let limit = 0;
     export let count = 0;
     export let offset = 1;
