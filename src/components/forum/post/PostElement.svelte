@@ -45,6 +45,7 @@
     .buttons {
         display: flex;
         justify-content: flex-end;
+        margin-top: 0.5em;
     }
 
     button {
