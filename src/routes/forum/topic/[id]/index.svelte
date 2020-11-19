@@ -1,12 +1,13 @@
 <script lang="ts">
+    import * as route from "route";
     import * as method from "method";
     import { send } from "network";
     import { sessionUserName } from "utils";
-    import { onMount } from "svelte";
     import { stores } from "@sapper/app";
     import Session from "../../../../components/Session.svelte";
     import PostElement from "../../../../components/forum/post/PostElement.svelte";
     import Navigator from "../../../../components/forum/main/Navigator.svelte";
+    import Pagination from "../../../../components/Pagination.svelte";
 
     const { page } = stores();
     const topicId = +$page.params.id;
@@ -18,20 +19,27 @@
     let posts = [];
     let post: string;
 
-    onMount(async () => {
+    let pageNo = 1;
+    let postCount = 0;
+
+    const pageLimit = 30;
+
+    $: if (process.browser && $page.query) {
+        pageNo = +$page.query.page || 1;
         load();
-    });
+    }
 
     async function load() {
         const params = {
             topic_id: topicId,
-            offset: 0,
-            limit: 1000,
+            offset: (pageNo - 1) * pageLimit,
+            limit: pageLimit,
         };
 
         const result = await send(method.Forum.Post.GetAll, params);
         title = result.topic_name;
         posts = result.posts;
+        postCount = result.post_count;
     }
 
     async function append() {
@@ -50,6 +58,7 @@
     .area {
         max-width: 100%;
         width: 700px;
+        margin-top: 0.7em;
     }
 
     button {
@@ -69,6 +78,13 @@
 {#each posts as post}
     <PostElement {post} on:removed={() => load()} />
 {/each}
+
+<Pagination
+    count={postCount}
+    limit={pageLimit}
+    offset={pageNo}
+    baseRoute={route.Forum.Topic.Id(topicId)} />
+
 <textarea class="area" rows="10" bind:value={post} />
 <div>Пользователь: {sessionUserName(user)}</div>
 <div><button on:click={append} disabled={!post}>Отправить</button></div>
