@@ -14,12 +14,8 @@
 
     let pageNo = 1;
     let currentCount = 0;
-    let lastPage = 0;
-
-    let firstPageLink: string;
-    let lastPageLink: string;
-    let nextPageLink: string;
-    let prevPageLink: string;
+    let baseQuery = new URLSearchParams();
+    let pageQuery = new URLSearchParams();
 
     const pageLimit = 50;
 
@@ -35,7 +31,9 @@
 
     $: if (nonReactive.pageInit && vote >= 0) {
         pageNo = 1;
-        goto(makeLink(pageNo));
+        makeBaseQuery();
+        const queryString = baseQuery.toString();
+        goto(route.Rating + (queryString ? "?" : "") + queryString);
     }
 
     $: if (process.browser && $page.query) {
@@ -44,19 +42,14 @@
         nonReactive.setPageInit();
     }
 
-    function makeLink(page: number): string {
+    function makeBaseQuery() {
         const params = new URLSearchParams();
-
-        if (page > 1) {
-            params.append("page", page.toString());
-        }
 
         if (vote) {
             params.append("vote", vote.toString());
         }
 
-        const query = params.toString();
-        return route.Rating + (query ? "?" + query : "");
+        baseQuery = params;
     }
 
     function assignQuery() {
@@ -74,13 +67,6 @@
         let result = await send(method.Rating.GetMandels, params);
         mandels = result.mandels;
         currentCount = result.total_count;
-
-        lastPage = Math.ceil(currentCount / pageLimit);
-
-        firstPageLink = makeLink(1);
-        lastPageLink = makeLink(lastPage);
-        nextPageLink = makeLink(pageNo + 1);
-        prevPageLink = makeLink(pageNo - 1);
     }
 
     function mandelaLink(id: number, mandela, i: number) {
@@ -105,11 +91,9 @@
 {/each}
 
 <Pagination
-    {currentCount}
-    {pageLimit}
-    {pageNo}
-    {lastPage}
-    {firstPageLink}
-    {prevPageLink}
-    {nextPageLink}
-    {lastPageLink} />
+    count={currentCount}
+    limit={pageLimit}
+    offset={pageNo}
+    baseRoute={route.Rating}
+    {baseQuery}
+    bind:pageQuery />
