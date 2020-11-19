@@ -69,6 +69,6 @@
 {#each posts as post}
     <PostElement {post} on:removed={() => load()} />
 {/each}
-<textarea class="area" rows="15" bind:value={post} />
+<textarea class="area" rows="10" bind:value={post} />
 <div>Пользователь: {sessionUserName(user)}</div>
 <div><button on:click={append} disabled={!post}>Отправить</button></div>
