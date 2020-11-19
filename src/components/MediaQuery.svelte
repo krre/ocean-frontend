@@ -1,7 +1,8 @@
-<script>
+<script lang="ts">
     import { onMount } from "svelte";
+    import type { ScreenSize } from "types";
 
-    export let query;
+    export let size: ScreenSize;
 
     let mql;
     let mqlListener;
@@ -18,11 +19,12 @@
     $: {
         if (wasMounted) {
             removeActiveListener();
-            addNewListener(query);
+            addNewListener(size);
         }
     }
 
-    function addNewListener(query) {
+    function addNewListener(size: ScreenSize) {
+        const query = `(max-width: ${size}px)`;
         mql = window.matchMedia(query);
         mqlListener = (v) => (matches = v.matches);
         mql.addListener(mqlListener);

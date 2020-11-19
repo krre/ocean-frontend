@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { ScreenSize } from "types";
     import Menu from "./Menu.svelte";
     import Burger from "./Burger.svelte";
     import MediaQuery from "../MediaQuery.svelte";
@@ -17,7 +18,7 @@
 </style>
 
 <div class="bar">
-    <MediaQuery query="(max-width: 768px)" let:matches>
+    <MediaQuery size={ScreenSize.Tablet} let:matches>
         {#if matches}
             <Burger bind:open={sidebar} />
         {:else}
