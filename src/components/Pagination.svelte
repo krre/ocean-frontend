@@ -31,8 +31,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        margin-top: 30px;
-        margin: 0 -5px;
+        margin-top: 0.7em;
     }
 
     .pagination-item {
