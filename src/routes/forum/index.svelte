@@ -71,7 +71,7 @@
 
 {#if isAdmin}
     <div class="edit-btn">
-        <button on:click={() => (editable = !editable)}> Редактировать </button>
+        <button on:click={() => (editable = !editable)}>Редактировать</button>
     </div>
 {/if}
 
