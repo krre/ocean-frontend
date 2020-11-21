@@ -48,7 +48,7 @@
     let voteValue = -1;
     let editVote = false;
 
-    $: if (session.user && mandela && !mandela.mark_ts) {
+    $: if (process.browser && session.user && mandela && !mandela.mark_ts) {
         mark();
     }
 
