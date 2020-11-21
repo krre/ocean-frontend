@@ -12,8 +12,8 @@
     const { page } = stores();
     const topicId = +$page.params.id;
 
-    let title: string;
-
+    let topicTitle: string;
+    let topicUserId: number;
     let isAdmin = false;
     let user;
     let posts = [];
@@ -37,7 +37,8 @@
         };
 
         const result = await send(method.Forum.Post.GetAll, params);
-        title = result.topic_name;
+        topicTitle = result.topic_name;
+        topicUserId = result.topic_user_id;
         posts = result.posts;
         postCount = result.post_count;
     }
@@ -67,16 +68,16 @@
 </style>
 
 <svelte:head>
-    <title>{title}</title>
+    <title>{topicTitle}</title>
 </svelte:head>
 
-<h1>{title}</h1>
+<h1>{topicTitle}</h1>
 
 <Session bind:user bind:isAdmin />
 <Navigator />
 
 {#each posts as post}
-    <PostElement {post} on:removed={() => load()} />
+    <PostElement {post} {topicUserId} on:removed={() => load()} />
 {/each}
 
 <Pagination

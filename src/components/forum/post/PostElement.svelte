@@ -10,6 +10,7 @@
 
     const dispatch = createEventDispatcher();
 
+    export let topicUserId: number;
     export let post: any;
     export let editable = false;
 
@@ -17,7 +18,11 @@
     let isFierce = true;
     let user;
 
-    $: editable = isAdmin || (user && user.id === post.user_id && !isFierce);
+    $: editable =
+        isAdmin ||
+        (user &&
+            (user.id === post.user_id || user.id == topicUserId) &&
+            !isFierce);
 
     function editPost() {
         goto(route.Forum.Post.Edit(post.id));
