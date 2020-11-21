@@ -93,6 +93,8 @@
 
     .message {
         white-space: pre-wrap;
+        overflow-wrap: break-word;
+        word-wrap: break-word;
     }
 
     .label-link {
