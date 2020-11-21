@@ -48,6 +48,8 @@
         padding: 1em;
         border: 1px solid;
         white-space: pre-line;
+        overflow-wrap: break-word;
+        word-wrap: break-word;
     }
 
     .buttons {
