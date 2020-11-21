@@ -13,7 +13,7 @@
     let pageNo = 1;
     let topicCount = 0;
 
-    const pageLimit = 30;
+    const pageLimit = 20;
 
     $: if (process.browser && $page.query) {
         pageNo = +$page.query.page || 1;
@@ -38,3 +38,9 @@
 {#each topics as topic}
     <NewPost {topic} />
 {/each}
+
+<Pagination
+    count={topicCount}
+    limit={pageLimit}
+    offset={pageNo}
+    baseRoute={route.Forum.New} />
