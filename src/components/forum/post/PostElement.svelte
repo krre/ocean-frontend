@@ -4,6 +4,7 @@
     import * as route from "route";
     import * as method from "method";
     import * as dialog from "dialog";
+    import * as consts from "consts";
     import { goto } from "@sapper/app";
     import { createEventDispatcher } from "svelte";
     import Session from "../../../components/Session.svelte";
@@ -21,8 +22,10 @@
     $: editable =
         isAdmin ||
         (user &&
-            (user.id === post.user_id || user.id == topicUserId) &&
-            !isFierce);
+            !isFierce &&
+            (user.id === post.user_id ||
+                (user.id == topicUserId &&
+                    post.user_id != consts.Account.Id.Admin)));
 
     function editPost() {
         goto(route.Forum.Post.Edit(post.id));
