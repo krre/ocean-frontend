@@ -6,7 +6,6 @@
     import { goto } from "@sapper/app";
     import Session from "../../components/Session.svelte";
     import CategoryElement from "../../components/forum/category/CategoryElement.svelte";
-    import Navigator from "../../components/forum/main/Navigator.svelte";
 
     const title = "Форум";
 
@@ -57,6 +56,10 @@
         display: flex;
         justify-content: flex-end;
     }
+
+    .new {
+        margin: 0.5em 0;
+    }
 </style>
 
 <Session bind:user bind:isAdmin />
@@ -66,8 +69,7 @@
 </svelte:head>
 
 <div class="warn">Форум находится в разработке, но пользоваться уже можно</div>
-
-<Navigator />
+<div class="new"><a href={route.Forum.New}>Новые сообщения</a></div>
 
 {#if isAdmin}
     <div class="edit-btn">
