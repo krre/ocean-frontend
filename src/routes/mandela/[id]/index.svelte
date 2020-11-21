@@ -11,7 +11,7 @@
             id: +id,
         };
 
-        let result = await send("mandela.getOne", params);
+        let result = await send(method.Mandela.GetOne, params);
         const mandela = result.mandela;
         const categories = result.categories;
         const votes = result.votes;

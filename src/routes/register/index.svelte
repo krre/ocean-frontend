@@ -27,7 +27,7 @@
             return;
         }
 
-        const nextId = await send("user.getNextId");
+        const nextId = await send(method.User.GetNextId);
         const id = nextId.id;
 
         let params: object = {

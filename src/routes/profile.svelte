@@ -104,7 +104,7 @@
         };
 
         try {
-            await send("user.updateToken", params);
+            await send(method.User.UpdateToken, params);
             setToken(token);
             $session.user.token = token;
 
