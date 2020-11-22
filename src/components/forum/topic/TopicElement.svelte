@@ -36,8 +36,7 @@
 
 <style>
     .topic {
-        margin-top: 0.2em;
-        margin-bottom: 0.2em;
+        margin: 0.5em 0;
         padding: 1em;
         border: 1px solid;
     }

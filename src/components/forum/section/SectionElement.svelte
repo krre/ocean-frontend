@@ -28,7 +28,9 @@
 
 <style>
     .section {
-        padding: 0.5em 0.7em;
+        margin: 0.5em 0;
+        padding: 1em;
+        border: 1px solid;
     }
 
     .buttons {

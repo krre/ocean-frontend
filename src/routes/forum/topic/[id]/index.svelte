@@ -59,7 +59,6 @@
     .area {
         max-width: 100%;
         width: 700px;
-        margin-top: 0.7em;
     }
 
     button {

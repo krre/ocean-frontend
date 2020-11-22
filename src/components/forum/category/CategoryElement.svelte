@@ -32,18 +32,9 @@
 </script>
 
 <style>
-    .category {
-        margin-bottom: 0.7em;
-        border: 1px solid;
-    }
-
     .header {
-        border-bottom: 1px solid;
-        padding: 0.7em;
-    }
-
-    .sections {
-        min-height: 1.5em;
+        border: 1px solid;
+        padding: 1em;
     }
 
     .buttons {
@@ -56,21 +47,17 @@
     }
 </style>
 
-<div class="category">
-    <div class="header">
-        <strong>{category.name}</strong>
-        {#if editable}
-            <div class="buttons">
-                <button on:click={appendSection}>Добавить раздел</button>
-                <button on:click={editCategory}>Изменить</button>
-                <button on:click={removeCategory}>Удалить</button>
-            </div>
-        {/if}
-    </div>
-
-    <div class="sections">
-        {#each category.sections as section}
-            <SectionElement {section} {editable} on:removed />
-        {/each}
-    </div>
+<div class="header">
+    <strong>{category.name}</strong>
+    {#if editable}
+        <div class="buttons">
+            <button on:click={appendSection}>Добавить раздел</button>
+            <button on:click={editCategory}>Изменить</button>
+            <button on:click={removeCategory}>Удалить</button>
+        </div>
+    {/if}
 </div>
+
+{#each category.sections as section}
+    <SectionElement {section} {editable} on:removed />
+{/each}
