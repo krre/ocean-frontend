@@ -11,7 +11,7 @@
     const { page } = stores();
     const sectionId = +$page.params.id;
 
-    let title: string;
+    let sectionName: string;
 
     let isAdmin = false;
     let user;
@@ -35,7 +35,7 @@
         };
 
         const result = await send(method.Forum.Topic.GetAll, params);
-        title = result.section_name;
+        sectionName = result.section_name;
         topics = result.topics;
         topicCount = result.topic_count;
     }
@@ -49,12 +49,13 @@
 </style>
 
 <svelte:head>
-    <title>{title}</title>
+    <title>{sectionName}</title>
 </svelte:head>
 
+<Session bind:user bind:isAdmin />
 <Navigator />
 
-<Session bind:user bind:isAdmin />
+<h1>{sectionName}</h1>
 
 <div><button on:click={append}>Создать тему</button></div>
 {#each topics as topic}
