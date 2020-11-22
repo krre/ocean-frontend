@@ -14,7 +14,6 @@
     import { errorMessage } from "network";
     import { stores } from "@sapper/app";
     import OperationResult from "../components/OperationResult.svelte";
-    import AccountMode from "../components/AccountMode.svelte";
 
     const { session } = stores();
 
@@ -27,51 +26,13 @@
     let successPassword: string;
     let errorPassword: string;
 
-    let code: string;
-    let name: string;
-
     let password1: string;
     let password2: string;
 
-    let prevCode: string;
-
-    $: if (user) {
-        setName(user.name);
-    }
-
-    $: if (code) {
-        if (code === consts.Account.Conspirator) {
-            setName(consts.Account.ModeNames[consts.Account.Conspirator]);
-        }
-
-        if (
-            code == consts.Account.User &&
-            prevCode === consts.Account.Conspirator
-        ) {
-            setName("");
-        }
-
-        successProfile = "";
-        errorProfile = "";
-        successPassword = "";
-        errorPassword = "";
-
-        prevCode = code;
-    }
-
-    function setName(value) {
-        name = value;
-    }
-
     async function update() {
-        if (code === consts.Account.User && !user.name) {
-            errorProfile = "Введите имя";
-            return;
-        }
-
         const params = {
-            name: name,
-            code: user.code === consts.Account.Admin ? user.code : code,
+            name: user.name,
+            code: user.code,
         };
 
         try {
@@ -133,15 +94,9 @@
     <h1>{title}</h1>
     <div>ИД: {user.id}</div>
     <div>Создано: {formatDateTime(user.create_ts)}</div>
-    {#if user.code !== consts.Account.Admin}
-        <AccountMode bind:code bind:initCode={user.code} />
-    {/if}
-    {#if code !== consts.Account.Conspirator}
-        Имя:
-        <input bind:value={name} />
-    {/if}
+    Имя:<input bind:value={user.name} />
     <OperationResult bind:success={successProfile} bind:error={errorProfile} />
-    <button on:click={update} disabled={!name}>Сохранить</button>
+    <button on:click={update} disabled={!user.name}>Сохранить</button>
     Пароль:
     <input type="password" bind:value={password1} />
     Пароль (ещё раз):

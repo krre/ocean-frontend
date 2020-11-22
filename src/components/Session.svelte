@@ -6,9 +6,9 @@
 
     export let user: any = null;
     export let isAdmin = false;
-    export let isFierce = true;
+    export let isAnonym = true;
 
     $: isAdmin = user ? user.code === consts.Account.Admin : false;
-    $: isFierce = user ? user.code === consts.Account.Fierce : false;
+    $: isAnonym = user ? user.code === consts.Account.Anonym : false;
     $: user = $session.user;
 </script>

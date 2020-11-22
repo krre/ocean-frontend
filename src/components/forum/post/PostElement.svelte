@@ -16,13 +16,13 @@
     export let editable = false;
 
     let isAdmin = false;
-    let isFierce = true;
+    let isAnonym = true;
     let user;
 
     $: editable =
         isAdmin ||
         (user &&
-            !isFierce &&
+            !isAnonym &&
             (user.id === post.user_id ||
                 (user.id == topicUserId &&
                     post.user_id != consts.Account.Id.Admin)));
@@ -63,7 +63,7 @@
     }
 </style>
 
-<Session bind:user bind:isAdmin bind:isFierce />
+<Session bind:user bind:isAdmin bind:isAnonym />
 
 <div class="post">
     <div>{post.user_name} | {formatDateTime(post.create_ts)}</div>

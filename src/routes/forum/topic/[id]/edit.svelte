@@ -31,10 +31,10 @@
     export let userId: number;
 
     let isAdmin = false;
-    let isFierce = true;
+    let isAnonym = true;
     let user;
 
-    $: editable = isAdmin || (user && user.id === userId && !isFierce);
+    $: editable = isAdmin || (user && user.id === userId && !isAnonym);
 
     const action = async () => {
         const params = {
@@ -47,7 +47,7 @@
     };
 </script>
 
-<Session bind:isAdmin bind:isFierce bind:user />
+<Session bind:isAdmin bind:isAnonym bind:user />
 
 <svelte:head>
     <title>{title}</title>

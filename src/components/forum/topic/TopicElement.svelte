@@ -14,10 +14,10 @@
     export let editable = false;
 
     let isAdmin = false;
-    let isFierce = true;
+    let isAnonym = true;
     let user;
 
-    $: editable = isAdmin || (user && user.id === topic.user_id && !isFierce);
+    $: editable = isAdmin || (user && user.id === topic.user_id && !isAnonym);
 
     function editTopic() {
         goto(route.Forum.Topic.Edit(topic.id));
@@ -52,7 +52,7 @@
     }
 </style>
 
-<Session bind:user bind:isAdmin bind:isFierce />
+<Session bind:user bind:isAdmin bind:isAnonym />
 
 <div class="topic">
     <a href={route.Forum.Topic.Id(topic.id)}>{topic.name}</a>

@@ -7,7 +7,6 @@
     import { createToken } from "utils";
     import BoxForm from "../../components/BoxForm.svelte";
     import OperationResult from "../../components/OperationResult.svelte";
-    import AccountMode from "../../components/AccountMode.svelte";
 
     const title = "Регистрация";
 
@@ -32,11 +31,8 @@
 
         let params: object = {
             id: id,
-            name:
-                code === consts.Account.Conspirator
-                    ? consts.Account.ModeNames[consts.Account.Conspirator]
-                    : name,
-            code: code,
+            name: name,
+            code: consts.Account.User,
             token: createToken(id, password1),
         };
 
@@ -51,8 +47,8 @@
 
 <BoxForm>
     <h2>{title}</h2><span />
-    <AccountMode bind:code />
-    {#if code === consts.Account.User}Имя: <input bind:value={name} />{/if}
+    Имя:
+    <input bind:value={name} />
     Пароль:
     <input type="password" bind:value={password1} />
     Пароль (ещё раз):
