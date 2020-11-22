@@ -1,6 +1,6 @@
 <script lang="ts">
     import { send } from "network";
-    import SectionElement from "../main/SectionElement.svelte";
+    import SectionElement from "../section/SectionElement.svelte";
     import * as route from "route";
     import * as method from "method";
     import * as dialog from "dialog";
