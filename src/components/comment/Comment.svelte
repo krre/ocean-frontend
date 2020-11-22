@@ -1,32 +1,41 @@
 <script lang="ts">
-    import * as consts from "consts";
-    import * as method from "method";
     import { formatDateTime, sessionUserName } from "utils";
     import { send } from "network";
+    import { stores } from "@sapper/app";
+    import * as consts from "consts";
+    import * as method from "method";
+    import * as route from "route";
     import EditComment from "./EditComment.svelte";
     import RemoveComment from "./RemoveComment.svelte";
+    import Pagination from "../Pagination.svelte";
+
+    const { page } = stores();
 
     export let user;
     export let mandelaId: number;
 
-    let totalCount: number;
-    const limit = 1000; // TODO: When will be added pagination, change on 50
+    let pageNo = 1;
+    let commentCount = 0;
+    const pageLimit = 50;
 
     let comments = [];
     let message: string;
     let userName = sessionUserName(user);
 
-    $: mandelaId && load();
+    $: if (process.browser && $page.query) {
+        pageNo = +$page.query.page || 1;
+        load();
+    }
 
     async function load() {
         const params = {
             mandela_id: +mandelaId,
-            limit: limit,
-            offset: 0,
+            limit: pageLimit,
+            offset: (pageNo - 1) * pageLimit,
         };
 
         let result = await send(method.Comment.GetAll, params);
-        totalCount = result.total_count;
+        commentCount = result.total_count;
 
         comments = [];
 
@@ -142,6 +151,12 @@
     {/if}
     <br />
 {/each}
+
+<Pagination
+    count={commentCount}
+    limit={pageLimit}
+    offset={pageNo}
+    baseRoute={route.Mandela.Id(mandelaId)} />
 
 <textarea class="area" rows="10" bind:value={message} />
 <div>Пользователь: {userName}</div>
