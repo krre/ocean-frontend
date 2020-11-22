@@ -1,6 +1,7 @@
 <script lang="ts">
     import * as route from "route";
     import * as method from "method";
+    import * as consts from "consts";
     import type { PathPart } from "forum";
     import { send } from "network";
     import { sessionUserName } from "utils";
@@ -23,7 +24,7 @@
     let pageNo = 1;
     let postCount = 0;
 
-    const pageLimit = 30;
+    const pageLimit = consts.Forum.Post.PageLimit;
 
     let categoryNav: PathPart;
     let sectionNav: PathPart;
