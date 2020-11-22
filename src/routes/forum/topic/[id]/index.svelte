@@ -1,6 +1,7 @@
 <script lang="ts">
     import * as route from "route";
     import * as method from "method";
+    import type { PathPart } from "forum";
     import { send } from "network";
     import { sessionUserName } from "utils";
     import { stores } from "@sapper/app";
@@ -24,6 +25,9 @@
 
     const pageLimit = 30;
 
+    let categoryNav: PathPart;
+    let sectionNav: PathPart;
+
     $: if (process.browser && $page.query) {
         pageNo = +$page.query.page || 1;
         load();
@@ -41,6 +45,16 @@
         topicUserId = result.topic_user_id;
         posts = result.posts;
         postCount = result.post_count;
+
+        categoryNav = {
+            id: result.category_id,
+            name: result.category_name,
+        };
+
+        sectionNav = {
+            id: result.section_id,
+            name: result.section_name,
+        };
     }
 
     async function append() {
@@ -71,7 +85,7 @@
 </svelte:head>
 
 <Session bind:user bind:isAdmin />
-<Navigator />
+<Navigator category={categoryNav} section={sectionNav} />
 
 <h1>{topicName}</h1>
 
