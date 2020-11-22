@@ -1,6 +1,7 @@
 <script lang="ts">
     import * as route from "route";
     import * as method from "method";
+    import type { PathPart } from "forum";
     import { send } from "network";
     import { goto, stores } from "@sapper/app";
     import Session from "../../../../components/Session.svelte";
@@ -20,6 +21,8 @@
     let pageNo = 1;
     let topicCount = 0;
 
+    let categoryNav: PathPart;
+
     const pageLimit = 20;
 
     $: if (process.browser && $page.query) {
@@ -38,6 +41,11 @@
         sectionName = result.section_name;
         topics = result.topics;
         topicCount = result.topic_count;
+
+        categoryNav = {
+            id: result.category_id,
+            name: result.category_name,
+        };
     }
 
     function append() {
@@ -53,7 +61,7 @@
 </svelte:head>
 
 <Session bind:user bind:isAdmin />
-<Navigator />
+<Navigator category={categoryNav} />
 
 <h1>{sectionName}</h1>
 
