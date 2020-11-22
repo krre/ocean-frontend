@@ -8,7 +8,7 @@
     const { page } = stores();
     const title = "Рейтинг";
 
-    let type = 0;
+    let type = consts.Rating.Mandela;
 
     class NonReactive {
         pageInit = false;
@@ -20,7 +20,7 @@
 
     const nonReactive = new NonReactive();
 
-    $: if (nonReactive.pageInit && type >= 0) {
+    $: if (nonReactive.pageInit && type >= consts.Rating.Mandela) {
         const params = new URLSearchParams();
 
         if (type) {
@@ -48,13 +48,19 @@
 
 <h1>{title}</h1>
 
-<label> <input type="radio" bind:group={type} value={0} /> Манделы </label>
+<label>
+    <input type="radio" bind:group={type} value={consts.Rating.Mandela} />
+    Манделы
+</label>
 
-<label> <input type="radio" bind:group={type} value={1} /> Пользователи </label>
+<label>
+    <input type="radio" bind:group={type} value={consts.Rating.User} />
+    Пользователи
+</label>
 
 <p />
 
-{#if type === 0}
+{#if type === consts.Rating.Mandela}
     <MandelaRating />
 {:else}
     <UserRating />
