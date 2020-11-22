@@ -58,7 +58,7 @@
 
 <div class="category">
     <div class="header">
-        {category.name}
+        <strong>{category.name}</strong>
         {#if editable}
             <div class="buttons">
                 <button on:click={appendSection}>Добавить раздел</button>
