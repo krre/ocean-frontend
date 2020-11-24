@@ -5,8 +5,10 @@
 
     export let topic;
 
-    function topicLink(id: number, postCount: number): string {
-        const offset = Math.floor(postCount / consts.Forum.Post.PageLimit);
+    function topicLink(): string {
+        const offset = Math.floor(
+            topic.post_count / consts.Forum.Post.PageLimit
+        );
         const query = offset ? `?page=${offset + 1}` : "";
         return route.Forum.Topic.Id(topic.id) + query;
     }
@@ -25,8 +27,7 @@
 </style>
 
 <div class="topic">
-    <a
-        href={topicLink(topic.id, topic.post_count)}><strong>{topic.name}</strong></a>
+    <a href={topicLink()}><strong>{topic.name}</strong></a>
     <br /><br />
     <div>
         Автор:
