@@ -59,7 +59,7 @@
     }
 
     .new {
-        margin: 0.5em 0;
+        margin: 0.5em var(--page-margin);
     }
 </style>
 
@@ -67,9 +67,9 @@
 
 <div class="warn">Форум находится в разработке, но пользоваться уже можно</div>
 
-<Page {title} showHeader={false}>
-    <div class="new"><a href={route.Forum.New}>Новые сообщения</a></div>
+<div class="new"><a href={route.Forum.New}>Новые сообщения</a></div>
 
+<Page {title} showHeader={false}>
     {#if isAdmin}
         <div class="edit-btn">
             <button
