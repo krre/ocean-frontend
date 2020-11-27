@@ -1,4 +1,5 @@
 <script lang="ts">
+    import Page from "../components/Page.svelte";
     export let status;
     export let error;
 
@@ -8,14 +9,10 @@
 <style>
 </style>
 
-<svelte:head>
-    <title>{status}</title>
-</svelte:head>
+<Page title={status}>
+    <p>{error.message}</p>
 
-<h1>{status}</h1>
-
-<p>{error.message}</p>
-
-{#if dev && error.stack}
-    <pre>{error.stack}</pre>
-{/if}
+    {#if dev && error.stack}
+        <pre>{error.stack}</pre>
+    {/if}
+</Page>

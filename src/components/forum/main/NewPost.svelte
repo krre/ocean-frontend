@@ -23,6 +23,8 @@
 
     .post {
         margin-top: 0.5em;
+        overflow-wrap: break-word;
+        word-wrap: break-word;
     }
 </style>
 

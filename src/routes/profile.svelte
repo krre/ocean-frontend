@@ -10,9 +10,9 @@
 </script>
 
 <script lang="ts">
-    import * as consts from "consts";
     import { errorMessage } from "network";
     import { stores } from "@sapper/app";
+    import Page from "../components/Page.svelte";
     import OperationResult from "../components/OperationResult.svelte";
 
     const { session } = stores();
@@ -86,23 +86,22 @@
     }
 </style>
 
-<svelte:head>
-    <title>{title}</title>
-</svelte:head>
-
-<div class="grid">
-    <h1>{title}</h1>
-    <div>ИД: {user.id}</div>
-    <div>Создано: {formatDateTime(user.create_ts)}</div>
-    Имя:<input bind:value={user.name} />
-    <OperationResult bind:success={successProfile} bind:error={errorProfile} />
-    <button on:click={update} disabled={!user.name}>Сохранить</button>
-    Пароль:
-    <input type="password" bind:value={password1} />
-    Пароль (ещё раз):
-    <input type="password" bind:value={password2} />
-    <OperationResult
-        bind:success={successPassword}
-        bind:error={errorPassword} />
-    <button on:click={changePassword}>Изменить</button>
-</div>
+<Page {title}>
+    <div class="grid">
+        <div>ИД: {user.id}</div>
+        <div>Создано: {formatDateTime(user.create_ts)}</div>
+        Имя:<input bind:value={user.name} />
+        <OperationResult
+            bind:success={successProfile}
+            bind:error={errorProfile} />
+        <button on:click={update} disabled={!user.name}>Сохранить</button>
+        Пароль:
+        <input type="password" bind:value={password1} />
+        Пароль (ещё раз):
+        <input type="password" bind:value={password2} />
+        <OperationResult
+            bind:success={successPassword}
+            bind:error={errorPassword} />
+        <button on:click={changePassword}>Изменить</button>
+    </div>
+</Page>

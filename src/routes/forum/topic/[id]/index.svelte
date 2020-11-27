@@ -6,6 +6,7 @@
     import { send } from "network";
     import { sessionUserName } from "utils";
     import { stores } from "@sapper/app";
+    import Page from "../../../../components/Page.svelte";
     import Session from "../../../../components/Session.svelte";
     import PostElement from "../../../../components/forum/post/PostElement.svelte";
     import Navigator from "../../../../components/forum/main/Navigator.svelte";
@@ -81,25 +82,21 @@
     }
 </style>
 
-<svelte:head>
-    <title>{topicName}</title>
-</svelte:head>
-
 <Session bind:user bind:isAdmin />
 <Navigator category={categoryNav} section={sectionNav} />
 
-<h1>{topicName}</h1>
+<Page title={topicName}>
+    {#each posts as post}
+        <PostElement {post} {topicUserId} on:removed={() => load()} />
+    {/each}
 
-{#each posts as post}
-    <PostElement {post} {topicUserId} on:removed={() => load()} />
-{/each}
+    <Pagination
+        count={postCount}
+        limit={pageLimit}
+        offset={pageNo}
+        baseRoute={route.Forum.Topic.Id(topicId)} />
 
-<Pagination
-    count={postCount}
-    limit={pageLimit}
-    offset={pageNo}
-    baseRoute={route.Forum.Topic.Id(topicId)} />
-
-<textarea class="area" rows="10" bind:value={post} />
-<div>Пользователь: {sessionUserName(user)}</div>
-<div><button on:click={append} disabled={!post}>Отправить</button></div>
+    <textarea class="area" rows="10" bind:value={post} />
+    <div>Пользователь: {sessionUserName(user)}</div>
+    <div><button on:click={append} disabled={!post}>Отправить</button></div>
+</Page>

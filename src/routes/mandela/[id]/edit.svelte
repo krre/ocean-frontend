@@ -17,6 +17,7 @@
 <script lang="ts">
     import * as consts from "consts";
     import { goto } from "@sapper/app";
+    import Page from "../../../components/Page.svelte";
     import MandelaEditor from "../../../components/MandelaEditor.svelte";
 
     const title = "Редактировать манделу";
@@ -58,22 +59,18 @@
     }
 </script>
 
-<svelte:head>
-    <title>{title}</title>
-</svelte:head>
-
-<h1>{title}</h1>
-
-<MandelaEditor
-    bind:titleMode={mandela.title_mode}
-    bind:title={mandela.title}
-    bind:what={mandela.what}
-    bind:before={mandela.before}
-    bind:after={mandela.after}
-    bind:description={mandela.description}
-    bind:images={mandela.images}
-    bind:videos={mandela.videos}
-    bind:links={mandela.links}
-    bind:categories
-    bind:user={session.user}
-    on:click={edit} />
+<Page {title}>
+    <MandelaEditor
+        bind:titleMode={mandela.title_mode}
+        bind:title={mandela.title}
+        bind:what={mandela.what}
+        bind:before={mandela.before}
+        bind:after={mandela.after}
+        bind:description={mandela.description}
+        bind:images={mandela.images}
+        bind:videos={mandela.videos}
+        bind:links={mandela.links}
+        bind:categories
+        bind:user={session.user}
+        on:click={edit} />
+</Page>

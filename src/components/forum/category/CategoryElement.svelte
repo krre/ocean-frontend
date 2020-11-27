@@ -33,8 +33,14 @@
 
 <style>
     .header {
-        border: 1px solid;
+        background-color: var(--header-background);
+        border-top: var(--border-1px);
+        border-bottom: var(--border-1px);
+    }
+
+    h3 {
         padding: 1em;
+        margin: 0;
     }
 
     .buttons {
@@ -48,7 +54,7 @@
 </style>
 
 <div class="header">
-    <strong>{category.name}</strong>
+    <h3>{category.name}</h3>
     {#if editable}
         <div class="buttons">
             <button on:click={appendSection}>Добавить раздел</button>
@@ -58,6 +64,8 @@
     {/if}
 </div>
 
-{#each category.sections as section}
-    <SectionElement {section} {editable} on:removed />
-{/each}
+<div class="list">
+    {#each category.sections as section}
+        <SectionElement {section} {editable} on:removed />
+    {/each}
+</div>

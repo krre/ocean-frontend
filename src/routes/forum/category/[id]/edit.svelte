@@ -18,7 +18,7 @@
 <script lang="ts">
     import { goto } from "@sapper/app";
     import * as route from "route";
-    import "../../../../components/Session.svelte";
+    import Page from "../../../../components/Page.svelte";
     import Session from "../../../../components/Session.svelte";
     import CategoryEditor from "../../../../components/forum/category/CategoryEditor.svelte";
 
@@ -43,14 +43,10 @@
 
 <Session bind:isAdmin />
 
-<svelte:head>
-    <title>{title}</title>
-</svelte:head>
-
-<h1>{title}</h1>
-
-{#if !isAdmin}
-    Доступ запрещён
-{:else}
-    <CategoryEditor bind:name bind:order {action} />
-{/if}
+<Page {title}>
+    {#if !isAdmin}
+        Доступ запрещён
+    {:else}
+        <CategoryEditor bind:name bind:order {action} />
+    {/if}
+</Page>

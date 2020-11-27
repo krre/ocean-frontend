@@ -4,6 +4,7 @@
     import * as method from "method";
     import { goto, stores } from "@sapper/app";
     import { send } from "network";
+    import Page from "../../components/Page.svelte";
     import MandelaEditor from "../../components/MandelaEditor.svelte";
 
     const { session } = stores();
@@ -39,22 +40,18 @@
     }
 </script>
 
-<svelte:head>
-    <title>{pageTitle}</title>
-</svelte:head>
-
-<h1>{pageTitle}</h1>
-
-<MandelaEditor
-    bind:titleMode
-    bind:title
-    bind:what
-    bind:before
-    bind:after
-    bind:description
-    bind:images
-    bind:videos
-    bind:links
-    bind:categories
-    bind:user={$session.user}
-    on:click={append} />
+<Page title={pageTitle}>
+    <MandelaEditor
+        bind:titleMode
+        bind:title
+        bind:what
+        bind:before
+        bind:after
+        bind:description
+        bind:images
+        bind:videos
+        bind:links
+        bind:categories
+        bind:user={$session.user}
+        on:click={append} />
+</Page>

@@ -4,6 +4,7 @@
     import { send } from "network";
     import { onMount } from "svelte";
     import { goto } from "@sapper/app";
+    import Page from "../../components/Page.svelte";
     import Session from "../../components/Session.svelte";
     import CategoryElement from "../../components/forum/category/CategoryElement.svelte";
 
@@ -64,23 +65,23 @@
 
 <Session bind:user bind:isAdmin />
 
-<svelte:head>
-    <title>{title}</title>
-</svelte:head>
-
 <div class="warn">Форум находится в разработке, но пользоваться уже можно</div>
-<div class="new"><a href={route.Forum.New}>Новые сообщения</a></div>
 
-{#if isAdmin}
-    <div class="edit-btn">
-        <button on:click={() => (editable = !editable)}>Редактировать</button>
+<Page {title} showHeader={false}>
+    <div class="new"><a href={route.Forum.New}>Новые сообщения</a></div>
+
+    {#if isAdmin}
+        <div class="edit-btn">
+            <button
+                on:click={() => (editable = !editable)}>Редактировать</button>
+        </div>
+    {/if}
+
+    {#each categories as category}
+        <CategoryElement {category} {editable} on:removed={() => load()} />
+    {/each}
+
+    <div>
+        {#if editable}<button on:click={append}>Добавить категорию</button>{/if}
     </div>
-{/if}
-
-{#each categories as category}
-    <CategoryElement {category} {editable} on:removed={() => load()} />
-{/each}
-
-<div>
-    {#if editable}<button on:click={append}>Добавить категорию</button>{/if}
-</div>
+</Page>

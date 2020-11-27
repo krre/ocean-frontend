@@ -2,6 +2,7 @@
     import { send } from "network";
     import { makeTitle } from "utils";
     import * as method from "method";
+    import Page from "../components/Page.svelte";
 
     const title = "Поиск мандел";
     const searchContent = "0";
@@ -62,51 +63,48 @@
     }
 </style>
 
-<svelte:head>
-    <title>{title}</title>
-</svelte:head>
-<h1>{title}</h1>
-
-<div class="container">
-    <div class="item">
-        Искать по
-        <select bind:value={searchType}>
-            <option value={searchContent}>Содержимому</option>
-            <option value={searchId}>Номеру</option>
-        </select>
-    </div>
-    <div class="item">
-        {#if searchType == searchId}
-            Введите номер:
-            <input type="number" bind:value={id} on:keyup={keyPressed} />
-        {:else}
-            Введите строку:
-            <input bind:value={content} on:keyup={keyPressed} />
-            <br />
-            <label>
-                <input type="checkbox" bind:checked={searchInTitle} />
-                Искать в заголовке
-            </label>
-            <br />
-            <label>
-                <input type="checkbox" bind:checked={searchInDescription} />
-                Искать в описании
-            </label>
-        {/if}
-    </div>
-
-    <div class="item"><button on:click={search}>Найти</button></div>
-
-    <div class="item">
-        {#if emptyResult}
-            Ничего не найдено
-        {:else if mandela}
-            {@html mandelaLink(id, mandela)}
-        {:else if mandels}
-            {#each mandels as mandela}
-                {@html mandelaLink(mandela.id, mandela)}
+<Page {title}>
+    <div class="container">
+        <div class="item">
+            Искать по
+            <select bind:value={searchType}>
+                <option value={searchContent}>Содержимому</option>
+                <option value={searchId}>Номеру</option>
+            </select>
+        </div>
+        <div class="item">
+            {#if searchType == searchId}
+                Введите номер:
+                <input type="number" bind:value={id} on:keyup={keyPressed} />
+            {:else}
+                Введите строку:
+                <input bind:value={content} on:keyup={keyPressed} />
                 <br />
-            {/each}
-        {/if}
+                <label>
+                    <input type="checkbox" bind:checked={searchInTitle} />
+                    Искать в заголовке
+                </label>
+                <br />
+                <label>
+                    <input type="checkbox" bind:checked={searchInDescription} />
+                    Искать в описании
+                </label>
+            {/if}
+        </div>
+
+        <div class="item"><button on:click={search}>Найти</button></div>
+
+        <div class="item">
+            {#if emptyResult}
+                Ничего не найдено
+            {:else if mandela}
+                {@html mandelaLink(id, mandela)}
+            {:else if mandels}
+                {#each mandels as mandela}
+                    {@html mandelaLink(mandela.id, mandela)}
+                    <br />
+                {/each}
+            {/if}
+        </div>
     </div>
-</div>
+</Page>

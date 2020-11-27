@@ -3,6 +3,7 @@
     import { formatDateTime } from "utils";
     import * as route from "route";
     import * as method from "method";
+    import Page from "../../../components/Page.svelte";
 
     export async function preload(page, session) {
         const { id } = page.params;
@@ -145,126 +146,122 @@
     }
 </style>
 
-<svelte:head>
-    <title>{title}</title>
-</svelte:head>
-
-<h1>{title}</h1>
-
-<div class="grid">
-    <div>ИД:</div>
-    <div>{mandela.id}</div>
-    <div>Добавлено:</div>
-    <div>{mandela.user_name}</div>
-    <div>Создано:</div>
-    <div>{formatDateTime(mandela.create_ts)}</div>
-
-    {#if mandela.create_ts !== mandela.update_ts}
-        <div>Изменено:</div>
-        <div>{formatDateTime(mandela.update_ts)}</div>
-    {/if}
-    {#if mandela.mark_ts}
-        <div>Просмотрено:</div>
-        <div>{formatDateTime(mandela.mark_ts)}</div>
-    {/if}
-</div>
-
-<!-- <button on:click={copyLink}>Скопировать ссылку</button>
-<button on:click={copyCode}>Скопировать код ссылки</button> -->
-
-<hr />
-
-{#if mandela.title_mode === consts.Mandela.Title.Complex}
+<Page {title}>
     <div class="grid">
-        <div>Было:</div>
-        <div>{mandela.before}</div>
-        <div>Стало:</div>
-        <div>{mandela.after}</div>
+        <div>ИД:</div>
+        <div>{mandela.id}</div>
+        <div>Добавлено:</div>
+        <div>{mandela.user_name}</div>
+        <div>Создано:</div>
+        <div>{formatDateTime(mandela.create_ts)}</div>
+
+        {#if mandela.create_ts !== mandela.update_ts}
+            <div>Изменено:</div>
+            <div>{formatDateTime(mandela.update_ts)}</div>
+        {/if}
+        {#if mandela.mark_ts}
+            <div>Просмотрено:</div>
+            <div>{formatDateTime(mandela.mark_ts)}</div>
+        {/if}
     </div>
-{/if}
 
-{#if mandela.description}
-    <p />
-    <div class="message">{mandela.description}</div>
+    <!-- <button on:click={copyLink}>Скопировать ссылку</button>
+    <button on:click={copyCode}>Скопировать код ссылки</button> -->
+
     <hr />
-{/if}
 
-{#if mandela.images.length}
-    {#each mandela.images as image}
-        <div><img alt="" src={image} /></div>
-    {/each}
-    <hr />
-{/if}
-
-{#if mandela.videos.length}
-    {#each mandela.videos as video}
-        <div>
-            <iframe
-                class="video"
-                title=""
-                src={fixYouTubeLink(video)}
-                frameborder="0"
-                allow="accelerometer; autoplay; encrypted-media; gyroscope;
-                picture-in-picture"
-                allowfullscreen />
-        </div>
-    {/each}
-    <hr />
-{/if}
-
-{#if mandela.links.length}
-    {#each mandela.links as link}
-        <div><a href={link}>{link}</a></div>
-    {/each}
-    <hr />
-{/if}
-
-{#if categories.length}
-    Категории:
-    {#each categories as category}{consts.Categories[category]}&nbsp;{/each}
-    <hr />
-{/if}
-
-{#if session.user && session.user.id === mandela.user_id}
-    <p />
-    <button on:click={edit}>Редактировать</button>
-    <p />
-{/if}
-
-{#if session.user}
-    {#if votes && !editVote}
-        <p>Результаты опроса:</p>
-        <div class="grid" style="margin-left: 1em">
-            {#each consts.Votes as voteName, i}
-                <div>{voteName}:</div>
-                <div>{getVoteCount(i)}</div>
-            {/each}
-        </div>
-        <p />
+    {#if mandela.title_mode === consts.Mandela.Title.Complex}
         <div class="grid">
-            <div>Всего голосов:</div>
-            <div>{totalVotes}</div>
-            <div>Выбрано:</div>
-            <div>{consts.Votes[vote]}</div>
+            <div>Было:</div>
+            <div>{mandela.before}</div>
+            <div>Стало:</div>
+            <div>{mandela.after}</div>
         </div>
-        <p>
-            <button on:click={() => (editVote = true)}>Изменить выбор</button>
-        </p>
-    {:else}
-        Является ли для вас это манделой?
-        <p>
-            {#each consts.Votes as voteName, i}
-                <label class="vote">
-                    <input type="radio" bind:group={voteValue} value={i} />
-                    {voteName}
-                </label>
-            {/each}
-        </p>
-        <button on:click={castVote} disabled={voteValue < 0}>
-            Проголосовать
-        </button>
     {/if}
-    <hr />
-{/if}
 
-<Comment user={session.user} mandelaId={id} />
+    {#if mandela.description}
+        <p />
+        <div class="message">{mandela.description}</div>
+        <hr />
+    {/if}
+
+    {#if mandela.images.length}
+        {#each mandela.images as image}
+            <div><img alt="" src={image} /></div>
+        {/each}
+        <hr />
+    {/if}
+
+    {#if mandela.videos.length}
+        {#each mandela.videos as video}
+            <div>
+                <iframe
+                    class="video"
+                    title=""
+                    src={fixYouTubeLink(video)}
+                    frameborder="0"
+                    allow="accelerometer; autoplay; encrypted-media; gyroscope;
+                    picture-in-picture"
+                    allowfullscreen />
+            </div>
+        {/each}
+        <hr />
+    {/if}
+
+    {#if mandela.links.length}
+        {#each mandela.links as link}
+            <div><a href={link}>{link}</a></div>
+        {/each}
+        <hr />
+    {/if}
+
+    {#if categories.length}
+        Категории:
+        {#each categories as category}{consts.Categories[category]}&nbsp;{/each}
+        <hr />
+    {/if}
+
+    {#if session.user && session.user.id === mandela.user_id}
+        <p />
+        <button on:click={edit}>Редактировать</button>
+        <p />
+    {/if}
+
+    {#if session.user}
+        {#if votes && !editVote}
+            <p>Результаты опроса:</p>
+            <div class="grid" style="margin-left: 1em">
+                {#each consts.Votes as voteName, i}
+                    <div>{voteName}:</div>
+                    <div>{getVoteCount(i)}</div>
+                {/each}
+            </div>
+            <p />
+            <div class="grid">
+                <div>Всего голосов:</div>
+                <div>{totalVotes}</div>
+                <div>Выбрано:</div>
+                <div>{consts.Votes[vote]}</div>
+            </div>
+            <p>
+                <button on:click={() => (editVote = true)}>Изменить выбор</button>
+            </p>
+        {:else}
+            Является ли для вас это манделой?
+            <p>
+                {#each consts.Votes as voteName, i}
+                    <label class="vote">
+                        <input type="radio" bind:group={voteValue} value={i} />
+                        {voteName}
+                    </label>
+                {/each}
+            </p>
+            <button on:click={castVote} disabled={voteValue < 0}>
+                Проголосовать
+            </button>
+        {/if}
+        <hr />
+    {/if}
+
+    <Comment user={session.user} mandelaId={id} />
+</Page>

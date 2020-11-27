@@ -1,9 +1,10 @@
 <script lang="ts">
-    import MandelaRating from "../components/rating/MandelaRating.svelte";
-    import UserRating from "../components/rating/UserRating.svelte";
     import * as consts from "consts";
     import * as route from "route";
     import { goto, stores } from "@sapper/app";
+    import Page from "../components/Page.svelte";
+    import MandelaRating from "../components/rating/MandelaRating.svelte";
+    import UserRating from "../components/rating/UserRating.svelte";
 
     const { page } = stores();
     const title = "Рейтинг";
@@ -42,26 +43,22 @@
     }
 </script>
 
-<svelte:head>
-    <title>{title}</title>
-</svelte:head>
+<Page {title}>
+    <label>
+        <input type="radio" bind:group={type} value={consts.Rating.Mandela} />
+        Манделы
+    </label>
 
-<h1>{title}</h1>
+    <label>
+        <input type="radio" bind:group={type} value={consts.Rating.User} />
+        Пользователи
+    </label>
 
-<label>
-    <input type="radio" bind:group={type} value={consts.Rating.Mandela} />
-    Манделы
-</label>
+    <p />
 
-<label>
-    <input type="radio" bind:group={type} value={consts.Rating.User} />
-    Пользователи
-</label>
-
-<p />
-
-{#if type === consts.Rating.Mandela}
-    <MandelaRating />
-{:else}
-    <UserRating />
-{/if}
+    {#if type === consts.Rating.Mandela}
+        <MandelaRating />
+    {:else}
+        <UserRating />
+    {/if}
+</Page>

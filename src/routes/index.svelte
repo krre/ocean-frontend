@@ -7,9 +7,12 @@
     import { formatDateTime, zeroLeading, makeTitle } from "utils";
     import Indicator from "../components/main/Indicator.svelte";
     import Pagination from "../components/Pagination.svelte";
+    import Page from "../components/Page.svelte";
 
     const { page, session } = stores();
     const user = $session.user;
+
+    const title = "Океан. Каталог фактов эффекта Манделы";
 
     let pageNo = 1;
     let filter = 0;
@@ -184,87 +187,85 @@
     }
 </style>
 
-<svelte:head>
-    <title>Океан. Каталог фактов эффекта Манделы</title>
-</svelte:head>
-
-<div class="tool-bar">
-    <Indicator
-        title="Всего"
-        count={totalCount}
-        active={filter == showAll}
-        on:clicked={() => (filter = showAll)} />
-    {#if user}
+<Page {title} showHeader={false}>
+    <div class="tool-bar">
         <Indicator
-            title="Новые"
-            count={newCount}
-            active={filter == showNew}
-            highlightNew={true}
-            on:clicked={() => (filter = showNew)} />
+            title="Всего"
+            count={totalCount}
+            active={filter == showAll}
+            on:clicked={() => (filter = showAll)} />
+        {#if user}
+            <Indicator
+                title="Новые"
+                count={newCount}
+                active={filter == showNew}
+                highlightNew={true}
+                on:clicked={() => (filter = showNew)} />
 
-        <Indicator
-            title="Мои"
-            count={mineCount}
-            active={filter == showMine}
-            on:clicked={() => (filter = showMine)} />
+            <Indicator
+                title="Мои"
+                count={mineCount}
+                active={filter == showMine}
+                on:clicked={() => (filter = showMine)} />
 
-        <Indicator
-            title="Опросы"
-            count={pollCount}
-            highlightNew={true}
-            active={filter == showPoll}
-            on:clicked={() => (filter = showPoll)} />
-        <span class="tool-bar-item">Категория:
-            <select bind:value={category}>
-                {#each categories as categoryName, i}
-                    <option value={i} selected={category == i}>
-                        {categoryName}
-                    </option>
+            <Indicator
+                title="Опросы"
+                count={pollCount}
+                highlightNew={true}
+                active={filter == showPoll}
+                on:clicked={() => (filter = showPoll)} />
+            <span class="tool-bar-item">Категория:
+                <select bind:value={category}>
+                    {#each categories as categoryName, i}
+                        <option value={i} selected={category == i}>
+                            {categoryName}
+                        </option>
+                    {/each}
+                </select>
+            </span>
+        {/if}
+        <span class="tool-bar-item">Сортировать по:
+            <select bind:value={sort}>
+                {#each sorts as sortName, i}
+                    <option value={i} selected={sort == i}>{sortName}</option>
                 {/each}
             </select>
         </span>
+    </div>
+
+    {#if admin && mandels.length}
+        <div>
+            <button
+                style="margin-top: 0.5em"
+                on:click={deleteMandela}>Удалить</button>
+        </div>
     {/if}
-    <span class="tool-bar-item">Сортировать по:
-        <select bind:value={sort}>
-            {#each sorts as sortName, i}
-                <option value={i} selected={sort == i}>{sortName}</option>
-            {/each}
-        </select>
-    </span>
-</div>
 
-{#if admin && mandels.length}
-    <div>
-        <button
-            style="margin-top: 0.5em"
-            on:click={deleteMandela}>Удалить</button>
-    </div>
-{/if}
-
-{#each mandels as mandela}
-    <div class="row">
-        {#if admin}
-            <input
-                type="checkbox"
-                bind:group={selected_delete}
-                value={mandela.id} />
-        {/if}
-        <a class="row-link" href={route.Mandela.Id(mandela.id)}>
-            <span
-                class:new-mandela={user && !mandela.mark_ts}>{zeroLeading(mandela.id, zeroLeadingCount)}</span>
-            |
-            {formatDateTime(mandela.create_ts)}
-            |
-            {makeTitle(mandela)}
-            |
-            {mandela.user_name}
-            {#if mandela.comment_count}
-                | Комментариев:
-                <div class="comments">{mandela.comment_count}</div>
+    {#each mandels as mandela}
+        <div class="row">
+            {#if admin}
+                <input
+                    type="checkbox"
+                    bind:group={selected_delete}
+                    value={mandela.id} />
             {/if}
-        </a>
-    </div>
-{/each}
+            <a class="row-link" href={route.Mandela.Id(mandela.id)}>
+                <span
+                    class:new-mandela={user && !mandela.mark_ts}>{zeroLeading(mandela.id, zeroLeadingCount)}</span>
+                |
+                {formatDateTime(mandela.create_ts)}
+                |
+                {makeTitle(mandela)}
+                |
+                {mandela.user_name}
+                {#if mandela.comment_count}
+                    | Комментариев:
+                    <div class="comments">{mandela.comment_count}</div>
+                {/if}
+            </a>
+        </div>
+    {/each}
+</Page>
 
 <Pagination
     count={currentCount}

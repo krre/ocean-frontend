@@ -3,6 +3,7 @@
     import * as method from "method";
     import { send } from "network";
     import { goto, stores } from "@sapper/app";
+    import Page from "../../../../components/Page.svelte";
     import Session from "../../../../components/Session.svelte";
     import SectionElement from "../../../../components/forum/section/SectionElement.svelte";
     import Navigator from "../../../../components/forum/main/Navigator.svelte";
@@ -39,16 +40,12 @@
 <style>
 </style>
 
-<svelte:head>
-    <title>{categoryName}</title>
-</svelte:head>
-
 <Session bind:user bind:isAdmin />
 <Navigator />
 
-<h1>{categoryName}</h1>
-
-<div><button on:click={append}>Добавить раздел</button></div>
-{#each sections as section}
-    <SectionElement {section} on:removed={() => load()} />
-{/each}
+<Page title={categoryName}>
+    <div><button on:click={append}>Добавить раздел</button></div>
+    {#each sections as section}
+        <SectionElement {section} on:removed={() => load()} />
+    {/each}
+</Page>
