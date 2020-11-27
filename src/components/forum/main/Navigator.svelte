@@ -31,17 +31,17 @@
 
 <style>
     .path {
-        margin: 1em 0;
+        margin: var(--page-margin);
     }
 
     .part {
-        margin: 0 0.4em;
+        margin-right: 0.4em;
     }
 </style>
 
 <div class="path">
     {#each path as part, i}
         <a class="part" href={part.route}>{part.name}</a>
-        {i < path.length - 1 ? '|' : ''}
+        <span class="part">{i < path.length - 1 ? '|' : ''}</span>
     {/each}
 </div>
