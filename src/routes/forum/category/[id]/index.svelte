@@ -3,7 +3,7 @@
     import * as method from "method";
     import { send } from "network";
     import { goto, stores } from "@sapper/app";
-    import Page from "../../../../components/Page.svelte";
+    import ForumPage from "../../../../components/forum/main/ForumPage.svelte";
     import Session from "../../../../components/Session.svelte";
     import SectionElement from "../../../../components/forum/section/SectionElement.svelte";
     import Navigator from "../../../../components/forum/main/Navigator.svelte";
@@ -38,14 +38,26 @@
 </script>
 
 <style>
+    button {
+        margin-left: var(--page-margin);
+    }
+
+    .line {
+        border-top: var(--border-1px);
+    }
 </style>
 
 <Session bind:user bind:isAdmin />
 <Navigator />
 
-<Page title={categoryName}>
-    <div><button on:click={append}>Добавить раздел</button></div>
-    {#each sections as section}
+<div><button on:click={append}>Добавить раздел</button></div>
+
+<ForumPage title={categoryName}>
+    {#each sections as section, row}
         <SectionElement {section} on:removed={() => load()} />
+
+        {#if row < sections.length - 1}
+            <div class="line" />
+        {/if}
     {/each}
-</Page>
+</ForumPage>

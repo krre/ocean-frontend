@@ -6,6 +6,7 @@
     import * as dialog from "dialog";
     import { goto } from "@sapper/app";
     import { createEventDispatcher } from "svelte";
+    import type { select_options } from "svelte/internal";
 
     const dispatch = createEventDispatcher();
 
@@ -33,14 +34,17 @@
 
 <style>
     .header {
-        background-color: var(--header-background);
-        border-top: var(--border-1px);
-        border-bottom: var(--border-1px);
+        background-color: rgb(228, 237, 241);
+        border: var(--border-1px);
     }
 
     h3 {
         padding: 1em;
         margin: 0;
+    }
+
+    .line {
+        border-top: var(--border-1px);
     }
 
     .buttons {
@@ -64,8 +68,10 @@
     {/if}
 </div>
 
-<div class="list">
-    {#each category.sections as section}
-        <SectionElement {section} {editable} on:removed />
-    {/each}
-</div>
+{#each category.sections as section, i}
+    <SectionElement {section} {editable} on:removed />
+
+    {#if i < category.sections.length - 1}
+        <div class="line" />
+    {/if}
+{/each}

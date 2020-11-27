@@ -4,7 +4,7 @@
     import { send } from "network";
     import { onMount } from "svelte";
     import { goto } from "@sapper/app";
-    import Page from "../../components/Page.svelte";
+    import ForumPage from "../../components/forum/main/ForumPage.svelte";
     import Session from "../../components/Session.svelte";
     import CategoryElement from "../../components/forum/category/CategoryElement.svelte";
 
@@ -69,7 +69,7 @@
 
 <div class="new"><a href={route.Forum.New}>Новые сообщения</a></div>
 
-<Page {title} showHeader={false}>
+<ForumPage {title} showHeader={false}>
     {#if isAdmin}
         <div class="edit-btn">
             <button
@@ -84,4 +84,4 @@
     <div>
         {#if editable}<button on:click={append}>Добавить категорию</button>{/if}
     </div>
-</Page>
+</ForumPage>
