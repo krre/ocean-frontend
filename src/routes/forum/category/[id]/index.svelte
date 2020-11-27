@@ -50,7 +50,9 @@
 <Session bind:user bind:isAdmin />
 <Navigator />
 
-<div><button on:click={append}>Добавить раздел</button></div>
+{#if isAdmin}
+    <div><button on:click={append}>Добавить раздел</button></div>
+{/if}
 
 <ForumPage title={categoryName}>
     {#each sections as section, row}
