@@ -13,6 +13,7 @@
         background-color: white;
         padding: 1em;
         margin: var(--page-margin);
+        border: var(--border-1px);
     }
 
     @media screen and (max-width: 600px) {
