@@ -195,7 +195,9 @@
 
     {#if mandela.description}
         <p />
-        <div class="message">{mandela.description}</div>
+        <div class="message">
+            {@html mandela.description}
+        </div>
         <hr />
     {/if}
 

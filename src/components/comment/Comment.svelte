@@ -130,7 +130,9 @@
                         on:send={(event) => editComment(i, event.detail.text)}
                         on:cancel={() => (comment.edit = false)} />
                 {:else}
-                    <div class="message">{comment.message}</div>
+                    <div class="message">
+                        {@html comment.message}
+                    </div>
                 {/if}
             </div>
         {/each}

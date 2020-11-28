@@ -78,6 +78,8 @@
             on:send={(event) => editPost(event.detail.text)}
             on:cancel={() => (post.edit = false)} />
     {:else}
-        <div class="text">{post.post}</div>
+        <div class="text">
+            {@html post.post}
+        </div>
     {/if}
 </div>
