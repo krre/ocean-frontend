@@ -36,9 +36,12 @@
 
 <style>
     .topic {
-        margin: 0.5em 0;
-        padding: 1em;
-        border: 1px solid;
+        padding: var(--page-padding);
+        border-bottom: var(--border-1px);
+    }
+
+    .topic:last-child {
+        border-bottom: none;
     }
 
     .buttons {

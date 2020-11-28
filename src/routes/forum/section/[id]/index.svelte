@@ -4,7 +4,7 @@
     import type { PathPart } from "forum";
     import { send } from "network";
     import { goto, stores } from "@sapper/app";
-    import Page from "../../../../components/Page.svelte";
+    import ForumPage from "../../../../components/forum/main/ForumPage.svelte";
     import Session from "../../../../components/Session.svelte";
     import TopicElement from "../../../../components/forum/topic/TopicElement.svelte";
     import Navigator from "../../../../components/forum/main/Navigator.svelte";
@@ -60,12 +60,13 @@
 <Session bind:user bind:isAdmin />
 <Navigator category={categoryNav} />
 
-<Page title={sectionName}>
-    <div><button on:click={append}>Создать тему</button></div>
+<ForumPage title={sectionName}>
+    <button slot="button" on:click={append}>Создать тему</button>
+
     {#each topics as topic}
         <TopicElement {topic} on:removed={() => load()} />
     {/each}
-</Page>
+</ForumPage>
 
 <Pagination
     count={topicCount}

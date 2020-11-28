@@ -9,6 +9,12 @@
         margin-left: 0;
     }
 
+    .btn {
+        margin-right: var(--page-margin);
+        display: flex;
+        justify-content: flex-end;
+    }
+
     .container {
         background-color: white;
         margin: var(--page-margin);
@@ -29,6 +35,10 @@
 {#if showHeader}
     <h1 class="header">{title}</h1>
 {/if}
+
+<div class="btn">
+    <slot name="button" />
+</div>
 
 <div class="container">
     <slot />
