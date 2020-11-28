@@ -28,7 +28,7 @@
 
 <style>
     .section {
-        padding: 1em;
+        padding: var(--page-padding);
         border-bottom: var(--border-1px);
     }
 
