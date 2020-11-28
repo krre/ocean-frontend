@@ -112,8 +112,7 @@
     }
 </style>
 
-<div>Комментарии</div>
-<br />
+<h2>Комментарии</h2>
 
 {#each comments as comment, i}
     <PostTitle author={comment.user_name} date={comment.create_ts} />
