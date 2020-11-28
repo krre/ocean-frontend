@@ -32,16 +32,17 @@
 <style>
     .path {
         margin: var(--page-margin);
+        display: flex;
     }
 
-    .part {
-        margin-right: 0.4em;
+    .devider {
+        margin: 0 0.4em;
     }
 </style>
 
 <div class="path">
     {#each path as part, i}
-        <a class="part" href={part.route}>{part.name}</a>
-        <span class="part">{i < path.length - 1 ? '|' : ''}</span>
+        <a href={part.route}>{part.name}</a>
+        <span class="devider">{i < path.length - 1 ? '|' : ''}</span>
     {/each}
 </div>
