@@ -52,7 +52,7 @@
     }
 
     .new {
-        margin: 0.5em var(--page-margin);
+        margin: var(--page-margin);
     }
 </style>
 
