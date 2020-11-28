@@ -44,12 +44,15 @@
 
 <style>
     .post {
-        margin: 0.5em 0;
-        padding: 1em;
-        border: 1px solid;
+        padding: var(--page-padding);
+        border-bottom: var(--border-1px);
         white-space: pre-line;
         overflow-wrap: break-word;
         word-wrap: break-word;
+    }
+
+    .post:last-child {
+        border-bottom: none;
     }
 
     .buttons {

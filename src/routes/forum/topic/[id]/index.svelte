@@ -6,7 +6,7 @@
     import { send } from "network";
     import { sessionUserName } from "utils";
     import { stores } from "@sapper/app";
-    import Page from "../../../../components/Page.svelte";
+    import ForumPage from "../../../../components/forum/main/ForumPage.svelte";
     import Session from "../../../../components/Session.svelte";
     import PostElement from "../../../../components/forum/post/PostElement.svelte";
     import Navigator from "../../../../components/forum/main/Navigator.svelte";
@@ -72,6 +72,10 @@
 </script>
 
 <style>
+    .send {
+        margin: var(--page-margin);
+    }
+
     .area {
         max-width: 100%;
         width: 700px;
@@ -85,18 +89,20 @@
 <Session bind:user bind:isAdmin />
 <Navigator category={categoryNav} section={sectionNav} />
 
-<Page title={topicName}>
+<ForumPage title={topicName}>
     {#each posts as post}
         <PostElement {post} {topicUserId} on:removed={() => load()} />
     {/each}
+</ForumPage>
 
-    <Pagination
-        count={postCount}
-        limit={pageLimit}
-        offset={pageNo}
-        baseRoute={route.Forum.Topic.Id(topicId)} />
+<Pagination
+    count={postCount}
+    limit={pageLimit}
+    offset={pageNo}
+    baseRoute={route.Forum.Topic.Id(topicId)} />
 
+<div class="send">
     <textarea class="area" rows="10" bind:value={post} />
     <div>Пользователь: {sessionUserName(user)}</div>
     <div><button on:click={append} disabled={!post}>Отправить</button></div>
-</Page>
+</div>
