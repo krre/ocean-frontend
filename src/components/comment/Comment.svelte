@@ -1,10 +1,11 @@
 <script lang="ts">
-    import { formatDateTime, sessionUserName } from "utils";
+    import { sessionUserName } from "utils";
     import { send } from "network";
     import { stores } from "@sapper/app";
     import * as consts from "consts";
     import * as method from "method";
     import * as route from "route";
+    import PostTitle from "../PostTitle.svelte";
     import EditComment from "./EditComment.svelte";
     import RemoveComment from "./RemoveComment.svelte";
     import Pagination from "../Pagination.svelte";
@@ -115,10 +116,8 @@
 <br />
 
 {#each comments as comment, i}
+    <PostTitle author={comment.user_name} date={comment.create_ts} />
     <div>
-        {formatDateTime(comment.create_ts)}
-        |
-        {comment.user_name}
         {#if user && (comment.user_id === user.id || user.id === consts.Account.Id.Admin)}
             <div>
                 <span class="label-link" on:click={() => showEdit(i)}>

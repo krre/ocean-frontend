@@ -8,6 +8,7 @@
     import { goto } from "@sapper/app";
     import { createEventDispatcher } from "svelte";
     import Session from "../../../components/Session.svelte";
+    import PostTitle from "../../../components/PostTitle.svelte";
 
     const dispatch = createEventDispatcher();
 
@@ -69,7 +70,7 @@
 <Session bind:user bind:isAdmin bind:isAnonym />
 
 <div class="post">
-    <div>{post.user_name} | {formatDateTime(post.create_ts)}</div>
+    <PostTitle author={post.user_name} date={post.create_ts} />
     <br />
     {post.post}
     {#if editable}
