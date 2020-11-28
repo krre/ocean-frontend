@@ -71,7 +71,6 @@
 
 <div class="post">
     <PostTitle author={post.user_name} date={post.create_ts} />
-    <br />
     {post.post}
     {#if editable}
         <div class="buttons">

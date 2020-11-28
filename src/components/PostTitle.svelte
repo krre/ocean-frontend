@@ -9,6 +9,7 @@
     .title {
         color: gray;
         display: flex;
+        margin-bottom: 1em;
     }
 
     .devider {
