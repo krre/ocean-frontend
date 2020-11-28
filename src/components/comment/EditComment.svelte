@@ -21,6 +21,10 @@
         max-width: 100%;
         margin: 0.5em 0;
     }
+
+    button {
+        margin-right: 0.5em;
+    }
 </style>
 
 <textarea class="area" rows="10" bind:value={text} />
