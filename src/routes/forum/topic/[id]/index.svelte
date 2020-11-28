@@ -45,8 +45,13 @@
         const result = await send(method.Forum.Post.GetAll, params);
         topicName = result.topic_name;
         topicUserId = result.topic_user_id;
-        posts = result.posts;
         postCount = result.post_count;
+
+        for (let i = 0; i < result.posts.length; i++) {
+            const post = result.posts[i];
+            post.edit = false;
+            posts.push(post);
+        }
 
         categoryNav = {
             id: result.category_id,
