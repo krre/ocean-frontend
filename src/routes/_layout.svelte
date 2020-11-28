@@ -30,6 +30,16 @@
         font-size: 90%;
         background-color: var(--page-background);
     }
+
+    :global(a) {
+        color: teal;
+        text-decoration: none;
+    }
+
+    :global(a:hover) {
+        color: olive;
+        text-decoration: underline;
+    }
 </style>
 
 <Sidebar bind:open on:itemClicked={() => (open = false)} />

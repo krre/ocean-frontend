@@ -9,12 +9,15 @@
 
 <style>
     a {
-        text-decoration: none;
         color: rgb(235, 246, 255);
         font-size: 1.1em;
-        margin-left: 0.7em;
-        margin-top: 0.5em;
-        margin-bottom: 0.5em;
+        padding: 0.5em;
+    }
+
+    a:hover {
+        color: white;
+        background-color: darkslateblue;
+        text-decoration: none;
     }
 
     nav {
