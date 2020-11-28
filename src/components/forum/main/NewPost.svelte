@@ -1,7 +1,8 @@
 <script lang="ts">
-    import { formatDateTime, textCut } from "utils";
+    import { textCut } from "utils";
     import * as route from "route";
     import * as consts from "consts";
+    import PostTitle from "../../PostTitle.svelte";
 
     export let topic;
 
@@ -25,20 +26,17 @@
     }
 
     .post {
-        margin-top: 0.5em;
         overflow-wrap: break-word;
         word-wrap: break-word;
+    }
+
+    h3 {
+        margin: 0 0 0.3em 0;
     }
 </style>
 
 <div class="topic">
-    <a href={topicLink()}><strong>{topic.name}</strong></a>
-    <br /><br />
-    <div>
-        Автор:
-        {topic.user_name}
-        | Создано:
-        {formatDateTime(topic.post_create_ts)}
-    </div>
+    <a href={topicLink()}><h3>{topic.name}</h3></a>
+    <PostTitle author={topic.user_name} date={topic.post_create_ts} />
     <div class="post">{textCut(topic.post, 100)}</div>
 </div>
