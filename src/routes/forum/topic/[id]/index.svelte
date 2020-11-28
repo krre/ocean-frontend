@@ -47,11 +47,15 @@
         topicUserId = result.topic_user_id;
         postCount = result.post_count;
 
+        posts = [];
+
         for (let i = 0; i < result.posts.length; i++) {
             const post = result.posts[i];
             post.edit = false;
             posts.push(post);
         }
+
+        posts = posts;
 
         categoryNav = {
             id: result.category_id,
