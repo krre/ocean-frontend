@@ -46,7 +46,7 @@
 
 <style>
     .edit-btn {
-        margin-bottom: 0.5em;
+        margin-right: var(--page-margin);
         display: flex;
         justify-content: flex-end;
     }
@@ -61,13 +61,6 @@
 <div class="new"><a href={route.Forum.New}>Новые сообщения</a></div>
 
 <ForumPage {title} showHeader={false}>
-    {#if isAdmin}
-        <div class="edit-btn">
-            <button
-                on:click={() => (editable = !editable)}>Редактировать</button>
-        </div>
-    {/if}
-
     <div>
         {#each categories as category}
             <CategoryElement {category} {editable} on:removed={() => load()} />
@@ -78,3 +71,9 @@
         {#if editable}<button on:click={append}>Добавить категорию</button>{/if}
     </div>
 </ForumPage>
+
+{#if isAdmin}
+    <div class="edit-btn">
+        <button on:click={() => (editable = !editable)}>Редактировать</button>
+    </div>
+{/if}
