@@ -30,8 +30,9 @@
 
 <style>
     .column {
-        display: grid;
-        grid-gap: 10px;
+        display: flex;
+        gap: 0.5em;
+        flex-direction: column;
     }
 
     .append-item {
