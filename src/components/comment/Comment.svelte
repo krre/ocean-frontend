@@ -92,6 +92,21 @@
 </script>
 
 <style>
+    .list {
+        background-color: white;
+        border: var(--border-1px);
+        margin-bottom: 1em;
+    }
+
+    .post {
+        padding: 1em;
+        border-bottom: var(--border-1px);
+    }
+
+    .post:last-child {
+        border-bottom: none;
+    }
+
     .area {
         max-width: 100%;
         width: 700px;
@@ -114,41 +129,44 @@
 
 <h2>Комментарии</h2>
 
-{#each comments as comment, i}
-    <PostTitle author={comment.user_name} date={comment.create_ts} />
-    <div>
-        {#if user && (comment.user_id === user.id || user.id === consts.Account.Id.Admin)}
+<div class="list">
+    {#each comments as comment, i}
+        <div class="post">
+            <PostTitle author={comment.user_name} date={comment.create_ts} />
             <div>
-                <span class="label-link" on:click={() => showEdit(i)}>
-                    Редактировать
-                </span>
-                |
-                <span class="label-link" on:click={() => showRemove(i)}>
-                    Удалить
-                </span>
+                {#if user && (comment.user_id === user.id || user.id === consts.Account.Id.Admin)}
+                    <div>
+                        <span class="label-link" on:click={() => showEdit(i)}>
+                            Редактировать
+                        </span>
+                        |
+                        <span class="label-link" on:click={() => showRemove(i)}>
+                            Удалить
+                        </span>
+                    </div>
+                {/if}
             </div>
-        {/if}
-    </div>
-    <div class="message">{comment.message}</div>
+            <div class="message">{comment.message}</div>
 
-    {#if comment.edit}
-        <p>
-            <EditComment
-                text={comment.message}
-                on:send={(event) => edit(i, event.detail.text)}
-                on:cancel={() => (comment.edit = false)} />
-        </p>
-    {/if}
+            {#if comment.edit}
+                <p>
+                    <EditComment
+                        text={comment.message}
+                        on:send={(event) => edit(i, event.detail.text)}
+                        on:cancel={() => (comment.edit = false)} />
+                </p>
+            {/if}
 
-    {#if comment.remove}
-        <p>
-            <RemoveComment
-                on:confirm={() => deleteComment(i)}
-                on:cancel={() => (comment.remove = false)} />
-        </p>
-    {/if}
-    <br />
-{/each}
+            {#if comment.remove}
+                <p>
+                    <RemoveComment
+                        on:confirm={() => deleteComment(i)}
+                        on:cancel={() => (comment.remove = false)} />
+                </p>
+            {/if}
+        </div>
+    {/each}
+</div>
 
 <Pagination
     count={commentCount}

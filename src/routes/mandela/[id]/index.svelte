@@ -144,6 +144,10 @@
         width: 420px;
         height: 315px;
     }
+
+    .comment {
+        margin: var(--page-margin);
+    }
 </style>
 
 <Page {title}>
@@ -260,8 +264,9 @@
                 Проголосовать
             </button>
         {/if}
-        <hr />
     {/if}
-
-    <Comment user={session.user} mandelaId={id} />
 </Page>
+
+<div class="comment">
+    <Comment user={session.user} mandelaId={id} />
+</div>
