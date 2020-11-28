@@ -35,16 +35,12 @@
 <style>
     .header {
         background-color: rgb(228, 237, 241);
-        border: var(--border-1px);
+        border-bottom: var(--border-1px);
     }
 
     h3 {
         padding: 1em;
         margin: 0;
-    }
-
-    .line {
-        border-top: var(--border-1px);
     }
 
     .buttons {
@@ -70,8 +66,4 @@
 
 {#each category.sections as section, i}
     <SectionElement {section} {editable} on:removed />
-
-    {#if i < category.sections.length - 1}
-        <div class="line" />
-    {/if}
 {/each}

@@ -77,9 +77,11 @@
         </div>
     {/if}
 
-    {#each categories as category}
-        <CategoryElement {category} {editable} on:removed={() => load()} />
-    {/each}
+    <div>
+        {#each categories as category}
+            <CategoryElement {category} {editable} on:removed={() => load()} />
+        {/each}
+    </div>
 
     <div>
         {#if editable}<button on:click={append}>Добавить категорию</button>{/if}

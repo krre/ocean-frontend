@@ -12,6 +12,7 @@
     .container {
         background-color: white;
         margin: var(--page-margin);
+        border: var(--border-1px);
     }
 
     @media screen and (max-width: 600px) {

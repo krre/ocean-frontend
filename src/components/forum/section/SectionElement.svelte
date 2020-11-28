@@ -29,6 +29,11 @@
 <style>
     .section {
         padding: 1em;
+        border-bottom: var(--border-1px);
+    }
+
+    .section:last-child {
+        border-bottom: none;
     }
 
     .buttons {

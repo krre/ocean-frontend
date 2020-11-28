@@ -41,10 +41,6 @@
     button {
         margin-left: var(--page-margin);
     }
-
-    .line {
-        border-top: var(--border-1px);
-    }
 </style>
 
 <Session bind:user bind:isAdmin />
@@ -57,9 +53,5 @@
 <ForumPage title={categoryName}>
     {#each sections as section, row}
         <SectionElement {section} on:removed={() => load()} />
-
-        {#if row < sections.length - 1}
-            <div class="line" />
-        {/if}
     {/each}
 </ForumPage>
