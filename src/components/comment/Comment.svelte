@@ -6,6 +6,7 @@
     import * as method from "method";
     import * as route from "route";
     import PostTitle from "../PostTitle.svelte";
+    import PostEditor from "../post/PostEditor.svelte";
     import EditComment from "./EditComment.svelte";
     import Pagination from "../Pagination.svelte";
 
@@ -95,11 +96,6 @@
         border-bottom: none;
     }
 
-    .area {
-        max-width: 100%;
-        width: 700px;
-    }
-
     .send {
         margin-top: 10px;
     }
@@ -145,6 +141,7 @@
         baseRoute={route.Mandela.Id(mandelaId)} />
 {/if}
 
-<textarea class="area" rows="10" bind:value={message} />
+<PostEditor bind:post={message} />
+
 <div>Пользователь: {userName}</div>
 <button class="send" on:click={append} disabled={!message}>Отправить</button>

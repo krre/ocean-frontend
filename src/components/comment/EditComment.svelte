@@ -1,4 +1,5 @@
 <script lang="ts">
+    import PostEditor from "../post/PostEditor.svelte";
     import { createEventDispatcher } from "svelte";
 
     const dispatch = createEventDispatcher();
@@ -16,19 +17,18 @@
 </script>
 
 <style>
-    .area {
-        width: 600px;
-        max-width: 100%;
-        margin-bottom: 0.5em;
-    }
-
     button {
         margin-right: 0.5em;
     }
+
+    .row-btn {
+        margin-top: 0.5em;
+    }
 </style>
 
-<textarea class="area" rows="10" bind:value={text} />
-<div>
+<PostEditor bind:post={text} />
+
+<div class="row-btn">
     <button on:click={send}>Отправить</button>
     <button on:click={cancel}>Отменить</button>
 </div>

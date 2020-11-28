@@ -11,6 +11,7 @@
     import PostElement from "../../../../components/forum/post/PostElement.svelte";
     import Navigator from "../../../../components/forum/main/Navigator.svelte";
     import Pagination from "../../../../components/Pagination.svelte";
+    import PostEditor from "../../../../components/post/PostEditor.svelte";
 
     const { page } = stores();
     const topicId = +$page.params.id;
@@ -91,11 +92,6 @@
         }
     }
 
-    .area {
-        max-width: 100%;
-        width: 700px;
-    }
-
     button {
         margin-top: 0.5em;
     }
@@ -117,7 +113,7 @@
     baseRoute={route.Forum.Topic.Id(topicId)} />
 
 <div class="send">
-    <textarea class="area" rows="10" bind:value={post} />
+    <PostEditor bind:post />
     <div>Пользователь: {sessionUserName(user)}</div>
     <div><button on:click={append} disabled={!post}>Отправить</button></div>
 </div>

@@ -3,6 +3,7 @@
     import * as utils from "utils";
     import ListEditor from "./ListEditor.svelte";
     import MandelaTitle from "./MandelaTitle.svelte";
+    import PostEditor from "./post/PostEditor.svelte";
 
     export let titleMode = consts.Mandela.Title.Simple;
     export let title = "";
@@ -58,7 +59,7 @@
         bind:after
         bind:mode={titleMode} />
     Описание:
-    <textarea rows="10" bind:value={description} />
+    <PostEditor bind:post={description} />
     Изображения:
     <ListEditor bind:list={images} />
     Видео (только YouTube):
