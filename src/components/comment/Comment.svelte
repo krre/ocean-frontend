@@ -123,13 +123,14 @@
                     on:edit={(event) => (comments[event.detail.row].edit = true)}
                     on:remove={(event) => deleteComment(event.detail.row)} />
                 <div />
-                <div class="message">{comment.message}</div>
 
                 {#if comment.edit}
                     <EditComment
                         text={comment.message}
                         on:send={(event) => editComment(i, event.detail.text)}
                         on:cancel={() => (comment.edit = false)} />
+                {:else}
+                    <div class="message">{comment.message}</div>
                 {/if}
             </div>
         {/each}

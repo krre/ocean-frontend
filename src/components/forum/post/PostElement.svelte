@@ -72,12 +72,12 @@
         on:edit={(event) => (post.edit = true)}
         on:remove={(event) => removePost()} />
 
-    <div class="text">{post.post}</div>
-
     {#if post.edit}
         <EditComment
             text={post.post}
             on:send={(event) => editPost(event.detail.text)}
             on:cancel={() => (post.edit = false)} />
+    {:else}
+        <div class="text">{post.post}</div>
     {/if}
 </div>

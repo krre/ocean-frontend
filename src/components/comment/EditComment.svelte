@@ -19,7 +19,7 @@
     .area {
         width: 600px;
         max-width: 100%;
-        margin: 0.5em 0;
+        margin-bottom: 0.5em;
     }
 
     button {
