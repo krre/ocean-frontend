@@ -6,7 +6,7 @@
 
     function send() {
         dispatch("send", {
-            text: text
+            text: text,
         });
     }
 
@@ -18,6 +18,8 @@
 <style>
     .area {
         width: 600px;
+        max-width: 100%;
+        margin: 0.5em 0;
     }
 </style>
 

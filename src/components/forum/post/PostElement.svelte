@@ -1,6 +1,5 @@
 <script lang="ts">
     import { send } from "network";
-    import { formatDateTime } from "utils";
     import * as route from "route";
     import * as method from "method";
     import * as dialog from "dialog";
@@ -33,8 +32,6 @@
     }
 
     async function removePost() {
-        if (!dialog.remove("Удалить сообщение?")) return;
-
         const params = {
             id: +post.id,
         };
@@ -55,27 +52,16 @@
     .post:last-child {
         border-bottom: none;
     }
-
-    .buttons {
-        display: flex;
-        justify-content: flex-end;
-        margin-top: 0.5em;
-    }
-
-    button {
-        margin-right: 0.5em;
-    }
 </style>
 
 <Session bind:user bind:isAdmin bind:isAnonym />
 
 <div class="post">
-    <PostTitle author={post.user_name} date={post.create_ts} />
+    <PostTitle
+        author={post.user_name}
+        date={post.create_ts}
+        edited={editable}
+        on:edit={(event) => editPost()}
+        on:remove={(event) => removePost()} />
     {post.post}
-    {#if editable}
-        <div class="buttons">
-            <button on:click={editPost}>Изменить</button>
-            <button on:click={removePost}>Удалить</button>
-        </div>
-    {/if}
 </div>

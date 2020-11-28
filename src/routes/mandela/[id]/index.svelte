@@ -145,8 +145,18 @@
         height: 315px;
     }
 
+    h2 {
+        margin-left: 1rem;
+    }
+
     .comment {
         margin: var(--page-margin);
+    }
+
+    @media screen and (max-width: 600px) {
+        .comment {
+            margin: var(--page-margin) 0;
+        }
     }
 </style>
 
@@ -266,6 +276,8 @@
         {/if}
     {/if}
 </Page>
+
+<h2>Комментарии</h2>
 
 <div class="comment">
     <Comment user={session.user} mandelaId={id} />

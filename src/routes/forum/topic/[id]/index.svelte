@@ -76,6 +76,12 @@
         margin: var(--page-margin);
     }
 
+    @media screen and (max-width: 600px) {
+        .send {
+            margin: var(--page-margin) 0;
+        }
+    }
+
     .area {
         max-width: 100%;
         width: 700px;

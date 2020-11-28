@@ -7,7 +7,6 @@
     import * as route from "route";
     import PostTitle from "../PostTitle.svelte";
     import EditComment from "./EditComment.svelte";
-    import RemoveComment from "./RemoveComment.svelte";
     import Pagination from "../Pagination.svelte";
 
     const { page } = stores();
@@ -59,12 +58,7 @@
         load();
     }
 
-    function showEdit(row: number) {
-        comments[row].edit = true;
-        comments[row].remove = false;
-    }
-
-    async function edit(row: number, message: string) {
+    async function editComment(row: number, message: string) {
         const params = {
             id: +comments[row].id,
             message: message,
@@ -72,11 +66,6 @@
 
         await send(method.Comment.Update, params);
         comments[row].message = message;
-        comments[row].edit = false;
-    }
-
-    function showRemove(row: number) {
-        comments[row].remove = true;
         comments[row].edit = false;
     }
 
@@ -121,58 +110,38 @@
         overflow-wrap: break-word;
         word-wrap: break-word;
     }
-
-    .label-link {
-        cursor: pointer;
-    }
 </style>
 
-<h2>Комментарии</h2>
+{#if comments.length}
+    <div class="list">
+        {#each comments as comment, i}
+            <div class="post">
+                <PostTitle
+                    row={i}
+                    author={comment.user_name}
+                    date={comment.create_ts}
+                    edited={user && (comment.user_id === user.id || user.id === consts.Account.Id.Admin)}
+                    on:edit={(event) => (comments[event.detail.row].edit = true)}
+                    on:remove={(event) => deleteComment(event.detail.row)} />
+                <div />
+                <div class="message">{comment.message}</div>
 
-<div class="list">
-    {#each comments as comment, i}
-        <div class="post">
-            <PostTitle author={comment.user_name} date={comment.create_ts} />
-            <div>
-                {#if user && (comment.user_id === user.id || user.id === consts.Account.Id.Admin)}
-                    <div>
-                        <span class="label-link" on:click={() => showEdit(i)}>
-                            Редактировать
-                        </span>
-                        |
-                        <span class="label-link" on:click={() => showRemove(i)}>
-                            Удалить
-                        </span>
-                    </div>
-                {/if}
-            </div>
-            <div class="message">{comment.message}</div>
-
-            {#if comment.edit}
-                <p>
+                {#if comment.edit}
                     <EditComment
                         text={comment.message}
-                        on:send={(event) => edit(i, event.detail.text)}
+                        on:send={(event) => editComment(i, event.detail.text)}
                         on:cancel={() => (comment.edit = false)} />
-                </p>
-            {/if}
+                {/if}
+            </div>
+        {/each}
+    </div>
 
-            {#if comment.remove}
-                <p>
-                    <RemoveComment
-                        on:confirm={() => deleteComment(i)}
-                        on:cancel={() => (comment.remove = false)} />
-                </p>
-            {/if}
-        </div>
-    {/each}
-</div>
-
-<Pagination
-    count={commentCount}
-    limit={pageLimit}
-    offset={pageNo}
-    baseRoute={route.Mandela.Id(mandelaId)} />
+    <Pagination
+        count={commentCount}
+        limit={pageLimit}
+        offset={pageNo}
+        baseRoute={route.Mandela.Id(mandelaId)} />
+{/if}
 
 <textarea class="area" rows="10" bind:value={message} />
 <div>Пользователь: {userName}</div>
