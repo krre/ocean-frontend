@@ -42,7 +42,6 @@
         for (let i = 0; i < result.comments.length; i++) {
             const comment = result.comments[i];
             comment.edit = false;
-            comment.remove = false;
             comments.push(comment);
         }
     }
