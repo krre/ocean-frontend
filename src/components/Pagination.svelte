@@ -56,6 +56,7 @@
         justify-content: center;
         align-items: center;
         text-align: center;
+        margin-bottom: var(--page-margin);
     }
 
     span {
