@@ -29,33 +29,23 @@
     .title {
         color: gray;
         display: flex;
+        gap: 0.5em;
+        margin-bottom: 1em;
+        align-items: center;
     }
 
-    .edit-labels {
-        display: block;
-        color: lightblue;
-    }
-
-    .devider {
-        margin: 0 0.5em;
-    }
-
-    .label-link {
-        cursor: pointer;
+    button {
+        color: gray;
     }
 </style>
 
 <div class="title">
-    {author}<span class="devider">|</span>
+    {author}
+    <span>|</span>
     {formatDateTime(date)}
+
+    {#if edited}
+        <button on:click={edit}><i class="fas fa-edit" /></button>
+        <button on:click={remove}><i class="fas fa-trash-alt" /></button>
+    {/if}
 </div>
-
-{#if edited}
-    <div class="edit-labels">
-        <span class="label-link" on:click={edit}> Редактировать </span>
-        <span class="devider">|</span>
-        <span class="label-link" on:click={remove}> Удалить </span>
-    </div>
-{/if}
-
-<br />
