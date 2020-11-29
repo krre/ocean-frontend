@@ -33,16 +33,19 @@
     .path {
         margin: var(--page-margin);
         display: flex;
+        gap: 0.5em;
+        align-items: center;
     }
 
-    .devider {
-        margin: 0 0.4em;
+    .arrow {
+        color: gray;
+        font-size: 0.8em;
     }
 </style>
 
 <div class="path">
     {#each path as part, i}
         <a href={part.route}>{part.name}</a>
-        <span class="devider">{i < path.length - 1 ? '|' : ''}</span>
+        {#if i < path.length - 1}<i class="fas fa-chevron-right arrow" />{/if}
     {/each}
 </div>
