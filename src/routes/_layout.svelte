@@ -1,4 +1,5 @@
 <script context="module" lang="ts">
+    import Modal from "../components/dialog/Modal.svelte";
     import { setToken } from "network";
 
     export async function preload(page, session) {
@@ -47,4 +48,5 @@
 
 <main>
     <slot />
+    <Modal />
 </main>
