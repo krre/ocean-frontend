@@ -1,14 +1,21 @@
 <script lang="ts">
-    import "../components/Page.svelte";
+    import * as dialog from "dialog";
     import { stores } from "@sapper/app";
     import Page from "../components/Page.svelte";
-    const { page } = stores();
+    import QuestionDialog from "../components/dialog/Question.svelte";
 
+    const { page } = stores();
     const title = "Справка";
+
+    function openDialog() {
+        dialog.open(QuestionDialog);
+    }
 </script>
 
 <style>
 </style>
+
+<button on:click={openDialog}>Диалог</button>
 
 <Page {title}>
     <div><a href="{$page.path}#about">О сайте</a></div>
