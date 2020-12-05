@@ -41,6 +41,11 @@
         color: olive;
         text-decoration: underline;
     }
+
+    :global(img) {
+        max-width: 100%;
+        max-height: 100vh;
+    }
 </style>
 
 <Sidebar bind:open on:itemClicked={() => (open = false)} />

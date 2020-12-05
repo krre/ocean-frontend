@@ -14,7 +14,9 @@
     }
 
     function onOkImage(link: string, width?: number) {
-        console.log(link, width);
+        const widthProp = width ? "width=" + width.toString() : "";
+        const htmlImage = `<a href="${link}"><img src=${link} ${widthProp}></a>`;
+        post = insertText(post, areaRef.selectionStart, htmlImage);
     }
 
     function onOkVideo(link: string) {
