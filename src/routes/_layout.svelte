@@ -46,6 +46,13 @@
         max-width: 100%;
         max-height: 100vh;
     }
+
+    :global(.video) {
+        max-width: 100%;
+        max-height: auto;
+        width: 420px;
+        height: 315px;
+    }
 </style>
 
 <Sidebar bind:open on:itemClicked={() => (open = false)} />

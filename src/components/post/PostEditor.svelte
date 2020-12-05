@@ -9,18 +9,25 @@
     let areaRef;
 
     function onOkLink(link: string, description: string) {
-        const htmlLink = `<a href="${link}"">${description || link}</a>`;
+        const htmlLink = `<a href="${link}">${description || link}</a>`;
         post = insertText(post, areaRef.selectionStart, htmlLink);
     }
 
     function onOkImage(link: string, width?: number) {
-        const widthProp = width ? "width=" + width.toString() : "";
-        const htmlImage = `<a href="${link}"><img src=${link} ${widthProp}></a>`;
+        const widthProp = width ? " width=" + width.toString() : "";
+        const htmlImage = `<a href="${link}"><img src="${link}"${widthProp}></a>`;
         post = insertText(post, areaRef.selectionStart, htmlImage);
     }
 
     function onOkVideo(link: string) {
-        console.log(link);
+        const htmlVideo = `<iframe class="video" src="${fixYouTubeLink(
+            link
+        )}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+        post = insertText(post, areaRef.selectionStart, htmlVideo);
+    }
+
+    function fixYouTubeLink(link) {
+        return "https://www.youtube.com/embed/" + link.match(/([^\/]*$)/)[0];
     }
 </script>
 
