@@ -1,6 +1,7 @@
 <script lang="ts">
     import LinkDialog from "./LinkDialog.svelte";
     import ImageDialog from "./ImageDialog.svelte";
+    import VideoDialog from "./VideoDialog.svelte";
     import * as dialog from "dialog";
 
     export let post: string;
@@ -11,6 +12,10 @@
 
     function onOkImage(link: string, width?: number) {
         console.log(link, width);
+    }
+
+    function onOkVideo(link: string) {
+        console.log(link);
     }
 </script>
 
@@ -46,7 +51,9 @@
         <button
             on:click={() => dialog.open(ImageDialog, { onOk: onOkImage })}><i
                 class="fas fa-image" /></button>
-        <button on:click={() => {}}><i class="fab fa-youtube" /></button>
+        <button
+            on:click={() => dialog.open(VideoDialog, { onOk: onOkVideo })}><i
+                class="fab fa-youtube" /></button>
     </div>
     <textarea class="area" rows="10" bind:value={post} />
 </div>
