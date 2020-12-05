@@ -1,7 +1,12 @@
 <script lang="ts">
+    import LinkDialog from "./LinkDialog.svelte";
+    import * as dialog from "dialog";
+
     export let post: string;
 
-    function openLinkDialog() {}
+    function openLinkDialog() {
+        dialog.open(LinkDialog);
+    }
 
     function openImageDialog() {}
 

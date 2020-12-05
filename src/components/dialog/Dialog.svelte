@@ -28,6 +28,9 @@
     .content {
         margin: 0 var(--page-margin);
         white-space: pre-wrap;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5em;
     }
 
     .buttons {
