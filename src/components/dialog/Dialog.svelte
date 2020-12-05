@@ -27,9 +27,6 @@
 
     .content {
         margin: 0 var(--page-margin);
-        padding: var(--page-padding);
-        border: var(--border-1px);
-        background-color: white;
         white-space: pre-wrap;
     }
 
