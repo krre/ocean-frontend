@@ -1,14 +1,14 @@
 <script lang="ts">
     import Dialog from "./Dialog.svelte";
+    import * as dialog from "dialog";
+    export let title: string;
+    export let text: string;
 </script>
 
 <style>
-    .quest {
-        background-color: white;
-        color: tomato;
-    }
 </style>
 
-<Dialog>
-    <div class="quest">Вопрос</div>
+<Dialog {title}>
+    <div>{text}</div>
+    <button slot="buttons" on:click={() => dialog.close()}>Закрыть</button>
 </Dialog>

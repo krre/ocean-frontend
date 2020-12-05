@@ -8,7 +8,10 @@
     const title = "Справка";
 
     function openDialog() {
-        dialog.open(QuestionDialog);
+        dialog.open(QuestionDialog, {
+            title: "Заголовок вопроса",
+            text: "Вопрос",
+        });
     }
 </script>
 
