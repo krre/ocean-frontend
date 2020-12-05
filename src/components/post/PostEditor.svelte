@@ -5,7 +5,11 @@
     export let post: string;
 
     function openLinkDialog() {
-        dialog.open(LinkDialog);
+        dialog.open(LinkDialog, { onOk: onOkLink });
+    }
+
+    function onOkLink(link: string, description: string) {
+        console.log(link, description);
     }
 
     function openImageDialog() {}

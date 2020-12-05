@@ -2,8 +2,14 @@
     import Dialog from "../dialog/Dialog.svelte";
     import * as dialog from "dialog";
 
+    export let onOk = (link: string, description?: string) => {};
     let link: string;
     let description: string;
+
+    function pressOk() {
+        onOk(link, description);
+        dialog.close();
+    }
 </script>
 
 <style>
@@ -15,7 +21,7 @@
         bind:value={description}
         placeholder="Введите описание (не обязательно)" />
     <div slot="buttons">
-        <button on:click={() => dialog.close()}>ОК</button>
+        <button on:click={pressOk}>ОК</button>
         <button on:click={() => dialog.close()}>Отменить</button>
     </div>
 </Dialog>
