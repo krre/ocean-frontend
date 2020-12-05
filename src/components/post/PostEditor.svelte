@@ -2,12 +2,15 @@
     import LinkDialog from "./LinkDialog.svelte";
     import ImageDialog from "./ImageDialog.svelte";
     import VideoDialog from "./VideoDialog.svelte";
+    import { insertText } from "utils";
     import * as dialog from "dialog";
 
-    export let post: string;
+    export let post = "";
+    let areaRef;
 
     function onOkLink(link: string, description: string) {
-        console.log(link, description);
+        const htmlLink = `<a href="${link}"">${description || link}</a>`;
+        post = insertText(post, areaRef.selectionStart, htmlLink);
     }
 
     function onOkImage(link: string, width?: number) {
@@ -55,5 +58,5 @@
             on:click={() => dialog.open(VideoDialog, { onOk: onOkVideo })}><i
                 class="fab fa-youtube" /></button>
     </div>
-    <textarea class="area" rows="10" bind:value={post} />
+    <textarea class="area" rows="10" bind:value={post} bind:this={areaRef} />
 </div>
