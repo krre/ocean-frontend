@@ -1,20 +1,17 @@
 <script lang="ts">
     import LinkDialog from "./LinkDialog.svelte";
+    import ImageDialog from "./ImageDialog.svelte";
     import * as dialog from "dialog";
 
     export let post: string;
-
-    function openLinkDialog() {
-        dialog.open(LinkDialog, { onOk: onOkLink });
-    }
 
     function onOkLink(link: string, description: string) {
         console.log(link, description);
     }
 
-    function openImageDialog() {}
-
-    function openYouTubeDialog() {}
+    function onOkImage(link: string, width?: number) {
+        console.log(link, width);
+    }
 </script>
 
 <style>
@@ -44,10 +41,12 @@
 
 <div class="container">
     <div class="toolbar">
-        <button on:click={openLinkDialog}><i class="fas fa-link" /></button>
-        <button on:click={openImageDialog}><i class="fas fa-image" /></button>
-        <button on:click={openYouTubeDialog}><i
-                class="fab fa-youtube" /></button>
+        <button on:click={() => dialog.open(LinkDialog, { onOk: onOkLink })}><i
+                class="fas fa-link" /></button>
+        <button
+            on:click={() => dialog.open(ImageDialog, { onOk: onOkImage })}><i
+                class="fas fa-image" /></button>
+        <button on:click={() => {}}><i class="fab fa-youtube" /></button>
     </div>
     <textarea class="area" rows="10" bind:value={post} />
 </div>
