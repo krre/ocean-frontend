@@ -12,7 +12,6 @@
     .window {
         position: relative;
         width: 40em;
-        /* height: 15em; */
         max-width: 100%;
         max-height: 100%;
         margin: 1em auto;
