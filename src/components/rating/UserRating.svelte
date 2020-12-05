@@ -37,7 +37,13 @@
 
 <p>Количество мандел, добавленных пользователями.</p>
 
-{#each users as user, i}{i + 1}. {user.name} - {user.count} <br />{/each}
+{#each users as user, i}
+    {i + 1 + (pageNo - 1) * pageLimit}.
+    {user.name}
+    -
+    {user.count}
+    <br />
+{/each}
 
 <Pagination
     count={userCount}
