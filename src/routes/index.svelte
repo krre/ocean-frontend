@@ -38,7 +38,7 @@
     const showPoll = 3;
     const showCategory = 4;
     const sorts = ["Манделам", "Комментариям"];
-    const zeroLeadingCount = 3;
+    const zeroLeadingCount = 4;
     const pageLimit = 50;
 
     class NonReactive {
