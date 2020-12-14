@@ -5,6 +5,7 @@
     import * as consts from "consts";
     import * as method from "method";
     import * as route from "route";
+    import * as bbcode from "bbcode";
     import PostTitle from "../PostTitle.svelte";
     import PostEditor from "../post/PostEditor.svelte";
     import EditComment from "./EditComment.svelte";
@@ -127,7 +128,7 @@
                         on:cancel={() => (comment.edit = false)} />
                 {:else}
                     <div class="message">
-                        {@html comment.message}
+                        {@html bbcode.parse(comment.message)}
                     </div>
                 {/if}
             </div>
