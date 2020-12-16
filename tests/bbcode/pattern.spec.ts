@@ -86,5 +86,4 @@ describe("BBCode pattern", () => {
             expect(p.exec("ABC", 0)).toStrictEqual({ res: [], end: 0 });
         })
     })
-
 });
