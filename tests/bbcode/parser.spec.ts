@@ -1,5 +1,5 @@
 export { }
-import { name, char, wsp, text, quoted, attr, attrs, node } from "../../src/node_modules/bbcode/parser"
+import { name, char, wsp, text, quoted, attr, attrs, open, close, node } from "../../src/node_modules/bbcode/parser"
 
 describe("BBCode parser", () => {
     test("name", () => {
@@ -28,6 +28,18 @@ describe("BBCode parser", () => {
 
     test("attrs", () => {
         expect(attrs.exec('width="500" height="200"', 0)).toStrictEqual({ res: { width: "500", height: "200" }, end: 24 })
+    });
+
+    test("open", () => {
+        expect(open.exec('[b]', 0)).toStrictEqual({ res: { name: "b", attrs: {} }, end: 3 })
+    });
+
+    test("open attrs", () => {
+        expect(open.exec('[b width="500" height="200"]', 0)).toStrictEqual({ res: { name: "b", attrs: { width: "500", height: "200" } }, end: 28 })
+    });
+
+    test("close", () => {
+        expect(close.exec('[/b]', 0)).toStrictEqual({ res: "b", end: 4 })
     });
 
     // test("node", () => {
