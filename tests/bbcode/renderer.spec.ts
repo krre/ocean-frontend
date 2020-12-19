@@ -24,4 +24,14 @@ describe("BBCode renderer", () => {
     test("url description", () => {
         expect(render({ name: "url", attrs: { url: "https://ocean-mandela.info" }, nodes: ["Ocean"] })).toBe(`<a href="https://ocean-mandela.info">Ocean</a>`);
     });
+
+    test("img", () => {
+        expect(render({ name: "img", attrs: {}, nodes: ["https://ocean-mandela.info/cat.jpg"] }))
+            .toBe(`<a href="https://ocean-mandela.info/cat.jpg"><img src="https://ocean-mandela.info/cat.jpg"></a>`);
+    });
+
+    test("img width", () => {
+        expect(render({ name: "img", attrs: { width: "500" }, nodes: ["https://ocean-mandela.info/cat.jpg"] }))
+            .toBe(`<a href="https://ocean-mandela.info/cat.jpg"><img src="https://ocean-mandela.info/cat.jpg" width=500></a>`);
+    });
 })
