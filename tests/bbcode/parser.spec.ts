@@ -1,4 +1,3 @@
-export { }
 import { name, char, wsp, text, quoted, attr, attrs, open, close, node } from "../../src/node_modules/bbcode/parser"
 
 describe("BBCode parser", () => {
