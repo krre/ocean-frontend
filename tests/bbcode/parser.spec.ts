@@ -42,15 +42,20 @@ describe("BBCode parser", () => {
         expect(close.exec('[/b]', 0)).toStrictEqual({ res: "b", end: 4 })
     });
 
-    // test("node", () => {
-    //     expect(node.exec('[b]bold text[/b]', 0)).toStrictEqual({ res: { name: "b", attrs: {} }, end: 11 })
-    // });
+    test("node", () => {
+        expect(node.exec('[b]bold text[/b]', 0)).toStrictEqual({ res: { name: "b", attrs: {}, nodes: ["bold text"] }, end: 16 })
+    });
 
-    // test("bold", () => {
-    //     expect(parse("[b]bold text[/b]")).toBe("<strong>bold text</strong>");
-    // })
-
-    // test("raw link", () => {
-    //     expect(parse("[url]http://ocean-mandela.info[/url]")).toBe(`<a href="http://ocean-mandela.info">http://ocean-mandela.info</a>`);
-    // });
+    test("nodes", () => {
+        expect(node.exec('[b][i]bold italic text[/i] bold text[/b]', 0)).toStrictEqual({
+            res: {
+                name: "b", attrs: {}, nodes:
+                    [{
+                        name: "i", attrs: {}, nodes: [
+                            "bold italic text"
+                        ],
+                    }, " bold text"]
+            }, end: 40
+        })
+    });
 })
