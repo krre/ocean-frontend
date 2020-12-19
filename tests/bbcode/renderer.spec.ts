@@ -39,4 +39,15 @@ describe("BBCode renderer", () => {
         expect(render({ name: "youtube", attrs: {}, nodes: ["https://youtu.be/GnFq03_3S0c"] }))
             .toBe(`<iframe class="video" src="https://www.youtube.com/embed/GnFq03_3S0c" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`);
     });
+
+    test("complex", () => {
+        expect(render({
+            name: "b", attrs: {}, nodes:
+                [{
+                    name: "i", attrs: {}, nodes: [
+                        "bold italic text"
+                    ],
+                }, " bold text"]
+        })).toBe("<strong><em>bold italic text</em> bold text</strong>");
+    })
 })
