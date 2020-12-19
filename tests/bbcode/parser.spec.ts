@@ -34,8 +34,12 @@ describe("BBCode parser", () => {
         expect(open.exec('[b]', 0)).toStrictEqual({ res: { name: "b", attrs: {} }, end: 3 })
     });
 
+    test("open attr", () => {
+        expect(open.exec('[url="https://ocean-mandela.info"]', 0)).toStrictEqual({ res: { name: "url", attrs: { url: "https://ocean-mandela.info" } }, end: 34 })
+    });
+
     test("open attrs", () => {
-        expect(open.exec('[b width="500" height="200"]', 0)).toStrictEqual({ res: { name: "b", attrs: { width: "500", height: "200" } }, end: 28 })
+        expect(open.exec('[img width="500" height="200"]', 0)).toStrictEqual({ res: { name: "img", attrs: { width: "500", height: "200" } }, end: 30 })
     });
 
     test("close", () => {
