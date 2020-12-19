@@ -1,4 +1,4 @@
-import { name, char, wsp, text, quoted, attr, attrs, open, close, node } from "../../src/node_modules/bbcode/parser"
+import { name, char, wsp, text, quoted, attr, attrs, open, close, node, doc } from "../../src/node_modules/bbcode/parser"
 
 describe("BBCode parser", () => {
     test("name", () => {
@@ -45,7 +45,7 @@ describe("BBCode parser", () => {
         expect(close.exec('[/b]', 0)).toStrictEqual({ res: "b", end: 4 })
     });
 
-    test("node", () => {
+    test("node bbcode", () => {
         expect(node.exec('[b]bold text[/b]', 0)).toStrictEqual({ res: { name: "b", attrs: {}, nodes: ["bold text"] }, end: 16 })
     });
 
@@ -60,5 +60,9 @@ describe("BBCode parser", () => {
                     }, " bold text"]
             }, end: 40
         })
+    });
+
+    test("doc", () => {
+        expect(doc.exec("Simple text", 0)).toStrictEqual({ res: { name: "doc", attrs: {}, nodes: ["Simple text"] }, end: 11 })
     });
 })
