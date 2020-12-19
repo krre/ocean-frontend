@@ -16,4 +16,12 @@ describe("BBCode renderer", () => {
     test("strikethrough", () => {
         expect(render({ name: "s", attrs: {}, nodes: ["strikethrough text"] })).toBe("<del>strikethrough text</del>");
     });
+
+    test("url", () => {
+        expect(render({ name: "url", attrs: {}, nodes: ["https://ocean-mandela.info"] })).toBe(`<a href="https://ocean-mandela.info">https://ocean-mandela.info</a>`);
+    });
+
+    test("url description", () => {
+        expect(render({ name: "url", attrs: { url: "https://ocean-mandela.info" }, nodes: ["Ocean"] })).toBe(`<a href="https://ocean-mandela.info">Ocean</a>`);
+    });
 })
