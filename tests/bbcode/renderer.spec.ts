@@ -34,4 +34,9 @@ describe("BBCode renderer", () => {
         expect(render({ name: "img", attrs: { width: "500" }, nodes: ["https://ocean-mandela.info/cat.jpg"] }))
             .toBe(`<a href="https://ocean-mandela.info/cat.jpg"><img src="https://ocean-mandela.info/cat.jpg" width=500></a>`);
     });
+
+    test("youtube", () => {
+        expect(render({ name: "youtube", attrs: {}, nodes: ["https://youtu.be/GnFq03_3S0c"] }))
+            .toBe(`<iframe class="video" src="https://www.youtube.com/embed/GnFq03_3S0c" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`);
+    });
 })
