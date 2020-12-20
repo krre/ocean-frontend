@@ -30,27 +30,27 @@ describe("BBCode parser", () => {
     });
 
     test("open", () => {
-        expect(open.exec('[b]', 0)).toStrictEqual({ res: { name: "b", attrs: {} }, end: 3 })
+        expect(open.exec('⁅b⁆', 0)).toStrictEqual({ res: { name: "b", attrs: {} }, end: 3 })
     });
 
     test("open attr", () => {
-        expect(open.exec('[url="https://ocean-mandela.info"]', 0)).toStrictEqual({ res: { name: "url", attrs: { url: "https://ocean-mandela.info" } }, end: 34 })
+        expect(open.exec('⁅url="https://ocean-mandela.info"⁆', 0)).toStrictEqual({ res: { name: "url", attrs: { url: "https://ocean-mandela.info" } }, end: 34 })
     });
 
     test("open attrs", () => {
-        expect(open.exec('[img width="500" height="200"]', 0)).toStrictEqual({ res: { name: "img", attrs: { width: "500", height: "200" } }, end: 30 })
+        expect(open.exec('⁅img width="500" height="200"⁆', 0)).toStrictEqual({ res: { name: "img", attrs: { width: "500", height: "200" } }, end: 30 })
     });
 
     test("close", () => {
-        expect(close.exec('[/b]', 0)).toStrictEqual({ res: "b", end: 4 })
+        expect(close.exec('⁅/b⁆', 0)).toStrictEqual({ res: "b", end: 4 })
     });
 
     test("node bbcode", () => {
-        expect(node.exec('[b]bold text[/b]', 0)).toStrictEqual({ res: { name: "b", attrs: {}, nodes: ["bold text"] }, end: 16 })
+        expect(node.exec('⁅b⁆bold text⁅/b⁆', 0)).toStrictEqual({ res: { name: "b", attrs: {}, nodes: ["bold text"] }, end: 16 })
     });
 
     test("nodes", () => {
-        expect(node.exec('[b][i]bold italic text[/i] bold text[/b]', 0)).toStrictEqual({
+        expect(node.exec('⁅b⁆⁅i⁆bold italic text⁅/i⁆ bold text⁅/b⁆', 0)).toStrictEqual({
             res: {
                 name: "b", attrs: {}, nodes:
                     [{

@@ -10,19 +10,19 @@
 
     function onOkLink(link: string, description: string) {
         const htmlLink = description
-            ? `[url="${link}"]${description}[/url]`
-            : `[url]${link}[/url]`;
+            ? `⁅url="${link}"⁆${description}⁅/url⁆`
+            : `⁅url⁆${link}⁅/url⁆`;
         post = insertText(post, areaRef.selectionStart, htmlLink);
     }
 
     function onOkImage(link: string, width?: number) {
         const widthProp = width ? "=" + width.toString() : "";
-        const htmlImage = `[img${widthProp}]${link}[/img]`;
+        const htmlImage = `⁅img${widthProp}⁆${link}⁅/img⁆`;
         post = insertText(post, areaRef.selectionStart, htmlImage);
     }
 
     function onOkVideo(link: string) {
-        const htmlVideo = `[youtube]${link}[/youtube]`;
+        const htmlVideo = `⁅youtube⁆${link}⁅/youtube⁆`;
         post = insertText(post, areaRef.selectionStart, htmlVideo);
     }
 </script>
