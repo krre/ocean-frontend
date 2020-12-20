@@ -28,8 +28,6 @@
         const start = areaRef.selectionStart;
         const end = areaRef.selectionEnd;
 
-        if (start == end) return;
-
         const str = areaRef.value.substring(start, end);
         const result = handler(str);
         post =
