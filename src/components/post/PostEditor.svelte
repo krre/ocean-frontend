@@ -8,6 +8,36 @@
     export let post = "";
     let areaRef;
 
+    function appendBold() {
+        replaceSelection((str: string) => `⁅b⁆${str}⁅/b⁆`);
+    }
+
+    function appendItalic() {
+        replaceSelection((str: string) => `⁅i⁆${str}⁅/i⁆`);
+    }
+
+    function appendUnderline() {
+        replaceSelection((str: string) => `⁅u⁆${str}⁅/u⁆`);
+    }
+
+    function appendStrikethrough() {
+        replaceSelection((str: string) => `⁅s⁆${str}⁅/s⁆`);
+    }
+
+    const replaceSelection = (handler) => {
+        const start = areaRef.selectionStart;
+        const end = areaRef.selectionEnd;
+
+        if (start == end) return;
+
+        const str = areaRef.value.substring(start, end);
+        const result = handler(str);
+        post =
+            post.substring(0, start) +
+            result +
+            post.substring(end, post.length);
+    };
+
     function onOkLink(link: string, description: string) {
         const htmlLink = description
             ? `⁅url="${link}"⁆${description}⁅/url⁆`
@@ -54,11 +84,23 @@
 
 <div class="container">
     <div class="toolbar">
+        <button on:click={appendBold}><i class="fas fa-bold" /></button>
+
+        <button on:click={appendItalic}><i class="fas fa-italic" /></button>
+
+        <button on:click={appendUnderline}><i
+                class="fas fa-underline" /></button>
+
+        <button on:click={appendStrikethrough}><i
+                class="fas fa-strikethrough" /></button>
+
         <button on:click={() => dialog.open(LinkDialog, { onOk: onOkLink })}><i
                 class="fas fa-link" /></button>
+
         <button
             on:click={() => dialog.open(ImageDialog, { onOk: onOkImage })}><i
                 class="fas fa-image" /></button>
+
         <button
             on:click={() => dialog.open(VideoDialog, { onOk: onOkVideo })}><i
                 class="fab fa-youtube" /></button>
