@@ -62,7 +62,7 @@ describe("BBCode parser", () => {
         })
     });
 
-    test("mix", () => {
-        expect(doc.exec("Simple text", 0)).toStrictEqual({ res: { name: "mix", attrs: {}, nodes: ["Simple text"] }, end: 11 })
+    test("doc", () => {
+        expect(doc.exec("Simple text", 0)).toStrictEqual({ res: { name: "doc", attrs: {}, nodes: ["Simple text"] }, end: 11 })
     });
 })
