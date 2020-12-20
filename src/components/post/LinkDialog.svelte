@@ -7,15 +7,14 @@
         focusRef.focus();
     });
 
-    export let onOk = (link: string, description?: string) => {};
+    export let onOk = (link: string) => {};
 
     let link: string;
-    let description: string;
 
     let focusRef;
 
     function pressOk() {
-        onOk(link, description);
+        onOk(link);
         dialog.close();
     }
 </script>
@@ -28,9 +27,6 @@
         bind:value={link}
         bind:this={focusRef}
         placeholder="Введите ссылку" />
-    <input
-        bind:value={description}
-        placeholder="Введите описание (не обязательно)" />
     <div slot="buttons">
         <button on:click={pressOk}>ОК</button>
         <button on:click={() => dialog.close()}>Отменить</button>

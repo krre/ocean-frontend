@@ -36,11 +36,16 @@
             post.substring(end, post.length);
     };
 
-    function onOkLink(link: string, description: string) {
-        const htmlLink = description
-            ? `⁅url="${link}"⁆${description}⁅/url⁆`
-            : `⁅url⁆${link}⁅/url⁆`;
-        post = insertText(post, areaRef.selectionStart, htmlLink);
+    function onOkLink(link: string) {
+        if (areaRef.selectionStart != areaRef.selectionEnd) {
+            replaceSelection((str: string) => `⁅url="${link}"⁆${str}⁅/url⁆`);
+        } else {
+            post = insertText(
+                post,
+                areaRef.selectionStart,
+                `⁅url⁆${link}⁅/url⁆`
+            );
+        }
     }
 
     function onOkImage(link: string, width?: number) {
