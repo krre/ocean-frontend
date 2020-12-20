@@ -2,6 +2,7 @@
     import { send } from "network";
     import * as method from "method";
     import * as consts from "consts";
+    import * as bbcode from "bbcode";
     import { createEventDispatcher } from "svelte";
     import Session from "../../../components/Session.svelte";
     import PostTitle from "../../../components/PostTitle.svelte";
@@ -79,7 +80,7 @@
             on:cancel={() => (post.edit = false)} />
     {:else}
         <div class="text">
-            {@html post.post}
+            {@html bbcode.parse(post.post)}
         </div>
     {/if}
 </div>
