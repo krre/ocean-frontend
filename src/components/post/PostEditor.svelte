@@ -44,7 +44,7 @@
     }
 
     function onOkImage(link: string, width?: number) {
-        const widthProp = width ? "=" + width.toString() : "";
+        const widthProp = width ? ` width="${width}"` : "";
         const htmlImage = `⁅img${widthProp}⁆${link}⁅/img⁆`;
         post = insertText(post, areaRef.selectionStart, htmlImage);
     }
