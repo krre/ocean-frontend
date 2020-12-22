@@ -32,6 +32,7 @@
 
 <script lang="ts">
     import * as consts from "consts";
+    import * as bbcode from "bbcode";
     import { goto } from "@sapper/app";
     import { stores } from "@sapper/app";
     import Comment from "../../../components/comment/Comment.svelte";
@@ -196,7 +197,7 @@
     {#if mandela.description}
         <p />
         <div class="message">
-            {@html mandela.description}
+            {@html bbcode.parse(mandela.description)}
         </div>
         <hr />
     {/if}
