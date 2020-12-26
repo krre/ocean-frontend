@@ -67,9 +67,6 @@
         bind:before={mandela.before}
         bind:after={mandela.after}
         bind:description={mandela.description}
-        bind:images={mandela.images}
-        bind:videos={mandela.videos}
-        bind:links={mandela.links}
         bind:categories
         bind:user={session.user}
         on:click={edit} />

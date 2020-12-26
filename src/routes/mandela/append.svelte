@@ -48,9 +48,6 @@
         bind:before
         bind:after
         bind:description
-        bind:images
-        bind:videos
-        bind:links
         bind:categories
         bind:user={$session.user}
         on:click={append} />

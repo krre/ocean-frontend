@@ -1,7 +1,6 @@
 <script lang="ts">
     import * as consts from "consts";
     import * as utils from "utils";
-    import ListEditor from "./ListEditor.svelte";
     import MandelaTitle from "./MandelaTitle.svelte";
     import PostEditor from "./post/PostEditor.svelte";
 
@@ -11,9 +10,6 @@
     export let before = "";
     export let after = "";
     export let description = "";
-    export let images = [];
-    export let videos = [];
-    export let links = [];
     export let categories = [];
     export let user;
 
@@ -61,12 +57,6 @@
         bind:mode={titleMode} />
     Описание:
     <PostEditor bind:post={description} />
-    Изображения:
-    <ListEditor bind:list={images} />
-    Видео (только YouTube):
-    <ListEditor bind:list={videos} />
-    Ссылки:
-    <ListEditor bind:list={links} />
     Категории:
     <div class="category">
         {#each consts.Categories as category, i}
