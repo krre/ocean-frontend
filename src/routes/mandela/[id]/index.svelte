@@ -260,9 +260,8 @@
                 <div>Выбрано:</div>
                 <div>{consts.Votes[vote]}</div>
             </div>
-            <p>
-                <button on:click={() => (editVote = true)}>Изменить выбор</button>
-            </p>
+            <p />
+            <button on:click={() => (editVote = true)}>Изменить выбор</button>
         {:else}
             Является ли для вас это манделой?
             <p>
