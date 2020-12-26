@@ -48,9 +48,6 @@
                     ? mandela.after
                     : "",
             description: mandela.description,
-            images: mandela.images,
-            videos: mandela.videos,
-            links: mandela.links,
             categories: categories,
         };
 

@@ -132,20 +132,6 @@
         display: block;
     }
 
-    img {
-        max-width: 100%;
-        max-height: 100vh;
-        width: auto;
-        height: auto;
-    }
-
-    .video {
-        max-width: 100%;
-        max-height: auto;
-        width: 420px;
-        height: 315px;
-    }
-
     h2 {
         margin-left: 1rem;
     }
@@ -199,36 +185,6 @@
         <div class="message">
             {@html bbcode.parse(mandela.description)}
         </div>
-        <hr />
-    {/if}
-
-    {#if mandela.images.length}
-        {#each mandela.images as image}
-            <div><img alt="" src={image} /></div>
-        {/each}
-        <hr />
-    {/if}
-
-    {#if mandela.videos.length}
-        {#each mandela.videos as video}
-            <div>
-                <iframe
-                    class="video"
-                    title=""
-                    src={fixYouTubeLink(video)}
-                    frameborder="0"
-                    allow="accelerometer; autoplay; encrypted-media; gyroscope;
-                    picture-in-picture"
-                    allowfullscreen />
-            </div>
-        {/each}
-        <hr />
-    {/if}
-
-    {#if mandela.links.length}
-        {#each mandela.links as link}
-            <div><a href={link}>{link}</a></div>
-        {/each}
         <hr />
     {/if}
 
