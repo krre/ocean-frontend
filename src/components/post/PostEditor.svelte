@@ -4,9 +4,11 @@
     import VideoDialog from "./VideoDialog.svelte";
     import { insertText } from "utils";
     import * as dialog from "dialog";
+    import * as bbcode from "bbcode";
 
     export let post = "";
     let areaRef;
+    let isPreview = false;
 
     function appendBold() {
         replaceSelection((str: string) => `⁅b⁆${str}⁅/b⁆`);
@@ -63,7 +65,7 @@
 <style>
     .container {
         max-width: 100%;
-        width: 50em;
+        width: 60em;
         display: flex;
         flex-direction: column;
     }
@@ -72,41 +74,88 @@
         border-top: var(--border-1px);
         border-left: var(--border-1px);
         border-right: var(--border-1px);
-        padding: 0.4em;
         background-color: rgb(236, 238, 255);
+        display: flex;
+        align-items: stretch;
     }
 
     .area {
         margin-bottom: 0.5em;
     }
 
+    .preview {
+        margin-bottom: 1em;
+        white-space: pre-wrap;
+        overflow-wrap: break-word;
+        word-wrap: break-word;
+        border: var(--border-1px);
+    }
+
+    .preview-button {
+        padding: 0.5em;
+        border-left: var(--border-1px);
+        background-color: rgb(200, 219, 255);
+    }
+
+    .preview-button:hover {
+        background-color: rgb(114, 230, 218);
+        cursor: pointer;
+    }
+
+    .toolbar-spacing {
+        flex-grow: 1;
+    }
+
     button {
         margin-left: 0.3em;
+        margin-top: 0.3em;
+        margin-bottom: 0.3em;
     }
 </style>
 
 <div class="container">
     <div class="toolbar">
-        <button on:click={appendBold}><i class="fas fa-bold" /></button>
+        <div>
+            <button on:click={appendBold}><i class="fas fa-bold" /></button>
 
-        <button on:click={appendItalic}><i class="fas fa-italic" /></button>
+            <button on:click={appendItalic}><i class="fas fa-italic" /></button>
 
-        <button on:click={appendUnderline}><i
-                class="fas fa-underline" /></button>
+            <button on:click={appendUnderline}><i
+                    class="fas fa-underline" /></button>
 
-        <button on:click={appendStrikethrough}><i
-                class="fas fa-strikethrough" /></button>
+            <button on:click={appendStrikethrough}><i
+                    class="fas fa-strikethrough" /></button>
 
-        <button on:click={() => dialog.open(LinkDialog, { onOk: onOkLink })}><i
-                class="fas fa-link" /></button>
+            <button
+                on:click={() => dialog.open(LinkDialog, { onOk: onOkLink })}><i
+                    class="fas fa-link" /></button>
 
-        <button
-            on:click={() => dialog.open(ImageDialog, { onOk: onOkImage })}><i
-                class="fas fa-image" /></button>
+            <button
+                on:click={() => dialog.open(ImageDialog, {
+                        onOk: onOkImage,
+                    })}><i class="fas fa-image" /></button>
 
-        <button
-            on:click={() => dialog.open(VideoDialog, { onOk: onOkVideo })}><i
-                class="fab fa-youtube" /></button>
+            <button
+                on:click={() => dialog.open(VideoDialog, {
+                        onOk: onOkVideo,
+                    })}><i class="fab fa-youtube" /></button>
+        </div>
+
+        <div class="toolbar-spacing" />
+
+        <div class="preview-button" on:click={() => (isPreview = !isPreview)}>
+            {#if isPreview}Редактор{:else}Просмотр{/if}
+        </div>
     </div>
-    <textarea class="area" rows="10" bind:value={post} bind:this={areaRef} />
+    {#if !isPreview}
+        <textarea
+            class="area"
+            rows="10"
+            bind:value={post}
+            bind:this={areaRef} />
+    {:else}
+        <div class="preview">
+            {@html bbcode.parse(post)}
+        </div>
+    {/if}
 </div>
