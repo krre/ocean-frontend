@@ -16,9 +16,6 @@
     export let before = "";
     export let after = "";
     let description = "";
-    let images = [];
-    let videos = [];
-    let links = [];
     let categories = [];
 
     async function append() {
@@ -29,9 +26,6 @@
             before: titleMode === consts.Mandela.Title.Complex ? before : "",
             after: titleMode === consts.Mandela.Title.Complex ? after : "",
             description: description,
-            images: images,
-            videos: videos,
-            links: links,
             categories: categories,
         };
 

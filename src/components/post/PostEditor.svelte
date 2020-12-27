@@ -2,6 +2,7 @@
     import LinkDialog from "./LinkDialog.svelte";
     import ImageDialog from "./ImageDialog.svelte";
     import VideoDialog from "./VideoDialog.svelte";
+    import SmilePanel from "./SmilePanel.svelte";
     import { insertText } from "utils";
     import * as dialog from "dialog";
     import * as bbcode from "bbcode";
@@ -9,6 +10,7 @@
     export let post = "";
     let areaRef;
     let isPreview = false;
+    let isSmilePanelActive = false;
 
     function appendBold() {
         replaceSelection((str: string) => `⁅b⁆${str}⁅/b⁆`);
@@ -139,6 +141,10 @@
                 on:click={() => dialog.open(VideoDialog, {
                         onOk: onOkVideo,
                     })}><i class="fab fa-youtube" /></button>
+
+            <button
+                on:click={() => (isSmilePanelActive = !isSmilePanelActive)}><i
+                    class="far fa-smile" /></button>
         </div>
 
         <div class="toolbar-spacing" />
@@ -147,6 +153,13 @@
             {#if isPreview}Редактор{:else}Просмотр{/if}
         </div>
     </div>
+    {#if isSmilePanelActive}
+        <SmilePanel
+            on:selected={(event) => {
+                post += event.detail.smile;
+            }} />
+    {/if}
+
     {#if !isPreview}
         <textarea
             class="area"
