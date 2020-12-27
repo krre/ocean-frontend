@@ -7,7 +7,7 @@
         focusRef.focus();
     });
 
-    export let onOk = (link: string, width?: number) => {};
+    export let onOk = (_link: string, _width?: number) => {};
 
     let link: string;
     let width: number;

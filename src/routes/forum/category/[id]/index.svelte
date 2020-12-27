@@ -2,12 +2,12 @@
     import * as route from "route";
     import * as method from "method";
     import { send } from "network";
+    import type { User } from "types";
     import { goto, stores } from "@sapper/app";
     import ForumPage from "../../../../components/forum/main/ForumPage.svelte";
     import Session from "../../../../components/Session.svelte";
     import SectionElement from "../../../../components/forum/section/SectionElement.svelte";
     import Navigator from "../../../../components/forum/main/Navigator.svelte";
-    import Pagination from "../../../../components/Pagination.svelte";
 
     const { page } = stores();
     const categoryId = +$page.params.id;
@@ -15,7 +15,7 @@
     let categoryName: string;
 
     let isAdmin = false;
-    let user;
+    let user: User;
     let sections = [];
 
     $: if (process.browser) {
@@ -51,7 +51,7 @@
 {/if}
 
 <ForumPage title={categoryName}>
-    {#each sections as section, row}
+    {#each sections as section}
         <SectionElement {section} on:removed={() => load()} />
     {/each}
 </ForumPage>

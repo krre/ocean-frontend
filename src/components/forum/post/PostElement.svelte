@@ -1,5 +1,6 @@
 <script lang="ts">
     import { send } from "network";
+    import type { User } from "types";
     import * as method from "method";
     import * as consts from "consts";
     import * as bbcode from "bbcode";
@@ -16,7 +17,7 @@
 
     let isAdmin = false;
     let isAnonym = true;
-    let user;
+    let user: User;
 
     $: editable =
         isAdmin ||
@@ -70,8 +71,8 @@
         author={post.user_name}
         date={post.create_ts}
         edited={editable}
-        on:edit={(event) => (post.edit = true)}
-        on:remove={(event) => removePost()} />
+        on:edit={() => (post.edit = true)}
+        on:remove={() => removePost()} />
 
     {#if post.edit}
         <EditComment

@@ -1,6 +1,7 @@
 <script lang="ts">
     import { sessionUserName } from "utils";
     import { send } from "network";
+    import type { User } from "types";
     import { stores } from "@sapper/app";
     import * as consts from "consts";
     import * as method from "method";
@@ -13,7 +14,7 @@
 
     const { page } = stores();
 
-    export let user;
+    export let user: User;
     export let mandelaId: number;
 
     let pageNo = 1;

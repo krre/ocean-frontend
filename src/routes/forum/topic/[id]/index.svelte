@@ -3,6 +3,7 @@
     import * as method from "method";
     import * as consts from "consts";
     import type { PathPart } from "forum";
+    import type { User } from "types";
     import { send } from "network";
     import { sessionUserName } from "utils";
     import { stores } from "@sapper/app";
@@ -19,7 +20,7 @@
     let topicName: string;
     let topicUserId: number;
     let isAdmin = false;
-    let user;
+    let user: User;
     let posts = [];
     let post: string;
 
@@ -75,7 +76,7 @@
             post: post,
         };
 
-        const result = await send(method.Forum.Post.Create, params);
+        await send(method.Forum.Post.Create, params);
         post = "";
         load();
     }

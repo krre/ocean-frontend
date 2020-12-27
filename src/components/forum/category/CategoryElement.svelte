@@ -6,7 +6,6 @@
     import * as dialog from "dialog";
     import { goto } from "@sapper/app";
     import { createEventDispatcher } from "svelte";
-    import type { select_options } from "svelte/internal";
 
     const dispatch = createEventDispatcher();
 
@@ -64,6 +63,6 @@
     {/if}
 </div>
 
-{#each category.sections as section, i}
+{#each category.sections as section}
     <SectionElement {section} {editable} on:removed />
 {/each}

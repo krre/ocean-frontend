@@ -1,6 +1,5 @@
 <script lang="ts">
     import { modalDialog } from "stores";
-    import Dialog from "./Dialog.svelte";
 </script>
 
 <style>

@@ -63,10 +63,6 @@
         goto(route.Mandela.Edit(id));
     }
 
-    function fixYouTubeLink(link) {
-        return "https://www.youtube.com/embed/" + link.match(/([^\/]*$)/)[0];
-    }
-
     async function mark() {
         const params = {
             id: mandela.id,
@@ -105,14 +101,14 @@
         return "http://" + $page.host + $page.path;
     }
 
-    function copyLink(params) {
-        navigator.clipboard.writeText(url());
-    }
+    // function copyLink(params) {
+    //     navigator.clipboard.writeText(url());
+    // }
 
-    function copyCode(params) {
-        const code = `<a href="${url()}">Океан. Мандела №${id}</a>`;
-        navigator.clipboard.writeText(code);
-    }
+    // function copyCode(params) {
+    //     const code = `<a href="${url()}">Океан. Мандела №${id}</a>`;
+    //     navigator.clipboard.writeText(code);
+    // }
 </script>
 
 <style>

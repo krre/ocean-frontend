@@ -17,13 +17,13 @@
 </script>
 
 <script lang="ts">
-    import { goto, stores } from "@sapper/app";
+    import { goto } from "@sapper/app";
+    import type { User } from "types";
     import * as route from "route";
     import Page from "../../../../components/Page.svelte";
     import Session from "../../../../components/Session.svelte";
     import TopicEditor from "../../../../components/forum/topic/TopicEditor.svelte";
 
-    const { page } = stores();
     const title = "Редактировать тему";
 
     export let id: number;
@@ -33,7 +33,7 @@
 
     let isAdmin = false;
     let isAnonym = true;
-    let user;
+    let user: User;
 
     $: editable = isAdmin || (user && user.id === userId && !isAnonym);
 

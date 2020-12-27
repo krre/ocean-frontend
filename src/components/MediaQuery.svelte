@@ -4,8 +4,8 @@
 
     export let size: ScreenSize;
 
-    let mql;
-    let mqlListener;
+    let mql: MediaQueryList;
+    let mqlListener: (this: MediaQueryList, ev: MediaQueryListEvent) => any;
     let wasMounted = false;
     let matches = false;
 

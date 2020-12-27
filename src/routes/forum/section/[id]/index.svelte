@@ -2,6 +2,7 @@
     import * as route from "route";
     import * as method from "method";
     import type { PathPart } from "forum";
+    import type { User } from "types";
     import { send } from "network";
     import { goto, stores } from "@sapper/app";
     import ForumPage from "../../../../components/forum/main/ForumPage.svelte";
@@ -16,7 +17,7 @@
     let sectionName: string;
 
     let isAdmin = false;
-    let user;
+    let user: User;
     let topics = [];
 
     let pageNo = 1;

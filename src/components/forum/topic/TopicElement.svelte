@@ -1,6 +1,6 @@
 <script lang="ts">
     import { send } from "network";
-    import { formatDateTime } from "utils";
+    import type { User } from "types";
     import * as route from "route";
     import * as method from "method";
     import * as dialog from "dialog";
@@ -15,7 +15,7 @@
 
     let isAdmin = false;
     let isAnonym = true;
-    let user;
+    let user: User;
 
     $: editable = isAdmin || (user && user.id === topic.user_id && !isAnonym);
 

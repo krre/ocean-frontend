@@ -6,8 +6,6 @@
     export let after = "";
     export let mode = consts.Mandela.Title.Simple;
 
-    let selected;
-
     let modes = [
         {
             name: "Простой заголовок",

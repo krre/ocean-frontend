@@ -1,6 +1,7 @@
 <script lang="ts">
     import * as route from "route";
     import * as method from "method";
+    import type { User } from "types";
     import { send } from "network";
     import { onMount } from "svelte";
     import { goto } from "@sapper/app";
@@ -12,7 +13,7 @@
 
     let isAdmin = false;
     let editable = false;
-    let user;
+    let user: User;
     let categories = [];
 
     onMount(() => {

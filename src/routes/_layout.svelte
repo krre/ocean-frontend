@@ -2,7 +2,7 @@
     import Modal from "../components/dialog/Modal.svelte";
     import { setToken } from "network";
 
-    export async function preload(page, session) {
+    export async function preload(_page, session) {
         setToken(session.user ? session.user.token : "");
     }
 </script>

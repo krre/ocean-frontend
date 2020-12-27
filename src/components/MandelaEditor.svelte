@@ -1,4 +1,5 @@
 <script lang="ts">
+    import type { User } from "types";
     import * as consts from "consts";
     import * as utils from "utils";
     import MandelaTitle from "./MandelaTitle.svelte";
@@ -11,7 +12,7 @@
     export let after = "";
     export let description = "";
     export let categories = [];
-    export let user;
+    export let user: User;
 
     let buttonEnabled: boolean;
 

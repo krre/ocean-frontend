@@ -16,13 +16,12 @@
 </script>
 
 <script lang="ts">
-    import { goto, stores } from "@sapper/app";
+    import { goto } from "@sapper/app";
     import * as route from "route";
     import Page from "../../../../components/Page.svelte";
     import Session from "../../../../components/Session.svelte";
     import SectionEditor from "../../../../components/forum/section/SectionEditor.svelte";
 
-    const { page } = stores();
     const title = "Редактировать раздел";
 
     export let id: number;

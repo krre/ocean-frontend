@@ -11,6 +11,7 @@
 
 <script lang="ts">
     import { errorMessage } from "network";
+    import type { User } from "types";
     import { stores } from "@sapper/app";
     import Page from "../components/Page.svelte";
     import OperationResult from "../components/OperationResult.svelte";
@@ -18,7 +19,7 @@
     const { session } = stores();
 
     const title = "Профиль";
-    export let user;
+    export let user: User;
 
     let successProfile: string;
     let errorProfile: string;

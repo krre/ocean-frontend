@@ -20,7 +20,7 @@
             name: name,
         };
 
-        const result = await send(method.Forum.Topic.Create, params);
+        await send(method.Forum.Topic.Create, params);
         goto(route.Forum.Section.Id(sectionId));
     };
 </script>
