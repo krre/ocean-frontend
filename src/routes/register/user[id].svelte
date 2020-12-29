@@ -7,16 +7,16 @@
 </script>
 
 <script lang="ts">
-    import Page from "../../components/Page.svelte";
+    import Frame from "../../components/Frame.svelte";
     const title = "Регистрация окончена";
     export let id: number;
 </script>
 
-<Page {title}>
+<Frame {title}>
     <h2>Ваш ИД: {id}</h2>
 
     <p>Используйте его совместно с вашим паролем, чтобы входить на сайт.</p>
     Если вы потеряете ИД или пароль, то не сможете их восставить, и вам придётся
     регистрироваться заново.
     <p><a href="signin">Войти</a></p>
-</Page>
+</Frame>

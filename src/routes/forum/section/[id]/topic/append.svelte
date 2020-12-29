@@ -3,7 +3,7 @@
     import { goto, stores } from "@sapper/app";
     import * as method from "method";
     import * as route from "route";
-    import Page from "../../../../../components/Page.svelte";
+    import Frame from "../../../../../components/Frame.svelte";
     import Session from "../../../../../components/Session.svelte";
     import TopicEditor from "../../../../../components/forum/topic/TopicEditor.svelte";
 
@@ -27,6 +27,6 @@
 
 <Session bind:isAdmin />
 
-<Page {title}>
+<Frame {title}>
     <TopicEditor bind:name {action} />
-</Page>
+</Frame>

@@ -7,7 +7,7 @@
     import { send } from "network";
     import { sessionUserName } from "utils";
     import { stores } from "@sapper/app";
-    import ForumPage from "../../../../components/forum/main/ForumPage.svelte";
+    import FramePage from "../../../../components/forum/main/ForumFrame.svelte";
     import Session from "../../../../components/Session.svelte";
     import PostElement from "../../../../components/forum/post/PostElement.svelte";
     import Navigator from "../../../../components/forum/main/Navigator.svelte";
@@ -101,11 +101,11 @@
 <Session bind:user bind:isAdmin />
 <Navigator category={categoryNav} section={sectionNav} />
 
-<ForumPage title={topicName}>
+<FramePage title={topicName}>
     {#each posts as post}
         <PostElement {post} {topicUserId} on:removed={() => load()} />
     {/each}
-</ForumPage>
+</FramePage>
 
 <Pagination
     count={postCount}

@@ -4,7 +4,7 @@
     import type { Session } from "types";
     import * as route from "route";
     import * as method from "method";
-    import Page from "../../../components/Page.svelte";
+    import Frame from "../../../components/Frame.svelte";
 
     export async function preload(page, session: Session) {
         const { id } = page.params;
@@ -141,7 +141,7 @@
     }
 </style>
 
-<Page {title}>
+<Frame {title}>
     <div class="grid">
         <div>ИД:</div>
         <div>{mandela.id}</div>
@@ -227,7 +227,7 @@
             </button>
         {/if}
     {/if}
-</Page>
+</Frame>
 
 <h2>Комментарии</h2>
 

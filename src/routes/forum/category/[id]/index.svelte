@@ -4,7 +4,7 @@
     import { send } from "network";
     import type { User } from "types";
     import { goto, stores } from "@sapper/app";
-    import ForumPage from "../../../../components/forum/main/ForumPage.svelte";
+    import FramePage from "../../../../components/forum/main/ForumFrame.svelte";
     import Session from "../../../../components/Session.svelte";
     import SectionElement from "../../../../components/forum/section/SectionElement.svelte";
     import Navigator from "../../../../components/forum/main/Navigator.svelte";
@@ -50,8 +50,8 @@
     <div><button on:click={append}>Добавить раздел</button></div>
 {/if}
 
-<ForumPage title={categoryName}>
+<FramePage title={categoryName}>
     {#each sections as section}
         <SectionElement {section} on:removed={() => load()} />
     {/each}
-</ForumPage>
+</FramePage>

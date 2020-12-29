@@ -19,7 +19,7 @@
 <script lang="ts">
     import { goto } from "@sapper/app";
     import * as route from "route";
-    import Page from "../../../../components/Page.svelte";
+    import Frame from "../../../../components/Frame.svelte";
     import SessionHub from "../../../../components/Session.svelte";
     import CategoryEditor from "../../../../components/forum/category/CategoryEditor.svelte";
 
@@ -44,10 +44,10 @@
 
 <SessionHub bind:isAdmin />
 
-<Page {title}>
+<Frame {title}>
     {#if !isAdmin}
         Доступ запрещён
     {:else}
         <CategoryEditor bind:name bind:order {action} />
     {/if}
-</Page>
+</Frame>

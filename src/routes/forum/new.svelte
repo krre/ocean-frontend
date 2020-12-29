@@ -3,7 +3,7 @@
     import * as method from "method";
     import { send } from "network";
     import { stores } from "@sapper/app";
-    import ForumPage from "../../components/forum/main/ForumPage.svelte";
+    import FramePage from "../../components/forum/main/ForumFrame.svelte";
     import NewPost from "../../components/forum/main/NewPost.svelte";
     import Pagination from "../../components/Pagination.svelte";
 
@@ -37,11 +37,11 @@
 <style>
 </style>
 
-<ForumPage {title}>
+<FramePage {title}>
     {#each topics as topic}
         <NewPost {topic} />
     {/each}
-</ForumPage>
+</FramePage>
 
 <Pagination
     count={topicCount}

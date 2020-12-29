@@ -3,7 +3,7 @@
     import { goto, stores } from "@sapper/app";
     import { send, setToken, errorMessage } from "network";
     import { post, createToken } from "utils";
-    import Page from "../components/Page.svelte";
+    import Frame from "../components/Frame.svelte";
     import BoxForm from "../components/BoxForm.svelte";
     import OperationResult from "../components/OperationResult.svelte";
 
@@ -42,7 +42,7 @@
     }
 </script>
 
-<Page {title}>
+<Frame {title}>
     <BoxForm>
         ИД:
         <input type="number" bind:value={id} />
@@ -51,4 +51,4 @@
         <OperationResult {error} />
         <button on:click={signin} disabled={!signinButtonEnabled}>Войти</button>
     </BoxForm>
-</Page>
+</Frame>

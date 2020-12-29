@@ -2,7 +2,7 @@
     import * as consts from "consts";
     import * as route from "route";
     import { goto, stores } from "@sapper/app";
-    import Page from "../components/Page.svelte";
+    import Frame from "../components/Frame.svelte";
     import MandelaRating from "../components/rating/MandelaRating.svelte";
     import UserRating from "../components/rating/UserRating.svelte";
 
@@ -43,7 +43,7 @@
     }
 </script>
 
-<Page {title}>
+<Frame {title}>
     <label>
         <input type="radio" bind:group={type} value={consts.Rating.Mandela} />
         Манделы
@@ -61,4 +61,4 @@
     {:else}
         <UserRating />
     {/if}
-</Page>
+</Frame>

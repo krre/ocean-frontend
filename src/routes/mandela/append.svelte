@@ -4,7 +4,7 @@
     import * as method from "method";
     import { goto, stores } from "@sapper/app";
     import { send } from "network";
-    import Page from "../../components/Page.svelte";
+    import Frame from "../../components/Frame.svelte";
     import MandelaEditor from "../../components/MandelaEditor.svelte";
 
     const { session } = stores();
@@ -34,7 +34,7 @@
     }
 </script>
 
-<Page title={pageTitle}>
+<Frame title={pageTitle}>
     <MandelaEditor
         bind:titleMode
         bind:title
@@ -45,4 +45,4 @@
         bind:categories
         bind:user={$session.user}
         on:click={append} />
-</Page>
+</Frame>

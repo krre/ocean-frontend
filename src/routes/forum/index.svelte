@@ -5,7 +5,7 @@
     import { send } from "network";
     import { onMount } from "svelte";
     import { goto } from "@sapper/app";
-    import ForumPage from "../../components/forum/main/ForumPage.svelte";
+    import FramePage from "../../components/forum/main/ForumFrame.svelte";
     import Session from "../../components/Session.svelte";
     import CategoryElement from "../../components/forum/category/CategoryElement.svelte";
 
@@ -61,7 +61,7 @@
 
 <div class="new"><a href={route.Forum.New}>Новые сообщения</a></div>
 
-<ForumPage {title} showHeader={false}>
+<FramePage {title} showHeader={false}>
     <div>
         {#each categories as category}
             <CategoryElement {category} {editable} on:removed={() => load()} />
@@ -71,7 +71,7 @@
     <div>
         {#if editable}<button on:click={append}>Добавить категорию</button>{/if}
     </div>
-</ForumPage>
+</FramePage>
 
 {#if isAdmin}
     <div class="edit-btn">

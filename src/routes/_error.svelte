@@ -1,5 +1,5 @@
 <script lang="ts">
-    import Page from "../components/Page.svelte";
+    import Frame from "../components/Frame.svelte";
     export let status;
     export let error;
 
@@ -9,10 +9,10 @@
 <style>
 </style>
 
-<Page title={status}>
+<Frame title={status}>
     <p>{error.message}</p>
 
     {#if dev && error.stack}
         <pre>{error.stack}</pre>
     {/if}
-</Page>
+</Frame>

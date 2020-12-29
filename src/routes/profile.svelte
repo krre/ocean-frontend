@@ -14,7 +14,7 @@
     import { errorMessage } from "network";
     import type { User } from "types";
     import { stores } from "@sapper/app";
-    import Page from "../components/Page.svelte";
+    import Frame from "../components/Frame.svelte";
     import OperationResult from "../components/OperationResult.svelte";
 
     const { session } = stores();
@@ -88,7 +88,7 @@
     }
 </style>
 
-<Page {title}>
+<Frame {title}>
     <div class="grid">
         <div>ИД: {user.id}</div>
         <div>Создано: {formatDateTime(user.create_ts)}</div>
@@ -106,4 +106,4 @@
             bind:error={errorPassword} />
         <button on:click={changePassword}>Изменить</button>
     </div>
-</Page>
+</Frame>

@@ -7,7 +7,7 @@
     import { formatDateTime, zeroLeading, makeTitle } from "utils";
     import Indicator from "../components/main/Indicator.svelte";
     import Pagination from "../components/Pagination.svelte";
-    import Page from "../components/Page.svelte";
+    import Frame from "../components/Frame.svelte";
 
     const { page, session } = stores();
     const user = $session.user;
@@ -187,7 +187,7 @@
     }
 </style>
 
-<Page {title} showHeader={false}>
+<Frame {title} showHeader={false}>
     <div class="tool-bar">
         <Indicator
             title="Всего"
@@ -265,7 +265,7 @@
             </a>
         </div>
     {/each}
-</Page>
+</Frame>
 
 <Pagination
     count={currentCount}

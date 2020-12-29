@@ -2,7 +2,7 @@
     import { send } from "network";
     import { makeTitle } from "utils";
     import * as method from "method";
-    import Page from "../components/Page.svelte";
+    import Frame from "../components/Frame.svelte";
 
     const title = "Поиск мандел";
     const searchContent = "0";
@@ -72,7 +72,7 @@
     }
 </style>
 
-<Page {title}>
+<Frame {title}>
     <div class="container">
         <div class="item">
             Искать по
@@ -116,4 +116,4 @@
             {/if}
         </div>
     </div>
-</Page>
+</Frame>

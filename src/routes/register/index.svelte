@@ -5,7 +5,7 @@
     import { goto } from "@sapper/app";
     import { send } from "network";
     import { createToken } from "utils";
-    import Page from "../../components/Page.svelte";
+    import Frame from "../../components/Frame.svelte";
     import BoxForm from "../../components/BoxForm.svelte";
     import OperationResult from "../../components/OperationResult.svelte";
 
@@ -42,7 +42,7 @@
     }
 </script>
 
-<Page {title}>
+<Frame {title}>
     <BoxForm>
         Имя:
         <input bind:value={name} />
@@ -55,4 +55,4 @@
             Зарегистрироваться
         </button>
     </BoxForm>
-</Page>
+</Frame>

@@ -21,7 +21,7 @@
     import { goto } from "@sapper/app";
     import type { User } from "types";
     import * as route from "route";
-    import Page from "../../../../components/Page.svelte";
+    import Frame from "../../../../components/Frame.svelte";
     import SessionHub from "../../../../components/Session.svelte";
     import TopicEditor from "../../../../components/forum/topic/TopicEditor.svelte";
 
@@ -51,10 +51,10 @@
 
 <SessionHub bind:isAdmin bind:isAnonym bind:user />
 
-<Page {title}>
+<Frame {title}>
     {#if !editable}
         Доступ запрещён
     {:else}
         <TopicEditor bind:name {action} />
     {/if}
-</Page>
+</Frame>

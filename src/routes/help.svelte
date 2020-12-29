@@ -1,6 +1,6 @@
 <script lang="ts">
     import { stores } from "@sapper/app";
-    import Page from "../components/Page.svelte";
+    import Frame from "../components/Frame.svelte";
 
     const { page } = stores();
     const title = "Справка";
@@ -9,7 +9,7 @@
 <style>
 </style>
 
-<Page {title}>
+<Frame {title}>
     <div><a href="{$page.path}#about">О сайте</a></div>
 
     <div><a href="{$page.path}#termins">Термины</a></div>
@@ -340,4 +340,4 @@
             Эффект Манделы / The Mandela Effect / 2019 (художественный)
         </a>
     </div>
-</Page>
+</Frame>
