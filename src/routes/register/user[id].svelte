@@ -1,5 +1,6 @@
 <script context="module" lang="ts">
-    export async function preload(page, _session) {
+    import type { Session } from "types";
+    export async function preload(page, _session: Session) {
         const { id } = page.params;
         return { id };
     }

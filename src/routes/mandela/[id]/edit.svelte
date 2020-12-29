@@ -1,9 +1,10 @@
 <script context="module" lang="ts">
     import { send } from "network";
+    import type { Session } from "types";
     import * as route from "route";
     import * as method from "method";
 
-    export async function preload(page, session) {
+    export async function preload(page, session: Session) {
         const { id } = page.params;
 
         let result = await send(method.Mandela.GetOne, { id: Number(id) });
@@ -25,7 +26,7 @@
     export let id: number;
     export let mandela;
     export let categories;
-    export let session;
+    export let session: Session;
 
     async function edit() {
         const params = {

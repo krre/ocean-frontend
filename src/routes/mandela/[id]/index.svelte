@@ -1,11 +1,12 @@
 <script context="module" lang="ts">
     import { send } from "network";
     import { formatDateTime } from "utils";
+    import type { Session } from "types";
     import * as route from "route";
     import * as method from "method";
     import Page from "../../../components/Page.svelte";
 
-    export async function preload(page, session) {
+    export async function preload(page, session: Session) {
         const { id } = page.params;
 
         const params: any = {
@@ -42,7 +43,7 @@
     export let vote;
     export let totalVotes = 0;
     export let categories: number[];
-    export let session;
+    export let session: Session;
 
     let voteValue = -1;
     let editVote = false;

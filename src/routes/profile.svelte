@@ -1,9 +1,10 @@
 <script context="module" lang="ts">
     import * as method from "method";
     import { send, setToken } from "network";
+    import type { Session } from "types";
     import { formatDateTime, createToken } from "utils";
 
-    export async function preload(_page, _session) {
+    export async function preload(_page, _session: Session) {
         const user = await send(method.User.GetOne);
         return { user };
     }
