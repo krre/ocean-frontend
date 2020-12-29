@@ -1,10 +1,10 @@
 <script context="module" lang="ts">
     import { send } from "network";
-    import type { Session } from "types";
+    import type { Session, Page } from "types";
     import * as route from "route";
     import * as method from "method";
 
-    export async function preload(page, session: Session) {
+    export async function preload(page: Page, session: Session) {
         const { id } = page.params;
 
         let result = await send(method.Mandela.GetOne, { id: Number(id) });

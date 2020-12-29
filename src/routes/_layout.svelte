@@ -1,9 +1,9 @@
 <script context="module" lang="ts">
     import Modal from "../components/dialog/Modal.svelte";
     import { setToken } from "network";
-    import type { Session } from "types";
+    import type { Session, Page } from "types";
 
-    export async function preload(_page, session: Session) {
+    export async function preload(_page: Page, session: Session) {
         setToken(session.user ? session.user.token : "");
     }
 </script>

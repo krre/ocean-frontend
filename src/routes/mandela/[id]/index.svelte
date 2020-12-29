@@ -1,12 +1,12 @@
 <script context="module" lang="ts">
     import { send } from "network";
     import { formatDateTime } from "utils";
-    import type { Session } from "types";
+    import type { Session, Page } from "types";
     import * as route from "route";
     import * as method from "method";
     import Frame from "../../../components/Frame.svelte";
 
-    export async function preload(page, session: Session) {
+    export async function preload(page: Page, session: Session) {
         const { id } = page.params;
 
         const params: any = {

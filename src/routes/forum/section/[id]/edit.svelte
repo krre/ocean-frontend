@@ -1,9 +1,9 @@
 <script context="module" lang="ts">
     import { send } from "network";
-    import type { Session } from "types";
+    import type { Session, Page } from "types";
     import * as method from "method";
 
-    export async function preload(page, _session: Session) {
+    export async function preload(page: Page, _session: Session) {
         const { id } = page.params;
 
         let result = await send(method.Forum.Section.GetOne, {
