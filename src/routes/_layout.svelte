@@ -11,7 +11,6 @@
     import Navbar from "../components/menu/Navbar.svelte";
     import Sidebar from "../components/menu/Sidebar.svelte";
 
-    export let segment;
     let open = false;
 </script>
 
@@ -56,7 +55,7 @@
 </style>
 
 <Sidebar bind:open on:itemClicked={() => (open = false)} />
-<Navbar {segment} bind:sidebar={open} />
+<Navbar bind:sidebar={open} />
 
 <main>
     <slot />
