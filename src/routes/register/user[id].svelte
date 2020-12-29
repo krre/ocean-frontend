@@ -1,5 +1,5 @@
 <script context="module" lang="ts">
-    export async function preload(page, session) {
+    export async function preload(page, _session) {
         const { id } = page.params;
         return { id };
     }
@@ -8,7 +8,7 @@
 <script lang="ts">
     import Page from "../../components/Page.svelte";
     const title = "Регистрация окончена";
-    export let id;
+    export let id: number;
 </script>
 
 <Page {title}>

@@ -34,17 +34,14 @@
     import * as consts from "consts";
     import * as bbcode from "bbcode";
     import { goto } from "@sapper/app";
-    import { stores } from "@sapper/app";
     import Comment from "../../../components/comment/Comment.svelte";
-
-    const { page } = stores();
 
     export let id: number;
     export let mandela;
     export let votes;
     export let vote;
     export let totalVotes = 0;
-    export let categories;
+    export let categories: number[];
     export let session;
 
     let voteValue = -1;
@@ -97,9 +94,9 @@
         return 0;
     }
 
-    function url() {
-        return "http://" + $page.host + $page.path;
-    }
+    // function url() {
+    //     return "http://" + $page.host + $page.path;
+    // }
 
     // function copyLink(params) {
     //     navigator.clipboard.writeText(url());

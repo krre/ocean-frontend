@@ -3,7 +3,7 @@
     import { send, setToken } from "network";
     import { formatDateTime, createToken } from "utils";
 
-    export async function preload(page, session) {
+    export async function preload(_page, _session) {
         const user = await send(method.User.GetOne);
         return { user };
     }

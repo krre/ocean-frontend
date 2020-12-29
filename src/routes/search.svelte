@@ -9,8 +9,8 @@
     const searchId = "1";
 
     let searchType = searchContent;
-    let id;
-    let content;
+    let id: number;
+    let content: string;
     let mandela;
     let mandels;
     let searchInTitle = true;
@@ -46,7 +46,7 @@
         }
     }
 
-    function mandelaLink(id, mandela) {
+    function mandelaLink(id: number, mandela) {
         const title = makeTitle(mandela);
         return `<a target="_blank" class="row-link" href="/mandela/${id}">${title}</a>`;
     }

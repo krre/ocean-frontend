@@ -22,7 +22,7 @@
 
     const title = "Редактировать манделу";
 
-    export let id;
+    export let id: number;
     export let mandela;
     export let categories;
     export let session;

@@ -2,7 +2,7 @@
     import { send } from "network";
     import * as method from "method";
 
-    export async function preload(page, session) {
+    export async function preload(page, _session) {
         const { id } = page.params;
 
         let result = await send(method.Forum.Category.GetOne, {
