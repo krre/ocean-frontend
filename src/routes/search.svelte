@@ -8,11 +8,20 @@
     const searchContent = "0";
     const searchId = "1";
 
+    interface Mandela {
+        after: string;
+        before: string;
+        id?: number;
+        title: string;
+        title_mode: number;
+        what: string;
+    }
+
     let searchType = searchContent;
     let id: number;
     let content: string;
-    let mandela;
-    let mandels;
+    let mandela: Mandela;
+    let mandels: Mandela[];
     let searchInTitle = true;
     let searchInDescription = true;
     let emptyResult = false;
@@ -46,7 +55,7 @@
         }
     }
 
-    function mandelaLink(id: number, mandela) {
+    function mandelaLink(id: number, mandela: Mandela) {
         const title = makeTitle(mandela);
         return `<a target="_blank" class="row-link" href="/mandela/${id}">${title}</a>`;
     }
