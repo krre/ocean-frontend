@@ -1,10 +1,11 @@
 <script lang="ts">
     import { onMount } from "svelte";
+    import type { Input } from "types";
     import Dialog from "../dialog/Dialog.svelte";
     import * as dialog from "dialog";
 
     onMount(() => {
-        focusRef.focus();
+        inputRef.focus();
     });
 
     export let onOk = (_link: string, _width?: number) => {};
@@ -12,7 +13,7 @@
     let link: string;
     let width: number;
 
-    let focusRef;
+    let inputRef: Input;
 
     function pressOk() {
         onOk(link, width);
@@ -26,7 +27,7 @@
 <Dialog title="Добавление изображения">
     <input
         bind:value={link}
-        bind:this={focusRef}
+        bind:this={inputRef}
         placeholder="Введите ссылку" />
     <input bind:value={width} placeholder="Введите ширину (не обязательно)" />
     <div slot="buttons">
