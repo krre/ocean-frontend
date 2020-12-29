@@ -4,7 +4,7 @@
     import * as method from "method";
     import * as route from "route";
     import Frame from "../../../components/Frame.svelte";
-    import Session from "../../../components/Session.svelte";
+    import SessionHub from "../../../components/SessionHub.svelte";
     import CategoryEditor from "../../../components/forum/category/CategoryEditor.svelte";
 
     const title = "Добавить категорию";
@@ -24,7 +24,7 @@
     };
 </script>
 
-<Session bind:isAdmin />
+<SessionHub bind:isAdmin />
 
 <Frame {title}>
     {#if !isAdmin}

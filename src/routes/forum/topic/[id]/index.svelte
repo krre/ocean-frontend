@@ -8,7 +8,7 @@
     import { sessionUserName } from "utils";
     import { stores } from "@sapper/app";
     import FramePage from "../../../../components/forum/main/ForumFrame.svelte";
-    import Session from "../../../../components/Session.svelte";
+    import SessionHub from "../../../../components/SessionHub.svelte";
     import PostElement from "../../../../components/forum/post/PostElement.svelte";
     import Navigator from "../../../../components/forum/main/Navigator.svelte";
     import Pagination from "../../../../components/Pagination.svelte";
@@ -98,7 +98,7 @@
     }
 </style>
 
-<Session bind:user bind:isAdmin />
+<SessionHub bind:user bind:isAdmin />
 <Navigator category={categoryNav} section={sectionNav} />
 
 <FramePage title={topicName}>

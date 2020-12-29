@@ -1,9 +1,9 @@
 <script context="module" lang="ts">
     import { send } from "network";
-    import type { Session } from "types";
+    import type { Session, Page } from "types";
     import * as method from "method";
 
-    export async function preload(page, _session: Session) {
+    export async function preload(page: Page, _session: Session) {
         const { id } = page.params;
 
         let result = await send(method.Forum.Category.GetOne, {
@@ -20,7 +20,7 @@
     import { goto } from "@sapper/app";
     import * as route from "route";
     import Frame from "../../../../components/Frame.svelte";
-    import SessionHub from "../../../../components/Session.svelte";
+    import SessionHub from "../../../../components/SessionHub.svelte";
     import CategoryEditor from "../../../../components/forum/category/CategoryEditor.svelte";
 
     const title = "Редактировать категорию";

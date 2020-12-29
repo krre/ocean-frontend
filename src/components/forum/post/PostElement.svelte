@@ -5,7 +5,7 @@
     import * as consts from "consts";
     import * as bbcode from "bbcode";
     import { createEventDispatcher } from "svelte";
-    import Session from "../../../components/Session.svelte";
+    import SessionHub from "../../SessionHub.svelte";
     import PostTitle from "../../../components/PostTitle.svelte";
     import EditComment from "../../../components/comment/EditComment.svelte";
 
@@ -64,7 +64,7 @@
     }
 </style>
 
-<Session bind:user bind:isAdmin bind:isAnonym />
+<SessionHub bind:user bind:isAdmin bind:isAnonym />
 
 <div class="post">
     <PostTitle

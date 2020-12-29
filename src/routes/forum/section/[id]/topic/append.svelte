@@ -4,7 +4,7 @@
     import * as method from "method";
     import * as route from "route";
     import Frame from "../../../../../components/Frame.svelte";
-    import Session from "../../../../../components/Session.svelte";
+    import SessionHub from "../../../../../components/SessionHub.svelte";
     import TopicEditor from "../../../../../components/forum/topic/TopicEditor.svelte";
 
     const { page } = stores();
@@ -25,7 +25,7 @@
     };
 </script>
 
-<Session bind:isAdmin />
+<SessionHub bind:isAdmin />
 
 <Frame {title}>
     <TopicEditor bind:name {action} />

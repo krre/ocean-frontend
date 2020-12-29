@@ -6,7 +6,7 @@
     import { send } from "network";
     import { goto, stores } from "@sapper/app";
     import FramePage from "../../../../components/forum/main/ForumFrame.svelte";
-    import Session from "../../../../components/Session.svelte";
+    import SessionHub from "../../../../components/SessionHub.svelte";
     import TopicElement from "../../../../components/forum/topic/TopicElement.svelte";
     import Navigator from "../../../../components/forum/main/Navigator.svelte";
     import Pagination from "../../../../components/Pagination.svelte";
@@ -58,7 +58,7 @@
 <style>
 </style>
 
-<Session bind:user bind:isAdmin />
+<SessionHub bind:user bind:isAdmin />
 <Navigator category={categoryNav} />
 
 <FramePage title={sectionName}>

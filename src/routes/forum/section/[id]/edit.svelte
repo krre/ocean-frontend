@@ -20,7 +20,7 @@
     import { goto } from "@sapper/app";
     import * as route from "route";
     import Frame from "../../../../components/Frame.svelte";
-    import SessionHub from "../../../../components/Session.svelte";
+    import SessionHub from "../../../../components/SessionHub.svelte";
     import SectionEditor from "../../../../components/forum/section/SectionEditor.svelte";
 
     const title = "Редактировать раздел";

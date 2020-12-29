@@ -5,7 +5,7 @@
     import type { User } from "types";
     import { goto, stores } from "@sapper/app";
     import FramePage from "../../../../components/forum/main/ForumFrame.svelte";
-    import Session from "../../../../components/Session.svelte";
+    import SessionHub from "../../../../components/SessionHub.svelte";
     import SectionElement from "../../../../components/forum/section/SectionElement.svelte";
     import Navigator from "../../../../components/forum/main/Navigator.svelte";
 
@@ -43,7 +43,7 @@
     }
 </style>
 
-<Session bind:user bind:isAdmin />
+<SessionHub bind:user bind:isAdmin />
 <Navigator />
 
 {#if isAdmin}

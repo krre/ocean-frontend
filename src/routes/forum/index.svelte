@@ -6,7 +6,7 @@
     import { onMount } from "svelte";
     import { goto } from "@sapper/app";
     import FramePage from "../../components/forum/main/ForumFrame.svelte";
-    import Session from "../../components/Session.svelte";
+    import SessionHub from "../../components/SessionHub.svelte";
     import CategoryElement from "../../components/forum/category/CategoryElement.svelte";
 
     const title = "Форум";
@@ -57,7 +57,7 @@
     }
 </style>
 
-<Session bind:user bind:isAdmin />
+<SessionHub bind:user bind:isAdmin />
 
 <div class="new"><a href={route.Forum.New}>Новые сообщения</a></div>
 

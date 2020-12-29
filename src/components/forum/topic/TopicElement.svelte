@@ -6,7 +6,7 @@
     import * as dialog from "dialog";
     import { goto } from "@sapper/app";
     import { createEventDispatcher } from "svelte";
-    import Session from "../../../components/Session.svelte";
+    import SessionHub from "../../SessionHub.svelte";
 
     const dispatch = createEventDispatcher();
 
@@ -55,7 +55,7 @@
     }
 </style>
 
-<Session bind:user bind:isAdmin bind:isAnonym />
+<SessionHub bind:user bind:isAdmin bind:isAnonym />
 
 <div class="topic">
     <a href={route.Forum.Topic.Id(topic.id)}>{topic.name}</a>
