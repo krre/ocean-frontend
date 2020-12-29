@@ -115,7 +115,7 @@
     }
 
     async function load() {
-        const params = {
+        const params: method.Mandela.Type.GetAll.Params = {
             sort: sort,
             limit: pageLimit,
             offset: (pageNo - 1) * pageLimit,
