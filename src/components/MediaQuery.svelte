@@ -24,16 +24,18 @@
     }
 
     function addNewListener(size: ScreenSize) {
-        const query = `(max-width: ${size}px)`;
-        mql = window.matchMedia(query);
-        mqlListener = (v) => (matches = v.matches);
-        mql.addListener(mqlListener);
-        matches = mql.matches;
+        mql = window.matchMedia(`(max-width: ${size}px)`);
+
+        mqlListener = (e) => {
+            matches = e.matches;
+        };
+
+        mql.addEventListener("change", mqlListener);
     }
 
     function removeActiveListener() {
         if (mql && mqlListener) {
-            mql.removeListener(mqlListener);
+            mql.removeEventListener("change", mqlListener);
         }
     }
 </script>
