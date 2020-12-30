@@ -29,7 +29,7 @@
         replaceSelection((str: string) => `⁅s⁆${str}⁅/s⁆`);
     }
 
-    const replaceSelection = (handler) => {
+    const replaceSelection = (handler: (str: string) => string) => {
         const start = areaRef.selectionStart;
         const end = areaRef.selectionEnd;
 

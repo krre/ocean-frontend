@@ -21,11 +21,26 @@
     import Frame from "../../../components/Frame.svelte";
     import MandelaEditor from "../../../components/MandelaEditor.svelte";
 
+    interface Mandela {
+        after: string;
+        before: string;
+        create_ts: Date;
+        description: string;
+        id: number;
+        mark_ts: Date;
+        title: string;
+        title_mode: number;
+        update_ts: Date;
+        user_id: number;
+        user_name: string;
+        what: string;
+    }
+
     const title = "Редактировать манделу";
 
     export let id: number;
-    export let mandela;
-    export let categories;
+    export let mandela: Mandela;
+    export let categories: number[] = [];
     export let session: Session;
 
     async function edit() {

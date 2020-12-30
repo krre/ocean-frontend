@@ -7,9 +7,19 @@
     import { makeTitle } from "utils";
     import Pagination from "../Pagination.svelte";
 
+    interface Mandela {
+        after: string;
+        before: string;
+        count: number;
+        id: number;
+        title: string;
+        title_mode: number;
+        what: string;
+    }
+
     const { page } = stores();
 
-    let mandels = [];
+    let mandels: Mandela[] = [];
     let vote = 0;
 
     let pageNo = 1;
@@ -69,7 +79,7 @@
         currentCount = result.total_count;
     }
 
-    function mandelaLink(id: number, mandela, i: number) {
+    function mandelaLink(id: number, mandela: Mandela, i: number) {
         const title = makeTitle(mandela);
         return `<a class="row-link" href=${route.Mandela.Id(id)}>${
             i + 1 + (pageNo - 1) * pageLimit

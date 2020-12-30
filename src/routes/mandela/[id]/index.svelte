@@ -37,10 +37,30 @@
     import { goto } from "@sapper/app";
     import Comment from "../../../components/comment/Comment.svelte";
 
+    interface Mandela {
+        after: string;
+        before: string;
+        create_ts: Date;
+        description: string;
+        id: number;
+        mark_ts: Date;
+        title: string;
+        title_mode: number;
+        update_ts: Date;
+        user_id: number;
+        user_name: string;
+        what: string;
+    }
+
+    interface Vote {
+        count: number;
+        vote: number;
+    }
+
     export let id: number;
-    export let mandela;
-    export let votes;
-    export let vote;
+    export let mandela: Mandela;
+    export let votes: Vote[];
+    export let vote: number;
     export let totalVotes = 0;
     export let categories: number[];
     export let session: Session;
@@ -85,7 +105,7 @@
         }
     }
 
-    function getVoteCount(vote) {
+    function getVoteCount(vote: number) {
         for (let i in votes) {
             if (votes[i].vote === vote) {
                 return votes[i].count;

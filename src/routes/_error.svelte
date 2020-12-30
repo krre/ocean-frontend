@@ -1,7 +1,13 @@
 <script lang="ts">
     import Frame from "../components/Frame.svelte";
-    export let status;
-    export let error;
+
+    interface Error {
+        message: string;
+        stack: string;
+    }
+
+    export let status: string;
+    export let error: Error;
 
     const dev = process.env.NODE_ENV === "development";
 </script>
