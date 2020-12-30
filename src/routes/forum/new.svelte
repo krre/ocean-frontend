@@ -2,6 +2,7 @@
     import * as route from "route";
     import * as method from "method";
     import { send } from "network";
+    import type { NewTopic } from "forum";
     import { stores } from "@sapper/app";
     import FramePage from "../../components/forum/main/ForumFrame.svelte";
     import NewPost from "../../components/forum/main/NewPost.svelte";
@@ -10,7 +11,7 @@
     const { page } = stores();
     const title = "Новые сообщения форума";
 
-    let topics = [];
+    let topics: NewTopic[] = [];
 
     let pageNo = 1;
     let topicCount = 0;

@@ -1,10 +1,11 @@
 <script lang="ts">
     import { textCut } from "utils";
+    import type { NewTopic } from "forum";
     import * as route from "route";
     import * as consts from "consts";
     import PostTitle from "../../PostTitle.svelte";
 
-    export let topic;
+    export let topic: NewTopic;
 
     function topicLink(): string {
         const offset = Math.floor(
