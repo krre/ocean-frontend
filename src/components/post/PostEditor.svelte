@@ -4,11 +4,12 @@
     import VideoDialog from "./VideoDialog.svelte";
     import SmilePanel from "./SmilePanel.svelte";
     import { insertText } from "utils";
+    import type { TextArea } from "types";
     import * as dialog from "dialog";
     import * as bbcode from "bbcode";
 
     export let post = "";
-    let areaRef;
+    let areaRef: TextArea;
     let isPreview = false;
     let isSmilePanelActive = false;
 
