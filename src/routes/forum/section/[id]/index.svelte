@@ -1,9 +1,8 @@
 <script lang="ts">
     import * as route from "route";
-    import * as method from "method";
+    import * as api from "api";
     import type { PathPart } from "forum";
     import type { User } from "types";
-    import { send } from "network";
     import { goto, stores } from "@sapper/app";
     import FramePage from "../../../../components/forum/main/ForumFrame.svelte";
     import SessionHub from "../../../../components/SessionHub.svelte";
@@ -33,13 +32,13 @@
     }
 
     async function load() {
-        const params = {
+        const params: api.Forum.Topic.GetAll.Request = {
             section_id: sectionId,
             offset: (pageNo - 1) * pageLimit,
             limit: pageLimit,
         };
 
-        const result = await send(method.Forum.Topic.GetAll, params);
+        const result = await api.Forum.Topic.GetAll.exec(params);
         sectionName = result.section_name;
         topics = result.topics;
         topicCount = result.topic_count;

@@ -1,14 +1,14 @@
 <script context="module" lang="ts">
-    import { send } from "network";
+    import * as api from "api";
     import type { Session, Page } from "types";
-    import * as method from "method";
 
     export async function preload(page: Page, _session: Session) {
         const { id } = page.params;
-
-        let result = await send(method.Forum.Topic.GetOne, {
+        const params: api.Forum.Topic.GetOne.Request = {
             id: +id,
-        });
+        };
+
+        const result = await api.Forum.Topic.GetOne.exec(params);
         const name = result.name;
         const sectionId = result.section_id;
         const userId = result.user_id;
@@ -39,12 +39,12 @@
     $: editable = isAdmin || (user && user.id === userId && !isAnonym);
 
     const action = async () => {
-        const params = {
+        const params: api.Forum.Topic.Update.Request = {
             id: +id,
             name: name,
         };
 
-        await send(method.Forum.Topic.Update, params);
+        await api.Forum.Topic.Update.exec(params);
         goto(route.Forum.Section.Id(sectionId));
     };
 </script>

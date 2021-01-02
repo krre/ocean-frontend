@@ -1,8 +1,7 @@
 <script lang="ts">
-    import { send } from "network";
-    import { goto, stores } from "@sapper/app";
-    import * as method from "method";
     import * as route from "route";
+    import * as api from "api";
+    import { goto, stores } from "@sapper/app";
     import Frame from "../../../../../components/Frame.svelte";
     import SessionHub from "../../../../../components/SessionHub.svelte";
     import TopicEditor from "../../../../../components/forum/topic/TopicEditor.svelte";
@@ -15,12 +14,12 @@
     let name: string;
 
     const action = async () => {
-        const params = {
+        const params: api.Forum.Topic.Create.Request = {
             section_id: sectionId,
             name: name,
         };
 
-        await send(method.Forum.Topic.Create, params);
+        await api.Forum.Topic.Create.exec(params);
         goto(route.Forum.Section.Id(sectionId));
     };
 </script>

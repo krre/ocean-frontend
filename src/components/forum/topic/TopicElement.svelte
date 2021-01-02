@@ -1,9 +1,8 @@
 <script lang="ts">
-    import { send } from "network";
-    import type { User } from "types";
     import * as route from "route";
-    import * as method from "method";
     import * as dialog from "dialog";
+    import * as api from "api";
+    import type { User } from "types";
     import { goto } from "@sapper/app";
     import { createEventDispatcher } from "svelte";
     import SessionHub from "../../SessionHub.svelte";
@@ -26,10 +25,10 @@
     async function removeTopic() {
         if (!dialog.remove("Удалить тему?")) return;
 
-        const params = {
+        const params: api.Forum.Topic.Delete.Request = {
             id: +topic.id,
         };
-        await send(method.Forum.Topic.Delete, params);
+        await api.Forum.Topic.Delete.exec(params);
         dispatch("removed");
     }
 </script>
