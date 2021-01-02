@@ -1,18 +1,22 @@
 <script lang="ts">
     import { sessionUserName } from "utils";
-    import { send } from "network";
     import type { User } from "types";
     import { stores } from "@sapper/app";
     import * as consts from "consts";
-    import * as method from "method";
     import * as route from "route";
     import * as bbcode from "bbcode";
+    import * as api from "api";
     import PostTitle from "../PostTitle.svelte";
     import PostEditor from "../post/PostEditor.svelte";
     import EditComment from "./EditComment.svelte";
     import Pagination from "../Pagination.svelte";
 
     const { page } = stores();
+
+    interface EditedComment extends api.Comment.GetAll.Comment {
+        edit: boolean;
+        remove: boolean;
+    }
 
     export let user: User;
     export let mandelaId: number;
@@ -21,7 +25,7 @@
     let commentCount = 0;
     const pageLimit = 50;
 
-    let comments = [];
+    let comments: EditedComment[] = [];
     let message: string;
     let userName = sessionUserName(user);
 
@@ -31,52 +35,45 @@
     }
 
     async function load() {
-        const params = {
+        const params: api.Comment.GetAll.Request = {
             mandela_id: +mandelaId,
             limit: pageLimit,
             offset: (pageNo - 1) * pageLimit,
         };
 
-        let result = await send(method.Comment.GetAll, params);
+        const result = await api.Comment.GetAll.exec(params);
         commentCount = result.total_count;
-
-        comments = [];
-
-        for (let i = 0; i < result.comments.length; i++) {
-            const comment = result.comments[i];
-            comment.edit = false;
-            comments.push(comment);
-        }
+        comments = result.comments as EditedComment[];
     }
 
     async function append() {
-        const params = {
+        const params: api.Comment.Create.Request = {
             mandela_id: +mandelaId,
             message: message,
         };
 
-        await send(method.Comment.Create, params);
+        await api.Comment.Create.exec(params);
         message = "";
         load();
     }
 
     async function editComment(row: number, message: string) {
-        const params = {
+        const params: api.Comment.Update.Request = {
             id: +comments[row].id,
             message: message,
         };
 
-        await send(method.Comment.Update, params);
+        await api.Comment.Update.exec(params);
         comments[row].message = message;
         comments[row].edit = false;
     }
 
     async function deleteComment(row: number) {
-        const params = {
+        const params: api.Comment.Delete.Request = {
             id: comments[row].id,
         };
 
-        await send(method.Comment.Delete, params);
+        await api.Comment.Delete.exec(params);
         comments[row].remove = false;
         comments.splice(row, 1);
     }
