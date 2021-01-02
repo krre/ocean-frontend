@@ -1,10 +1,9 @@
 <script lang="ts">
     import * as route from "route";
-    import * as method from "method";
+    import * as api from "api";
     import * as consts from "consts";
     import type { PathPart } from "forum";
     import type { User } from "types";
-    import { send } from "network";
     import { sessionUserName } from "utils";
     import { stores } from "@sapper/app";
     import FramePage from "../../../../components/forum/main/ForumFrame.svelte";
@@ -17,11 +16,15 @@
     const { page } = stores();
     const topicId = +$page.params.id;
 
+    interface EditedPost extends api.Forum.Post.GetAll.Post {
+        edit: boolean;
+    }
+
     let topicName: string;
     let topicUserId: number;
     let isAdmin = false;
     let user: User;
-    let posts = [];
+    let posts: EditedPost[] = [];
     let post: string;
 
     let pageNo = 1;
@@ -38,26 +41,17 @@
     }
 
     async function load() {
-        const params = {
+        const params: api.Forum.Post.GetAll.Request = {
             topic_id: topicId,
             offset: (pageNo - 1) * pageLimit,
             limit: pageLimit,
         };
 
-        const result = await send(method.Forum.Post.GetAll, params);
+        const result = await api.Forum.Post.GetAll.exec(params);
         topicName = result.topic_name;
         topicUserId = result.topic_user_id;
         postCount = result.post_count;
-
-        posts = [];
-
-        for (let i = 0; i < result.posts.length; i++) {
-            const post = result.posts[i];
-            post.edit = false;
-            posts.push(post);
-        }
-
-        posts = posts;
+        posts = result.posts as EditedPost[];
 
         categoryNav = {
             id: result.category_id,
@@ -71,12 +65,12 @@
     }
 
     async function append() {
-        const params = {
+        const params: api.Forum.Post.Create.Request = {
             topic_id: topicId,
             post: post,
         };
 
-        await send(method.Forum.Post.Create, params);
+        await api.Forum.Post.Create.exec(params);
         post = "";
         load();
     }

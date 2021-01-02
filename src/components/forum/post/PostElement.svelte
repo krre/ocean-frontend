@@ -1,9 +1,8 @@
 <script lang="ts">
-    import { send } from "network";
-    import type { User } from "types";
-    import * as method from "method";
     import * as consts from "consts";
     import * as bbcode from "bbcode";
+    import * as api from "api";
+    import type { User } from "types";
     import { createEventDispatcher } from "svelte";
     import SessionHub from "../../SessionHub.svelte";
     import PostTitle from "../../../components/PostTitle.svelte";
@@ -11,8 +10,12 @@
 
     const dispatch = createEventDispatcher();
 
+    interface EditedPost extends api.Forum.Post.GetAll.Post {
+        edit: boolean;
+    }
+
     export let topicUserId: number;
-    export let post: any;
+    export let post: EditedPost;
     export let editable = false;
 
     let isAdmin = false;
@@ -28,21 +31,21 @@
                     post.user_id != consts.Account.Id.Admin)));
 
     async function editPost(message: string) {
-        const params = {
+        const params: api.Forum.Post.Update.Request = {
             id: +post.id,
             post: message,
         };
 
-        await send(method.Forum.Post.Update, params);
+        await api.Forum.Post.Update.exec(params);
         post.post = message;
         post.edit = false;
     }
 
     async function removePost() {
-        const params = {
+        const params: api.Forum.Post.Delete.Request = {
             id: +post.id,
         };
-        await send(method.Forum.Post.Delete, params);
+        await api.Forum.Post.Delete.exec(params);
         dispatch("removed");
     }
 </script>
