@@ -1,49 +1,52 @@
 <script lang="ts">
-    import { send } from "network";
+    import * as api from "api";
     import { makeTitle } from "utils";
-    import * as method from "method";
     import Frame from "../components/Frame.svelte";
 
     const title = "Поиск мандел";
     const searchContent = "0";
     const searchId = "1";
 
-    interface Mandela {
-        after: string;
-        before: string;
-        id?: number;
-        title: string;
-        title_mode: number;
-        what: string;
-    }
-
     let searchType = searchContent;
     let id: number;
     let content: string;
-    let mandela: Mandela;
-    let mandels: Mandela[];
+    let mandels: api.Search.Mandela[] = [];
     let searchInTitle = true;
     let searchInDescription = true;
-    let emptyResult = false;
+    let start = true;
+
+    $: searchType && clear();
+
+    function clear() {
+        start = true;
+        mandels = [];
+    }
 
     async function search() {
-        mandela = null;
-        mandels = null;
-        emptyResult = false;
+        clear();
 
         try {
             if (searchType === searchId) {
-                mandela = await send(method.Search.GetById, { id: Number(id) });
-                emptyResult = !mandela;
+                const params: api.Search.GetById.Request = {
+                    id: Number(id),
+                };
+                const mandela = await api.Search.GetById.exec(params);
+
+                if (mandela) {
+                    mandels.push(mandela);
+                    mandels = mandels;
+                }
             } else {
-                const params = {
+                const params: api.Search.GetByContent.Request = {
                     content: content || "",
                     search_title: searchInTitle,
                     search_description: searchInDescription,
                 };
-                mandels = await send(method.Search.GetByContent, params);
-                emptyResult = !mandels.length;
+
+                mandels = await api.Search.GetByContent.exec(params);
             }
+
+            start = false;
         } catch (e) {
             console.error(e);
         }
@@ -55,7 +58,7 @@
         }
     }
 
-    function mandelaLink(id: number, mandela: Mandela) {
+    function mandelaLink(id: number, mandela: api.Search.Mandela) {
         const title = makeTitle(mandela);
         return `<a target="_blank" class="row-link" href="/mandela/${id}">${title}</a>`;
     }
@@ -103,17 +106,12 @@
 
         <div class="item"><button on:click={search}>Найти</button></div>
 
-        <div class="item">
-            {#if emptyResult}
-                Ничего не найдено
-            {:else if mandela}
-                {@html mandelaLink(id, mandela)}
-            {:else if mandels}
-                {#each mandels as mandela}
-                    {@html mandelaLink(mandela.id, mandela)}
-                    <br />
-                {/each}
-            {/if}
-        </div>
+        {#if mandels.length}
+            <br />
+            {#each mandels as mandela}
+                {@html mandelaLink(mandela.id, mandela)}
+                <br />
+            {/each}
+        {:else if !start}<br /> Ничего не найдено{/if}
     </div>
 </Frame>
