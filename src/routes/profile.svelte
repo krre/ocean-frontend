@@ -1,11 +1,11 @@
 <script context="module" lang="ts">
-    import * as method from "method";
-    import { send, setToken } from "network";
+    import * as api from "api";
+    import { setToken } from "network";
     import type { Session, Page } from "types";
     import { formatDateTime, createToken } from "utils";
 
     export async function preload(_page: Page, _session: Session) {
-        const user = await send(method.User.GetOne);
+        const user = await api.User.GetOne.exec();
         return { user };
     }
 </script>
@@ -32,13 +32,13 @@
     let password2: string;
 
     async function update() {
-        const params = {
+        const params: api.User.Update.Request = {
             name: user.name,
             code: user.code,
         };
 
         try {
-            await send(method.User.Update, params);
+            await api.User.Update.exec(params);
 
             $session.user.name = params.name;
             $session.user.code = params.code;
@@ -62,12 +62,12 @@
 
         const token = createToken(user.id, password1);
 
-        const params = {
+        const params: api.User.UpdateToken.Request = {
             token: token,
         };
 
         try {
-            await send(method.User.UpdateToken, params);
+            await api.User.UpdateToken.exec(params);
             setToken(token);
             $session.user.token = token;
 

@@ -1,9 +1,8 @@
 <script lang="ts">
     import * as consts from "consts";
     import * as route from "route";
-    import * as method from "method";
+    import * as api from "api";
     import { goto } from "@sapper/app";
-    import { send } from "network";
     import { createToken } from "utils";
     import Frame from "../../components/Frame.svelte";
     import BoxForm from "../../components/BoxForm.svelte";
@@ -27,17 +26,17 @@
             return;
         }
 
-        const nextId = await send(method.User.GetNextId);
-        const id = nextId.id;
+        const result = await api.User.GetNextId.exec();
+        const id = result.id;
 
-        let params: object = {
+        const params: api.User.Create.Request = {
             id: id,
             name: name,
             code: consts.Account.User,
             token: createToken(id, password1),
         };
 
-        await send(method.User.Create, params);
+        await api.User.Create.exec(params);
         goto(route.Register.UserId(id));
     }
 </script>

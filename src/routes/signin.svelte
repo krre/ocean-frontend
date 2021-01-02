@@ -1,7 +1,7 @@
 <script lang="ts">
-    import * as method from "method";
+    import * as api from "api";
     import { goto, stores } from "@sapper/app";
-    import { send, setToken, errorMessage } from "network";
+    import { setToken, errorMessage } from "network";
     import { post, createToken } from "utils";
     import Frame from "../components/Frame.svelte";
     import BoxForm from "../components/BoxForm.svelte";
@@ -19,12 +19,12 @@
     async function signin() {
         const token = createToken(id, password);
 
-        const params = {
+        const params: api.User.Auth.Request = {
             token: token,
         };
 
         try {
-            const result = await send(method.User.Auth, params);
+            const result = await api.User.Auth.exec(params);
             const user = {
                 token: token,
                 id: id,
