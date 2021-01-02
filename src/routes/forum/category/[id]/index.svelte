@@ -1,7 +1,6 @@
 <script lang="ts">
     import * as route from "route";
-    import * as method from "method";
-    import { send } from "network";
+    import * as api from "api";
     import type { User } from "types";
     import { goto, stores } from "@sapper/app";
     import FramePage from "../../../../components/forum/main/ForumFrame.svelte";
@@ -16,18 +15,18 @@
 
     let isAdmin = false;
     let user: User;
-    let sections = [];
+    let sections: api.Forum.Section.GetAll.Section[] = [];
 
     $: if (process.browser) {
         load();
     }
 
     async function load() {
-        const params = {
+        const params: api.Forum.Section.GetAll.Request = {
             category_id: categoryId,
         };
 
-        const result = await send(method.Forum.Section.GetAll, params);
+        const result = await api.Forum.Section.GetAll.exec(params);
         categoryName = result.category_name;
         sections = result.sections;
     }

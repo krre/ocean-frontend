@@ -1,14 +1,14 @@
 <script context="module" lang="ts">
-    import { send } from "network";
+    import * as api from "api";
     import type { Session, Page } from "types";
-    import * as method from "method";
 
     export async function preload(page: Page, _session: Session) {
         const { id } = page.params;
-
-        let result = await send(method.Forum.Section.GetOne, {
+        const params: api.Forum.Section.GetOne.Request = {
             id: Number(id),
-        });
+        };
+
+        const result = await api.Forum.Section.GetOne.exec(params);
         const name = result.name;
         const order = result.order_index;
 
@@ -32,13 +32,13 @@
     let isAdmin = false;
 
     const action = async () => {
-        const params = {
+        const params: api.Forum.Section.Update.Request = {
             id: +id,
             name: name,
             order_index: order,
         };
 
-        await send(method.Forum.Section.Update, params);
+        await api.Forum.Section.Update.exec(params);
         goto(route.Forum.Root);
     };
 </script>
