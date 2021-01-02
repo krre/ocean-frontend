@@ -1,13 +1,15 @@
 <script context="module" lang="ts">
-    import { send } from "network";
-    import type { Session, Page } from "types";
     import * as route from "route";
-    import * as method from "method";
+    import * as api from "api";
+    import type { Session, Page } from "types";
 
     export async function preload(page: Page, session: Session) {
         const { id } = page.params;
+        const params: api.Mandela.GetOne.Request = {
+            id: Number(id),
+        };
 
-        let result = await send(method.Mandela.GetOne, { id: Number(id) });
+        const result = await api.Mandela.GetOne.exec(params);
         const mandela = result.mandela;
         const categories = result.categories;
 
@@ -21,30 +23,15 @@
     import Frame from "../../../components/Frame.svelte";
     import MandelaEditor from "../../../components/MandelaEditor.svelte";
 
-    interface Mandela {
-        after: string;
-        before: string;
-        create_ts: Date;
-        description: string;
-        id: number;
-        mark_ts: Date;
-        title: string;
-        title_mode: number;
-        update_ts: Date;
-        user_id: number;
-        user_name: string;
-        what: string;
-    }
-
     const title = "Редактировать манделу";
 
     export let id: number;
-    export let mandela: Mandela;
+    export let mandela: api.Mandela.GetOne.Mandela;
     export let categories: number[] = [];
     export let session: Session;
 
     async function edit() {
-        const params = {
+        const params: api.Mandela.Update.Request = {
             id: Number(id),
             title_mode: mandela.title_mode,
             title:
@@ -67,7 +54,7 @@
             categories: categories,
         };
 
-        await send(method.Mandela.Update, params);
+        await api.Mandela.Update.exec(params);
         goto(route.Mandela.Id(id));
     }
 </script>

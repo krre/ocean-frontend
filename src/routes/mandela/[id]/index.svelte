@@ -1,19 +1,18 @@
 <script context="module" lang="ts">
-    import { send } from "network";
+    import * as route from "route";
+    import * as api from "api";
     import { formatDateTime } from "utils";
     import type { Session, Page } from "types";
-    import * as route from "route";
-    import * as method from "method";
     import Frame from "../../../components/Frame.svelte";
 
     export async function preload(page: Page, session: Session) {
         const { id } = page.params;
 
-        const params: any = {
+        const params: api.Mandela.GetOne.Request = {
             id: +id,
         };
 
-        let result = await send(method.Mandela.GetOne, params);
+        const result = await api.Mandela.GetOne.exec(params);
         const mandela = result.mandela;
         const categories = result.categories;
         const votes = result.votes;
@@ -37,29 +36,9 @@
     import { goto } from "@sapper/app";
     import Comment from "../../../components/comment/Comment.svelte";
 
-    interface Mandela {
-        after: string;
-        before: string;
-        create_ts: Date;
-        description: string;
-        id: number;
-        mark_ts: Date;
-        title: string;
-        title_mode: number;
-        update_ts: Date;
-        user_id: number;
-        user_name: string;
-        what: string;
-    }
-
-    interface Vote {
-        count: number;
-        vote: number;
-    }
-
     export let id: number;
-    export let mandela: Mandela;
-    export let votes: Vote[];
+    export let mandela: api.Mandela.GetOne.Mandela;
+    export let votes: api.Mandela.GetOne.Vote[];
     export let vote: number;
     export let totalVotes = 0;
     export let categories: number[];
@@ -82,20 +61,20 @@
     }
 
     async function mark() {
-        const params = {
+        const params: api.Mandela.Mark.Request = {
             id: mandela.id,
         };
 
-        await send(method.Mandela.Mark, params);
+        await api.Mandela.Mark.exec(params);
     }
 
     async function castVote() {
-        const params = {
+        const params: api.Mandela.Vote.Request = {
             id: mandela.id,
             vote: voteValue,
         };
 
-        votes = await send(method.Mandela.Vote, params);
+        votes = await api.Mandela.Vote.exec(params);
         vote = voteValue;
         editVote = false;
         totalVotes = 0;

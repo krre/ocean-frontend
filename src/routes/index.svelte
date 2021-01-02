@@ -1,8 +1,7 @@
 <script lang="ts">
     import * as consts from "consts";
-    import * as method from "method";
     import * as route from "route";
-    import { send } from "network";
+    import * as api from "api";
     import { goto, stores } from "@sapper/app";
     import { formatDateTime, zeroLeading, makeTitle } from "utils";
     import Indicator from "../components/main/Indicator.svelte";
@@ -19,7 +18,7 @@
     let category = 0;
     let sort = 0;
 
-    let mandels = [];
+    let mandels: api.Mandela.GetAll.Mandela[] = [];
     let categories = ["Все"].concat(consts.Categories);
     let totalCount = 0;
     let newCount = 0;
@@ -27,7 +26,7 @@
     let pollCount = 0;
     let categoryCount = 0;
 
-    let selected_delete = [];
+    let selected_delete: number[] = [];
     let currentCount = 0;
     let baseQuery = new URLSearchParams();
     let pageQuery = new URLSearchParams();
@@ -115,7 +114,7 @@
     }
 
     async function load() {
-        const params: method.Mandela.Type.GetAll.Params = {
+        const params: api.Mandela.GetAll.Request = {
             sort: sort,
             limit: pageLimit,
             offset: (pageNo - 1) * pageLimit,
@@ -126,7 +125,7 @@
             params.category = category - 1;
         }
 
-        let result = await send(method.Mandela.GetAll, params);
+        const result = await api.Mandela.GetAll.exec(params);
         mandels = result.mandels;
         totalCount = result.total_count;
         newCount = result.new_count;
@@ -150,11 +149,13 @@
     async function deleteMandela() {
         if (!selected_delete.length) return;
 
-        await send(method.Mandela.Delete, { id: selected_delete });
+        const params: api.Mandela.Delete.Request = {
+            id: selected_delete,
+        };
 
-        mandels = mandels.filter(function (mandela) {
-            return selected_delete.indexOf(mandela.id) === -1;
-        });
+        await api.Mandela.Delete.exec(params);
+
+        mandels = mandels.filter((m) => selected_delete.indexOf(m.id) === -1);
         selected_delete = [];
     }
 </script>

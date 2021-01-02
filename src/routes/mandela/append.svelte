@@ -1,9 +1,8 @@
 <script lang="ts">
     import * as consts from "consts";
     import * as route from "route";
-    import * as method from "method";
+    import * as api from "api";
     import { goto, stores } from "@sapper/app";
-    import { send } from "network";
     import Frame from "../../components/Frame.svelte";
     import MandelaEditor from "../../components/MandelaEditor.svelte";
 
@@ -16,10 +15,10 @@
     export let before = "";
     export let after = "";
     let description = "";
-    let categories = [];
+    let categories: number[] = [];
 
     async function append() {
-        const params = {
+        const params: api.Mandela.Create.Request = {
             title_mode: titleMode,
             title: titleMode === consts.Mandela.Title.Simple ? title : "",
             what: titleMode === consts.Mandela.Title.Complex ? what : "",
@@ -29,7 +28,7 @@
             categories: categories,
         };
 
-        const result = await send(method.Mandela.Create, params);
+        const result = await api.Mandela.Create.exec(params);
         goto(route.Mandela.Id(result.id));
     }
 </script>
