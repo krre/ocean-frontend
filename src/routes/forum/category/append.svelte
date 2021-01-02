@@ -1,8 +1,7 @@
 <script lang="ts">
-    import { send } from "network";
     import { goto } from "@sapper/app";
-    import * as method from "method";
     import * as route from "route";
+    import * as api from "api";
     import Frame from "../../../components/Frame.svelte";
     import SessionHub from "../../../components/SessionHub.svelte";
     import CategoryEditor from "../../../components/forum/category/CategoryEditor.svelte";
@@ -14,12 +13,12 @@
     let order: number;
 
     const action = async () => {
-        const params = {
+        const params: api.Forum.Category.Create.Request = {
             name: name,
             order_index: order,
         };
 
-        await send(method.Forum.Category.Create, params);
+        await api.Forum.Category.Create.exec(params);
         goto(route.Forum.Root);
     };
 </script>

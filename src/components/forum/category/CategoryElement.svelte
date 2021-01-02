@@ -1,11 +1,10 @@
 <script lang="ts">
-    import { send } from "network";
-    import SectionElement from "../section/SectionElement.svelte";
     import * as route from "route";
-    import * as method from "method";
+    import * as api from "api";
     import * as dialog from "dialog";
     import { goto } from "@sapper/app";
     import { createEventDispatcher } from "svelte";
+    import SectionElement from "../section/SectionElement.svelte";
 
     const dispatch = createEventDispatcher();
 
@@ -19,10 +18,10 @@
     async function removeCategory() {
         if (!dialog.remove("Удалить категорию?")) return;
 
-        const params = {
+        const params: api.Forum.Category.Delete.Request = {
             id: +category.id,
         };
-        await send(method.Forum.Category.Delete, params);
+        await api.Forum.Category.Delete.exec(params);
         dispatch("removed");
     }
 
