@@ -1,7 +1,6 @@
 <script lang="ts">
-    import { send } from "network";
     import { stores } from "@sapper/app";
-    import * as method from "method";
+    import * as api from "api";
     import * as route from "route";
     import * as consts from "consts";
     import Pagination from "../Pagination.svelte";
@@ -13,7 +12,7 @@
     let baseQuery = new URLSearchParams();
     const pageLimit = 30;
 
-    let users = [];
+    let users: api.Rating.GetUsers.User[] = [];
 
     $: if (process.browser && $page.query) {
         pageNo = +$page.query.page || 1;
@@ -24,12 +23,12 @@
     }
 
     async function load() {
-        const params = {
+        const params: api.Rating.GetUsers.Request = {
             limit: pageLimit,
             offset: (pageNo - 1) * pageLimit,
         };
 
-        const result = await send(method.Rating.GetUsers, params);
+        const result = await api.Rating.GetUsers.exec(params);
         users = result.users;
         userCount = result.user_count;
     }

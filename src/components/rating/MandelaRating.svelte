@@ -1,25 +1,14 @@
 <script lang="ts">
     import * as consts from "consts";
     import * as route from "route";
-    import * as method from "method";
+    import * as api from "api";
     import { goto, stores } from "@sapper/app";
-    import { send } from "network";
     import { makeTitle } from "utils";
     import Pagination from "../Pagination.svelte";
 
-    interface Mandela {
-        after: string;
-        before: string;
-        count: number;
-        id: number;
-        title: string;
-        title_mode: number;
-        what: string;
-    }
-
     const { page } = stores();
 
-    let mandels: Mandela[] = [];
+    let mandels: api.Rating.GetMandels.Mandela[] = [];
     let vote = 0;
 
     let pageNo = 1;
@@ -68,18 +57,22 @@
     }
 
     async function load() {
-        const params = {
+        const params: api.Rating.GetMandels.Request = {
             vote: vote,
             limit: pageLimit,
             offset: (pageNo - 1) * pageLimit,
         };
 
-        let result = await send(method.Rating.GetMandels, params);
+        const result = await api.Rating.GetMandels.exec(params);
         mandels = result.mandels;
         currentCount = result.total_count;
     }
 
-    function mandelaLink(id: number, mandela: Mandela, i: number) {
+    function mandelaLink(
+        id: number,
+        mandela: api.Rating.GetMandels.Mandela,
+        i: number
+    ) {
         const title = makeTitle(mandela);
         return `<a class="row-link" href=${route.Mandela.Id(id)}>${
             i + 1 + (pageNo - 1) * pageLimit
