@@ -1,8 +1,6 @@
 <script lang="ts">
     import * as route from "route";
-    import * as method from "method";
-    import { send } from "network";
-    import type { NewTopic } from "forum";
+    import * as api from "api";
     import { stores } from "@sapper/app";
     import FramePage from "../../components/forum/main/ForumFrame.svelte";
     import NewPost from "../../components/forum/main/NewPost.svelte";
@@ -11,7 +9,7 @@
     const { page } = stores();
     const title = "Новые сообщения форума";
 
-    let topics: NewTopic[] = [];
+    let topics: api.Forum.GetNew.Topic[] = [];
 
     let pageNo = 1;
     let topicCount = 0;
@@ -24,12 +22,12 @@
     }
 
     async function load() {
-        const params = {
+        const params: api.Forum.GetNew.Request = {
             offset: (pageNo - 1) * pageLimit,
             limit: pageLimit,
         };
 
-        const result = await send(method.Forum.GetNew, params);
+        const result = await api.Forum.GetNew.exec(params);
         topics = result.topics;
         topicCount = result.topic_count;
     }

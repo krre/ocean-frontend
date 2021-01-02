@@ -1,8 +1,7 @@
 <script lang="ts">
     import * as route from "route";
-    import * as method from "method";
+    import * as api from "api";
     import type { User } from "types";
-    import { send } from "network";
     import { onMount } from "svelte";
     import { goto } from "@sapper/app";
     import FramePage from "../../components/forum/main/ForumFrame.svelte";
@@ -14,18 +13,18 @@
     let isAdmin = false;
     let editable = false;
     let user: User;
-    let categories = [];
+    let categories: api.Forum.GetAll.Category[] = [];
 
     onMount(() => {
         load();
     });
 
     async function load() {
-        const result = await send(method.Forum.GetAll);
+        const result = await api.Forum.GetAll.exec();
         categories = [];
 
         for (let category of result.categories) {
-            let sections = [];
+            let sections: api.Forum.GetAll.Section[] = [];
 
             for (let section of result.sections) {
                 if (section.category_id === category.id) {
