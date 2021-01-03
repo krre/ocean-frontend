@@ -6,6 +6,7 @@
     import type { User } from "types";
     import { sessionUserName } from "utils";
     import { stores } from "@sapper/app";
+    import Rectangle from "../../../../components/Rectangle.svelte";
     import FramePage from "../../../../components/forum/main/ForumFrame.svelte";
     import SessionHub from "../../../../components/SessionHub.svelte";
     import PostElement from "../../../../components/forum/post/PostElement.svelte";
@@ -77,16 +78,6 @@
 </script>
 
 <style>
-    .send {
-        margin: var(--page-margin);
-    }
-
-    @media screen and (max-width: 600px) {
-        .send {
-            margin: var(--page-margin) 0;
-        }
-    }
-
     button {
         margin-top: 0.5em;
     }
@@ -107,8 +98,8 @@
     offset={pageNo}
     baseRoute={route.Forum.Topic.Id(topicId)} />
 
-<div class="send">
+<Rectangle padding={false} solid={false}>
     <PostEditor bind:post />
     <div>Пользователь: {sessionUserName(user)}</div>
     <div><button on:click={append} disabled={!post}>Отправить</button></div>
-</div>
+</Rectangle>

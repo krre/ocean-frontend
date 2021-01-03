@@ -1,4 +1,5 @@
 <script lang="ts">
+    import Rectangle from "../../Rectangle.svelte";
     export let title: string;
     export let showHeader = true;
 </script>
@@ -14,18 +15,6 @@
         display: flex;
         justify-content: flex-end;
     }
-
-    .container {
-        background-color: white;
-        margin: var(--page-margin);
-        border: var(--border-1px);
-    }
-
-    @media screen and (max-width: 600px) {
-        .container {
-            margin: var(--page-margin) 0;
-        }
-    }
 </style>
 
 <svelte:head>
@@ -40,6 +29,6 @@
     <slot name="button" />
 </div>
 
-<div class="container">
+<Rectangle padding={false}>
     <slot />
-</div>
+</Rectangle>

@@ -6,6 +6,7 @@
     import * as route from "route";
     import * as bbcode from "bbcode";
     import * as api from "api";
+    import Rectangle from "../Rectangle.svelte";
     import PostTitle from "../PostTitle.svelte";
     import PostEditor from "../post/PostEditor.svelte";
     import EditComment from "./EditComment.svelte";
@@ -80,14 +81,7 @@
 </script>
 
 <style>
-    .list {
-        background-color: white;
-        border: var(--border-1px);
-        margin-bottom: 1em;
-    }
-
     .post {
-        padding: 1em;
         border-bottom: var(--border-1px);
     }
 
@@ -107,7 +101,7 @@
 </style>
 
 {#if comments.length}
-    <div class="list">
+    <Rectangle>
         {#each comments as comment, i}
             <div class="post">
                 <PostTitle
@@ -131,7 +125,7 @@
                 {/if}
             </div>
         {/each}
-    </div>
+    </Rectangle>
 
     <Pagination
         count={commentCount}
@@ -140,7 +134,12 @@
         baseRoute={route.Mandela.Id(mandelaId)} />
 {/if}
 
-<PostEditor bind:post={message} />
+<Rectangle padding={false} solid={false}>
+    <PostEditor bind:post={message} />
 
-<div>Пользователь: {userName}</div>
-<button class="send" on:click={append} disabled={!message}>Отправить</button>
+    <div>Пользователь: {userName}</div>
+    <button
+        class="send"
+        on:click={append}
+        disabled={!message}>Отправить</button>
+</Rectangle>

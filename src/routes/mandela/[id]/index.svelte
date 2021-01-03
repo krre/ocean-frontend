@@ -128,16 +128,6 @@
     h2 {
         margin-left: 1rem;
     }
-
-    .comment {
-        margin: var(--page-margin);
-    }
-
-    @media screen and (max-width: 600px) {
-        .comment {
-            margin: var(--page-margin) 0;
-        }
-    }
 </style>
 
 <Frame {title}>
