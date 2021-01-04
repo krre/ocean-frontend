@@ -1,9 +1,13 @@
 <script lang="ts">
     import * as api from "api";
-    import LatestComments from "./LatestComments.svelte";
-    import LatestForumPosts from "./LatestForumPosts.svelte";
+    import * as route from "route";
+    import * as forum from "forum";
+    import type { ActivityMessage } from "types";
+    import Latest from "./Latest.svelte";
 
     const LIMIT = 5;
+    let comments: ActivityMessage[] = [];
+    let topics: ActivityMessage[] = [];
 
     $: if (process.browser) {
         load();
@@ -14,7 +18,22 @@
             limit: LIMIT,
         };
         const result = await api.Activity.GetAll.exec(params);
-        console.log(result);
+
+        topics = [];
+
+        result.topics.forEach((item: api.Activity.GetAll.Response) => {
+            const topic: ActivityMessage = {
+                title: item.name,
+                url: forum.topicLink(item.id, item.post_count),
+                date: item.post_create_ts,
+                author: item.user_name,
+                message: item.post,
+            };
+
+            topics.push(topic);
+        });
+
+        topics = topics;
     }
 </script>
 
@@ -26,6 +45,9 @@
 </style>
 
 <div class="container">
-    <LatestComments />
-    <LatestForumPosts />
+    <Latest title="Последние комментарии" messages={comments} />
+    <Latest
+        title="Последние сообщения форума"
+        link={route.Forum.New}
+        messages={topics} />
 </div>
