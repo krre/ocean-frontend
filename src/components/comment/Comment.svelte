@@ -83,6 +83,7 @@
 <style>
     .post {
         border-bottom: var(--border-1px);
+        padding: var(--page-padding);
     }
 
     .post:last-child {
@@ -101,7 +102,7 @@
 </style>
 
 {#if comments.length}
-    <Rectangle>
+    <Rectangle padding={false}>
         {#each comments as comment, i}
             <div class="post">
                 <PostTitle
