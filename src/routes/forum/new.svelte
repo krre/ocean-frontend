@@ -7,7 +7,7 @@
     import Pagination from "../../components/Pagination.svelte";
 
     const { page } = stores();
-    const title = "Новые сообщения форума";
+    const title = "Последние сообщения форума";
 
     let topics: api.Forum.GetNew.Topic[] = [];
 
