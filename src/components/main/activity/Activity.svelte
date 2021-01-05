@@ -21,7 +21,7 @@
 
         topics = [];
 
-        result.topics.forEach((item: api.Activity.GetAll.Response) => {
+        result.topics.forEach((item: api.Activity.Topic) => {
             const topic: ActivityMessage = {
                 title: item.name,
                 url: forum.topicLink(item.id, item.post_count),
