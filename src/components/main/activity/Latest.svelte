@@ -18,6 +18,11 @@
         overflow-wrap: anywhere;
         white-space: pre-line;
         font-size: 0.85rem;
+        margin-bottom: 1em;
+    }
+
+    .message:last-child {
+        margin-bottom: 0;
     }
 
     span {
@@ -34,7 +39,6 @@
             <span>{formatDateTime(message.date)}, {message.author}</span>
             <br />
             {textCut(message.message, 200)}
-            <br /><br />
         </div>
     {/each}
 </Rectangle>
