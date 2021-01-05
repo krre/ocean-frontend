@@ -2,6 +2,7 @@
     import * as api from "api";
     import * as route from "route";
     import * as forum from "forum";
+    import { makeTitle } from "utils";
     import type { ActivityMessage } from "types";
     import Latest from "./Latest.svelte";
 
@@ -34,6 +35,22 @@
         });
 
         topics = topics;
+
+        comments = [];
+
+        result.comments.forEach((item: api.Activity.Comment) => {
+            const comment: ActivityMessage = {
+                title: makeTitle(item),
+                url: route.Mandela.Id(item.mandela_id),
+                date: item.create_ts,
+                author: item.user_name,
+                message: item.message,
+            };
+
+            comments.push(comment);
+        });
+
+        comments = comments;
     }
 </script>
 
