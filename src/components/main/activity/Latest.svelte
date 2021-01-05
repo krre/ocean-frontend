@@ -13,7 +13,7 @@
     }
 
     .message {
-        word-break: break-all;
+        word-break: break-word;
         white-space: pre-line;
         font-size: 0.85rem;
         margin-bottom: 1em;
