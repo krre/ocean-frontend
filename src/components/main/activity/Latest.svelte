@@ -11,11 +11,10 @@
 <style>
     .title {
         margin-bottom: var(--page-margin);
-        /* font-size: 0.9rem; */
     }
 
     .message {
-        overflow-wrap: anywhere;
+        word-break: break-all;
         white-space: pre-line;
         font-size: 0.85rem;
         margin-bottom: 1em;
