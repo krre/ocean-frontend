@@ -61,9 +61,6 @@
 </style>
 
 <div class="container">
-    <Latest title="Последние комментарии" messages={comments} />
-    <Latest
-        title="Последние сообщения форума"
-        link={route.Forum.New}
-        messages={topics} />
+    <Latest title="Последние комментарии к манделам" messages={comments} />
+    <Latest title="Последние сообщения форума" messages={topics} />
 </div>

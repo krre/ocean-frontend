@@ -5,7 +5,6 @@
     import Rectangle from "../../Rectangle.svelte";
     export let title = "";
     export let messages: ActivityMessage[] = [];
-    export let link = "#";
 </script>
 
 <style>
@@ -30,7 +29,7 @@
 </style>
 
 <Rectangle>
-    <div class="title"><a href={link}>{title}</a></div>
+    <div class="title">{title}</div>
     {#each messages as message}
         <div class="message">
             <a href={message.url}>{message.title}</a>
