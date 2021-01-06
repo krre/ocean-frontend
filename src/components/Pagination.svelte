@@ -59,7 +59,7 @@
         margin-bottom: var(--page-margin);
     }
 
-    span {
+    a {
         width: 2em;
         padding: 0.7em;
         border-top: var(--border-1px);
@@ -67,7 +67,7 @@
         border-left: var(--border-1px);
     }
 
-    span:last-child {
+    a:last-child {
         border-right: var(--border-1px);
     }
 
@@ -78,9 +78,10 @@
 
 {#if count > limit}
     <div class="container">
-        {#each pages as p}
-            <span class:offset={offset == p}><a
-                    href={makeLink(p, baseQuery)}>{p}</a></span>
+        {#each pages as page}
+            <a
+                class:offset={offset == page}
+                href={makeLink(page, baseQuery)}>{page}</a>
         {/each}
     </div>
 {/if}
