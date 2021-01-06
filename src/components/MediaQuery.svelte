@@ -6,25 +6,23 @@
 
     let mql: MediaQueryList;
     let mqlListener: (this: MediaQueryList, ev: MediaQueryListEvent) => any;
-    let wasMounted = false;
     let matches = false;
 
     onMount(() => {
-        wasMounted = true;
+        addNewListener(size);
+        matches = matchMaxWidth(size).matches;
+
         return () => {
             removeActiveListener();
         };
     });
 
-    $: {
-        if (wasMounted) {
-            removeActiveListener();
-            addNewListener(size);
-        }
+    function matchMaxWidth(size: ScreenSize): MediaQueryList {
+        return window.matchMedia(`(max-width: ${size}px)`);
     }
 
     function addNewListener(size: ScreenSize) {
-        mql = window.matchMedia(`(max-width: ${size}px)`);
+        mql = matchMaxWidth(size);
 
         mqlListener = (e) => {
             matches = e.matches;
