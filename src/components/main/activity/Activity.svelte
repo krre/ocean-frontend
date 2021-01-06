@@ -57,7 +57,7 @@
 <style>
     .container {
         flex-basis: 25em;
-        min-width: 25em;
+        min-width: min(100%, 25em);
     }
 </style>
 
