@@ -20,9 +20,9 @@
 <div class="bar">
     <MediaQuery size={ScreenSize.Tablet} let:matches>
         {#if matches}
-            <Menu />
-        {:else}
             <Burger bind:open={sidebar} />
+        {:else}
+            <Menu />
         {/if}
     </MediaQuery>
 </div>
