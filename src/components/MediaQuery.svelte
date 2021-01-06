@@ -24,7 +24,7 @@
     }
 
     function addNewListener(size: ScreenSize) {
-        mql = window.matchMedia(`(max-width: ${size}px)`);
+        mql = window.matchMedia(`(min-width: ${size}px)`);
 
         mqlListener = (e) => {
             matches = e.matches;
