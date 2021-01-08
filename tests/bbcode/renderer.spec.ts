@@ -40,6 +40,13 @@ describe("BBCode renderer", () => {
             .toBe(`<iframe class="video" src="https://www.youtube.com/embed/GnFq03_3S0c" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`);
     });
 
+    test("quote", () => {
+        expect(render({ name: "quote", attrs: { quote: "Anonym" }, nodes: ["Message"] }))
+            .toBe(`<div class="quote">Anonym пишет:
+
+<em>Message</em></div>`);
+    });
+
     test("complex", () => {
         expect(render({
             name: "b", attrs: {}, nodes:
