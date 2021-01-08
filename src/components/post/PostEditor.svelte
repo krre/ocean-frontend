@@ -13,6 +13,12 @@
     let isPreview = false;
     let isSmilePanelActive = false;
 
+    export function appendReply(userName: string, text: string) {
+        const reply = `⁅quote="${userName}"⁆${text}⁅/quote⁆`;
+        post = insertText(post, areaRef.selectionStart, reply + "\n");
+        areaRef.focus();
+    }
+
     function appendBold() {
         replaceSelection((str: string) => `⁅b⁆${str}⁅/b⁆`);
     }

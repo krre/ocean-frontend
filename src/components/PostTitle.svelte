@@ -23,6 +23,12 @@
             row: row,
         });
     }
+
+    function reply() {
+        dispatch("reply", {
+            row: row,
+        });
+    }
 </script>
 
 <style>
@@ -48,4 +54,5 @@
         <button on:click={edit}><i class="fas fa-edit" /></button>
         <button on:click={remove}><i class="fas fa-trash-alt" /></button>
     {/if}
+    <button on:click={reply}><i class="fas fa-reply" /></button>
 </div>

@@ -29,6 +29,7 @@
     let comments: EditedComment[] = [];
     let message: string;
     let userName = sessionUserName(user);
+    let postEditorRef: PostEditor;
 
     $: if (process.browser && $page.query) {
         pageNo = +$page.query.page || 1;
@@ -78,6 +79,16 @@
         comments[row].remove = false;
         comments.splice(row, 1);
     }
+
+    function replyComment(row: number) {
+        const selection = window.getSelection().toString();
+        const comment = comments[row];
+        const message =
+            selection && comment.message.includes(selection)
+                ? selection
+                : comment.message;
+        postEditorRef.appendReply(comment.user_name, message);
+    }
 </script>
 
 <style>
@@ -111,7 +122,8 @@
                     date={comment.create_ts}
                     edited={user && (comment.user_id === user.id || user.id === consts.Account.Id.Admin)}
                     on:edit={(event) => (comments[event.detail.row].edit = true)}
-                    on:remove={(event) => deleteComment(event.detail.row)} />
+                    on:remove={(event) => deleteComment(event.detail.row)}
+                    on:reply={(event) => replyComment(event.detail.row)} />
                 <div />
 
                 {#if comment.edit}
@@ -136,7 +148,7 @@
 {/if}
 
 <Rectangle padding={false} solid={false}>
-    <PostEditor bind:post={message} />
+    <PostEditor bind:post={message} bind:this={postEditorRef} />
 
     <div>Пользователь: {userName}</div>
     <button
