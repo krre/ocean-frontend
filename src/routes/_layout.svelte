@@ -53,6 +53,12 @@
         width: 420px;
         height: 315px;
     }
+
+    :global(.quote) {
+        background-color: rgb(244, 251, 255);
+        border: var(--border-1px);
+        padding: 0.7em;
+    }
 </style>
 
 <Sidebar bind:open on:itemClicked={() => (open = false)} />
