@@ -81,13 +81,8 @@
     }
 
     function replyComment(row: number) {
-        const selection = window.getSelection().toString();
         const comment = comments[row];
-        const message =
-            selection && comment.message.includes(selection)
-                ? selection
-                : comment.message;
-        postEditorRef.appendReply(comment.user_name, message);
+        postEditorRef.appendReply(comment.user_name, comment.message);
     }
 </script>
 

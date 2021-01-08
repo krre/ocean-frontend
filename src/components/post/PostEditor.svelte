@@ -14,7 +14,10 @@
     let isSmilePanelActive = false;
 
     export function appendReply(userName: string, text: string) {
-        const reply = `⁅quote="${userName}"⁆${text}⁅/quote⁆`;
+        const selection = window.getSelection().toString();
+        const message =
+            selection && text.includes(selection) ? selection : text;
+        const reply = `⁅quote="${userName}"⁆${message}⁅/quote⁆`;
         post = insertText(post, areaRef.selectionStart, reply + "\n");
         areaRef.focus();
     }
