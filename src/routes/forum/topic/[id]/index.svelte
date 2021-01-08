@@ -93,8 +93,9 @@
 <Navigator category={categoryNav} section={sectionNav} />
 
 <FramePage title={topicName}>
-    {#each posts as post}
+    {#each posts as post, i}
         <PostElement
+            row={i}
             {post}
             {topicUserId}
             on:removed={() => load()}

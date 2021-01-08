@@ -17,6 +17,7 @@
     export let topicUserId: number;
     export let post: EditedPost;
     export let editable = false;
+    export let row = 0;
 
     let isAdmin = false;
     let isAnonym = true;
@@ -71,6 +72,7 @@
 
 <div class="post">
     <PostTitle
+        {row}
         author={post.user_name}
         date={post.create_ts}
         edited={editable}
