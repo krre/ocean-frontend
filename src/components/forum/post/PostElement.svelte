@@ -75,7 +75,8 @@
         date={post.create_ts}
         edited={editable}
         on:edit={() => (post.edit = true)}
-        on:remove={() => removePost()} />
+        on:remove={() => removePost()}
+        on:reply />
 
     {#if post.edit}
         <EditComment

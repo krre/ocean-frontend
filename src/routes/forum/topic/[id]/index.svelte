@@ -27,6 +27,7 @@
     let user: User;
     let posts: EditedPost[] = [];
     let post: string;
+    let postEditorRef: PostEditor;
 
     let pageNo = 1;
     let postCount = 0;
@@ -75,6 +76,11 @@
         post = "";
         load();
     }
+
+    function replyPost(row: number) {
+        const post = posts[row];
+        postEditorRef.appendReply(post.user_name, post.post);
+    }
 </script>
 
 <style>
@@ -88,7 +94,11 @@
 
 <FramePage title={topicName}>
     {#each posts as post}
-        <PostElement {post} {topicUserId} on:removed={() => load()} />
+        <PostElement
+            {post}
+            {topicUserId}
+            on:removed={() => load()}
+            on:reply={(event) => replyPost(event.detail.row)} />
     {/each}
 </FramePage>
 
@@ -99,7 +109,7 @@
     baseRoute={route.Forum.Topic.Id(topicId)} />
 
 <Rectangle padding={false} solid={false}>
-    <PostEditor bind:post />
+    <PostEditor bind:post bind:this={postEditorRef} />
     <div>Пользователь: {sessionUserName(user)}</div>
     <div><button on:click={append} disabled={!post}>Отправить</button></div>
 </Rectangle>
