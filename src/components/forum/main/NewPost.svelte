@@ -33,5 +33,5 @@
             {topic.name}
         </h3></a>
     <PostTitle author={topic.user_name} date={topic.post_create_ts} {replyed} />
-    <div class="post">{textCut(topic.post, 100)}</div>
+    <div class="post">{textCut(topic.post, 300)}</div>
 </div>
