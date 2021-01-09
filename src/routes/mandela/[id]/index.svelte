@@ -183,38 +183,40 @@
         <p />
     {/if}
 
-    {#if session.user}
-        {#if votes && !editVote}
-            <p>Результаты опроса:</p>
-            <div class="grid" style="margin-left: 1em">
-                {#each consts.Votes as voteName, i}
-                    <div>{voteName}:</div>
-                    <div>{getVoteCount(i)}</div>
-                {/each}
-            </div>
-            <p />
-            <div class="grid">
-                <div>Всего голосов:</div>
-                <div>{totalVotes}</div>
+    {#if !session.user || (vote != null && !editVote)}
+        <p>Результаты опроса:</p>
+        <div class="grid" style="margin-left: 1em">
+            {#each consts.Votes as voteName, i}
+                <div>{voteName}:</div>
+                <div>{getVoteCount(i)}</div>
+            {/each}
+        </div>
+        <p />
+        <div class="grid">
+            <div>Всего голосов:</div>
+            <div>{totalVotes}</div>
+            {#if session.user}
                 <div>Выбрано:</div>
                 <div>{consts.Votes[vote]}</div>
-            </div>
-            <p />
+            {/if}
+        </div>
+        <p />
+        {#if session.user}
             <button on:click={() => (editVote = true)}>Изменить выбор</button>
-        {:else}
-            Является ли для вас это манделой?
-            <p>
-                {#each consts.Votes as voteName, i}
-                    <label class="vote">
-                        <input type="radio" bind:group={voteValue} value={i} />
-                        {voteName}
-                    </label>
-                {/each}
-            </p>
-            <button on:click={castVote} disabled={voteValue < 0}>
-                Проголосовать
-            </button>
-        {/if}
+        {:else}Голосовать могут только зарегистрированные пользователи.{/if}
+    {:else}
+        Является ли для вас это манделой?
+        <p>
+            {#each consts.Votes as voteName, i}
+                <label class="vote">
+                    <input type="radio" bind:group={voteValue} value={i} />
+                    {voteName}
+                </label>
+            {/each}
+        </p>
+        <button on:click={castVote} disabled={voteValue < 0}>
+            Проголосовать
+        </button>
     {/if}
 </Frame>
 
