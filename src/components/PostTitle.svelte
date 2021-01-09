@@ -9,6 +9,7 @@
     export let date: Date;
     export let row = 0;
     export let edited = false;
+    export let replyed = true;
 
     function remove() {
         if (!dialog.remove("Удалить сообщение?")) return;
@@ -54,5 +55,7 @@
         <button on:click={edit}><i class="fas fa-edit" /></button>
         <button on:click={remove}><i class="fas fa-trash-alt" /></button>
     {/if}
-    <button on:click={reply}><i class="fas fa-reply" /></button>
+    {#if replyed}
+        <button on:click={reply}><i class="fas fa-reply" /></button>
+    {/if}
 </div>

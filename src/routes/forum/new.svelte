@@ -38,7 +38,7 @@
 
 <FramePage {title}>
     {#each topics as topic}
-        <NewPost {topic} />
+        <NewPost {topic} replyed={false} />
     {/each}
 </FramePage>
 

@@ -5,6 +5,7 @@
     import PostTitle from "../../PostTitle.svelte";
 
     export let topic: NewTopic;
+    export let replyed = true;
 </script>
 
 <style>
@@ -31,6 +32,6 @@
     <a href={forum.topicLink(topic.id, topic.post_count)}><h3>
             {topic.name}
         </h3></a>
-    <PostTitle author={topic.user_name} date={topic.post_create_ts} />
+    <PostTitle author={topic.user_name} date={topic.post_create_ts} {replyed} />
     <div class="post">{textCut(topic.post, 100)}</div>
 </div>
