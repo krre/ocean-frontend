@@ -43,8 +43,8 @@
     }
 
     :global(img) {
-        max-width: 100%;
-        max-height: 100vh;
+        max-width: min(100%, 1000px);
+        max-height: min(100vh, 700px);
     }
 
     :global(.video) {
