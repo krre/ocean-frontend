@@ -7,6 +7,7 @@
 
     export async function preload(page: Page, session: Session) {
         const { id } = page.params;
+        const url = "https://" + page.host + page.path;
 
         const params: api.Mandela.GetOne.Request = {
             id: +id,
@@ -26,7 +27,16 @@
             }
         }
 
-        return { id, mandela, votes, vote, totalVotes, categories, session };
+        return {
+            id,
+            mandela,
+            votes,
+            vote,
+            totalVotes,
+            categories,
+            session,
+            url,
+        };
     }
 </script>
 
@@ -43,9 +53,14 @@
     export let totalVotes = 0;
     export let categories: number[];
     export let session: Session;
+    export let url: string;
+
+    let htmlUrl = `<a href="${url}">Океан. Мандела №${id}</a>`;
+    let bbCodeUrl = `⁅url="${url}"⁆Океан. Мандела №${id}⁅/url⁆`;
 
     let voteValue = -1;
     let editVote = false;
+    let showMandelaLinks = false;
 
     $: if (process.browser && session.user && mandela && !mandela.mark_ts) {
         mark();
@@ -94,18 +109,9 @@
         return 0;
     }
 
-    // function url() {
-    //     return "http://" + $page.host + $page.path;
-    // }
-
-    // function copyLink(params) {
-    //     navigator.clipboard.writeText(url());
-    // }
-
-    // function copyCode(params) {
-    //     const code = `<a href="${url()}">Океан. Мандела №${id}</a>`;
-    //     navigator.clipboard.writeText(code);
-    // }
+    function copyLink(value: string) {
+        navigator.clipboard.writeText(value);
+    }
 </script>
 
 <style>
@@ -128,6 +134,26 @@
     h2 {
         margin-left: 1rem;
     }
+
+    .mandela-link-container {
+        margin-top: 1em;
+    }
+
+    .mandela-link {
+        cursor: pointer;
+        border-bottom-style: dashed;
+        border-bottom-width: 1px;
+        font-size: 0.9em;
+        color: #5f5f5f;
+    }
+
+    .mandela-link-grid {
+        width: min(40em, 100%);
+        margin-top: 1em;
+        display: grid;
+        gap: 0.5em;
+        grid-template-columns: 1fr auto;
+    }
 </style>
 
 <Frame {title}>
@@ -148,9 +174,6 @@
             <div>{formatDateTime(mandela.mark_ts)}</div>
         {/if}
     </div>
-
-    <!-- <button on:click={copyLink}>Скопировать ссылку</button>
-    <button on:click={copyCode}>Скопировать код ссылки</button> -->
 
     <hr />
 
@@ -217,6 +240,30 @@
         <button on:click={castVote} disabled={voteValue < 0}>
             Проголосовать
         </button>
+    {/if}
+
+    <div
+        class="mandela-link-container"
+        on:click={() => (showMandelaLinks = !showMandelaLinks)}
+    >
+        <span class="mandela-link">Ссылка на манделу</span>
+    </div>
+
+    {#if showMandelaLinks}
+        <div class="mandela-link-grid">
+            <input readonly value={url} />
+            <button on:click={() => copyLink(url)}
+                ><i class="far fa-copy" /></button
+            >
+            <input readonly value={htmlUrl} />
+            <button on:click={() => copyLink(htmlUrl)}
+                ><i class="far fa-copy" /></button
+            >
+            <input readonly value={bbCodeUrl} />
+            <button on:click={() => copyLink(bbCodeUrl)}
+                ><i class="far fa-copy" /></button
+            >
+        </div>
     {/if}
 </Frame>
 
