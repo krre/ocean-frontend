@@ -56,7 +56,7 @@
     export let url: string;
 
     let htmlUrl = `<a href="${url}">Океан. Мандела №${id}</a>`;
-    let bbCodeUrl = `⁅url="${url}"⁆Океан. Мандела №${id}⁅/url⁆`;
+    let bbCodeUrl = `⁅url="${url}"⁆Мандела №${id}⁅/url⁆`;
 
     let voteValue = -1;
     let editVote = false;
