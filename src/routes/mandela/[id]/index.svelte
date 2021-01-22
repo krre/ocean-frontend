@@ -6,11 +6,11 @@
     import Frame from "../../../components/Frame.svelte";
 
     export async function preload(page: Page, session: Session) {
-        const { id } = page.params;
+        const id = +page.params.id;
         const url = "https://" + page.host + page.path;
 
         const params: api.Mandela.GetOne.Request = {
-            id: +id,
+            id: id,
         };
 
         const result = await api.Mandela.GetOne.exec(params);
@@ -43,8 +43,10 @@
 <script lang="ts">
     import * as consts from "consts";
     import * as bbcode from "bbcode";
+    import * as dialog from "dialog";
     import { goto } from "@sapper/app";
     import Comment from "../../../components/comment/Comment.svelte";
+    import SessionHub from "../../../components/SessionHub.svelte";
 
     export let id: number;
     export let mandela: api.Mandela.GetOne.Mandela;
@@ -61,6 +63,7 @@
     let voteValue = -1;
     let editVote = false;
     let showMandelaLinks = false;
+    let isAdmin = false;
 
     $: if (process.browser && session.user && mandela && !mandela.mark_ts) {
         mark();
@@ -73,6 +76,18 @@
 
     function edit() {
         goto(route.Mandela.Edit(id));
+    }
+
+    async function remove() {
+        if (!dialog.remove("Удалить манделу?")) return;
+
+        const params: api.Mandela.Delete.Request = {
+            id: [id],
+        };
+
+        await api.Mandela.Delete.exec(params);
+
+        alert("Мандела удалена!");
     }
 
     async function mark() {
@@ -156,6 +171,8 @@
     }
 </style>
 
+<SessionHub bind:isAdmin />
+
 <Frame {title}>
     <div class="grid">
         <div>ИД:</div>
@@ -201,9 +218,11 @@
     {/if}
 
     {#if session.user && session.user.id === mandela.user_id}
-        <p />
         <button on:click={edit}>Редактировать</button>
-        <p />
+    {/if}
+
+    {#if isAdmin}
+        <button on:click={remove}>Удалить</button>
     {/if}
 
     {#if !session.user || (vote != null && !editVote)}
