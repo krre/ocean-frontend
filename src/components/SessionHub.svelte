@@ -9,7 +9,7 @@
     export let isAdmin = false;
     export let isAnonym = true;
 
+    $: user = $session.user as User;
     $: isAdmin = user ? user.code === consts.Account.Admin : false;
     $: isAnonym = user ? user.code === consts.Account.Anonym : false;
-    $: user = $session.user as User;
 </script>
