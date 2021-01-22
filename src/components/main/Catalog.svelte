@@ -26,7 +26,6 @@
     let pollCount = 0;
     let categoryCount = 0;
 
-    let selected_delete: number[] = [];
     let currentCount = 0;
     let baseQuery = new URLSearchParams();
     let pageQuery = new URLSearchParams();
@@ -145,19 +144,6 @@
             currentCount = categoryCount;
         }
     }
-
-    async function deleteMandela() {
-        if (!selected_delete.length) return;
-
-        const params: api.Mandela.Delete.Request = {
-            id: selected_delete,
-        };
-
-        await api.Mandela.Delete.exec(params);
-
-        mandels = mandels.filter((m) => selected_delete.indexOf(m.id) === -1);
-        selected_delete = [];
-    }
 </script>
 
 <style>
@@ -194,28 +180,33 @@
             title="Всего"
             count={totalCount}
             active={filter == showAll}
-            on:clicked={() => (filter = showAll)} />
+            on:clicked={() => (filter = showAll)}
+        />
         {#if user}
             <Indicator
                 title="Новые"
                 count={newCount}
                 active={filter == showNew}
                 highlightNew={true}
-                on:clicked={() => (filter = showNew)} />
+                on:clicked={() => (filter = showNew)}
+            />
 
             <Indicator
                 title="Мои"
                 count={mineCount}
                 active={filter == showMine}
-                on:clicked={() => (filter = showMine)} />
+                on:clicked={() => (filter = showMine)}
+            />
 
             <Indicator
                 title="Опросы"
                 count={pollCount}
                 highlightNew={true}
                 active={filter == showPoll}
-                on:clicked={() => (filter = showPoll)} />
-            <span class="tool-bar-item">Категория:
+                on:clicked={() => (filter = showPoll)}
+            />
+            <span class="tool-bar-item"
+                >Категория:
                 <select bind:value={category}>
                     {#each categories as categoryName, i}
                         <option value={i} selected={category == i}>
@@ -225,7 +216,8 @@
                 </select>
             </span>
         {/if}
-        <span class="tool-bar-item">Сортировать по:
+        <span class="tool-bar-item"
+            >Сортировать по:
             <select bind:value={sort}>
                 {#each sorts as sortName, i}
                     <option value={i} selected={sort == i}>{sortName}</option>
@@ -234,25 +226,12 @@
         </span>
     </div>
 
-    {#if admin && mandels.length}
-        <div>
-            <button
-                style="margin-top: 0.5em"
-                on:click={deleteMandela}>Удалить</button>
-        </div>
-    {/if}
-
     {#each mandels as mandela}
         <div class="row">
-            {#if admin}
-                <input
-                    type="checkbox"
-                    bind:group={selected_delete}
-                    value={mandela.id} />
-            {/if}
             <a class="row-link" href={route.Mandela.Id(mandela.id)}>
-                <span
-                    class:new-mandela={user && !mandela.mark_ts}>{zeroLeading(mandela.id, zeroLeadingCount)}</span>
+                <span class:new-mandela={user && !mandela.mark_ts}
+                    >{zeroLeading(mandela.id, zeroLeadingCount)}</span
+                >
                 |
                 {formatDateTime(mandela.create_ts)}
                 |
@@ -273,4 +252,5 @@
     limit={pageLimit}
     offset={pageNo}
     {baseQuery}
-    bind:pageQuery />
+    bind:pageQuery
+/>
