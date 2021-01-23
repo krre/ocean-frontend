@@ -92,14 +92,15 @@
 <SessionHub bind:user bind:isAdmin />
 <Navigator category={categoryNav} section={sectionNav} />
 
-<FramePage title={topicName}>
+<FramePage title={topicName} showContent={posts.length > 0}>
     {#each posts as post, i}
         <PostElement
             row={i}
             {post}
             {topicUserId}
             on:removed={() => load()}
-            on:reply={(event) => replyPost(event.detail.row)} />
+            on:reply={(event) => replyPost(event.detail.row)}
+        />
     {/each}
 </FramePage>
 
@@ -107,7 +108,8 @@
     count={postCount}
     limit={pageLimit}
     offset={pageNo}
-    baseRoute={route.Forum.Topic.Id(topicId)} />
+    baseRoute={route.Forum.Topic.Id(topicId)}
+/>
 
 <Rectangle padding={false} solid={false}>
     <PostEditor bind:post bind:this={postEditorRef} />
