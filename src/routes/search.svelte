@@ -33,6 +33,7 @@
                 const mandela = await api.Search.GetById.exec(params);
 
                 if (mandela) {
+                    mandela.id = id;
                     mandels.push(mandela);
                     mandels = mandels;
                 }
