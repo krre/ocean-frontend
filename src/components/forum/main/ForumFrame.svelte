@@ -2,6 +2,7 @@
     import Rectangle from "../../Rectangle.svelte";
     export let title: string;
     export let showHeader = true;
+    export let showPoll = false;
     export let showContent = true;
 </script>
 
@@ -29,6 +30,12 @@
 <div class="btn">
     <slot name="button" />
 </div>
+
+{#if showPoll}
+    <Rectangle>
+        <slot name="poll" />
+    </Rectangle>
+{/if}
 
 {#if showContent}
     <Rectangle padding={false}>

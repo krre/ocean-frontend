@@ -72,4 +72,5 @@
     count={topicCount}
     limit={pageLimit}
     offset={pageNo}
-    baseRoute={route.Forum.Section.Id(sectionId)} />
+    baseRoute={route.Forum.Section.Id(sectionId)}
+/>

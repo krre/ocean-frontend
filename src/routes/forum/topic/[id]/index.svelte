@@ -2,6 +2,7 @@
     import * as route from "route";
     import * as api from "api";
     import * as consts from "consts";
+    import * as types from "types";
     import type { PathPart } from "forum";
     import type { User } from "types";
     import { sessionUserName } from "utils";
@@ -24,10 +25,16 @@
     let topicName: string;
     let topicUserId: number;
     let isAdmin = false;
+    let isAnonym = true;
     let user: User;
     let posts: EditedPost[] = [];
     let post: string;
     let postEditorRef: PostEditor;
+    let pollSelectionType: types.ForumPollAnswerSelection;
+    let poll: api.Forum.Post.GetAll.Poll[];
+    let isVoted = false;
+    let oneVote = -1;
+    let severalVote: number[] = [];
 
     let pageNo = 1;
     let postCount = 0;
@@ -54,6 +61,10 @@
         topicUserId = result.topic_user_id;
         postCount = result.post_count;
         posts = result.posts as EditedPost[];
+        poll = result.poll;
+        pollSelectionType = result.poll_selection_type;
+
+        console.log(pollSelectionType);
 
         categoryNav = {
             id: result.category_id,
@@ -81,18 +92,84 @@
         const post = posts[row];
         postEditorRef.appendReply(post.user_name, post.post);
     }
+
+    async function castVote() {}
 </script>
 
 <style>
     button {
         margin-top: 0.5em;
     }
+
+    .poll {
+        display: grid;
+        grid-template-columns: max-content max-content max-content;
+        gap: 0.5em;
+    }
+
+    .vote {
+        display: block;
+    }
 </style>
 
-<SessionHub bind:user bind:isAdmin />
+<SessionHub bind:user bind:isAdmin bind:isAnonym />
 <Navigator category={categoryNav} section={sectionNav} />
 
-<FramePage title={topicName} showContent={posts.length > 0}>
+<FramePage
+    title={topicName}
+    showPoll={poll && poll.length > 0}
+    showContent={posts.length > 0}
+>
+    <div slot="poll">
+        {#if poll}
+            {#if isAnonym || isVoted}
+                <div class="poll">
+                    {#each poll as answer}
+                        <div>{answer.answer}:</div>
+                        <div>{answer.count}</div>
+                        <div>
+                            {#if !isAnonym && answer.voted}
+                                <i
+                                    class="far fa-check-circle"
+                                    style="color: green"
+                                />
+                            {/if}
+                        </div>
+                    {/each}
+                </div>
+            {:else}
+                {#each poll as answer, i}
+                    {#if pollSelectionType === types.ForumPollAnswerSelection.One}
+                        <label class="vote">
+                            <input
+                                type="radio"
+                                bind:group={oneVote}
+                                value={i}
+                            />
+                            {answer.answer}
+                        </label>
+                    {:else}
+                        <label class="vote">
+                            <input
+                                type="checkbox"
+                                bind:group={severalVote}
+                                value={i}
+                            />
+                            {answer.answer}
+                        </label>
+                    {/if}
+                {/each}
+
+                <button
+                    on:click={castVote}
+                    disabled={pollSelectionType ==
+                    types.ForumPollAnswerSelection.One
+                        ? oneVote < 0
+                        : severalVote.length == 0}> Выбрать </button>
+            {/if}
+        {/if}
+    </div>
+
     {#each posts as post, i}
         <PostElement
             row={i}
