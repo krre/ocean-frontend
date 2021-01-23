@@ -3,6 +3,7 @@
 
     export let name = "";
     export let action = () => {};
+    export let pollVisible = true;
     export let type = types.ForumTopicType.Common;
     export let answerSelection = types.ForumPollAnswerSelection.One;
     export let answers: string[] = [];
@@ -12,6 +13,11 @@
 
     function beforeAction() {
         if (type == types.ForumTopicType.Poll) {
+            if (answers.length < 2) {
+                alert("Количество ответов в опросе должно быть не менее двух!");
+                return;
+            }
+
             for (let answer of answers) {
                 if (!answer) {
                     alert("В опросе есть незаполненные ответы!");
@@ -40,71 +46,76 @@
 
 <div class="form">
     Название: <input type="text" bind:value={name} />
-    <div>
-        <label>
-            <input
-                type="radio"
-                bind:group={type}
-                value={types.ForumTopicType.Common}
-            />
-            Обычная тема
-        </label>
 
-        <label>
-            <input
-                type="radio"
-                bind:group={type}
-                value={types.ForumTopicType.Poll}
-            />
-            Опрос
-        </label>
-    </div>
+    {#if pollVisible}
+        <div>
+            <label>
+                <input
+                    type="radio"
+                    bind:group={type}
+                    value={types.ForumTopicType.Common}
+                />
+                Обычная тема
+            </label>
 
-    {#if type == types.ForumTopicType.Poll}
-        <div>Укажите вопрос в названии темы и добавьте варианты ответа.</div>
+            <label>
+                <input
+                    type="radio"
+                    bind:group={type}
+                    value={types.ForumTopicType.Poll}
+                />
+                Опрос
+            </label>
+        </div>
 
-        {#each answers as answer, i}
-            <div class="answer">
-                <input bind:value={answer} />
+        {#if type == types.ForumTopicType.Poll}
+            <div>
+                Укажите вопрос в названии темы и добавьте варианты ответа.
+            </div>
+
+            {#each answers as answer, i}
+                <div class="answer">
+                    <input bind:value={answer} />
+                    <button
+                        on:click={() => {
+                            answers.splice(i, 1);
+                            answers = answers;
+                        }}>Удалить</button
+                    >
+                </div>
+            {/each}
+
+            <div>
                 <button
                     on:click={() => {
-                        answers.splice(i, 1);
+                        answers.push("");
                         answers = answers;
-                    }}>Удалить</button
+                    }}>Добавить</button
                 >
             </div>
-        {/each}
 
-        <div>
-            <button
-                on:click={() => {
-                    answers.push("");
-                    answers = answers;
-                }}>Добавить</button
-            >
-        </div>
+            Сколько вариантов можно выбрать?
 
-        Сколько вариантов можно выбрать?
+            <div>
+                <label>
+                    <input
+                        type="radio"
+                        bind:group={answerSelection}
+                        value={types.ForumPollAnswerSelection.One}
+                    />
+                    Один
+                </label>
 
-        <div>
-            <label>
-                <input
-                    type="radio"
-                    bind:group={answerSelection}
-                    value={types.ForumPollAnswerSelection.One}
-                />
-                Один
-            </label>
-
-            <label>
-                <input
-                    type="radio"
-                    bind:group={answerSelection}
-                    value={types.ForumPollAnswerSelection.Several}
-                />
-                Несколько
-            </label>
-        </div>
+                <label>
+                    <input
+                        type="radio"
+                        bind:group={answerSelection}
+                        value={types.ForumPollAnswerSelection.Several}
+                    />
+                    Несколько
+                </label>
+            </div>
+        {/if}
     {/if}
 
     <div>
