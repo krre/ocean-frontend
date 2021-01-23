@@ -2,6 +2,7 @@
     import * as route from "route";
     import * as dialog from "dialog";
     import * as api from "api";
+    import * as types from "types";
     import type { User } from "types";
     import { goto } from "@sapper/app";
     import { createEventDispatcher } from "svelte";
@@ -57,7 +58,12 @@
 <SessionHub bind:user bind:isAdmin bind:isAnonym />
 
 <div class="topic">
-    <a href={route.Forum.Topic.Id(topic.id)}>{topic.name}</a>
+    <a href={route.Forum.Topic.Id(topic.id)}>
+        {#if topic.type == types.ForumTopicType.Poll}
+            <i class="fas fa-poll" />
+        {/if}
+        {topic.name}</a
+    >
     <br /><br />
     <div>Автор темы: {topic.user_name}</div>
     {#if editable}
