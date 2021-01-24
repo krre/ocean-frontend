@@ -49,6 +49,15 @@
         load();
     }
 
+    $: if (poll) {
+        for (const answer of poll) {
+            if (answer.voted) {
+                isVoted = true;
+                break;
+            }
+        }
+    }
+
     async function load() {
         const params: api.Forum.Post.GetAll.Request = {
             topic_id: topicId,
