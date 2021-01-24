@@ -5,11 +5,11 @@
 
     const { session } = stores();
 
-    export let user: User;
+    export let user: User = null;
     export let isAdmin = false;
     export let isAnonym = true;
 
     $: user = $session.user as User;
     $: isAdmin = user ? user.code === consts.Account.Admin : false;
-    $: isAnonym = user ? user.code === consts.Account.Anonym : false;
+    $: isAnonym = !user || user.code === consts.Account.Anonym;
 </script>
