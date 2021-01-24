@@ -35,6 +35,7 @@
     let isVoted = false;
     let oneVote = -1;
     let severalVote: number[] = [];
+    let editVote = false;
 
     let pageNo = 1;
     let postCount = 0;
@@ -116,7 +117,7 @@
 
         const result = await api.Forum.Topic.Vote.exec(params);
         poll = result.poll;
-        // editVote = false;
+        editVote = false;
     }
 </script>
 
@@ -146,7 +147,7 @@
 >
     <div slot="poll">
         {#if poll}
-            {#if isAnonym || isVoted}
+            {#if (isAnonym || isVoted) && !editVote}
                 <div class="poll">
                     {#each poll as answer}
                         <div>{answer.answer}:</div>
@@ -161,6 +162,15 @@
                         </div>
                     {/each}
                 </div>
+
+                {#if !isAnonym}
+                    <button on:click={() => (editVote = true)}
+                        >Изменить выбор</button
+                    >
+                {:else}
+                    <br />
+                    Голосовать могут только зарегистрированные пользователи.
+                {/if}
             {:else}
                 {#each poll as answer}
                     {#if pollSelectionType === types.ForumPollAnswerSelection.One}
