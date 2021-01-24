@@ -47,6 +47,7 @@
     import { goto } from "@sapper/app";
     import Comment from "../../../components/comment/Comment.svelte";
     import SessionHub from "../../../components/SessionHub.svelte";
+    import Rectangle from "../../../components/Rectangle.svelte";
 
     export let id: number;
     export let mandela: api.Mandela.GetOne.Mandela;
@@ -211,10 +212,12 @@
         {/if}
 
         {#if categories.length}
-            Категории:
-            {#each categories as category}{consts.Categories[
-                    category
-                ]}&nbsp;{/each}
+            <div>
+                Категории:
+                {#each categories as category}{consts.Categories[
+                        category
+                    ]}&nbsp;{/each}
+            </div>
         {/if}
 
         {#if !isAnonym && (session.user.id === mandela.user_id || isAdmin)}
@@ -229,6 +232,31 @@
             </div>
         {/if}
 
+        <div on:click={() => (showMandelaLinks = !showMandelaLinks)}>
+            <span class="mandela-link">Ссылка на манделу</span>
+        </div>
+
+        {#if showMandelaLinks}
+            <div class="mandela-link-grid">
+                <input readonly value={url} />
+                <button on:click={() => copyLink(url)}
+                    ><i class="far fa-copy" /></button
+                >
+                <input readonly value={htmlUrl} />
+                <button on:click={() => copyLink(htmlUrl)}
+                    ><i class="far fa-copy" /></button
+                >
+                <input readonly value={bbCodeUrl} />
+                <button on:click={() => copyLink(bbCodeUrl)}
+                    ><i class="far fa-copy" /></button
+                >
+            </div>
+        {/if}
+    </div>
+</Frame>
+
+<Rectangle>
+    <div class="container">
         {#if !session.user || (vote != null && !editVote)}
             <div>Результаты опроса:</div>
             <div class="grid" style="margin-left: 1em">
@@ -269,29 +297,8 @@
                 </button>
             </div>
         {/if}
-
-        <div on:click={() => (showMandelaLinks = !showMandelaLinks)}>
-            <span class="mandela-link">Ссылка на манделу</span>
-        </div>
-
-        {#if showMandelaLinks}
-            <div class="mandela-link-grid">
-                <input readonly value={url} />
-                <button on:click={() => copyLink(url)}
-                    ><i class="far fa-copy" /></button
-                >
-                <input readonly value={htmlUrl} />
-                <button on:click={() => copyLink(htmlUrl)}
-                    ><i class="far fa-copy" /></button
-                >
-                <input readonly value={bbCodeUrl} />
-                <button on:click={() => copyLink(bbCodeUrl)}
-                    ><i class="far fa-copy" /></button
-                >
-            </div>
-        {/if}
     </div>
-</Frame>
+</Rectangle>
 
 <h2>Комментарии</h2>
 
