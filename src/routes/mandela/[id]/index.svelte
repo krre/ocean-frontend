@@ -64,6 +64,7 @@
     let editVote = false;
     let showMandelaLinks = false;
     let isAdmin = false;
+    let isAnonym = true;
 
     $: if (process.browser && session.user && mandela && !mandela.mark_ts) {
         mark();
@@ -130,6 +131,12 @@
 </script>
 
 <style>
+    .container {
+        display: flex;
+        flex-direction: column;
+        gap: 1em;
+    }
+
     .grid {
         display: grid;
         grid-template-columns: max-content auto;
@@ -150,10 +157,6 @@
         margin-left: 1rem;
     }
 
-    .mandela-link-container {
-        margin-top: 1em;
-    }
-
     .mandela-link {
         cursor: pointer;
         border-bottom-style: dashed;
@@ -164,126 +167,130 @@
 
     .mandela-link-grid {
         width: min(40em, 100%);
-        margin-top: 1em;
         display: grid;
         gap: 0.5em;
         grid-template-columns: 1fr auto;
     }
 </style>
 
-<SessionHub bind:isAdmin />
+<SessionHub bind:isAdmin bind:isAnonym />
 
 <Frame {title}>
-    <div class="grid">
-        <div>ИД:</div>
-        <div>{mandela.id}</div>
-        <div>Добавлено:</div>
-        <div>{mandela.user_name}</div>
-        <div>Создано:</div>
-        <div>{formatDateTime(mandela.create_ts)}</div>
-
-        {#if mandela.create_ts !== mandela.update_ts}
-            <div>Изменено:</div>
-            <div>{formatDateTime(mandela.update_ts)}</div>
-        {/if}
-        {#if mandela.mark_ts}
-            <div>Просмотрено:</div>
-            <div>{formatDateTime(mandela.mark_ts)}</div>
-        {/if}
-    </div>
-
-    <hr />
-
-    {#if mandela.title_mode === consts.Mandela.Title.Complex}
+    <div class="container">
         <div class="grid">
-            <div>Было:</div>
-            <div>{mandela.before}</div>
-            <div>Стало:</div>
-            <div>{mandela.after}</div>
-        </div>
-    {/if}
+            <div>ИД:</div>
+            <div>{mandela.id}</div>
+            <div>Добавлено:</div>
+            <div>{mandela.user_name}</div>
+            <div>Создано:</div>
+            <div>{formatDateTime(mandela.create_ts)}</div>
 
-    {#if mandela.description}
-        <p />
-        <div class="message">
-            {@html bbcode.parse(mandela.description)}
-        </div>
-        <hr />
-    {/if}
-
-    {#if categories.length}
-        Категории:
-        {#each categories as category}{consts.Categories[category]}&nbsp;{/each}
-        <hr />
-    {/if}
-
-    {#if session.user && session.user.id === mandela.user_id}
-        <button on:click={edit}>Редактировать</button>
-    {/if}
-
-    {#if isAdmin}
-        <button on:click={remove}>Удалить</button>
-    {/if}
-
-    {#if !session.user || (vote != null && !editVote)}
-        <p>Результаты опроса:</p>
-        <div class="grid" style="margin-left: 1em">
-            {#each consts.Votes as voteName, i}
-                <div>{voteName}:</div>
-                <div>{getVoteCount(i)}</div>
-            {/each}
-        </div>
-        <p />
-        <div class="grid">
-            <div>Всего голосов:</div>
-            <div>{totalVotes}</div>
-            {#if session.user}
-                <div>Выбрано:</div>
-                <div>{consts.Votes[vote]}</div>
+            {#if mandela.create_ts !== mandela.update_ts}
+                <div>Изменено:</div>
+                <div>{formatDateTime(mandela.update_ts)}</div>
+            {/if}
+            {#if mandela.mark_ts}
+                <div>Просмотрено:</div>
+                <div>{formatDateTime(mandela.mark_ts)}</div>
             {/if}
         </div>
-        <p />
-        {#if session.user}
-            <button on:click={() => (editVote = true)}>Изменить выбор</button>
-        {:else}Голосовать могут только зарегистрированные пользователи.{/if}
-    {:else}
-        <p>Является ли для вас это манделой?</p>
-        <p>
-            {#each consts.Votes as voteName, i}
-                <label class="vote">
-                    <input type="radio" bind:group={voteValue} value={i} />
-                    {voteName}
-                </label>
-            {/each}
-        </p>
-        <button on:click={castVote} disabled={voteValue < 0}>
-            Проголосовать
-        </button>
-    {/if}
 
-    <div
-        class="mandela-link-container"
-        on:click={() => (showMandelaLinks = !showMandelaLinks)}
-    >
-        <span class="mandela-link">Ссылка на манделу</span>
-    </div>
+        {#if mandela.title_mode === consts.Mandela.Title.Complex}
+            <div class="grid">
+                <div>Было:</div>
+                <div>{mandela.before}</div>
+                <div>Стало:</div>
+                <div>{mandela.after}</div>
+            </div>
+        {/if}
 
-    {#if showMandelaLinks}
-        <div class="mandela-link-grid">
-            <input readonly value={url} />
-            <button on:click={() => copyLink(url)}
-                ><i class="far fa-copy" /></button
-            >
-            <input readonly value={htmlUrl} />
-            <button on:click={() => copyLink(htmlUrl)}
-                ><i class="far fa-copy" /></button
-            >
-            <input readonly value={bbCodeUrl} />
-            <button on:click={() => copyLink(bbCodeUrl)}
-                ><i class="far fa-copy" /></button
-            >
+        {#if mandela.description}
+            <div class="message">
+                {@html bbcode.parse(mandela.description)}
+            </div>
+        {/if}
+
+        {#if categories.length}
+            Категории:
+            {#each categories as category}{consts.Categories[
+                    category
+                ]}&nbsp;{/each}
+        {/if}
+
+        {#if !isAnonym && (session.user.id === mandela.user_id || isAdmin)}
+            <div>
+                {#if session.user.id === mandela.user_id}
+                    <button on:click={edit}>Редактировать</button>
+                {/if}
+
+                {#if isAdmin}
+                    <button on:click={remove}>Удалить</button>
+                {/if}
+            </div>
+        {/if}
+
+        {#if !session.user || (vote != null && !editVote)}
+            <div>Результаты опроса:</div>
+            <div class="grid" style="margin-left: 1em">
+                {#each consts.Votes as voteName, i}
+                    <div>{voteName}:</div>
+                    <div>{getVoteCount(i)}</div>
+                {/each}
+            </div>
+            <div class="grid">
+                <div>Всего голосов:</div>
+                <div>{totalVotes}</div>
+                {#if session.user}
+                    <div>Выбрано:</div>
+                    <div>{consts.Votes[vote]}</div>
+                {/if}
+            </div>
+            {#if session.user}
+                <div>
+                    <button on:click={() => (editVote = true)}
+                        >Изменить выбор</button
+                    >
+                </div>
+            {:else}Голосовать могут только зарегистрированные пользователи.{/if}
+        {:else}
+            <div>Является ли для вас это манделой?</div>
+            <div>
+                {#each consts.Votes as voteName, i}
+                    <label class="vote">
+                        <input type="radio" bind:group={voteValue} value={i} />
+                        {voteName}
+                    </label>
+                {/each}
+            </div>
+
+            <div>
+                <button on:click={castVote} disabled={voteValue < 0}>
+                    Проголосовать
+                </button>
+            </div>
+        {/if}
+
+        <div on:click={() => (showMandelaLinks = !showMandelaLinks)}>
+            <span class="mandela-link">Ссылка на манделу</span>
         </div>
-    {/if}
+
+        {#if showMandelaLinks}
+            <div class="mandela-link-grid">
+                <input readonly value={url} />
+                <button on:click={() => copyLink(url)}
+                    ><i class="far fa-copy" /></button
+                >
+                <input readonly value={htmlUrl} />
+                <button on:click={() => copyLink(htmlUrl)}
+                    ><i class="far fa-copy" /></button
+                >
+                <input readonly value={bbCodeUrl} />
+                <button on:click={() => copyLink(bbCodeUrl)}
+                    ><i class="far fa-copy" /></button
+                >
+            </div>
+        {/if}
+    </div>
 </Frame>
 
 <h2>Комментарии</h2>
