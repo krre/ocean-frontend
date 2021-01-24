@@ -247,7 +247,7 @@
             <button on:click={() => (editVote = true)}>Изменить выбор</button>
         {:else}Голосовать могут только зарегистрированные пользователи.{/if}
     {:else}
-        Является ли для вас это манделой?
+        <p>Является ли для вас это манделой?</p>
         <p>
             {#each consts.Votes as voteName, i}
                 <label class="vote">
