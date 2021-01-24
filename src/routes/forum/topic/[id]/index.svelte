@@ -4,7 +4,7 @@
     import * as consts from "consts";
     import * as types from "types";
     import type { PathPart } from "forum";
-    import type { User } from "types";
+    import type { User, ForumTopicPoll } from "types";
     import { sessionUserName } from "utils";
     import { stores } from "@sapper/app";
     import Rectangle from "../../../../components/Rectangle.svelte";
@@ -31,7 +31,7 @@
     let post: string;
     let postEditorRef: PostEditor;
     let pollSelectionType: types.ForumPollAnswerSelection;
-    let poll: api.Forum.Post.GetAll.Poll[];
+    let poll: ForumTopicPoll[];
     let isVoted = false;
     let oneVote = -1;
     let severalVote: number[] = [];
@@ -64,8 +64,6 @@
         poll = result.poll;
         pollSelectionType = result.poll_selection_type;
 
-        console.log(pollSelectionType);
-
         categoryNav = {
             id: result.category_id,
             name: result.category_name,
@@ -93,7 +91,24 @@
         postEditorRef.appendReply(post.user_name, post.post);
     }
 
-    async function castVote() {}
+    async function castVote() {
+        let votes: number[] = [];
+
+        if (pollSelectionType === types.ForumPollAnswerSelection.One) {
+            votes.push(oneVote);
+        } else {
+            votes = severalVote;
+        }
+
+        const params: api.Forum.Topic.Vote.Request = {
+            id: topicId,
+            votes: votes,
+        };
+
+        const result = await api.Forum.Topic.Vote.exec(params);
+        poll = result.poll;
+        // editVote = false;
+    }
 </script>
 
 <style>
@@ -138,13 +153,13 @@
                     {/each}
                 </div>
             {:else}
-                {#each poll as answer, i}
+                {#each poll as answer}
                     {#if pollSelectionType === types.ForumPollAnswerSelection.One}
                         <label class="vote">
                             <input
                                 type="radio"
                                 bind:group={oneVote}
-                                value={i}
+                                value={answer.id}
                             />
                             {answer.answer}
                         </label>
@@ -153,19 +168,22 @@
                             <input
                                 type="checkbox"
                                 bind:group={severalVote}
-                                value={i}
+                                value={answer.id}
                             />
                             {answer.answer}
                         </label>
                     {/if}
                 {/each}
 
+                <div style="margin: 0.5em" />
+
                 <button
                     on:click={castVote}
                     disabled={pollSelectionType ==
                     types.ForumPollAnswerSelection.One
                         ? oneVote < 0
-                        : severalVote.length == 0}> Выбрать </button>
+                        : severalVote.length == 0}>Выбрать</button
+                >
             {/if}
         {/if}
     </div>
