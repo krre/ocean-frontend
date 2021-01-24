@@ -8,12 +8,16 @@
     export let answerSelection = types.ForumPollAnswerSelection.One;
     export let answers: string[] = [];
 
+    let other = true;
+
     $: buttonEnabled =
         type === types.ForumTopicType.Common ? name : name && answers.length;
 
     function beforeAction() {
         if (type == types.ForumTopicType.Poll) {
-            if (answers.length < 2) {
+            const count = answers.length + (other ? 1 : 0);
+
+            if (count < 2) {
                 alert("Количество ответов в опросе должно быть не менее двух!");
                 return;
             }
@@ -23,6 +27,10 @@
                     alert("В опросе есть незаполненные ответы!");
                     return;
                 }
+            }
+
+            if (other) {
+                answers.push("Другое");
             }
         }
 
@@ -72,6 +80,11 @@
             <div>
                 Укажите вопрос в названии темы и добавьте варианты ответа.
             </div>
+
+            <label>
+                <input type="checkbox" bind:checked={other} />
+                Автоматически добавить вариант "Другое"</label
+            >
 
             {#each answers as answer, i}
                 <div class="answer">
