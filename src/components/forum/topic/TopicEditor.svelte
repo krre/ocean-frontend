@@ -3,7 +3,7 @@
 
     export let name = "";
     export let action = () => {};
-    export let pollVisible = true;
+    export let appendMode = true;
     export let type = types.ForumTopicType.Common;
     export let answerSelection = types.ForumPollAnswerSelection.One;
     export let answers: string[] = [];
@@ -55,7 +55,7 @@
 <div class="form">
     Название: <input type="text" bind:value={name} />
 
-    {#if pollVisible}
+    {#if appendMode}
         <div>
             <label>
                 <input

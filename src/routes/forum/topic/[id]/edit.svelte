@@ -55,6 +55,6 @@
     {#if !editable}
         Доступ запрещён
     {:else}
-        <TopicEditor bind:name {action} pollVisible={false} />
+        <TopicEditor bind:name {action} appendMode={false} />
     {/if}
 </Frame>
