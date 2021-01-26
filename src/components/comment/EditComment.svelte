@@ -29,6 +29,6 @@
 <PostEditor bind:post={text} />
 
 <div class="row-btn">
-    <button on:click={send}>Отправить</button>
+    <button on:click={send} disabled={!text}>Отправить</button>
     <button on:click={cancel}>Отменить</button>
 </div>

@@ -9,6 +9,7 @@
     import * as bbcode from "bbcode";
 
     export let post = "";
+
     let areaRef: TextArea;
     let isPreview = false;
     let isSmilePanelActive = false;
@@ -132,29 +133,35 @@
 
             <button on:click={appendItalic}><i class="fas fa-italic" /></button>
 
-            <button on:click={appendUnderline}><i
-                    class="fas fa-underline" /></button>
+            <button on:click={appendUnderline}
+                ><i class="fas fa-underline" /></button
+            >
 
-            <button on:click={appendStrikethrough}><i
-                    class="fas fa-strikethrough" /></button>
+            <button on:click={appendStrikethrough}
+                ><i class="fas fa-strikethrough" /></button
+            >
+
+            <button on:click={() => dialog.open(LinkDialog, { onOk: onOkLink })}
+                ><i class="fas fa-link" /></button
+            >
 
             <button
-                on:click={() => dialog.open(LinkDialog, { onOk: onOkLink })}><i
-                    class="fas fa-link" /></button>
-
-            <button
-                on:click={() => dialog.open(ImageDialog, {
+                on:click={() =>
+                    dialog.open(ImageDialog, {
                         onOk: onOkImage,
-                    })}><i class="fas fa-image" /></button>
+                    })}><i class="fas fa-image" /></button
+            >
 
             <button
-                on:click={() => dialog.open(VideoDialog, {
+                on:click={() =>
+                    dialog.open(VideoDialog, {
                         onOk: onOkVideo,
-                    })}><i class="fab fa-youtube" /></button>
+                    })}><i class="fab fa-youtube" /></button
+            >
 
-            <button
-                on:click={() => (isSmilePanelActive = !isSmilePanelActive)}><i
-                    class="far fa-smile" /></button>
+            <button on:click={() => (isSmilePanelActive = !isSmilePanelActive)}
+                ><i class="far fa-smile" /></button
+            >
         </div>
 
         <div class="toolbar-spacing" />
@@ -167,7 +174,8 @@
         <SmilePanel
             on:selected={(event) => {
                 post += event.detail.smile;
-            }} />
+            }}
+        />
     {/if}
 
     {#if !isPreview}
@@ -175,7 +183,8 @@
             class="area"
             rows="10"
             bind:value={post}
-            bind:this={areaRef} />
+            bind:this={areaRef}
+        />
     {:else}
         <div class="preview">
             {@html bbcode.parse(post)}

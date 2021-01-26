@@ -1,5 +1,4 @@
 <script lang="ts">
-    import { sessionUserName } from "utils";
     import type { User } from "types";
     import { stores } from "@sapper/app";
     import * as consts from "consts";
@@ -8,7 +7,7 @@
     import * as api from "api";
     import Rectangle from "../Rectangle.svelte";
     import PostTitle from "../PostTitle.svelte";
-    import PostEditor from "../post/PostEditor.svelte";
+    import MessageEditor from "../post/MessageEditor.svelte";
     import EditComment from "./EditComment.svelte";
     import Pagination from "../Pagination.svelte";
 
@@ -28,8 +27,7 @@
 
     let comments: EditedComment[] = [];
     let message: string;
-    let userName = sessionUserName(user);
-    let postEditorRef: PostEditor;
+    let messageEditorRef: MessageEditor;
 
     $: if (process.browser && $page.query) {
         pageNo = +$page.query.page || 1;
@@ -55,7 +53,6 @@
         };
 
         await api.Comment.Create.exec(params);
-        message = "";
         load();
     }
 
@@ -82,7 +79,7 @@
 
     function replyComment(row: number) {
         const comment = comments[row];
-        postEditorRef.appendReply(comment.user_name, comment.message);
+        messageEditorRef.appendReply(comment.user_name, comment.message);
     }
 </script>
 
@@ -94,10 +91,6 @@
 
     .post:last-child {
         border-bottom: none;
-    }
-
-    .send {
-        margin-top: 10px;
     }
 
     .message {
@@ -115,17 +108,22 @@
                     row={i}
                     author={comment.user_name}
                     date={comment.create_ts}
-                    edited={user && (comment.user_id === user.id || user.id === consts.Account.Id.Admin)}
-                    on:edit={(event) => (comments[event.detail.row].edit = true)}
+                    edited={user &&
+                        (comment.user_id === user.id ||
+                            user.id === consts.Account.Id.Admin)}
+                    on:edit={(event) =>
+                        (comments[event.detail.row].edit = true)}
                     on:remove={(event) => deleteComment(event.detail.row)}
-                    on:reply={(event) => replyComment(event.detail.row)} />
+                    on:reply={(event) => replyComment(event.detail.row)}
+                />
                 <div />
 
                 {#if comment.edit}
                     <EditComment
                         text={comment.message}
                         on:send={(event) => editComment(i, event.detail.text)}
-                        on:cancel={() => (comment.edit = false)} />
+                        on:cancel={() => (comment.edit = false)}
+                    />
                 {:else}
                     <div class="message">
                         {@html bbcode.parse(comment.message)}
@@ -139,15 +137,12 @@
         count={commentCount}
         limit={pageLimit}
         offset={pageNo}
-        baseRoute={route.Mandela.Id(mandelaId)} />
+        baseRoute={route.Mandela.Id(mandelaId)}
+    />
 {/if}
 
-<Rectangle padding={false} solid={false}>
-    <PostEditor bind:post={message} bind:this={postEditorRef} />
-
-    <div>Пользователь: {userName}</div>
-    <button
-        class="send"
-        on:click={append}
-        disabled={!message}>Отправить</button>
-</Rectangle>
+<MessageEditor
+    bind:message
+    bind:this={messageEditorRef}
+    appendAction={() => append()}
+/>

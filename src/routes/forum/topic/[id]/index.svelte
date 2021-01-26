@@ -5,15 +5,13 @@
     import * as types from "types";
     import type { PathPart } from "forum";
     import type { User, ForumTopicPoll } from "types";
-    import { sessionUserName } from "utils";
     import { stores } from "@sapper/app";
-    import Rectangle from "../../../../components/Rectangle.svelte";
     import FramePage from "../../../../components/forum/main/ForumFrame.svelte";
     import SessionHub from "../../../../components/SessionHub.svelte";
     import PostElement from "../../../../components/forum/post/PostElement.svelte";
     import Navigator from "../../../../components/forum/main/Navigator.svelte";
     import Pagination from "../../../../components/Pagination.svelte";
-    import PostEditor from "../../../../components/post/PostEditor.svelte";
+    import MessageEditor from "../../../../components/post/MessageEditor.svelte";
 
     const { page } = stores();
     const topicId = +$page.params.id;
@@ -28,8 +26,8 @@
     let isAnonym = true;
     let user: User;
     let posts: EditedPost[] = [];
-    let post: string;
-    let postEditorRef: PostEditor;
+    let post = "";
+    let messageEditorRef: MessageEditor;
     let pollSelectionType: types.ForumPollAnswerSelection;
     let poll: ForumTopicPoll[];
     let isVoted = false;
@@ -92,13 +90,12 @@
         };
 
         await api.Forum.Post.Create.exec(params);
-        post = "";
         load();
     }
 
     function replyPost(row: number) {
         const post = posts[row];
-        postEditorRef.appendReply(post.user_name, post.post);
+        messageEditorRef.appendReply(post.user_name, post.post);
     }
 
     async function castVote() {
@@ -225,8 +222,8 @@
     baseRoute={route.Forum.Topic.Id(topicId)}
 />
 
-<Rectangle padding={false} solid={false}>
-    <PostEditor bind:post bind:this={postEditorRef} />
-    <div>Пользователь: {sessionUserName(user)}</div>
-    <div><button on:click={append} disabled={!post}>Отправить</button></div>
-</Rectangle>
+<MessageEditor
+    bind:this={messageEditorRef}
+    bind:message={post}
+    appendAction={() => append()}
+/>
