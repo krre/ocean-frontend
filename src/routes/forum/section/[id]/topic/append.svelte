@@ -30,8 +30,8 @@
             params.poll_answer_selection = answerSelection;
         }
 
-        await api.Forum.Topic.Create.exec(params);
-        goto(route.Forum.Section.Id(sectionId));
+        const result = await api.Forum.Topic.Create.exec(params);
+        goto(route.Forum.Topic.Id(result.id));
     };
 </script>
 
