@@ -23,7 +23,6 @@
     import * as route from "route";
     import Frame from "../../../../components/Frame.svelte";
     import SessionHub from "../../../../components/SessionHub.svelte";
-    import TopicEditor from "../../../../components/forum/topic/TopicEditor.svelte";
 
     const title = "Редактировать тему";
 
@@ -49,12 +48,25 @@
     };
 </script>
 
+<style>
+    .form {
+        display: grid;
+        gap: 0.8em;
+    }
+</style>
+
 <SessionHub bind:isAdmin bind:isAnonym bind:user />
 
 <Frame {title}>
     {#if !editable}
         Доступ запрещён
     {:else}
-        <TopicEditor bind:name {action} appendMode={false} />
+        <div class="form">
+            Название: <input type="text" bind:value={name} />
+
+            <div>
+                <button on:click={action} disabled={!name}>Отправить</button>
+            </div>
+        </div>
     {/if}
 </Frame>
