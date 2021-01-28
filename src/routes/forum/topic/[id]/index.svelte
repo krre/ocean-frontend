@@ -1,11 +1,36 @@
+<script context="module" lang="ts">
+    import * as api from "api";
+    import type { Session, Page } from "types";
+
+    const PAGE_LIMIT = consts.Forum.Post.PageLimit;
+
+    export async function preload(page: Page, _session: Session) {
+        const topicId = +page.params.id;
+        const pageNo = +page.query.page || 1;
+        const getAllResponse = await load(topicId, pageNo);
+        return { getAllResponse, pageNo, topicId };
+    }
+
+    async function load(
+        topicId: number,
+        pageNo: number
+    ): Promise<api.Forum.Post.GetAll.Response> {
+        const params: api.Forum.Post.GetAll.Request = {
+            topic_id: topicId,
+            offset: (pageNo - 1) * PAGE_LIMIT,
+            limit: PAGE_LIMIT,
+        };
+
+        return await api.Forum.Post.GetAll.exec(params);
+    }
+</script>
+
 <script lang="ts">
     import * as route from "route";
-    import * as api from "api";
     import * as consts from "consts";
     import * as types from "types";
     import type { PathPart } from "forum";
     import type { User, ForumTopicPoll } from "types";
-    import { stores } from "@sapper/app";
     import FramePage from "../../../../components/forum/main/ForumFrame.svelte";
     import SessionHub from "../../../../components/SessionHub.svelte";
     import PostElement from "../../../../components/forum/post/PostElement.svelte";
@@ -13,12 +38,13 @@
     import Pagination from "../../../../components/Pagination.svelte";
     import MessageEditor from "../../../../components/post/MessageEditor.svelte";
 
-    const { page } = stores();
-    const topicId = +$page.params.id;
-
     interface EditedPost extends api.Forum.Post.GetAll.Post {
         edit: boolean;
     }
+
+    export let getAllResponse: api.Forum.Post.GetAll.Response;
+    export let topicId = 0;
+    export let pageNo = 1;
 
     let topicName: string;
     let topicUserId: number;
@@ -35,17 +61,28 @@
     let severalVote: number[] = [];
     let editVote = false;
 
-    let pageNo = 1;
     let postCount = 0;
-
-    const pageLimit = consts.Forum.Post.PageLimit;
 
     let categoryNav: PathPart;
     let sectionNav: PathPart;
 
-    $: if (process.browser && $page.query) {
-        pageNo = +$page.query.page || 1;
-        load();
+    $: {
+        topicName = getAllResponse.topic_name;
+        topicUserId = getAllResponse.topic_user_id;
+        postCount = getAllResponse.post_count;
+        posts = getAllResponse.posts as EditedPost[];
+        poll = getAllResponse.poll;
+        pollSelectionType = getAllResponse.poll_selection_type;
+
+        categoryNav = {
+            id: getAllResponse.category_id,
+            name: getAllResponse.category_name,
+        };
+
+        sectionNav = {
+            id: getAllResponse.section_id,
+            name: getAllResponse.section_name,
+        };
     }
 
     $: if (poll) {
@@ -57,30 +94,8 @@
         }
     }
 
-    async function load() {
-        const params: api.Forum.Post.GetAll.Request = {
-            topic_id: topicId,
-            offset: (pageNo - 1) * pageLimit,
-            limit: pageLimit,
-        };
-
-        const result = await api.Forum.Post.GetAll.exec(params);
-        topicName = result.topic_name;
-        topicUserId = result.topic_user_id;
-        postCount = result.post_count;
-        posts = result.posts as EditedPost[];
-        poll = result.poll;
-        pollSelectionType = result.poll_selection_type;
-
-        categoryNav = {
-            id: result.category_id,
-            name: result.category_name,
-        };
-
-        sectionNav = {
-            id: result.section_id,
-            name: result.section_name,
-        };
+    async function reload() {
+        getAllResponse = await load(topicId, pageNo);
     }
 
     async function append() {
@@ -90,7 +105,7 @@
         };
 
         await api.Forum.Post.Create.exec(params);
-        load();
+        reload();
     }
 
     function replyPost(row: number) {
@@ -209,7 +224,7 @@
             row={i}
             {post}
             {topicUserId}
-            on:removed={() => load()}
+            on:removed={() => reload()}
             on:reply={(event) => replyPost(event.detail.row)}
         />
     {/each}
@@ -217,7 +232,7 @@
 
 <Pagination
     count={postCount}
-    limit={pageLimit}
+    limit={PAGE_LIMIT}
     offset={pageNo}
     baseRoute={route.Forum.Topic.Id(topicId)}
 />
