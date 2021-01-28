@@ -1,40 +1,20 @@
 <script context="module" lang="ts">
-    import * as route from "route";
     import * as api from "api";
-    import { formatDateTime } from "utils";
     import type { Session, Page } from "types";
-    import Frame from "../../../components/Frame.svelte";
 
     export async function preload(page: Page, session: Session) {
-        const id = +page.params.id;
         const url = "https://" + page.host + page.path;
 
-        const params: api.Mandela.GetOne.Request = {
-            id: id,
-        };
+        const getOneResponse = await api.Mandela.GetOne.exec({
+            id: +page.params.id,
+        });
 
-        const result = await api.Mandela.GetOne.exec(params);
-        const mandela = result.mandela;
-        const categories = result.categories;
-        const votes = result.votes;
-        const vote = result.vote;
-
-        let totalVotes = 0;
-
-        if (votes) {
-            for (let i in votes) {
-                totalVotes += votes[i].count;
-            }
+        if (session.user && !getOneResponse.mandela.mark_ts) {
+            await api.Mandela.Mark.exec({ id: getOneResponse.mandela.id });
         }
 
         return {
-            id,
-            mandela,
-            votes,
-            vote,
-            totalVotes,
-            categories,
-            session,
+            getOneResponse,
             url,
         };
     }
@@ -44,37 +24,49 @@
     import * as consts from "consts";
     import * as bbcode from "bbcode";
     import * as dialog from "dialog";
+    import * as route from "route";
+    import type { User } from "types";
     import { goto } from "@sapper/app";
+    import { formatDateTime } from "utils";
     import Comment from "../../../components/comment/Comment.svelte";
+    import Frame from "../../../components/Frame.svelte";
     import SessionHub from "../../../components/SessionHub.svelte";
     import Rectangle from "../../../components/Rectangle.svelte";
 
-    export let id: number;
-    export let mandela: api.Mandela.GetOne.Mandela;
-    export let votes: api.Mandela.GetOne.Vote[];
-    export let vote: number;
-    export let totalVotes = 0;
-    export let categories: number[];
-    export let session: Session;
+    export let getOneResponse: api.Mandela.GetOne.Response;
     export let url: string;
 
-    let htmlUrl = `<a href="${url}">Океан. Мандела №${id}</a>`;
-    let bbCodeUrl = `⁅url="${url}"⁆Мандела №${id}⁅/url⁆`;
+    let totalVotes = 0;
+    let votes: api.Mandela.GetOne.Vote[];
+
+    $: mandela = getOneResponse.mandela;
+    $: id = mandela.id;
+    $: categories = getOneResponse.categories;
+    $: vote = getOneResponse.vote;
+    $: htmlUrl = `<a href="${url}">Океан. Мандела №${id}</a>`;
+    $: bbCodeUrl = `⁅url="${url}"⁆Мандела №${id}⁅/url⁆`;
+    $: title =
+        mandela.title_mode === consts.Mandela.Title.Simple
+            ? mandela.title
+            : mandela.what;
 
     let voteValue = -1;
     let editVote = false;
     let showMandelaLinks = false;
+
+    let user: User;
     let isAdmin = false;
     let isAnonym = true;
 
-    $: if (process.browser && session.user && mandela && !mandela.mark_ts) {
-        mark();
-    }
+    $: votes = getOneResponse.votes;
 
-    let title =
-        mandela.title_mode === consts.Mandela.Title.Simple
-            ? mandela.title
-            : mandela.what;
+    $: {
+        totalVotes = 0;
+
+        for (let v of votes) {
+            totalVotes += v.count;
+        }
+    }
 
     function edit() {
         goto(route.Mandela.Edit(id));
@@ -92,14 +84,6 @@
         alert("Мандела удалена!");
     }
 
-    async function mark() {
-        const params: api.Mandela.Mark.Request = {
-            id: mandela.id,
-        };
-
-        await api.Mandela.Mark.exec(params);
-    }
-
     async function castVote() {
         const params: api.Mandela.Vote.Request = {
             id: mandela.id,
@@ -109,17 +93,12 @@
         votes = await api.Mandela.Vote.exec(params);
         vote = voteValue;
         editVote = false;
-        totalVotes = 0;
-
-        for (let i in votes) {
-            totalVotes += votes[i].count;
-        }
     }
 
     function getVoteCount(vote: number) {
-        for (let i in votes) {
-            if (votes[i].vote === vote) {
-                return votes[i].count;
+        for (let v of votes) {
+            if (v.vote === vote) {
+                return v.count;
             }
         }
 
@@ -174,7 +153,7 @@
     }
 </style>
 
-<SessionHub bind:isAdmin bind:isAnonym />
+<SessionHub bind:user bind:isAdmin bind:isAnonym />
 
 <Frame {title}>
     <div class="container">
@@ -220,9 +199,9 @@
             </div>
         {/if}
 
-        {#if !isAnonym && (session.user.id === mandela.user_id || isAdmin)}
+        {#if !isAnonym && (user.id === mandela.user_id || isAdmin)}
             <div>
-                {#if session.user.id === mandela.user_id}
+                {#if user.id === mandela.user_id}
                     <button on:click={edit}>Редактировать</button>
                 {/if}
 
@@ -257,7 +236,7 @@
 
 <Rectangle>
     <div class="container">
-        {#if !session.user || (vote != null && !editVote)}
+        {#if !user || (vote != null && !editVote)}
             <div>Результаты опроса:</div>
             <div class="grid" style="margin-left: 1em">
                 {#each consts.Votes as voteName, i}
@@ -268,12 +247,12 @@
             <div class="grid">
                 <div>Всего голосов:</div>
                 <div>{totalVotes}</div>
-                {#if session.user}
+                {#if user}
                     <div>Выбрано:</div>
                     <div>{consts.Votes[vote]}</div>
                 {/if}
             </div>
-            {#if session.user}
+            {#if user}
                 <div>
                     <button on:click={() => (editVote = true)}
                         >Изменить выбор</button
@@ -303,5 +282,5 @@
 <h2>Комментарии</h2>
 
 <div class="comment">
-    <Comment user={session.user} mandelaId={id} />
+    <Comment {user} mandelaId={id} />
 </div>
