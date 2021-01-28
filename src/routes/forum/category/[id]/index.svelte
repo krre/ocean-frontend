@@ -1,15 +1,35 @@
+<script context="module" lang="ts">
+    import * as api from "api";
+    import type { Session, Page } from "types";
+
+    export async function preload(page: Page, _session: Session) {
+        const categoryId = +page.params.id;
+        const getAllResponse = await load(categoryId);
+        return { getAllResponse, categoryId };
+    }
+
+    async function load(
+        categoryId: number
+    ): Promise<api.Forum.Section.GetAll.Response> {
+        const params: api.Forum.Section.GetAll.Request = {
+            category_id: categoryId,
+        };
+
+        return await api.Forum.Section.GetAll.exec(params);
+    }
+</script>
+
 <script lang="ts">
     import * as route from "route";
-    import * as api from "api";
     import type { User } from "types";
-    import { goto, stores } from "@sapper/app";
+    import { goto } from "@sapper/app";
     import FramePage from "../../../../components/forum/main/ForumFrame.svelte";
     import SessionHub from "../../../../components/SessionHub.svelte";
     import SectionElement from "../../../../components/forum/section/SectionElement.svelte";
     import Navigator from "../../../../components/forum/main/Navigator.svelte";
 
-    const { page } = stores();
-    const categoryId = +$page.params.id;
+    export let getAllResponse: api.Forum.Section.GetAll.Response;
+    export let categoryId = 0;
 
     let categoryName: string;
 
@@ -17,22 +37,17 @@
     let user: User;
     let sections: api.Forum.Section.GetAll.Section[] = [];
 
-    $: if (process.browser) {
-        load();
-    }
-
-    async function load() {
-        const params: api.Forum.Section.GetAll.Request = {
-            category_id: categoryId,
-        };
-
-        const result = await api.Forum.Section.GetAll.exec(params);
-        categoryName = result.category_name;
-        sections = result.sections;
+    $: {
+        categoryName = getAllResponse.category_name;
+        sections = getAllResponse.sections;
     }
 
     function append() {
         goto(route.Forum.Section.Append(categoryId));
+    }
+
+    async function reload() {
+        getAllResponse = await load(categoryId);
     }
 </script>
 
@@ -51,6 +66,6 @@
 
 <FramePage title={categoryName}>
     {#each sections as section}
-        <SectionElement {section} on:removed={() => load()} />
+        <SectionElement {section} on:removed={() => reload()} />
     {/each}
 </FramePage>
