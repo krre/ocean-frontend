@@ -49,7 +49,6 @@
 
     const nonReactive = new NonReactive();
 
-    $: admin = user && user.code === consts.Account.Admin;
     $: filter = category > 0 ? showCategory : showAll;
 
     $: if (nonReactive.pageInit && filter >= 0 && category >= 0) {
