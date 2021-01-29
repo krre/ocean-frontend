@@ -1,42 +1,43 @@
+<script context="module" lang="ts">
+    import * as api from "api";
+    import type { Session, Page } from "types";
+
+    const PAGE_LIMIT = 20;
+
+    export async function preload(page: Page, session: Session) {
+        const pageNo = +page.query.page || 1;
+
+        const params: api.Forum.GetNew.Request = {
+            offset: (pageNo - 1) * PAGE_LIMIT,
+            limit: PAGE_LIMIT,
+        };
+
+        const getNewResponse = await api.Forum.GetNew.exec(params);
+
+        return {
+            getNewResponse,
+            pageNo,
+        };
+    }
+</script>
+
 <script lang="ts">
     import * as route from "route";
-    import * as api from "api";
-    import { stores } from "@sapper/app";
     import FramePage from "../../components/forum/main/ForumFrame.svelte";
     import NewPost from "../../components/forum/main/NewPost.svelte";
     import Pagination from "../../components/Pagination.svelte";
 
-    const { page } = stores();
-    const title = "Последние сообщения форума";
+    export let pageNo = 1;
+    export let getNewResponse: api.Forum.GetNew.Response;
 
-    let topics: api.Forum.GetNew.Topic[] = [];
-
-    let pageNo = 1;
-    let topicCount = 0;
-
-    const pageLimit = 20;
-
-    $: if (process.browser && $page.query) {
-        pageNo = +$page.query.page || 1;
-        load();
-    }
-
-    async function load() {
-        const params: api.Forum.GetNew.Request = {
-            offset: (pageNo - 1) * pageLimit,
-            limit: pageLimit,
-        };
-
-        const result = await api.Forum.GetNew.exec(params);
-        topics = result.topics;
-        topicCount = result.topic_count;
-    }
+    $: topics = getNewResponse.topics;
+    $: topicCount = getNewResponse.topic_count;
 </script>
 
 <style>
 </style>
 
-<FramePage {title}>
+<FramePage title="Последние сообщения форума">
     {#each topics as topic}
         <NewPost {topic} replyed={false} />
     {/each}
@@ -44,6 +45,7 @@
 
 <Pagination
     count={topicCount}
-    limit={pageLimit}
+    limit={PAGE_LIMIT}
     offset={pageNo}
-    baseRoute={route.Forum.New} />
+    baseRoute={route.Forum.New}
+/>
