@@ -1,32 +1,38 @@
+<script context="module" lang="ts">
+    import * as api from "api";
+    import type { Session, Page } from "types";
+
+    export async function preload(_page: Page, _session: Session) {
+        const getAllResponse = await api.Forum.GetAll.exec();
+
+        return {
+            getAllResponse,
+        };
+    }
+</script>
+
 <script lang="ts">
     import * as route from "route";
-    import * as api from "api";
     import type { User } from "types";
-    import { onMount } from "svelte";
     import { goto } from "@sapper/app";
     import FramePage from "../../components/forum/main/ForumFrame.svelte";
     import SessionHub from "../../components/SessionHub.svelte";
     import CategoryElement from "../../components/forum/category/CategoryElement.svelte";
 
-    const title = "Форум";
+    export let getAllResponse: api.Forum.GetAll.Response;
 
     let isAdmin = false;
     let editable = false;
     let user: User;
     let categories: api.Forum.GetAll.Category[] = [];
 
-    onMount(() => {
-        load();
-    });
-
-    async function load() {
-        const result = await api.Forum.GetAll.exec();
+    $: {
         categories = [];
 
-        for (let category of result.categories) {
+        for (let category of getAllResponse.categories) {
             let sections: api.Forum.GetAll.Section[] = [];
 
-            for (let section of result.sections) {
+            for (let section of getAllResponse.sections) {
                 if (section.category_id === category.id) {
                     sections.push(section);
                 }
@@ -37,6 +43,10 @@
         }
 
         categories = categories;
+    }
+
+    async function reload() {
+        getAllResponse = await api.Forum.GetAll.exec();
     }
 
     function append() {
@@ -60,10 +70,14 @@
 
 <div class="new"><a href={route.Forum.New}>Новые сообщения</a></div>
 
-<FramePage {title} showHeader={false}>
+<FramePage title="Форум" showHeader={false}>
     <div>
         {#each categories as category}
-            <CategoryElement {category} {editable} on:removed={() => load()} />
+            <CategoryElement
+                {category}
+                {editable}
+                on:removed={() => reload()}
+            />
         {/each}
     </div>
 
