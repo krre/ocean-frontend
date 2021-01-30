@@ -9,11 +9,34 @@
     const ACTIVITY_PAGE_LIMIT = 5;
 
     export async function preload(page: Page, session: Session) {
+        const pageNo = +page.query.page || 1;
+        const filter = +page.query.filter || 0;
+        const category = +page.query.category || 0;
+        const sort = +page.query.sort || 0;
+
+        const params: api.Mandela.GetAll.Request = {
+            sort: sort,
+            limit: MANDELA_PAGE_LIMIT,
+            offset: (pageNo - 1) * MANDELA_PAGE_LIMIT,
+        };
+
+        if (session.user) {
+            params.filter = filter;
+            params.category = category - 1;
+        }
+
+        const getAllResponse = await api.Mandela.GetAll.exec(params);
+
         const [topics, comments] = await loadActivity();
 
         return {
+            getAllResponse,
             topics,
             comments,
+            pageNo,
+            filter,
+            category,
+            sort,
         };
     }
 
@@ -61,8 +84,14 @@
     import Catalog from "../components/main/Catalog.svelte";
     import Activity from "../components/main/activity/Activity.svelte";
 
+    export let getAllResponse: api.Mandela.GetAll.Response;
     export let topics: ActivityMessage[];
     export let comments: ActivityMessage[];
+
+    export let pageNo = 1;
+    export let filter = 0;
+    export let category = 0;
+    export let sort = 0;
 </script>
 
 <style>
@@ -89,7 +118,14 @@
 
 <div class="container">
     <div class="catalog">
-        <Catalog />
+        <Catalog
+            {pageNo}
+            {filter}
+            {category}
+            {sort}
+            {getAllResponse}
+            pageLimit={MANDELA_PAGE_LIMIT}
+        />
     </div>
 
     <Activity {topics} {comments} />

@@ -2,21 +2,31 @@
     import * as consts from "consts";
     import * as route from "route";
     import * as api from "api";
-    import { goto, stores } from "@sapper/app";
+    import type { User } from "types";
+    import { onMount } from "svelte";
+    import { Mounted } from "types";
+    import { goto } from "@sapper/app";
     import { formatDateTime, zeroLeading, makeTitle } from "utils";
     import Indicator from "./Indicator.svelte";
     import Pagination from "../Pagination.svelte";
     import Frame from "../Frame.svelte";
+    import SessionHub from "../SessionHub.svelte";
 
-    const { page, session } = stores();
-    const user = $session.user;
+    export let pageLimit = 1;
+    export let pageNo = 1;
+    export let filter = 0;
+    export let category = 0;
+    export let sort = 0;
+    export let getAllResponse: api.Mandela.GetAll.Response;
 
-    const title = "Океан. Каталог фактов эффекта Манделы";
+    let mounted = new Mounted();
 
-    let pageNo = 1;
-    let filter = 0;
-    let category = 0;
-    let sort = 0;
+    onMount(() => {
+        mounted.setDone();
+    });
+
+    let baseQuery = new URLSearchParams();
+    let user: User;
 
     let mandels: api.Mandela.GetAll.Mandela[] = [];
     let categories = ["Все"].concat(consts.Categories);
@@ -27,7 +37,6 @@
     let categoryCount = 0;
 
     let currentCount = 0;
-    let baseQuery = new URLSearchParams();
     let pageQuery = new URLSearchParams();
 
     const showAll = 0;
@@ -37,41 +46,39 @@
     const showCategory = 4;
     const sorts = ["Манделам", "Комментариям"];
     const zeroLeadingCount = 4;
-    const pageLimit = 50;
 
-    class NonReactive {
-        pageInit = false;
+    $: {
+        mandels = getAllResponse.mandels;
+        totalCount = getAllResponse.total_count;
+        newCount = getAllResponse.new_count;
+        mineCount = getAllResponse.mine_count;
+        pollCount = getAllResponse.poll_count;
+        categoryCount = getAllResponse.category_count;
 
-        setPageInit() {
-            this.pageInit = true;
+        if (filter === showAll) {
+            currentCount = totalCount;
+        } else if (filter === showNew) {
+            currentCount = newCount;
+        } else if (filter === showMine) {
+            currentCount = mineCount;
+        } else if (filter === showPoll) {
+            currentCount = pollCount;
+        } else if (filter === showCategory) {
+            currentCount = categoryCount;
         }
     }
 
-    const nonReactive = new NonReactive();
+    $: if (mounted.done()) {
+        filter = category > 0 ? showCategory : showAll;
+    }
 
-    $: filter = category > 0 ? showCategory : showAll;
-
-    $: if (nonReactive.pageInit && filter >= 0 && category >= 0) {
+    $: if (mounted.done() && filter >= 0 && category >= 0) {
         pageNo = 1;
         makeQueryAndGoto(false);
     }
 
-    $: if (nonReactive.pageInit && sort >= 0) {
+    $: if (mounted.done() && sort >= 0) {
         makeQueryAndGoto();
-    }
-
-    function makeQueryAndGoto(usePage: boolean = true) {
-        makeBaseQuery();
-        const gotoQuery = new URLSearchParams(baseQuery);
-
-        if (usePage) {
-            for (let params of pageQuery) {
-                gotoQuery.append(params[0], params[1]);
-            }
-        }
-
-        const queryString = gotoQuery.toString();
-        goto((queryString ? "?" : "") + queryString);
     }
 
     function makeBaseQuery() {
@@ -98,50 +105,19 @@
         baseQuery = params;
     }
 
-    $: if (process.browser && $page.query) {
-        assignQuery();
-        load();
-        nonReactive.setPageInit();
-    }
+    function makeQueryAndGoto(usePage: boolean = true) {
+        makeBaseQuery();
 
-    function assignQuery() {
-        pageNo = +$page.query.page || 1;
-        filter = +$page.query.filter || 0;
-        category = +$page.query.category || 0;
-        sort = +$page.query.sort || 0;
-    }
+        const gotoQuery = new URLSearchParams(baseQuery);
 
-    async function load() {
-        const params: api.Mandela.GetAll.Request = {
-            sort: sort,
-            limit: pageLimit,
-            offset: (pageNo - 1) * pageLimit,
-        };
-
-        if (user) {
-            params.filter = filter;
-            params.category = category - 1;
+        if (usePage) {
+            for (let params of pageQuery) {
+                gotoQuery.append(params[0], params[1]);
+            }
         }
 
-        const result = await api.Mandela.GetAll.exec(params);
-        mandels = result.mandels;
-        totalCount = result.total_count;
-        newCount = result.new_count;
-        mineCount = result.mine_count;
-        pollCount = result.poll_count;
-        categoryCount = result.category_count;
-
-        if (filter === showAll) {
-            currentCount = totalCount;
-        } else if (filter === showNew) {
-            currentCount = newCount;
-        } else if (filter === showMine) {
-            currentCount = mineCount;
-        } else if (filter === showPoll) {
-            currentCount = pollCount;
-        } else if (filter === showCategory) {
-            currentCount = categoryCount;
-        }
+        const queryString = gotoQuery.toString();
+        goto((queryString ? "?" : "") + queryString);
     }
 </script>
 
@@ -173,7 +149,9 @@
     }
 </style>
 
-<Frame {title} showHeader={false}>
+<SessionHub bind:user />
+
+<Frame title="Океан. Каталог фактов эффекта Манделы" showHeader={false}>
     <div class="tool-bar">
         <Indicator
             title="Всего"
