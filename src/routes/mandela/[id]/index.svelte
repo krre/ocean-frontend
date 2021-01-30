@@ -2,21 +2,42 @@
     import * as api from "api";
     import type { Session, Page } from "types";
 
+    const PAGE_LIMIT = 50;
+
     export async function preload(page: Page, session: Session) {
         const url = "https://" + page.host + page.path;
+        const mandelaId = +page.params.id;
+        const pageNo = +page.query.page || 1;
 
         const getOneResponse = await api.Mandela.GetOne.exec({
-            id: +page.params.id,
+            id: mandelaId,
         });
 
         if (session.user && !getOneResponse.mandela.mark_ts) {
             await api.Mandela.Mark.exec({ id: getOneResponse.mandela.id });
         }
 
+        const commentGetAllResponse = await loadComments(mandelaId, pageNo);
+
         return {
             getOneResponse,
+            commentGetAllResponse,
             url,
+            pageNo,
         };
+    }
+
+    function loadComments(
+        mandelaId: number,
+        pageNo: number
+    ): Promise<api.Comment.GetAll.Response> {
+        const params: api.Comment.GetAll.Request = {
+            mandela_id: mandelaId,
+            limit: PAGE_LIMIT,
+            offset: (pageNo - 1) * PAGE_LIMIT,
+        };
+
+        return api.Comment.GetAll.exec(params);
     }
 </script>
 
@@ -34,12 +55,15 @@
     import Rectangle from "../../../components/Rectangle.svelte";
 
     export let getOneResponse: api.Mandela.GetOne.Response;
+    export let commentGetAllResponse: api.Comment.GetAll.Response;
     export let url: string;
+    export let pageNo: number;
 
     let totalVotes = 0;
     let votes: api.Mandela.GetOne.Vote[];
 
     $: mandela = getOneResponse.mandela;
+    $: comments = commentGetAllResponse.comments;
     $: id = mandela.id;
     $: categories = getOneResponse.categories;
     $: vote = getOneResponse.vote;
@@ -107,6 +131,10 @@
 
     function copyLink(value: string) {
         navigator.clipboard.writeText(value);
+    }
+
+    async function reloadComments() {
+        commentGetAllResponse = await loadComments(id, pageNo);
     }
 </script>
 
@@ -282,5 +310,13 @@
 <h2>Комментарии</h2>
 
 <div class="comment">
-    <Comment {user} mandelaId={id} />
+    <Comment
+        {user}
+        {comments}
+        {pageNo}
+        mandelaId={id}
+        pageLimit={PAGE_LIMIT}
+        commentCount={commentGetAllResponse.total_count}
+        on:appended={() => reloadComments()}
+    />
 </div>

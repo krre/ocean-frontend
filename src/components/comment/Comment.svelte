@@ -1,6 +1,6 @@
 <script lang="ts">
+    import { createEventDispatcher } from "svelte";
     import type { User } from "types";
-    import { stores } from "@sapper/app";
     import * as consts from "consts";
     import * as route from "route";
     import * as bbcode from "bbcode";
@@ -11,40 +11,22 @@
     import EditComment from "./EditComment.svelte";
     import Pagination from "../Pagination.svelte";
 
-    const { page } = stores();
+    const dispatch = createEventDispatcher();
 
     interface EditedComment extends api.Comment.GetAll.Comment {
-        edit: boolean;
-        remove: boolean;
+        edit?: boolean;
+        remove?: boolean;
     }
 
     export let user: User;
     export let mandelaId: number;
+    export let comments: EditedComment[] = [];
+    export let pageNo = 1;
+    export let commentCount = 0;
+    export let pageLimit = 1;
 
-    let pageNo = 1;
-    let commentCount = 0;
-    const pageLimit = 50;
-
-    let comments: EditedComment[] = [];
     let message: string;
     let messageEditorRef: MessageEditor;
-
-    $: if (process.browser && $page.query) {
-        pageNo = +$page.query.page || 1;
-        load();
-    }
-
-    async function load() {
-        const params: api.Comment.GetAll.Request = {
-            mandela_id: +mandelaId,
-            limit: pageLimit,
-            offset: (pageNo - 1) * pageLimit,
-        };
-
-        const result = await api.Comment.GetAll.exec(params);
-        commentCount = result.total_count;
-        comments = result.comments as EditedComment[];
-    }
 
     async function append() {
         const params: api.Comment.Create.Request = {
@@ -53,7 +35,7 @@
         };
 
         await api.Comment.Create.exec(params);
-        load();
+        dispatch("appended");
     }
 
     async function editComment(row: number, message: string) {
