@@ -18,12 +18,9 @@
             sort: sort,
             limit: MANDELA_PAGE_LIMIT,
             offset: (pageNo - 1) * MANDELA_PAGE_LIMIT,
+            filter: filter,
+            category: category - 1,
         };
-
-        if (session.user) {
-            params.filter = filter;
-            params.category = category - 1;
-        }
 
         const getAllResponse = await api.Mandela.GetAll.exec(params);
 

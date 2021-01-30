@@ -12,9 +12,17 @@
     import Frame from "../Frame.svelte";
     import SessionHub from "../SessionHub.svelte";
 
+    enum Filter {
+        All,
+        New,
+        Mine,
+        Poll,
+        Category,
+    }
+
     export let pageLimit = 1;
     export let pageNo = 1;
-    export let filter = 0;
+    export let filter = Filter.All;
     export let category = 0;
     export let sort = 0;
     export let getAllResponse: api.Mandela.GetAll.Response;
@@ -39,11 +47,6 @@
     let currentCount = 0;
     let pageQuery = new URLSearchParams();
 
-    const showAll = 0;
-    const showNew = 1;
-    const showMine = 2;
-    const showPoll = 3;
-    const showCategory = 4;
     const sorts = ["Манделам", "Комментариям"];
     const zeroLeadingCount = 4;
 
@@ -55,21 +58,21 @@
         pollCount = getAllResponse.poll_count;
         categoryCount = getAllResponse.category_count;
 
-        if (filter === showAll) {
+        if (filter === Filter.All) {
             currentCount = totalCount;
-        } else if (filter === showNew) {
+        } else if (filter === Filter.New) {
             currentCount = newCount;
-        } else if (filter === showMine) {
+        } else if (filter === Filter.Mine) {
             currentCount = mineCount;
-        } else if (filter === showPoll) {
+        } else if (filter === Filter.Poll) {
             currentCount = pollCount;
-        } else if (filter === showCategory) {
+        } else if (filter === Filter.Category) {
             currentCount = categoryCount;
         }
     }
 
     $: if (mounted.done()) {
-        filter = category > 0 ? showCategory : showAll;
+        filter = category > 0 ? Filter.Category : Filter.All;
     }
 
     $: if (mounted.done() && filter >= 0 && category >= 0) {
@@ -84,22 +87,20 @@
     function makeBaseQuery() {
         const params = new URLSearchParams();
 
+        if (filter != Filter.Category && category > 0) {
+            category = 0;
+        }
+
         if (sort) {
             params.append("sort", sort.toString());
         }
 
-        if (user) {
-            if (filter) {
-                params.append("filter", filter.toString());
-            }
+        if (category) {
+            params.append("category", category.toString());
+        }
 
-            if (filter != showCategory && category > 0) {
-                category = 0;
-            }
-
-            if (category) {
-                params.append("category", category.toString());
-            }
+        if (filter) {
+            params.append("filter", filter.toString());
         }
 
         baseQuery = params;
@@ -156,43 +157,43 @@
         <Indicator
             title="Всего"
             count={totalCount}
-            active={filter == showAll}
-            on:clicked={() => (filter = showAll)}
+            active={filter == Filter.All}
+            on:clicked={() => (filter = Filter.All)}
         />
         {#if user}
             <Indicator
                 title="Новые"
                 count={newCount}
-                active={filter == showNew}
+                active={filter == Filter.New}
                 highlightNew={true}
-                on:clicked={() => (filter = showNew)}
+                on:clicked={() => (filter = Filter.New)}
             />
 
             <Indicator
                 title="Мои"
                 count={mineCount}
-                active={filter == showMine}
-                on:clicked={() => (filter = showMine)}
+                active={filter == Filter.Mine}
+                on:clicked={() => (filter = Filter.Mine)}
             />
 
             <Indicator
                 title="Опросы"
                 count={pollCount}
                 highlightNew={true}
-                active={filter == showPoll}
-                on:clicked={() => (filter = showPoll)}
+                active={filter == Filter.Poll}
+                on:clicked={() => (filter = Filter.Poll)}
             />
-            <span class="tool-bar-item"
-                >Категория:
-                <select bind:value={category}>
-                    {#each categories as categoryName, i}
-                        <option value={i} selected={category == i}>
-                            {categoryName}
-                        </option>
-                    {/each}
-                </select>
-            </span>
         {/if}
+        <span class="tool-bar-item"
+            >Категория:
+            <select bind:value={category}>
+                {#each categories as categoryName, i}
+                    <option value={i} selected={category == i}>
+                        {categoryName}
+                    </option>
+                {/each}
+            </select>
+        </span>
         <span class="tool-bar-item"
             >Сортировать по:
             <select bind:value={sort}>
