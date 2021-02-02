@@ -1,19 +1,14 @@
 <script context="module" lang="ts">
     import * as api from "api";
     import type { Session, Page } from "types";
-    import { MandelaVote } from "types";
-
-    enum Type {
-        Mandels,
-        Users,
-    }
 
     const PAGE_LIMIT = 50;
 
     export async function preload(page: Page, _session: Session) {
         const pageNo = +page.query.page || 1;
         const vote = +page.query.vote || MandelaVote.Yes;
-        const type: Type = +page.query.type || Type.Mandels;
+        const type: types.RatingType =
+            +page.query.type || types.RatingType.Mandels;
 
         let params = {
             limit: PAGE_LIMIT,
@@ -23,7 +18,7 @@
         let getMandelsResponse: api.Rating.GetMandels.Response;
         let getUsersResponse: api.Rating.GetUsers.Response;
 
-        if (type === Type.Mandels) {
+        if (type === types.RatingType.Mandels) {
             const par = params as api.Rating.GetMandels.Request;
             par.vote = vote;
             getMandelsResponse = await api.Rating.GetMandels.exec(par);
@@ -43,15 +38,16 @@
 
 <script lang="ts">
     import * as route from "route";
+    import * as types from "types";
     import { goto } from "@sapper/app";
     import { onMount } from "svelte";
-    import { Mounted } from "types";
+    import { Mounted, MandelaVote } from "types";
     import Frame from "../components/Frame.svelte";
     import MandelaRating from "../components/rating/MandelaRating.svelte";
     import UserRating from "../components/rating/UserRating.svelte";
     import Pagination from "../components/Pagination.svelte";
 
-    export let type = Type.Mandels;
+    export let type = types.RatingType.Mandels;
     export let vote = MandelaVote.Yes;
     export let getMandelsResponse: api.Rating.GetMandels.Response;
     export let getUsersResponse: api.Rating.GetUsers.Response;
@@ -84,7 +80,7 @@
     $: if (mounted.done()) {
         const params = new URLSearchParams();
 
-        if (type == Type.Users) {
+        if (type == types.RatingType.Users) {
             params.append("type", type.toString());
         } else if (vote > MandelaVote.Yes) {
             params.append("vote", vote.toString());
@@ -99,18 +95,22 @@
 
 <Frame title="Рейтинг">
     <label>
-        <input type="radio" bind:group={type} value={Type.Mandels} />
+        <input
+            type="radio"
+            bind:group={type}
+            value={types.RatingType.Mandels}
+        />
         Манделы
     </label>
 
     <label>
-        <input type="radio" bind:group={type} value={Type.Users} />
+        <input type="radio" bind:group={type} value={types.RatingType.Users} />
         Пользователи
     </label>
 
     <p />
 
-    {#if type === Type.Mandels}
+    {#if type === types.RatingType.Mandels}
         <MandelaRating bind:vote {mandels} {pageNo} pageLimit={PAGE_LIMIT} />
     {:else}
         <UserRating {users} {pageNo} pageLimit={PAGE_LIMIT} />
@@ -118,7 +118,7 @@
 </Frame>
 
 <Pagination
-    count={type === Type.Mandels ? mandelsCount : usersCount}
+    count={type === types.RatingType.Mandels ? mandelsCount : usersCount}
     limit={PAGE_LIMIT}
     offset={pageNo}
     baseRoute={route.Rating}
