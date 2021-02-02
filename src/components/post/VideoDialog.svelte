@@ -25,9 +25,10 @@
     <input
         bind:value={link}
         bind:this={inputRef}
-        placeholder="Введите ссылку" />
+        placeholder="Введите ссылку"
+    />
     <div slot="buttons">
-        <button on:click={pressOk}>ОК</button>
+        <button disabled={!link} on:click={pressOk}>ОК</button>
         <button on:click={() => dialog.close()}>Отменить</button>
     </div>
 </Dialog>
