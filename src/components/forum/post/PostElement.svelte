@@ -23,13 +23,12 @@
     let isAnonym = true;
     let user: User;
 
-    $: editable =
+    $: editable = isAdmin || (user && !isAnonym && user.id === post.user_id);
+    $: removable =
         isAdmin ||
         (user &&
             !isAnonym &&
-            (user.id === post.user_id ||
-                (user.id == topicUserId &&
-                    post.user_id != consts.Account.Id.Admin)));
+            (user.id == topicUserId || user.id === post.user_id));
 
     async function editPost(message: string) {
         const params: api.Forum.Post.Update.Request = {
@@ -75,16 +74,19 @@
         {row}
         author={post.user_name}
         date={post.create_ts}
-        edited={editable}
+        {editable}
+        {removable}
         on:edit={() => (post.edit = true)}
         on:remove={() => removePost()}
-        on:reply />
+        on:reply
+    />
 
     {#if post.edit}
         <EditComment
             text={post.post}
             on:send={(event) => editPost(event.detail.text)}
-            on:cancel={() => (post.edit = false)} />
+            on:cancel={() => (post.edit = false)}
+        />
     {:else}
         <div class="text">
             {@html bbcode.parse(post.post)}

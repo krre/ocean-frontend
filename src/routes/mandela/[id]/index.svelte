@@ -315,6 +315,7 @@
         {comments}
         {pageNo}
         mandelaId={id}
+        mandelaUserId={mandela.user_id}
         pageLimit={PAGE_LIMIT}
         commentCount={commentGetAllResponse.total_count}
         on:appended={() => reloadComments()}

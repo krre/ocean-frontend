@@ -20,6 +20,7 @@
 
     export let user: User;
     export let mandelaId: number;
+    export let mandelaUserId: number;
     export let comments: EditedComment[] = [];
     export let pageNo = 1;
     export let commentCount = 0;
@@ -90,8 +91,12 @@
                     row={i}
                     author={comment.user_name}
                     date={comment.create_ts}
-                    edited={user &&
+                    editable={user &&
                         (comment.user_id === user.id ||
+                            user.id === consts.Account.Id.Admin)}
+                    removable={user &&
+                        (user.id === mandelaUserId ||
+                            user.id === comment.user_id ||
                             user.id === consts.Account.Id.Admin)}
                     on:edit={(event) =>
                         (comments[event.detail.row].edit = true)}

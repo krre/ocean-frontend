@@ -8,8 +8,9 @@
     export let author: string;
     export let date: Date;
     export let row = 0;
-    export let edited = false;
-    export let replyed = true;
+    export let editable = false;
+    export let removable = false;
+    export let replyable = true;
 
     function remove() {
         if (!dialog.remove("Удалить сообщение?")) return;
@@ -51,11 +52,15 @@
     <span>|</span>
     {formatDateTime(date)}
 
-    {#if edited}
+    {#if editable}
         <button on:click={edit}><i class="fas fa-edit" /></button>
+    {/if}
+
+    {#if removable}
         <button on:click={remove}><i class="fas fa-trash-alt" /></button>
     {/if}
-    {#if replyed}
+
+    {#if replyable}
         <button on:click={reply}><i class="fas fa-reply" /></button>
     {/if}
 </div>
