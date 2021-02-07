@@ -54,18 +54,19 @@
 <style>
     button {
         margin-left: var(--page-margin);
+        color: gray;
     }
 </style>
 
 <SessionHub bind:user bind:isAdmin />
 <Navigator />
 
-{#if isAdmin}
-    <div><button on:click={append}>Добавить раздел</button></div>
-{/if}
-
 <FramePage title={categoryName}>
     {#each sections as section}
         <SectionElement {section} on:removed={() => reload()} />
     {/each}
 </FramePage>
+
+{#if isAdmin}
+    <button on:click={append}><i class="far fa-plus-square" /></button>
+{/if}
