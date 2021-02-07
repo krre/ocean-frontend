@@ -35,22 +35,16 @@
         border-bottom: none;
     }
 
-    .buttons {
-        display: flex;
-        justify-content: flex-end;
-    }
-
     button {
-        margin-right: 0.5em;
+        margin-left: 0.5em;
+        color: gray;
     }
 </style>
 
 <div class="section">
     <a href={route.Forum.Section.Id(section.id)}>{section.name}</a>
     {#if editable}
-        <div class="buttons">
-            <button on:click={editSection}>Изменить</button>
-            <button on:click={removeSection}>Удалить</button>
-        </div>
+        <button on:click={editSection}><i class="fas fa-edit" /></button>
+        <button on:click={removeSection}><i class="fas fa-trash-alt" /></button>
     {/if}
 </div>
