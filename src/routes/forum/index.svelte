@@ -55,14 +55,13 @@
 </script>
 
 <style>
-    .edit-btn {
-        margin-right: var(--page-margin);
-        display: flex;
-        justify-content: flex-end;
-    }
-
     .new {
         margin: var(--page-margin) 0 0 var(--page-margin);
+    }
+
+    button {
+        margin-left: 0.2em;
+        color: gray;
     }
 </style>
 
@@ -80,14 +79,15 @@
             />
         {/each}
     </div>
-
-    <div>
-        {#if editable}<button on:click={append}>Добавить категорию</button>{/if}
-    </div>
 </FramePage>
 
 {#if isAdmin}
-    <div class="edit-btn">
-        <button on:click={() => (editable = !editable)}>Редактировать</button>
+    <div style="margin-left: 1em">
+        {#if editable}<button on:click={append}
+                ><i class="far fa-plus-square" /></button
+            >{/if}
+        <button on:click={() => (editable = !editable)}
+            ><i class="fas fa-edit" /></button
+        >
     </div>
 {/if}
