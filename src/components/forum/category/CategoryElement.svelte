@@ -37,28 +37,25 @@
     }
 
     h3 {
-        padding: 1em;
-        margin: 0;
-    }
-
-    .buttons {
-        display: flex;
-        justify-content: flex-end;
+        padding-left: 1em;
+        display: inline-block;
     }
 
     button {
-        margin-right: 0.5em;
+        margin-left: 0.2em;
+        color: gray;
     }
 </style>
 
 <div class="header">
     <h3>{category.name}</h3>
     {#if editable}
-        <div class="buttons">
-            <button on:click={appendSection}>Добавить раздел</button>
-            <button on:click={editCategory}>Изменить</button>
-            <button on:click={removeCategory}>Удалить</button>
-        </div>
+        <button on:click={appendSection}
+            ><i class="far fa-plus-square" /></button
+        >
+        <button on:click={editCategory}><i class="fas fa-edit" /></button>
+        <button on:click={removeCategory}><i class="fas fa-trash-alt" /></button
+        >
     {/if}
 </div>
 
