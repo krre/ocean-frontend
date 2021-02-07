@@ -44,14 +44,9 @@
         border-bottom: none;
     }
 
-    .buttons {
-        display: flex;
-        justify-content: flex-end;
-        margin-top: 0.5em;
-    }
-
     button {
-        margin-right: 0.5em;
+        margin-left: 0.5em;
+        color: gray;
     }
 </style>
 
@@ -64,12 +59,14 @@
         {/if}
         {topic.name}</a
     >
+    {#if editable}
+        <span>
+            <button on:click={editTopic}><i class="fas fa-edit" /></button>
+            <button on:click={removeTopic}
+                ><i class="fas fa-trash-alt" /></button
+            >
+        </span>
+    {/if}
     <br /><br />
     <div>Автор темы: {topic.user_name}</div>
-    {#if editable}
-        <div class="buttons">
-            <button on:click={editTopic}>Изменить</button>
-            <button on:click={removeTopic}>Удалить</button>
-        </div>
-    {/if}
 </div>
