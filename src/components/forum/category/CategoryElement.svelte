@@ -8,7 +8,7 @@
 
     const dispatch = createEventDispatcher();
 
-    export let category: any;
+    export let category: api.Forum.GetAll.Category;
     export let editable = false;
 
     function editCategory() {

@@ -7,7 +7,7 @@
 
     const dispatch = createEventDispatcher();
 
-    export let section: any;
+    export let section: api.Forum.Section.GetAll.Section;
     export let editable = false;
 
     function editSection() {
@@ -35,6 +35,11 @@
         border-bottom: none;
     }
 
+    .info {
+        margin-top: 0.5em;
+        color: rgb(90, 90, 90);
+    }
+
     button {
         margin-left: 0.5em;
         color: gray;
@@ -47,4 +52,7 @@
         <button on:click={editSection}><i class="fas fa-edit" /></button>
         <button on:click={removeSection}><i class="fas fa-trash-alt" /></button>
     {/if}
+    <div class="info">
+        Тем: {section.topic_count} Постов: {section.post_count}
+    </div>
 </div>
