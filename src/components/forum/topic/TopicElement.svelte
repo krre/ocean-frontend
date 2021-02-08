@@ -10,7 +10,7 @@
 
     const dispatch = createEventDispatcher();
 
-    export let topic: any;
+    export let topic: api.Forum.Topic.GetAll.Topic;
     export let editable = false;
 
     let isAdmin = false;
@@ -44,6 +44,11 @@
         border-bottom: none;
     }
 
+    .info {
+        margin-top: 0.5em;
+        color: rgb(90, 90, 90);
+    }
+
     button {
         margin-left: 0.5em;
         color: gray;
@@ -67,6 +72,5 @@
             >
         </span>
     {/if}
-    <br /><br />
-    <div>Автор темы: {topic.user_name}</div>
+    <div class="info">Автор: {topic.user_name}, Постов: {topic.post_count}</div>
 </div>

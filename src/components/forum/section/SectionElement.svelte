@@ -53,6 +53,6 @@
         <button on:click={removeSection}><i class="fas fa-trash-alt" /></button>
     {/if}
     <div class="info">
-        Тем: {section.topic_count} Постов: {section.post_count}
+        Тем: {section.topic_count}, Постов: {section.post_count}
     </div>
 </div>
