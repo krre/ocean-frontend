@@ -268,7 +268,7 @@
             <div>Результаты опроса:</div>
             <div class="grid" style="margin-left: 1em">
                 {#each consts.Votes as voteName, i}
-                    <div>{voteName}</div>
+                    <div>{voteName}:</div>
                     <div>{getVoteCount(i)}</div>
                 {/each}
             </div>
