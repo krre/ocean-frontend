@@ -14,11 +14,10 @@
 
 <script lang="ts">
     import * as consts from "consts";
-    import type { User } from "types";
     import { formatDateTime } from "utils";
     import Frame from "../../../components/Frame.svelte";
 
-    export let user: User;
+    export let user: api.User.GetOne.Response;
 </script>
 
 <style>
@@ -39,5 +38,13 @@
         <div>{formatDateTime(user.create_ts)}</div>
         <div>Тип аккаунта:</div>
         <div>{consts.Account.ModeNames[user.code]}</div>
+        <div>Мандел:</div>
+        <div>{user.mandela_count}</div>
+        <div>Комментариев:</div>
+        <div>{user.comment_count}</div>
+        <div>Тем на форуме:</div>
+        <div>{user.forum_topic_count}</div>
+        <div>Постов на форуме:</div>
+        <div>{user.forum_post_count}</div>
     </div>
 </Frame>
