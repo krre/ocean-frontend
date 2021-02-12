@@ -4,8 +4,12 @@
     import type { Session, Page } from "types";
     import { formatDateTime, createToken } from "utils";
 
-    export async function preload(_page: Page, _session: Session) {
-        const user = await api.User.GetOne.exec();
+    export async function preload(_page: Page, session: Session) {
+        const params: api.User.GetOne.Request = {
+            id: +session.user.id,
+        };
+
+        const user = await api.User.GetOne.exec(params);
         return { user };
     }
 </script>
@@ -95,7 +99,8 @@
         Имя:<input bind:value={user.name} />
         <OperationResult
             bind:success={successProfile}
-            bind:error={errorProfile} />
+            bind:error={errorProfile}
+        />
         <button on:click={update} disabled={!user.name}>Сохранить</button>
         Пароль:
         <input type="password" bind:value={password1} />
@@ -103,7 +108,8 @@
         <input type="password" bind:value={password2} />
         <OperationResult
             bind:success={successPassword}
-            bind:error={errorPassword} />
+            bind:error={errorPassword}
+        />
         <button on:click={changePassword}>Изменить</button>
     </div>
 </Frame>
