@@ -72,7 +72,8 @@
 <div class="post">
     <PostTitle
         {row}
-        author={post.user_name}
+        userName={post.user_name}
+        userId={post.user_id}
         date={post.create_ts}
         {editable}
         {removable}

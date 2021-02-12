@@ -4,7 +4,7 @@
     import * as api from "api";
     import * as types from "types";
     import type { User } from "types";
-    import { formatDateTime } from "utils";
+    import { formatDateTime, userUrl } from "utils";
     import { goto } from "@sapper/app";
     import { createEventDispatcher } from "svelte";
     import SessionHub from "../../SessionHub.svelte";
@@ -74,6 +74,8 @@
         </span>
     {/if}
     <div class="info">
-        {topic.user_name} | {formatDateTime(topic.create_ts)} | Постов: {topic.post_count}
+        {@html userUrl(topic.user_name, topic.user_id)} | {formatDateTime(
+            topic.create_ts
+        )} | Постов: {topic.post_count}
     </div>
 </div>

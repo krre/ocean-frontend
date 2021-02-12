@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { userUrl } from "utils";
     import * as api from "api";
 
     export let pageNo = 1;
@@ -10,7 +11,7 @@
 
 {#each users as user, i}
     {i + 1 + (pageNo - 1) * pageLimit}.
-    {user.name}
+    {@html userUrl(user.name, user.id)}
     -
     {user.count}
     <br />

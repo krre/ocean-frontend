@@ -47,6 +47,7 @@
     import * as dialog from "dialog";
     import * as route from "route";
     import type { User } from "types";
+    import { userUrl } from "utils";
     import { goto } from "@sapper/app";
     import { formatDateTime } from "utils";
     import Comment from "../../../components/comment/Comment.svelte";
@@ -189,7 +190,7 @@
             <div>ИД:</div>
             <div>{mandela.id}</div>
             <div>Добавлено:</div>
-            <div>{mandela.user_name}</div>
+            <div>{@html userUrl(mandela.user_name, mandela.user_id)}</div>
             <div>Создано:</div>
             <div>{formatDateTime(mandela.create_ts)}</div>
 

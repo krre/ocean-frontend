@@ -89,7 +89,8 @@
             <div class="post">
                 <PostTitle
                     row={i}
-                    author={comment.user_name}
+                    userName={comment.user_name}
+                    userId={comment.user_id}
                     date={comment.create_ts}
                     editable={user &&
                         (comment.user_id === user.id ||

@@ -52,7 +52,8 @@
                 title: item.name,
                 url: forum.topicLink(item.id, item.post_count),
                 date: item.post_create_ts,
-                author: item.user_name,
+                userName: item.user_name,
+                userId: item.user_id,
                 message: item.post,
             };
 
@@ -66,7 +67,8 @@
                 title: makeTitle(item),
                 url: route.Mandela.Id(item.mandela_id),
                 date: item.create_ts,
-                author: item.user_name,
+                userName: item.user_name,
+                userId: item.user_id,
                 message: item.message,
             };
 

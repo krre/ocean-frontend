@@ -29,9 +29,16 @@
 </style>
 
 <div class="topic">
-    <a href={forum.topicLink(topic.id, topic.post_count)}><h3>
+    <a href={forum.topicLink(topic.id, topic.post_count)}
+        ><h3>
             {topic.name}
-        </h3></a>
-    <PostTitle author={topic.user_name} date={topic.post_create_ts} {replyed} />
+        </h3></a
+    >
+    <PostTitle
+        userName={topic.user_name}
+        userId={topic.user_id}
+        date={topic.post_create_ts}
+        {replyed}
+    />
     <div class="post">{textCut(topic.post, 300)}</div>
 </div>
