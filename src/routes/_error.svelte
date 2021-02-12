@@ -16,7 +16,7 @@
 </style>
 
 <Frame title={status}>
-    <p>{error.message}</p>
+    <p>{JSON.stringify(error.message)}</p>
 
     {#if dev && error.stack}
         <pre>{error.stack}</pre>
