@@ -4,7 +4,7 @@
     import * as api from "api";
     import type { User } from "types";
     import { onMount } from "svelte";
-    import { Mounted } from "types";
+    import { Mounted, Vote } from "types";
     import { goto } from "@sapper/app";
     import { formatDateTime, zeroLeading, makeTitle } from "utils";
     import Indicator from "./Indicator.svelte";
@@ -120,6 +120,31 @@
         const queryString = gotoQuery.toString();
         goto((queryString ? "?" : "") + queryString);
     }
+
+    function voteColor(votes: api.Mandela.Vote[]): string {
+        let voteCounts = Array(4).fill(0);
+
+        for (const vote of votes) {
+            voteCounts[vote.vote] = vote.count;
+        }
+
+        if (
+            voteCounts[Vote.Fake] > voteCounts[Vote.Yes] ||
+            voteCounts[Vote.Fake] > voteCounts[Vote.No]
+        ) {
+            return consts.VoteColors[Vote.Fake];
+        }
+
+        if (voteCounts[Vote.Yes] > voteCounts[Vote.No]) {
+            return consts.VoteColors[Vote.Yes];
+        }
+
+        if (voteCounts[Vote.Yes] < voteCounts[Vote.No]) {
+            return consts.VoteColors[Vote.No];
+        }
+
+        return consts.VoteColors[Vote.Neutral];
+    }
 </script>
 
 <style>
@@ -205,7 +230,7 @@
     </div>
 
     {#each mandels as mandela}
-        <div class="row">
+        <div class="row" style="background-color: {voteColor(mandela.votes)}">
             <a class="row-link" href={route.Mandela.Id(mandela.id)}>
                 <span class:new-mandela={user && !mandela.mark_ts}
                     >{zeroLeading(mandela.id, zeroLeadingCount)}</span
