@@ -1,6 +1,8 @@
 <script lang="ts">
+    import * as consts from "consts";
     import { stores } from "@sapper/app";
     import Frame from "../components/Frame.svelte";
+    import { Vote } from "types";
 
     const { page } = stores();
     const title = "Справка";
@@ -13,6 +15,8 @@
     <div><a href="{$page.path}#about">О сайте</a></div>
 
     <div><a href="{$page.path}#termins">Термины</a></div>
+
+    <div><a href="{$page.path}#colors">Цветовая маркировка мандел</a></div>
 
     <div><a href="{$page.path}#research">Исследования наших участников</a></div>
 
@@ -84,6 +88,53 @@
         </li>
     </ul>
 
+    <h2 id="colors">Цветовая маркировка мандел</h2>
+
+    Манделы на главной странице маркируются следующими цветами в зависимости от
+    результатов голосования:
+
+    <ul>
+        <li>
+            {consts.Votes[Vote.Yes]} <strong>больше, чем</strong>
+            {consts.Votes[Vote.No]} -
+            <span style="background-color:{consts.VoteColors[Vote.Yes]}"
+                >зелёный</span
+            >
+        </li>
+
+        <li>
+            {consts.Votes[Vote.No]} <strong>больше, чем</strong>
+            {consts.Votes[Vote.Yes]} -
+            <span style="background-color:{consts.VoteColors[Vote.No]}"
+                >красный</span
+            >
+        </li>
+
+        <li>
+            {consts.Votes[Vote.Yes]} <strong>равно</strong>
+            {consts.Votes[Vote.No]} -
+            <span style="background-color:{consts.VoteColors[Vote.Neutral]}"
+                >жёлтый</span
+            >
+        </li>
+
+        <li>
+            {consts.Votes[Vote.Fake]} <strong>больше, чем</strong>
+            {consts.Votes[Vote.Yes]} <strong>или</strong>
+            {consts.Votes[Vote.No]}
+            -
+            <span style="background-color:{consts.VoteColors[Vote.Fake]}"
+                >серый</span
+            >
+        </li>
+        <li>
+            {consts.Votes[Vote.Neutral]}
+            <strong
+                >в цветовой маркировке не учитывается и ни на что не влияет</strong
+            >
+        </li>
+    </ul>
+
     <h2 id="research">Исследования наших участников</h2>
 
     <ul>
@@ -91,8 +142,8 @@
             <a href="https://mandelafx.livejournal.com/906.html">
                 Категории мандельских аномалий
             </a>
-            - попытка систематизации наблюдаемых аномалий, выполненная
-            Владимиром Зарыповым.
+            - попытка систематизации наблюдаемых аномалий, выполненная Владимиром
+            Зарыповым.
         </li>
         <li>
             <a href="/download/Основы манделоведения (по Зарыпову).docx">
@@ -274,7 +325,8 @@
     <h3>YouTube</h3>
     <div>
         <a
-            href="https://www.youtube.com/watch?v=oIPxMiv7UDM&list=PLzoF5ji3elGBAiBIhf1eHgAIgZJ6uiTMD">
+            href="https://www.youtube.com/watch?v=oIPxMiv7UDM&list=PLzoF5ji3elGBAiBIhf1eHgAIgZJ6uiTMD"
+        >
             Плейлист "Эффект манделы. Большая подборка" на канале
             "Перпендикулярный мир" Александра Бессонова
         </a>
@@ -282,7 +334,8 @@
 
     <div>
         <a
-            href="https://www.youtube.com/watch?v=fzK5JPzUtaA&list=PLA7jWfhdkQCdz6fgOZn8YAjqdUzqoO3CM">
+            href="https://www.youtube.com/watch?v=fzK5JPzUtaA&list=PLA7jWfhdkQCdz6fgOZn8YAjqdUzqoO3CM"
+        >
             Плейлист "Теории Заговора и Эффект Манделы" на канале "Gravity
             Tonya"
         </a>
@@ -314,7 +367,8 @@
     </div>
 
     <div>
-        <a href="https://www.reddit.com/r/Retconned">Retconned (англоязычный)</a>
+        <a href="https://www.reddit.com/r/Retconned">Retconned (англоязычный)</a
+        >
     </div>
 
     <h3>Каталоги мандел</h3>
@@ -336,7 +390,8 @@
 
     <div>
         <a
-            href="https://www.kinoasic.com/load/fantasticheskie/ehffekt_mandely_the_mandela_effect_2019_onlajn/20-1-0-2199">
+            href="https://www.kinoasic.com/load/fantasticheskie/ehffekt_mandely_the_mandela_effect_2019_onlajn/20-1-0-2199"
+        >
             Эффект Манделы / The Mandela Effect / 2019 (художественный)
         </a>
     </div>
