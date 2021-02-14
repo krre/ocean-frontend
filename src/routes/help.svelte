@@ -123,6 +123,14 @@
         </li>
     </ul>
 
+    <span
+        >Если нет ни одного голоса, то <span
+            style="background-color:{consts.VoteColors[Vote.Neutral]}"
+        >
+            жёлтый</span
+        ></span
+    >
+
     <h2 id="research">Исследования наших участников</h2>
 
     <ul>
