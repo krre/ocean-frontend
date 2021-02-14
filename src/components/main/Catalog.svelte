@@ -122,28 +122,17 @@
     }
 
     function voteColor(votes: api.Mandela.Vote[]): string {
-        let voteCounts = Array(4).fill(0);
+        let maxCount = 0;
+        let maxVote = Vote.Neutral;
 
         for (const vote of votes) {
-            voteCounts[vote.vote] = vote.count;
+            if (vote.count > maxCount) {
+                maxCount = vote.count;
+                maxVote = vote.vote;
+            }
         }
 
-        if (
-            voteCounts[Vote.Fake] > voteCounts[Vote.Yes] &&
-            voteCounts[Vote.Fake] > voteCounts[Vote.No]
-        ) {
-            return consts.VoteColors[Vote.Fake];
-        }
-
-        if (voteCounts[Vote.Yes] > voteCounts[Vote.No]) {
-            return consts.VoteColors[Vote.Yes];
-        }
-
-        if (voteCounts[Vote.Yes] < voteCounts[Vote.No]) {
-            return consts.VoteColors[Vote.No];
-        }
-
-        return consts.VoteColors[Vote.Neutral];
+        return consts.VoteColors[maxVote];
     }
 </script>
 

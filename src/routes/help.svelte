@@ -90,47 +90,35 @@
 
     <h2 id="colors">Цветовая маркировка мандел</h2>
 
-    Манделы на главной странице маркируются следующими цветами в зависимости от
-    результатов голосования:
+    Манделы на главной странице маркируются согласно результатам голосования
+    следующими цветами в завимости от того, каких голосов больше:
 
     <ul>
         <li>
-            {consts.Votes[Vote.Yes]} <strong>больше, чем</strong>
-            {consts.Votes[Vote.No]} -
+            {consts.Votes[Vote.Yes]} -
             <span style="background-color:{consts.VoteColors[Vote.Yes]}"
                 >зелёный</span
             >
         </li>
 
         <li>
-            {consts.Votes[Vote.No]} <strong>больше, чем</strong>
-            {consts.Votes[Vote.Yes]} -
+            {consts.Votes[Vote.No]} -
             <span style="background-color:{consts.VoteColors[Vote.No]}"
                 >красный</span
             >
         </li>
 
         <li>
-            {consts.Votes[Vote.Yes]} <strong>равно</strong>
-            {consts.Votes[Vote.No]} -
+            {consts.Votes[Vote.Neutral]} -
             <span style="background-color:{consts.VoteColors[Vote.Neutral]}"
                 >жёлтый</span
             >
         </li>
 
         <li>
-            {consts.Votes[Vote.Fake]} <strong>больше, чем</strong>
-            {consts.Votes[Vote.Yes]} <strong>и</strong>
-            {consts.Votes[Vote.No]}
-            -
+            {consts.Votes[Vote.Fake]} -
             <span style="background-color:{consts.VoteColors[Vote.Fake]}"
                 >серый</span
-            >
-        </li>
-        <li>
-            {consts.Votes[Vote.Neutral]}
-            <strong
-                >в цветовой маркировке не учитывается и ни на что не влияет</strong
             >
         </li>
     </ul>
