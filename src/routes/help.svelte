@@ -120,7 +120,7 @@
 
         <li>
             {consts.Votes[Vote.Fake]} <strong>больше, чем</strong>
-            {consts.Votes[Vote.Yes]} <strong>или</strong>
+            {consts.Votes[Vote.Yes]} <strong>и</strong>
             {consts.Votes[Vote.No]}
             -
             <span style="background-color:{consts.VoteColors[Vote.Fake]}"

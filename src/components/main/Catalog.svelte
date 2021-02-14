@@ -129,7 +129,7 @@
         }
 
         if (
-            voteCounts[Vote.Fake] > voteCounts[Vote.Yes] ||
+            voteCounts[Vote.Fake] > voteCounts[Vote.Yes] &&
             voteCounts[Vote.Fake] > voteCounts[Vote.No]
         ) {
             return consts.VoteColors[Vote.Fake];
