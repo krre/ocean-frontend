@@ -76,6 +76,11 @@
     <div class="info">
         {@html userUrl(topic.user_name, topic.user_id)} | {formatDateTime(
             topic.create_ts
-        )} | Постов: {topic.post_count}
+        )}
+    </div>
+    <div class="info">
+        Постов: {topic.post_count} | Последний: {formatDateTime(
+            topic.last_post_create_ts
+        )}
     </div>
 </div>
