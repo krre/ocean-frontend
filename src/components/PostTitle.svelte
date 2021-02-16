@@ -1,10 +1,12 @@
 <script lang="ts">
     import { createEventDispatcher } from "svelte";
-    import { formatDateTime, userUrl } from "utils";
+    import { userUrl, dateUrl } from "utils";
     import * as dialog from "dialog";
 
     const dispatch = createEventDispatcher();
 
+    export let baseUrl: string;
+    export let id: number;
     export let userName: string;
     export let userId: number;
     export let date: Date;
@@ -48,7 +50,7 @@
 </style>
 
 <div class="title">
-    {@html userUrl(userName, userId)} · {formatDateTime(date)}
+    {@html userUrl(userName, userId)} · {@html dateUrl(baseUrl, date, id)}
 
     {#if editable}
         <button on:click={edit}><i class="fas fa-edit" /></button>

@@ -37,6 +37,7 @@
     import Navigator from "../../../../components/forum/main/Navigator.svelte";
     import Pagination from "../../../../components/Pagination.svelte";
     import MessageEditor from "../../../../components/post/MessageEditor.svelte";
+    import { identity } from "svelte/internal";
 
     interface EditedPost extends api.Forum.Post.GetAll.Post {
         edit: boolean;
@@ -220,8 +221,11 @@
     </div>
 
     {#each posts as post, i}
+        <div id={post.id.toString()} />
         <PostElement
+            id={post.id}
             row={i}
+            baseUrl={route.Forum.Topic.Id(topicId)}
             {post}
             {topicUserId}
             on:removed={() => reload()}

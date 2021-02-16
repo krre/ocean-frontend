@@ -1,7 +1,8 @@
 <script lang="ts">
+    import * as forum from "forum";
+    import * as route from "route";
     import { textCut } from "utils";
     import type { NewTopic } from "forum";
-    import * as forum from "forum";
     import PostTitle from "../../PostTitle.svelte";
 
     export let topic: NewTopic;
@@ -34,6 +35,8 @@
         </h3></a
     >
     <PostTitle
+        id={topic.post_id}
+        baseUrl={route.Forum.Topic.Id(topic.id)}
         userName={topic.user_name}
         userId={topic.user_id}
         date={topic.post_create_ts}

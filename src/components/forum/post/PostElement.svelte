@@ -1,5 +1,4 @@
 <script lang="ts">
-    import * as consts from "consts";
     import * as bbcode from "bbcode";
     import * as api from "api";
     import type { User } from "types";
@@ -18,6 +17,8 @@
     export let post: EditedPost;
     export let editable = false;
     export let row = 0;
+    export let id = 0;
+    export let baseUrl = "";
 
     let isAdmin = false;
     let isAnonym = true;
@@ -71,7 +72,9 @@
 
 <div class="post">
     <PostTitle
+        {id}
         {row}
+        {baseUrl}
         userName={post.user_name}
         userId={post.user_id}
         date={post.create_ts}

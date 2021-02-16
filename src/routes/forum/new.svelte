@@ -39,7 +39,7 @@
 
 <FramePage title="Последние сообщения форума">
     {#each topics as topic}
-        <NewPost {topic} replyed={false} />
+        <NewPost {topic} />
     {/each}
 </FramePage>
 

@@ -29,6 +29,8 @@
     let message: string;
     let messageEditorRef: MessageEditor;
 
+    $: baseRoute = route.Mandela.Id(mandelaId);
+
     async function append() {
         const params: api.Comment.Create.Request = {
             mandela_id: +mandelaId,
@@ -86,8 +88,10 @@
 {#if comments.length}
     <Rectangle padding={false}>
         {#each comments as comment, i}
-            <div class="post">
+            <div class="post" id={comment.id.toString()}>
                 <PostTitle
+                    baseUrl={baseRoute}
+                    id={comment.id}
                     row={i}
                     userName={comment.user_name}
                     userId={comment.user_id}
@@ -125,7 +129,7 @@
         count={commentCount}
         limit={pageLimit}
         offset={pageNo}
-        baseRoute={route.Mandela.Id(mandelaId)}
+        {baseRoute}
     />
 {/if}
 

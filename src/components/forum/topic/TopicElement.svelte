@@ -4,7 +4,7 @@
     import * as api from "api";
     import * as types from "types";
     import type { User } from "types";
-    import { formatDateTime, userUrl } from "utils";
+    import { formatDateTime, userUrl, dateUrl } from "utils";
     import { goto } from "@sapper/app";
     import { createEventDispatcher } from "svelte";
     import SessionHub from "../../SessionHub.svelte";
@@ -79,8 +79,10 @@
         )}
     </div>
     <div class="info">
-        Постов: {topic.post_count} · Последний: {formatDateTime(
-            topic.last_post_create_ts
+        Постов: {topic.post_count} · Последний: {@html dateUrl(
+            route.Forum.Topic.Id(topic.id),
+            topic.last_post_create_ts,
+            topic.last_post_id
         )}
     </div>
 </div>
