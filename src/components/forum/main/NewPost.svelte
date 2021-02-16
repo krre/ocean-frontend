@@ -5,7 +5,6 @@
     import PostTitle from "../../PostTitle.svelte";
 
     export let topic: NewTopic;
-    export let replyed = true;
 </script>
 
 <style>
@@ -38,7 +37,7 @@
         userName={topic.user_name}
         userId={topic.user_id}
         date={topic.post_create_ts}
-        {replyed}
+        replyable={false}
     />
     <div class="post">{textCut(topic.post, 300)}</div>
 </div>
