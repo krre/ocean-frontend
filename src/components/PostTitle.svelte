@@ -37,21 +37,18 @@
 <style>
     .title {
         color: gray;
-        display: flex;
-        gap: 0.5em;
         margin-bottom: 1em;
         align-items: center;
     }
 
     button {
         color: gray;
+        margin-left: 0.2em;
     }
 </style>
 
 <div class="title">
-    {@html userUrl(userName, userId)}
-    <span>|</span>
-    {formatDateTime(date)}
+    {@html userUrl(userName, userId)} · {formatDateTime(date)}
 
     {#if editable}
         <button on:click={edit}><i class="fas fa-edit" /></button>

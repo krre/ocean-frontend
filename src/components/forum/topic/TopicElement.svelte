@@ -51,7 +51,7 @@
     }
 
     button {
-        margin-left: 0.5em;
+        margin-left: 0.2em;
         color: gray;
     }
 </style>
@@ -74,12 +74,12 @@
         </span>
     {/if}
     <div class="info">
-        {@html userUrl(topic.user_name, topic.user_id)} | {formatDateTime(
+        {@html userUrl(topic.user_name, topic.user_id)} · {formatDateTime(
             topic.create_ts
         )}
     </div>
     <div class="info">
-        Постов: {topic.post_count} | Последний: {formatDateTime(
+        Постов: {topic.post_count} · Последний: {formatDateTime(
             topic.last_post_create_ts
         )}
     </div>

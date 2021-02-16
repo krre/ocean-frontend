@@ -224,14 +224,14 @@
                 <span class:new-mandela={user && !mandela.mark_ts}
                     >{zeroLeading(mandela.id, zeroLeadingCount)}</span
                 >
-                |
+                ·
                 {formatDateTime(mandela.create_ts)}
-                |
+                ·
                 {makeTitle(mandela)}
-                |
+                ·
                 {mandela.user_name}
                 {#if mandela.comment_count}
-                    | Комментариев:
+                    · Комментариев:
                     <div class="comments">{mandela.comment_count}</div>
                 {/if}
             </a>

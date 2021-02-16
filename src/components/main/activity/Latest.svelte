@@ -35,7 +35,7 @@
             <a href={message.url}>{message.title}</a>
             <br />
             <span
-                >{formatDateTime(message.date)}, {@html userUrl(
+                >{formatDateTime(message.date)} · {@html userUrl(
                     message.userName,
                     message.userId
                 )}</span
