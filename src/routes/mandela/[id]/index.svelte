@@ -2,8 +2,6 @@
     import * as api from "api";
     import type { Session, Page } from "types";
 
-    const PAGE_LIMIT = 50;
-
     export async function preload(page: Page, session: Session) {
         const url = "https://" + page.host + page.path;
         const mandelaId = +page.params.id;
@@ -33,8 +31,8 @@
     ): Promise<api.Comment.GetAll.Response> {
         const params: api.Comment.GetAll.Request = {
             mandela_id: mandelaId,
-            limit: PAGE_LIMIT,
-            offset: (pageNo - 1) * PAGE_LIMIT,
+            limit: consts.Mandela.Comment.PageLimit,
+            offset: (pageNo - 1) * consts.Mandela.Comment.PageLimit,
         };
 
         return api.Comment.GetAll.exec(params);
@@ -317,7 +315,7 @@
         {pageNo}
         mandelaId={id}
         mandelaUserId={mandela.user_id}
-        pageLimit={PAGE_LIMIT}
+        pageLimit={consts.Mandela.Comment.PageLimit}
         commentCount={commentGetAllResponse.total_count}
         on:appended={() => reloadComments()}
     />

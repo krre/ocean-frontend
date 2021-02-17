@@ -1,7 +1,7 @@
 <script context="module" lang="ts">
     import * as api from "api";
     import * as route from "route";
-    import * as forum from "forum";
+    import * as consts from "consts";
     import type { Session, Page, ActivityMessage } from "types";
     import { makeTitle } from "utils";
 
@@ -49,8 +49,12 @@
 
         result.topics.forEach((item: api.Activity.Topic) => {
             const topic: ActivityMessage = {
+                id: item.post_id,
                 title: item.name,
-                url: forum.topicLink(item.id, item.post_count),
+                baseUrl: route.Forum.Topic.Id(item.id),
+                pageNo: Math.ceil(
+                    item.post_count / consts.Forum.Post.PageLimit
+                ),
                 date: item.post_create_ts,
                 userName: item.user_name,
                 userId: item.user_id,
@@ -64,8 +68,12 @@
 
         result.comments.forEach((item: api.Activity.Comment) => {
             const comment: ActivityMessage = {
+                id: item.id,
                 title: makeTitle(item),
-                url: route.Mandela.Id(item.mandela_id),
+                baseUrl: route.Mandela.Id(item.mandela_id),
+                pageNo: Math.ceil(
+                    item.comment_count / consts.Mandela.Comment.PageLimit
+                ),
                 date: item.create_ts,
                 userName: item.user_name,
                 userId: item.user_id,

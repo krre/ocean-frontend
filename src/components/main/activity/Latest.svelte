@@ -1,8 +1,9 @@
 <script lang="ts">
     import type { ActivityMessage } from "types";
     import { textCut } from "utils";
-    import { formatDateTime, userUrl } from "utils";
+    import { userUrl, dateUrl } from "utils";
     import Rectangle from "../../Rectangle.svelte";
+
     export let title = "";
     export let messages: ActivityMessage[] = [];
 </script>
@@ -32,13 +33,15 @@
     <div class="title">{title}</div>
     {#each messages as message}
         <div class="message">
-            <a href={message.url}>{message.title}</a>
+            <a href={message.baseUrl}>{message.title}</a>
             <br />
             <span
-                >{formatDateTime(message.date)} · {@html userUrl(
-                    message.userName,
-                    message.userId
-                )}</span
+                >{@html dateUrl(
+                    message.baseUrl,
+                    message.date,
+                    message.id,
+                    message.pageNo
+                )} · {@html userUrl(message.userName, message.userId)}</span
             >
             <br />
             {textCut(message.message, 200)}
