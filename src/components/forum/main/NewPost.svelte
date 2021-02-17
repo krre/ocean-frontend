@@ -1,4 +1,5 @@
 <script lang="ts">
+    import * as consts from "consts";
     import * as forum from "forum";
     import * as route from "route";
     import { textCut } from "utils";
@@ -37,6 +38,7 @@
     <PostTitle
         id={topic.post_id}
         baseUrl={route.Forum.Topic.Id(topic.id)}
+        pageNo={Math.ceil(topic.post_count / consts.Forum.Post.PageLimit)}
         userName={topic.user_name}
         userId={topic.user_id}
         date={topic.post_create_ts}

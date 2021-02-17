@@ -226,6 +226,7 @@
             id={post.id}
             row={i}
             baseUrl={route.Forum.Topic.Id(topicId)}
+            {pageNo}
             {post}
             {topicUserId}
             on:removed={() => reload()}

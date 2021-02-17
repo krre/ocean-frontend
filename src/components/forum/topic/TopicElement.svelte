@@ -1,4 +1,5 @@
 <script lang="ts">
+    import * as consts from "consts";
     import * as route from "route";
     import * as dialog from "dialog";
     import * as api from "api";
@@ -82,7 +83,8 @@
         Постов: {topic.post_count} · Последний: {@html dateUrl(
             route.Forum.Topic.Id(topic.id),
             topic.last_post_create_ts,
-            topic.last_post_id
+            topic.last_post_id,
+            Math.ceil(topic.post_count / consts.Forum.Post.PageLimit)
         )}
     </div>
 </div>

@@ -91,6 +91,7 @@
             <div class="post" id={comment.id.toString()}>
                 <PostTitle
                     baseUrl={baseRoute}
+                    {pageNo}
                     id={comment.id}
                     row={i}
                     userName={comment.user_name}

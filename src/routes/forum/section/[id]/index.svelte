@@ -38,7 +38,7 @@
 
     export let getAllResponse: api.Forum.Topic.GetAll.Response;
     export let sectionId = 0;
-    export let pageNo = 0;
+    export let pageNo = 1;
 
     let topics: api.Forum.Topic.GetAll.Topic[];
     let topicCount = 0;

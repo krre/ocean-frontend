@@ -6,6 +6,7 @@
     const dispatch = createEventDispatcher();
 
     export let baseUrl: string;
+    export let pageNo: number;
     export let id: number;
     export let userName: string;
     export let userId: number;
@@ -50,7 +51,12 @@
 </style>
 
 <div class="title">
-    {@html userUrl(userName, userId)} · {@html dateUrl(baseUrl, date, id)}
+    {@html userUrl(userName, userId)} · {@html dateUrl(
+        baseUrl,
+        date,
+        id,
+        pageNo
+    )}
 
     {#if editable}
         <button on:click={edit}><i class="fas fa-edit" /></button>

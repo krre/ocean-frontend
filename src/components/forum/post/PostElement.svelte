@@ -19,6 +19,7 @@
     export let row = 0;
     export let id = 0;
     export let baseUrl = "";
+    export let pageNo: number;
 
     let isAdmin = false;
     let isAnonym = true;
@@ -75,6 +76,7 @@
         {id}
         {row}
         {baseUrl}
+        {pageNo}
         userName={post.user_name}
         userId={post.user_id}
         date={post.create_ts}
