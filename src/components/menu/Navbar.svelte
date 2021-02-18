@@ -1,8 +1,6 @@
 <script lang="ts">
-    import { ScreenSize } from "types";
     import Menu from "./Menu.svelte";
     import Burger from "./Burger.svelte";
-    import MediaQuery from "../MediaQuery.svelte";
 
     export let sidebar = false;
 </script>
@@ -15,14 +13,42 @@
         display: flex;
         align-items: center;
     }
+
+    .burger {
+        display: block;
+    }
+
+    .menu {
+        display: block;
+    }
+
+    @media screen and (max-width: 45em) {
+        .burger {
+            display: block;
+        }
+
+        .menu {
+            display: none;
+        }
+    }
+
+    @media screen and (min-width: 45em) {
+        .burger {
+            display: none;
+        }
+
+        .menu {
+            display: block;
+        }
+    }
 </style>
 
 <div class="bar">
-    <MediaQuery size={ScreenSize.Tablet} let:matches>
-        {#if matches}
-            <Burger bind:open={sidebar} />
-        {:else}
-            <Menu />
-        {/if}
-    </MediaQuery>
+    <div class="burger">
+        <Burger bind:open={sidebar} />
+    </div>
+
+    <div class="menu">
+        <Menu />
+    </div>
 </div>
