@@ -4,7 +4,7 @@
 
     const PAGE_LIMIT = 20;
 
-    export async function preload(page: Page, session: Session) {
+    export async function preload(page: Page, _session: Session) {
         const pageNo = +page.query.page || 1;
 
         const params: api.Forum.GetNew.Request = {

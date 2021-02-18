@@ -5,7 +5,7 @@
 
     const dispatch = createEventDispatcher();
     export let text: string;
-    export let sendAction = async (text: string) => {};
+    export let sendAction = async (_text: string) => {};
 
     function cancel() {
         dispatch("cancel");

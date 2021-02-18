@@ -60,7 +60,7 @@
     export let pageNo: number;
 
     let totalVotes = 0;
-    let votes: api.Mandela.GetOne.Vote[];
+    let votes: api.Mandela.Vote[];
 
     $: mandela = getOneResponse.mandela;
     $: comments = commentGetAllResponse.comments;

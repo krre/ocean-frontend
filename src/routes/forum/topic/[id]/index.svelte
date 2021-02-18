@@ -37,7 +37,6 @@
     import Navigator from "../../../../components/forum/main/Navigator.svelte";
     import Pagination from "../../../../components/Pagination.svelte";
     import MessageEditor from "../../../../components/post/MessageEditor.svelte";
-    import { identity } from "svelte/internal";
 
     interface EditedPost extends api.Forum.Post.GetAll.Post {
         edit: boolean;

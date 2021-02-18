@@ -8,7 +8,7 @@
     const MANDELA_PAGE_LIMIT = 50;
     const ACTIVITY_PAGE_LIMIT = 5;
 
-    export async function preload(page: Page, session: Session) {
+    export async function preload(page: Page, _session: Session) {
         const pageNo = +page.query.page || 1;
         const filter = +page.query.filter || 0;
         const category = +page.query.category || 0;
