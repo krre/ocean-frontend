@@ -5,7 +5,23 @@
     const smiles: String[] = [];
 
     // Chars from Unicode table
-    for (let i = 0x1f600; i <= 0x1f64f; i++) {
+    for (let i = 0x1f600; i <= 0x1f637; i++) {
+        smiles.push(String.fromCodePoint(i));
+    }
+
+    for (let i = 0x1f641; i <= 0x1f644; i++) {
+        smiles.push(String.fromCodePoint(i));
+    }
+
+    for (let i = 0x1f90f; i <= 0x1f917; i++) {
+        smiles.push(String.fromCodePoint(i));
+    }
+
+    for (let i = 0x1f920; i <= 0x1f92f; i++) {
+        smiles.push(String.fromCodePoint(i));
+    }
+
+    for (let i = 0x1f44c; i <= 0x1f44f; i++) {
         smiles.push(String.fromCodePoint(i));
     }
 </script>
@@ -30,8 +46,10 @@
     {#each smiles as smile}
         <span
             class="smile"
-            on:click={() => dispatch('selected', {
+            on:click={() =>
+                dispatch("selected", {
                     smile: smile,
-                })}>{smile}</span>
+                })}>{smile}</span
+        >
     {/each}
 </div>
