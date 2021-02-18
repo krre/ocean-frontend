@@ -1,11 +1,12 @@
 <script lang="ts">
     import PostEditor from "./PostEditor.svelte";
     import Rectangle from "../Rectangle.svelte";
-    import SessionHub from "../../components/SessionHub.svelte";
+    import SessionHub from "../SessionHub.svelte";
+    import WaitButton from "../WaitButton.svelte";
 
     export let message = "";
     export let sendButtonEnabled = true;
-    export let appendAction = async () => {};
+    export let sendAction = async () => {};
 
     let userName: string;
     let postEditorRef: PostEditor;
@@ -15,13 +16,13 @@
     }
 
     async function action() {
-        await appendAction();
+        await sendAction();
         message = "";
     }
 </script>
 
 <style>
-    button {
+    .wait-button {
         margin-top: 0.5em;
     }
 </style>
@@ -32,9 +33,12 @@
     <PostEditor bind:post={message} bind:this={postEditorRef} />
 
     <div>Пользователь: {userName}</div>
-    <button
-        class="send"
-        on:click={action}
-        disabled={!(message.length > 0 && sendButtonEnabled)}>Отправить</button
-    >
+
+    <div class="wait-button">
+        <WaitButton
+            title="Отправить"
+            enabled={message.length > 0 && sendButtonEnabled}
+            sendAction={action}
+        />
+    </div>
 </Rectangle>

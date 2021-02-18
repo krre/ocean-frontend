@@ -151,7 +151,7 @@
 
 <MessageEditor
     bind:message={post}
-    appendAction={action}
+    sendAction={action}
     sendButtonEnabled={name.length > 0 &&
         (type === types.ForumTopicType.Poll ? answers.length > 0 : true)}
 />

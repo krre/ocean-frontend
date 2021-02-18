@@ -52,6 +52,7 @@
     import Frame from "../../../components/Frame.svelte";
     import SessionHub from "../../../components/SessionHub.svelte";
     import Rectangle from "../../../components/Rectangle.svelte";
+    import WaitButton from "../../../components/WaitButton.svelte";
 
     export let getOneResponse: api.Mandela.GetOne.Response;
     export let commentGetAllResponse: api.Comment.GetAll.Response;
@@ -298,9 +299,11 @@
             </div>
 
             <div>
-                <button on:click={castVote} disabled={voteValue < 0}>
-                    Проголосовать
-                </button>
+                <WaitButton
+                    title="Проголосовать"
+                    enabled={voteValue >= 0}
+                    sendAction={castVote}
+                />
             </div>
         {/if}
     </div>

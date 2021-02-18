@@ -69,5 +69,6 @@
         bind:description={mandela.description}
         bind:categories
         bind:user={session.user}
-        on:click={edit} />
+        sendAction={edit}
+    />
 </Frame>

@@ -43,5 +43,6 @@
         bind:description
         bind:categories
         bind:user={$session.user}
-        on:click={append} />
+        sendAction={append}
+    />
 </Frame>

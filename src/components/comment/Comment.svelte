@@ -114,7 +114,7 @@
                 {#if comment.edit}
                     <EditComment
                         text={comment.message}
-                        on:send={(event) => editComment(i, event.detail.text)}
+                        sendAction={(text) => editComment(i, text)}
                         on:cancel={() => (comment.edit = false)}
                     />
                 {:else}
@@ -137,5 +137,5 @@
 <MessageEditor
     bind:message
     bind:this={messageEditorRef}
-    appendAction={() => append()}
+    sendAction={() => append()}
 />

@@ -1,15 +1,11 @@
 <script lang="ts">
-    import PostEditor from "../post/PostEditor.svelte";
     import { createEventDispatcher } from "svelte";
+    import PostEditor from "../post/PostEditor.svelte";
+    import WaitButton from "../../components/WaitButton.svelte";
 
     const dispatch = createEventDispatcher();
     export let text: string;
-
-    function send() {
-        dispatch("send", {
-            text: text,
-        });
-    }
+    export let sendAction = async (text: string) => {};
 
     function cancel() {
         dispatch("cancel");
@@ -22,13 +18,19 @@
     }
 
     .row-btn {
+        display: flex;
         margin-top: 0.5em;
+        gap: 0.5em;
     }
 </style>
 
 <PostEditor bind:post={text} />
 
 <div class="row-btn">
-    <button on:click={send} disabled={!text}>Отправить</button>
+    <WaitButton
+        title="Отправить"
+        enabled={text.length > 0}
+        sendAction={() => sendAction(text)}
+    />
     <button on:click={cancel}>Отменить</button>
 </div>

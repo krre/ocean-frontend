@@ -245,5 +245,5 @@
 <MessageEditor
     bind:this={messageEditorRef}
     bind:message={post}
-    appendAction={() => append()}
+    sendAction={() => append()}
 />

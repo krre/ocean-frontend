@@ -90,7 +90,7 @@
     {#if post.edit}
         <EditComment
             text={post.post}
-            on:send={(event) => editPost(event.detail.text)}
+            sendAction={(text) => editPost(text)}
             on:cancel={() => (post.edit = false)}
         />
     {:else}

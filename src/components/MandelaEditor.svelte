@@ -4,6 +4,7 @@
     import * as utils from "utils";
     import MandelaTitle from "./MandelaTitle.svelte";
     import PostEditor from "./post/PostEditor.svelte";
+    import WaitButton from "./WaitButton.svelte";
 
     export let titleMode = consts.Mandela.Title.Simple;
     export let title = "";
@@ -13,6 +14,7 @@
     export let description = "";
     export let categories = [];
     export let user: User;
+    export let sendAction = async () => {};
 
     let buttonEnabled: boolean;
 
@@ -32,8 +34,8 @@
         flex-direction: column;
     }
 
-    .append-item {
-        margin-top: 10px;
+    .wait-button {
+        margin-top: 0.5em;
     }
 
     .rules {
@@ -55,7 +57,8 @@
         bind:what
         bind:before
         bind:after
-        bind:mode={titleMode} />
+        bind:mode={titleMode}
+    />
     Описание:
     <PostEditor bind:post={description} />
     Категории:
@@ -70,6 +73,6 @@
     <div>Пользователь: {userName}</div>
 </div>
 
-<button class="append-item" on:click disabled={!buttonEnabled}>
-    Отправить
-</button>
+<div class="wait-button">
+    <WaitButton title="Отправить" enabled={buttonEnabled} {sendAction} />
+</div>
