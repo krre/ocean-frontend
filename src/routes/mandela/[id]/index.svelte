@@ -157,6 +157,11 @@
         word-wrap: break-word;
     }
 
+    .edit-buttons {
+        display: flex;
+        gap: 0.5em;
+    }
+
     .vote {
         display: block;
     }
@@ -228,8 +233,8 @@
         {/if}
 
         {#if !isAnonym && (user.id === mandela.user_id || isAdmin)}
-            <div>
-                {#if user.id === mandela.user_id}
+            <div class="edit-buttons">
+                {#if user.id === mandela.user_id || isAdmin}
                     <button on:click={edit}>Редактировать</button>
                 {/if}
 
