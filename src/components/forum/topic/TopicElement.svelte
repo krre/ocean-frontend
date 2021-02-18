@@ -80,11 +80,14 @@
         )}
     </div>
     <div class="info">
-        Постов: {topic.post_count} · Последний: {@html dateUrl(
-            route.Forum.Topic.Id(topic.id),
-            topic.last_post_create_ts,
-            topic.last_post_id,
-            Math.ceil(topic.post_count / consts.Forum.Post.PageLimit)
-        )}
+        Постов: {topic.post_count} · Последний:
+        {#if topic.last_post_create_ts}
+            {@html dateUrl(
+                route.Forum.Topic.Id(topic.id),
+                topic.last_post_create_ts,
+                topic.last_post_id,
+                Math.ceil(topic.post_count / consts.Forum.Post.PageLimit)
+            )}
+        {/if}
     </div>
 </div>
