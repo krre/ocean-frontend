@@ -2,6 +2,7 @@
     import Rectangle from "./Rectangle.svelte";
     export let title: string;
     export let showHeader = true;
+    export let showContent = true;
 </script>
 
 <style>
@@ -19,6 +20,8 @@
     <h1 class="header">{title}</h1>
 {/if}
 
-<Rectangle>
-    <slot />
-</Rectangle>
+{#if showContent}
+    <Rectangle>
+        <slot />
+    </Rectangle>
+{/if}
