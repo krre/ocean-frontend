@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
     export let padding = true;
     export let solid = true;
 </script>

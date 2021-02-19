@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
     import Menu from "./Menu.svelte";
     export let open = false;
 </script>
