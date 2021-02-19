@@ -84,6 +84,11 @@
         white-space: pre-line;
         overflow-wrap: break-word;
         word-wrap: break-word;
+        margin-top: 1em;
+    }
+
+    h3 {
+        margin: 0.5em 0.5em 0.3em 0;
     }
 </style>
 
@@ -94,11 +99,9 @@
         <div>
             {description(feed.type)}
         </div>
-        <strong
-            ><a href={titleRoute(feed.title_id, feed.type)}>
-                {feed.title}</a
-            ></strong
-        >
+        <h3>
+            <a href={titleRoute(feed.title_id, feed.type)}> {feed.title}</a>
+        </h3>
 
         <div class="info">
             {@html userUrl(feed.user_name, feed.user_id)} · {@html dateRoute(
