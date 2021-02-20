@@ -2,6 +2,7 @@
     import * as api from "api";
     import { makeTitle } from "utils";
     import Frame from "../components/Frame.svelte";
+    import Rectangle from "../components/Rectangle.svelte";
 
     let content: string;
     let mandels: api.Search.Mandela[] = [];
@@ -57,13 +58,16 @@
         <input bind:value={content} on:keyup={keyPressed} />
 
         <div class="item"><button on:click={search}>Найти</button></div>
+    </div>
+</Frame>
 
+{#if !start}
+    <Rectangle>
         {#if mandels.length}
-            <br />
             {#each mandels as mandela}
                 {@html mandelaLink(mandela.id, mandela)}
                 <br />
             {/each}
-        {:else if !start}<br /> Ничего не найдено{/if}
-    </div>
-</Frame>
+        {:else if !start}Ничего не найдено{/if}
+    </Rectangle>
+{/if}
