@@ -4,7 +4,14 @@
     import Frame from "../components/Frame.svelte";
     import Rectangle from "../components/Rectangle.svelte";
 
-    let content: string;
+    enum Type {
+        Mandela,
+        Comment,
+        Forum,
+    }
+
+    let type = Type.Mandela;
+    let text = "";
     let mandels: api.Search.Mandela[] = [];
     let start = true;
 
@@ -18,11 +25,11 @@
 
         try {
             const params: api.Search.GetAll.Request = {
-                content: content || "",
+                text,
+                type: type,
             };
 
             mandels = await api.Search.GetAll.exec(params);
-
             start = false;
         } catch (e) {
             console.error(e);
@@ -43,21 +50,27 @@
 
 <style>
     .container {
-        display: flexbox;
+        display: flex;
         flex-direction: column;
-    }
-
-    .item {
-        margin-top: 1em;
+        max-width: 30em;
+        gap: 0.7em;
     }
 </style>
 
 <Frame title="Поиск">
     <div class="container">
-        Введите текст:
-        <input bind:value={content} on:keyup={keyPressed} />
+        Искать по:
+        <div>
+            <select bind:value={type}>
+                <option value={Type.Mandela}>манделам</option>
+                <option value={Type.Comment}>комментариям</option>
+                <option value={Type.Forum}>форуму</option>
+            </select>
+        </div>
 
-        <div class="item"><button on:click={search}>Найти</button></div>
+        Введите текст:
+        <input bind:value={text} on:keyup={keyPressed} />
+        <div><button on:click={search}>Найти</button></div>
     </div>
 </Frame>
 
