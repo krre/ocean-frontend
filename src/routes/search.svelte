@@ -1,26 +1,28 @@
 <script lang="ts">
+    import * as route from "route";
     import * as api from "api";
-    import { makeTitle } from "utils";
+    import * as consts from "consts";
+    import { pageUrl } from "utils";
     import Frame from "../components/Frame.svelte";
     import Rectangle from "../components/Rectangle.svelte";
 
     enum Type {
         Mandela,
         Comment,
-        Forum,
+        ForumPost,
     }
 
     const PAGE_LIMIT = 30;
 
     let type = Type.Mandela;
     let text = "";
-    let mandels: api.Search.Mandela[] = [];
+    let records: api.Search.GetAll.Record[] = [];
     let start = true;
     let pageNo = 1;
 
     function clear() {
         start = true;
-        mandels = [];
+        records = [];
     }
 
     async function search() {
@@ -34,7 +36,8 @@
                 offset: (pageNo - 1) * PAGE_LIMIT,
             };
 
-            mandels = await api.Search.GetAll.exec(params);
+            const result = await api.Search.GetAll.exec(params);
+            records = result.records;
             start = false;
         } catch (e) {
             console.error(e);
@@ -47,9 +50,29 @@
         }
     }
 
-    function mandelaLink(id: number, mandela: api.Search.Mandela) {
-        const title = makeTitle(mandela);
-        return `<a target="_blank" class="row-link" href="/mandela/${id}">${title}</a>`;
+    function recordTitle(
+        titleId: number,
+        title: string,
+        id: number,
+        row: number
+    ) {
+        if (type == Type.Mandela) {
+            return `<a target="_blank" href="${route.Mandela.Id(
+                titleId
+            )}">${title}</a>`;
+        } else if (type == Type.Comment) {
+            const page = Math.ceil(row / consts.Mandela.Comment.PageLimit);
+            return pageUrl(route.Mandela.Id(titleId), title, id, page, true);
+        } else {
+            const page = Math.ceil(row / consts.Forum.Post.PageLimit);
+            return pageUrl(
+                route.Forum.Topic.Id(titleId),
+                title,
+                id,
+                page,
+                true
+            );
+        }
     }
 </script>
 
@@ -60,6 +83,22 @@
         max-width: 30em;
         gap: 0.7em;
     }
+
+    .record {
+        border-bottom: var(--border-1px);
+        padding: var(--page-padding);
+    }
+
+    .record:last-child {
+        border-bottom: none;
+    }
+
+    .content {
+        margin-top: 1em;
+        white-space: pre-wrap;
+        overflow-wrap: break-word;
+        word-wrap: break-word;
+    }
 </style>
 
 <Frame title="Поиск">
@@ -69,7 +108,7 @@
             <select bind:value={type}>
                 <option value={Type.Mandela}>манделам</option>
                 <option value={Type.Comment}>комментариям</option>
-                <option value={Type.Forum}>форуму</option>
+                <option value={Type.ForumPost}>форуму</option>
             </select>
         </div>
 
@@ -79,13 +118,25 @@
     </div>
 </Frame>
 
-{#if !start}
-    <Rectangle>
-        {#if mandels.length}
-            {#each mandels as mandela}
-                {@html mandelaLink(mandela.id, mandela)}
-                <br />
-            {/each}
-        {:else if !start}Ничего не найдено{/if}
+{#if records.length}
+    <Rectangle padding={false}>
+        {#each records as record}
+            <div class="record">
+                {@html recordTitle(
+                    record.title_id,
+                    record.title,
+                    record.id,
+                    record.row
+                )}
+
+                <div class="content">
+                    {@html record.content}
+                </div>
+            </div>
+        {/each}
     </Rectangle>
+{/if}
+
+{#if !start && records.length == 0}
+    <Rectangle>Ничего не найдено</Rectangle>
 {/if}
