@@ -5,6 +5,7 @@
     import { pageUrl } from "utils";
     import Frame from "../components/Frame.svelte";
     import Rectangle from "../components/Rectangle.svelte";
+    import WaitButton from "../components/WaitButton.svelte";
 
     enum Type {
         Mandela,
@@ -18,6 +19,7 @@
     let text = "";
     let records: api.Search.GetAll.Record[] = [];
     let start = true;
+    let buttonEnabled = true;
     let pageNo = 1;
 
     function clear() {
@@ -27,6 +29,7 @@
 
     async function search() {
         clear();
+        buttonEnabled = false;
 
         try {
             const params: api.Search.GetAll.Request = {
@@ -42,6 +45,8 @@
         } catch (e) {
             console.error(e);
         }
+
+        buttonEnabled = true;
     }
 
     function keyPressed(event: any) {
@@ -114,7 +119,13 @@
 
         Введите текст:
         <input bind:value={text} on:keyup={keyPressed} />
-        <div><button on:click={search}>Найти</button></div>
+        <div>
+            <WaitButton
+                title="Найти"
+                enabled={buttonEnabled}
+                sendAction={search}
+            />
+        </div>
     </div>
 </Frame>
 
