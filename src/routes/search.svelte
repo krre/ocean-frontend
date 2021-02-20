@@ -10,10 +10,13 @@
         Forum,
     }
 
+    const PAGE_LIMIT = 30;
+
     let type = Type.Mandela;
     let text = "";
     let mandels: api.Search.Mandela[] = [];
     let start = true;
+    let pageNo = 1;
 
     function clear() {
         start = true;
@@ -27,6 +30,8 @@
             const params: api.Search.GetAll.Request = {
                 text,
                 type: type,
+                limit: PAGE_LIMIT,
+                offset: (pageNo - 1) * PAGE_LIMIT,
             };
 
             mandels = await api.Search.GetAll.exec(params);
