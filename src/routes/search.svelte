@@ -3,7 +3,6 @@
     import { makeTitle } from "utils";
     import Frame from "../components/Frame.svelte";
 
-    const title = "Поиск мандел";
     const searchContent = "0";
     const searchId = "1";
 
@@ -11,8 +10,6 @@
     let id: number;
     let content: string;
     let mandels: api.Search.Mandela[] = [];
-    let searchInTitle = true;
-    let searchInDescription = true;
     let start = true;
 
     $: searchType && clear();
@@ -40,8 +37,6 @@
             } else {
                 const params: api.Search.GetByContent.Request = {
                     content: content || "",
-                    search_title: searchInTitle,
-                    search_description: searchInDescription,
                 };
 
                 mandels = await api.Search.GetByContent.exec(params);
@@ -76,10 +71,10 @@
     }
 </style>
 
-<Frame {title}>
+<Frame title="Поиск">
     <div class="container">
         <div class="item">
-            Искать по
+            Искать по:
             <select bind:value={searchType}>
                 <option value={searchContent}>Содержимому</option>
                 <option value={searchId}>Номеру</option>
@@ -92,16 +87,6 @@
             {:else}
                 Введите строку:
                 <input bind:value={content} on:keyup={keyPressed} />
-                <br />
-                <label>
-                    <input type="checkbox" bind:checked={searchInTitle} />
-                    Искать в заголовке
-                </label>
-                <br />
-                <label>
-                    <input type="checkbox" bind:checked={searchInDescription} />
-                    Искать в описании
-                </label>
             {/if}
         </div>
 
