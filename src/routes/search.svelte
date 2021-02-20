@@ -3,7 +3,6 @@
     import { makeTitle } from "utils";
     import Frame from "../components/Frame.svelte";
 
-    let id: number;
     let content: string;
     let mandels: api.Search.Mandela[] = [];
     let start = true;
@@ -17,11 +16,11 @@
         clear();
 
         try {
-            const params: api.Search.GetByContent.Request = {
+            const params: api.Search.GetAll.Request = {
                 content: content || "",
             };
 
-            mandels = await api.Search.GetByContent.exec(params);
+            mandels = await api.Search.GetAll.exec(params);
 
             start = false;
         } catch (e) {
