@@ -3,16 +3,10 @@
     import { makeTitle } from "utils";
     import Frame from "../components/Frame.svelte";
 
-    const searchContent = "0";
-    const searchId = "1";
-
-    let searchType = searchContent;
     let id: number;
     let content: string;
     let mandels: api.Search.Mandela[] = [];
     let start = true;
-
-    $: searchType && clear();
 
     function clear() {
         start = true;
@@ -23,24 +17,11 @@
         clear();
 
         try {
-            if (searchType === searchId) {
-                const params: api.Search.GetById.Request = {
-                    id: Number(id),
-                };
-                const mandela = await api.Search.GetById.exec(params);
+            const params: api.Search.GetByContent.Request = {
+                content: content || "",
+            };
 
-                if (mandela) {
-                    mandela.id = id;
-                    mandels.push(mandela);
-                    mandels = mandels;
-                }
-            } else {
-                const params: api.Search.GetByContent.Request = {
-                    content: content || "",
-                };
-
-                mandels = await api.Search.GetByContent.exec(params);
-            }
+            mandels = await api.Search.GetByContent.exec(params);
 
             start = false;
         } catch (e) {
@@ -73,22 +54,8 @@
 
 <Frame title="Поиск">
     <div class="container">
-        <div class="item">
-            Искать по:
-            <select bind:value={searchType}>
-                <option value={searchContent}>Содержимому</option>
-                <option value={searchId}>Номеру</option>
-            </select>
-        </div>
-        <div class="item">
-            {#if searchType == searchId}
-                Введите номер:
-                <input type="number" bind:value={id} on:keyup={keyPressed} />
-            {:else}
-                Введите строку:
-                <input bind:value={content} on:keyup={keyPressed} />
-            {/if}
-        </div>
+        Введите текст:
+        <input bind:value={content} on:keyup={keyPressed} />
 
         <div class="item"><button on:click={search}>Найти</button></div>
 
