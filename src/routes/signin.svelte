@@ -40,14 +40,20 @@
             error = errorMessage(e.code);
         }
     }
+
+    function keyPressed(event: any) {
+        if (event.key == "Enter") {
+            signin();
+        }
+    }
 </script>
 
 <Frame {title}>
     <BoxForm>
         ИД:
-        <input type="number" bind:value={id} />
+        <input type="number" bind:value={id} on:keyup={keyPressed} />
         Пароль:
-        <input type="password" bind:value={password} />
+        <input type="password" bind:value={password} on:keyup={keyPressed} />
         <OperationResult {error} />
         <button on:click={signin} disabled={!signinButtonEnabled}>Войти</button>
     </BoxForm>
