@@ -34,6 +34,8 @@
         <div>{user.id}</div>
         <div>Имя:</div>
         <div>{user.name}</div>
+        <div>Пол:</div>
+        <div>{consts.Genders[user.gender]}</div>
         <div>Дата регистрации:</div>
         <div>{formatDateTime(user.create_ts)}</div>
         <div>Тип аккаунта:</div>
