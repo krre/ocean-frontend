@@ -17,6 +17,7 @@
         New,
         Mine,
         Poll,
+        Trash,
         Category,
     }
 
@@ -42,6 +43,7 @@
     let newCount = 0;
     let mineCount = 0;
     let pollCount = 0;
+    let trashCount = 0;
     let categoryCount = 0;
 
     let currentCount = 0;
@@ -56,6 +58,7 @@
         newCount = getAllResponse.new_count;
         mineCount = getAllResponse.mine_count;
         pollCount = getAllResponse.poll_count;
+        trashCount = getAllResponse.trash_count;
         categoryCount = getAllResponse.category_count;
 
         if (filter === Filter.All) {
@@ -66,6 +69,8 @@
             currentCount = mineCount;
         } else if (filter === Filter.Poll) {
             currentCount = pollCount;
+        } else if (filter === Filter.Trash) {
+            currentCount = trashCount;
         } else if (filter === Filter.Category) {
             currentCount = categoryCount;
         }
@@ -157,10 +162,8 @@
         display: flex;
         flex-wrap: wrap;
         align-items: center;
-    }
-
-    .tool-bar-item {
-        margin: 0.5em 0.2em;
+        gap: 0.5em;
+        margin-bottom: 0.7em;
     }
 </style>
 
@@ -198,6 +201,14 @@
                 on:clicked={() => (filter = Filter.Poll)}
             />
         {/if}
+
+        <Indicator
+            title="Хлам"
+            count={trashCount}
+            active={filter == Filter.Trash}
+            on:clicked={() => (filter = Filter.Trash)}
+        />
+
         <span class="tool-bar-item"
             >Категория:
             <select bind:value={category}>
