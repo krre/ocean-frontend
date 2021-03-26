@@ -125,6 +125,7 @@
         if (!dialog.remove("Переместить манделу?")) return;
 
         const params: api.Mandela.UpdateTrash.Request = {
+            id: mandela.id,
             trash: trash,
         };
 
