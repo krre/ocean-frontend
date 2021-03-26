@@ -53,6 +53,8 @@
     import SessionHub from "../../../components/SessionHub.svelte";
     import Rectangle from "../../../components/Rectangle.svelte";
     import WaitButton from "../../../components/WaitButton.svelte";
+    import MandelaEditor from "../../../components/MandelaEditor.svelte";
+    import MandelaTitle from "../../../components/MandelaTitle.svelte";
 
     export let getOneResponse: api.Mandela.GetOne.Response;
     export let commentGetAllResponse: api.Comment.GetAll.Response;
@@ -119,6 +121,16 @@
         editVote = false;
     }
 
+    async function updateTrash(trash: boolean) {
+        if (!dialog.remove("Переместить манделу?")) return;
+
+        const params: api.Mandela.UpdateTrash.Request = {
+            trash: trash,
+        };
+
+        await api.Mandela.UpdateTrash.exec(params);
+    }
+
     function getVoteCount(vote: number) {
         for (let v of votes) {
             if (v.vote === vote) {
@@ -157,6 +169,11 @@
         word-wrap: break-word;
     }
 
+    .trash {
+        color: red;
+        margin: 0;
+    }
+
     .edit-buttons {
         display: flex;
         gap: 0.5em;
@@ -190,6 +207,10 @@
 
 <Frame {title}>
     <div class="container">
+        {#if mandela.trash}
+            <h3 class="trash">Мандела находится в хламе!</h3>
+        {/if}
+
         <div class="grid">
             <div>ИД:</div>
             <div>{mandela.id}</div>
@@ -240,6 +261,15 @@
 
                 {#if isAdmin}
                     <button on:click={remove}>Удалить</button>
+                    {#if mandela.trash}
+                        <button on:click={() => updateTrash(false)}
+                            >Переместить в каталог</button
+                        >
+                    {:else}
+                        <button on:click={() => updateTrash(true)}
+                            >Переместить в хлам</button
+                        >
+                    {/if}
                 {/if}
             </div>
         {/if}
