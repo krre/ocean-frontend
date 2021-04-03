@@ -76,6 +76,7 @@
         clear();
         buttonEnabled = false;
         pageNo = 1;
+        totalCount = 0;
 
         try {
             searchGetAllResponse = await load(text, type, pageNo);
