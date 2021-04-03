@@ -1,11 +1,8 @@
-<script lang="ts">
-    import * as route from "route";
+<script context="module" lang="ts">
     import * as api from "api";
-    import * as consts from "consts";
-    import { pageUrl } from "utils";
-    import Frame from "../components/Frame.svelte";
-    import Rectangle from "../components/Rectangle.svelte";
-    import WaitButton from "../components/WaitButton.svelte";
+    import type { Session, Page } from "types";
+
+    const PAGE_LIMIT = 30;
 
     enum Type {
         Mandela,
@@ -13,14 +10,62 @@
         ForumPost,
     }
 
-    const PAGE_LIMIT = 30;
+    async function load(
+        text: string,
+        type: Type,
+        page: number
+    ): Promise<api.Search.GetAll.Response> {
+        const params: api.Search.GetAll.Request = {
+            text,
+            type: type,
+            limit: PAGE_LIMIT,
+            offset: (page - 1) * PAGE_LIMIT,
+        };
 
-    let type = Type.Mandela;
-    let text = "";
+        return api.Search.GetAll.exec(params);
+    }
+
+    export async function preload(page: Page, _session: Session) {
+        const pageNo = +page.query.page || 1;
+        const type = +page.query.type || Type.Mandela;
+        const text = page.query.text || "";
+
+        let searchGetAllResponse = await load(text, type, pageNo);
+
+        return {
+            searchGetAllResponse,
+            text,
+            type,
+            pageNo,
+        };
+    }
+</script>
+
+<script lang="ts">
+    import * as route from "route";
+    import * as consts from "consts";
+    import { pageUrl } from "utils";
+    import { goto } from "@sapper/app";
+    import Frame from "../components/Frame.svelte";
+    import Rectangle from "../components/Rectangle.svelte";
+    import WaitButton from "../components/WaitButton.svelte";
+    import Pagination from "../components/Pagination.svelte";
+
+    export let searchGetAllResponse: api.Search.GetAll.Response;
+    export let type = Type.Mandela;
+    export let text = "";
+    export let pageNo = 1;
+
+    let baseQuery = new URLSearchParams();
     let records: api.Search.GetAll.Record[] = [];
     let start = true;
     let buttonEnabled = true;
-    let pageNo = 1;
+    let totalCount = 0;
+
+    $: if (searchGetAllResponse) {
+        records = searchGetAllResponse.records;
+        totalCount = searchGetAllResponse.total_count;
+    }
 
     function clear() {
         start = true;
@@ -30,18 +75,25 @@
     async function search() {
         clear();
         buttonEnabled = false;
+        pageNo = 1;
 
         try {
-            const params: api.Search.GetAll.Request = {
-                text,
-                type: type,
-                limit: PAGE_LIMIT,
-                offset: (pageNo - 1) * PAGE_LIMIT,
-            };
-
-            const result = await api.Search.GetAll.exec(params);
-            records = result.records;
+            searchGetAllResponse = await load(text, type, pageNo);
             start = false;
+
+            const params = new URLSearchParams();
+
+            if (type) {
+                params.append("type", type.toString());
+            }
+
+            if (text.length) {
+                params.append("text", text);
+            }
+
+            baseQuery = params;
+            const query = baseQuery.toString();
+            goto(route.Search + (query ? "?" + query : ""));
         } catch (e) {
             console.error(e);
         }
@@ -151,3 +203,11 @@
 {#if !start && records.length == 0}
     <Rectangle>Ничего не найдено</Rectangle>
 {/if}
+
+<Pagination
+    count={totalCount}
+    limit={PAGE_LIMIT}
+    offset={pageNo}
+    baseRoute={route.Search}
+    {baseQuery}
+/>
