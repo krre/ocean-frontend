@@ -13,7 +13,6 @@
         edit: boolean;
     }
 
-    export let topicUserId: number;
     export let post: EditedPost;
     export let editable = false;
     export let row = 0;
