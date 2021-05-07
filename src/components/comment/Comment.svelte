@@ -101,8 +101,7 @@
                         (comment.user_id === user.id ||
                             user.id === consts.Account.Id.Admin)}
                     removable={user &&
-                        (user.id === mandelaUserId ||
-                            user.id === comment.user_id ||
+                        (user.id === comment.user_id ||
                             user.id === consts.Account.Id.Admin)}
                     on:edit={(event) =>
                         (comments[event.detail.row].edit = true)}

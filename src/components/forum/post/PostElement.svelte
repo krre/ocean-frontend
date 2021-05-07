@@ -26,11 +26,7 @@
     let user: User;
 
     $: editable = isAdmin || (user && !isAnonym && user.id === post.user_id);
-    $: removable =
-        isAdmin ||
-        (user &&
-            !isAnonym &&
-            (user.id == topicUserId || user.id === post.user_id));
+    $: removable = isAdmin || (user && !isAnonym && user.id === post.user_id);
 
     async function editPost(message: string) {
         const params: api.Forum.Post.Update.Request = {

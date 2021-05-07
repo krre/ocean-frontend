@@ -227,7 +227,6 @@
             baseUrl={route.Forum.Topic.Id(topicId)}
             {pageNo}
             {post}
-            {topicUserId}
             on:removed={() => reload()}
             on:reply={(event) => replyPost(event.detail.row)}
         />
