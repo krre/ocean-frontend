@@ -20,7 +20,6 @@
 
     export let user: User;
     export let mandelaId: number;
-    export let mandelaUserId: number;
     export let comments: EditedComment[] = [];
     export let pageNo = 1;
     export let commentCount = 0;

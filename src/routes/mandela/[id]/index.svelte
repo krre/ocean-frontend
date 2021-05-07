@@ -353,7 +353,6 @@
         {comments}
         {pageNo}
         mandelaId={id}
-        mandelaUserId={mandela.user_id}
         pageLimit={consts.Mandela.Comment.PageLimit}
         commentCount={commentGetAllResponse.total_count}
         on:appended={() => reloadComments()}
