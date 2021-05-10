@@ -53,8 +53,6 @@
     import SessionHub from "../../../components/SessionHub.svelte";
     import Rectangle from "../../../components/Rectangle.svelte";
     import WaitButton from "../../../components/WaitButton.svelte";
-    import MandelaEditor from "../../../components/MandelaEditor.svelte";
-    import MandelaTitle from "../../../components/MandelaTitle.svelte";
 
     export let getOneResponse: api.Mandela.GetOne.Response;
     export let commentGetAllResponse: api.Comment.GetAll.Response;
@@ -78,7 +76,6 @@
 
     let voteValue = -1;
     let editVote = false;
-    let showMandelaLinks = false;
 
     let user: User;
     let isAdmin = false;
@@ -188,15 +185,8 @@
         margin-left: 1rem;
     }
 
-    .mandela-link {
-        cursor: pointer;
-        border-bottom-style: dashed;
-        border-bottom-width: 1px;
-        font-size: 0.9em;
-        color: #5f5f5f;
-    }
-
     .mandela-link-grid {
+        margin-top: 0.7em;
         width: min(40em, 100%);
         display: grid;
         gap: 0.5em;
@@ -275,11 +265,8 @@
             </div>
         {/if}
 
-        <div on:click={() => (showMandelaLinks = !showMandelaLinks)}>
-            <span class="mandela-link">Ссылка на манделу</span>
-        </div>
-
-        {#if showMandelaLinks}
+        <details>
+            <summary>Ссылка на манделу</summary>
             <div class="mandela-link-grid">
                 <input readonly value={url} />
                 <button on:click={() => copyLink(url)}
@@ -294,9 +281,9 @@
                     ><i class="far fa-copy" /></button
                 >
             </div>
-        {/if}
-    </div>
-</Frame>
+        </details>
+    </div></Frame
+>
 
 <Rectangle>
     <div class="container">

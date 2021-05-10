@@ -2,6 +2,7 @@
     import LinkDialog from "./LinkDialog.svelte";
     import ImageDialog from "./ImageDialog.svelte";
     import VideoDialog from "./VideoDialog.svelte";
+    import SpoilerDialog from "./SpoilerDialog.svelte";
     import SmilePanel from "./SmilePanel.svelte";
     import { insertText } from "utils";
     import type { TextArea } from "types";
@@ -72,6 +73,20 @@
     function onOkVideo(link: string) {
         const htmlVideo = `⁅youtube⁆${link}⁅/youtube⁆`;
         post = insertText(post, areaRef.selectionStart, htmlVideo);
+    }
+
+    function onOkSpoiler(description: string) {
+        if (areaRef.selectionStart != areaRef.selectionEnd) {
+            replaceSelection(
+                (str: string) => `⁅spoiler="${description}"⁆${str}⁅/spoiler⁆`
+            );
+        } else {
+            post = insertText(
+                post,
+                areaRef.selectionStart,
+                `⁅spoiler="${description}⁆Этот текст будет скрыт⁅/spoiler⁆`
+            );
+        }
     }
 </script>
 
@@ -157,6 +172,12 @@
                     dialog.open(VideoDialog, {
                         onOk: onOkVideo,
                     })}><i class="fab fa-youtube" /></button
+            >
+
+            <button
+                on:click={() =>
+                    dialog.open(SpoilerDialog, { onOk: onOkSpoiler })}
+                ><i class="fas fa-eye-slash" /></button
             >
 
             <button on:click={() => (isSmilePanelActive = !isSmilePanelActive)}

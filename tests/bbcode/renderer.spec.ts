@@ -40,6 +40,10 @@ describe("BBCode renderer", () => {
             .toBe(`<iframe class="video" src="https://www.youtube.com/embed/GnFq03_3S0c" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`);
     });
 
+    test("spoiler description", () => {
+        expect(render({ name: "spoiler", attrs: { spoiler: "Спойлер" }, nodes: ["Скрытый текст"] })).toBe(`<details><summary>Спойлер</summary><br />Скрытый текст</details>`);
+    });
+
     test("quote", () => {
         expect(render({ name: "quote", attrs: { quote: "Anonym" }, nodes: ["Message"] }))
             .toBe(`<div class="quote">Anonym пишет:
