@@ -84,7 +84,7 @@
             post = insertText(
                 post,
                 areaRef.selectionStart,
-                `⁅spoiler="${description}⁆Этот текст будет скрыт⁅/spoiler⁆`
+                `⁅spoiler="${description}"⁆Этот текст будет скрыт⁅/spoiler⁆`
             );
         }
     }
