@@ -49,7 +49,7 @@
         <div>Мандел:</div>
         <div>
             {user.mandela_count}
-            <a target="_blank" href={openUrl()}>Показать</a>
+            <a href={openUrl()}>Показать</a>
         </div>
         <div>Комментариев:</div>
         <div>{user.comment_count}</div>
