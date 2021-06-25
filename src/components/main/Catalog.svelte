@@ -26,6 +26,7 @@
     export let filter = Filter.All;
     export let category = 0;
     export let sort = 0;
+    export let userId = 0;
     export let getAllResponse: api.Mandela.GetAll.Response;
 
     let mounted = new Mounted();
@@ -108,6 +109,10 @@
             params.append("filter", filter.toString());
         }
 
+        if (userId) {
+            params.append("user", userId.toString());
+        }
+
         baseQuery = params;
     }
 
@@ -171,43 +176,45 @@
 
 <Frame title="Океан. Каталог фактов эффекта Манделы" showHeader={false}>
     <div class="tool-bar">
-        <Indicator
-            title="Всего"
-            count={totalCount}
-            active={filter == Filter.All}
-            on:clicked={() => (filter = Filter.All)}
-        />
-        {#if user}
+        {#if !userId}
             <Indicator
-                title="Новые"
-                count={newCount}
-                active={filter == Filter.New}
-                highlightNew={true}
-                on:clicked={() => (filter = Filter.New)}
+                title="Всего"
+                count={totalCount}
+                active={filter == Filter.All}
+                on:clicked={() => (filter = Filter.All)}
             />
+            {#if user}
+                <Indicator
+                    title="Новые"
+                    count={newCount}
+                    active={filter == Filter.New}
+                    highlightNew={true}
+                    on:clicked={() => (filter = Filter.New)}
+                />
+
+                <Indicator
+                    title="Мои"
+                    count={mineCount}
+                    active={filter == Filter.Mine}
+                    on:clicked={() => (filter = Filter.Mine)}
+                />
+
+                <Indicator
+                    title="Опросы"
+                    count={pollCount}
+                    highlightNew={true}
+                    active={filter == Filter.Poll}
+                    on:clicked={() => (filter = Filter.Poll)}
+                />
+            {/if}
 
             <Indicator
-                title="Мои"
-                count={mineCount}
-                active={filter == Filter.Mine}
-                on:clicked={() => (filter = Filter.Mine)}
-            />
-
-            <Indicator
-                title="Опросы"
-                count={pollCount}
-                highlightNew={true}
-                active={filter == Filter.Poll}
-                on:clicked={() => (filter = Filter.Poll)}
+                title="Хлам"
+                count={trashCount}
+                active={filter == Filter.Trash}
+                on:clicked={() => (filter = Filter.Trash)}
             />
         {/if}
-
-        <Indicator
-            title="Хлам"
-            count={trashCount}
-            active={filter == Filter.Trash}
-            on:clicked={() => (filter = Filter.Trash)}
-        />
 
         <span class="tool-bar-item"
             >Категория:

@@ -39,6 +39,7 @@
             filter,
             category,
             sort,
+            userId,
         };
     }
 
@@ -104,6 +105,7 @@
     export let filter = 0;
     export let category = 0;
     export let sort = 0;
+    export let userId = 0;
 </script>
 
 <style>
@@ -135,6 +137,7 @@
             {filter}
             {category}
             {sort}
+            {userId}
             {getAllResponse}
             pageLimit={MANDELA_PAGE_LIMIT}
         />
