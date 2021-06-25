@@ -18,6 +18,12 @@
     import Frame from "../../../components/Frame.svelte";
 
     export let user: api.User.GetOne.Response;
+
+    function openUrl() {
+        const params = new URLSearchParams();
+        params.append("user", user.id.toString());
+        return "?" + params.toString();
+    }
 </script>
 
 <style>
@@ -41,7 +47,10 @@
         <div>Тип аккаунта:</div>
         <div>{consts.Account.ModeNames[user.code]}</div>
         <div>Мандел:</div>
-        <div>{user.mandela_count}</div>
+        <div>
+            {user.mandela_count}
+            <a target="_blank" href={openUrl()}>Показать</a>
+        </div>
         <div>Комментариев:</div>
         <div>{user.comment_count}</div>
         <div>Тем на форуме:</div>

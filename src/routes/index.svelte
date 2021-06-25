@@ -13,14 +13,19 @@
         const filter = +page.query.filter || 0;
         const category = +page.query.category || 0;
         const sort = +page.query.sort || 0;
+        const userId = +page.query.user || 0;
 
-        const params: api.Mandela.GetAll.Request = {
+        let params: api.Mandela.GetAll.Request = {
             sort: sort,
             limit: MANDELA_PAGE_LIMIT,
             offset: (pageNo - 1) * MANDELA_PAGE_LIMIT,
             filter: filter,
             category: category - 1,
         };
+
+        if (userId) {
+            params.user_id = userId;
+        }
 
         const getAllResponse = await api.Mandela.GetAll.exec(params);
 
