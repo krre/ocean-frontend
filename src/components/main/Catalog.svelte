@@ -46,6 +46,7 @@
     let pollCount = 0;
     let trashCount = 0;
     let categoryCount = 0;
+    let userCount = 0;
 
     let currentCount = 0;
     let pageQuery = new URLSearchParams();
@@ -61,8 +62,11 @@
         pollCount = getAllResponse.poll_count;
         trashCount = getAllResponse.trash_count;
         categoryCount = getAllResponse.category_count;
+        userCount = getAllResponse.user_count;
 
-        if (filter === Filter.All) {
+        if (userId) {
+            currentCount = userCount;
+        } else if (filter === Filter.All) {
             currentCount = totalCount;
         } else if (filter === Filter.New) {
             currentCount = newCount;
