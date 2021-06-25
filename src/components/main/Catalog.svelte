@@ -94,6 +94,10 @@
         makeQueryAndGoto();
     }
 
+    $: if (userId) {
+        makeBaseQuery();
+    }
+
     function makeBaseQuery() {
         const params = new URLSearchParams();
 
