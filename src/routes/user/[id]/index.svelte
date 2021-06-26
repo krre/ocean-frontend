@@ -27,6 +27,11 @@
 </script>
 
 <style>
+    .blocked {
+        color: red;
+        margin-top: 0;
+    }
+
     .grid {
         display: grid;
         grid-template-columns: max-content auto;
@@ -35,6 +40,10 @@
 </style>
 
 <Frame title="Пользователь">
+    {#if user.blocked}
+        <h3 class="blocked">Акканут заблокирован!</h3>
+    {/if}
+
     <div class="grid">
         <div>ИД:</div>
         <div>{user.id}</div>
