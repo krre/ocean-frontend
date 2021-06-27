@@ -1,8 +1,16 @@
 <script lang="ts">
+    import * as route from "route";
+    import { goto } from "@sapper/app";
+    import { Code } from "api-error";
     import Frame from "../components/Frame.svelte";
 
+    interface Message {
+        code: number;
+        message: String;
+    }
+
     interface Error {
-        message: string;
+        message: Message;
         stack: string;
     }
 
@@ -10,6 +18,10 @@
     export let error: Error;
 
     const dev = process.env.NODE_ENV === "development";
+
+    $: if (process.browser && error.message.code == Code.AccountBlocked) {
+        goto(route.Signout);
+    }
 </script>
 
 <style>
