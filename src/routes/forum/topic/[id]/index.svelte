@@ -140,7 +140,7 @@
 
     .poll {
         display: grid;
-        grid-template-columns: max-content max-content max-content;
+        grid-template-columns: auto auto auto 1fr;
         gap: 0.5em;
     }
 
@@ -172,6 +172,7 @@
                                 />
                             {/if}
                         </div>
+                        <div />
                     {/each}
                 </div>
 
