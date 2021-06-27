@@ -31,7 +31,7 @@
 
         const params: api.User.Create.Request = {
             id: id,
-            name: name,
+            name: name.trim(),
             code: consts.Account.User,
             token: createToken(id, password1),
         };
