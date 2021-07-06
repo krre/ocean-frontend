@@ -5,6 +5,7 @@
     import * as route from "route";
     import * as bbcode from "bbcode";
     import * as api from "api";
+    import { isAnonymAllowed } from "utils";
     import Rectangle from "../Rectangle.svelte";
     import PostTitle from "../PostTitle.svelte";
     import MessageEditor from "../post/MessageEditor.svelte";
@@ -102,6 +103,7 @@
                     removable={user &&
                         (user.id === comment.user_id ||
                             user.id === consts.Account.Id.Admin)}
+                    replyable={user !== undefined || isAnonymAllowed()}
                     on:edit={(event) =>
                         (comments[event.detail.row].edit = true)}
                     on:remove={(event) => deleteComment(event.detail.row)}
@@ -132,8 +134,10 @@
     />
 {/if}
 
-<MessageEditor
-    bind:message
-    bind:this={messageEditorRef}
-    sendAction={() => append()}
-/>
+{#if user !== undefined || isAnonymAllowed()}
+    <MessageEditor
+        bind:message
+        bind:this={messageEditorRef}
+        sendAction={() => append()}
+    />
+{/if}

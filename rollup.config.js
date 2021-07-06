@@ -27,7 +27,8 @@ export default {
 				'process.browser': true,
 				'process.env.NODE_ENV': JSON.stringify(mode),
 				'process.env.OCEAN_API_URL': JSON.stringify(process.env.OCEAN_API_URL),
-				'process.env.ANONYM_TOKEN': JSON.stringify(process.env.ANONYM_TOKEN)
+				'process.env.ANONYM_TOKEN': JSON.stringify(process.env.ANONYM_TOKEN),
+				'process.env.ANONYM_ALLOWED': process.env.ANONYM_ALLOWED
 			}),
 			svelte({
 				dev,

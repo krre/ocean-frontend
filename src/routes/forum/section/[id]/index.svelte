@@ -28,6 +28,7 @@
 <script lang="ts">
     import * as route from "route";
     import type { User } from "types";
+    import { isAnonymAllowed } from "utils";
     import { goto } from "@sapper/app";
     import type { PathPart } from "forum";
     import FramePage from "../../../../components/forum/main/ForumFrame.svelte";
@@ -60,7 +61,9 @@
     }
 
     function append() {
-        goto(route.Forum.Topic.Append(sectionId));
+        if (user || isAnonymAllowed()) {
+            goto(route.Forum.Topic.Append(sectionId));
+        }
     }
 
     async function reload() {

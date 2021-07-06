@@ -1,6 +1,7 @@
 <script lang="ts">
     import * as bbcode from "bbcode";
     import * as api from "api";
+    import { isAnonymAllowed } from "utils";
     import type { User } from "types";
     import { createEventDispatcher } from "svelte";
     import SessionHub from "../../SessionHub.svelte";
@@ -77,6 +78,7 @@
         date={post.create_ts}
         {editable}
         {removable}
+        replyable={user !== undefined || isAnonymAllowed()}
         on:edit={() => (post.edit = true)}
         on:remove={() => removePost()}
         on:reply

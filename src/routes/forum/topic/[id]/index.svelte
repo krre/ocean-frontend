@@ -30,6 +30,7 @@
     import * as consts from "consts";
     import * as types from "types";
     import type { PathPart } from "forum";
+    import { isAnonymAllowed } from "utils";
     import type { User, ForumTopicPoll } from "types";
     import FramePage from "../../../../components/forum/main/ForumFrame.svelte";
     import SessionHub from "../../../../components/SessionHub.svelte";
@@ -241,8 +242,10 @@
     baseRoute={route.Forum.Topic.Id(topicId)}
 />
 
-<MessageEditor
-    bind:this={messageEditorRef}
-    bind:message={post}
-    sendAction={() => append()}
-/>
+{#if user !== undefined || isAnonymAllowed()}
+    <MessageEditor
+        bind:this={messageEditorRef}
+        bind:message={post}
+        sendAction={() => append()}
+    />
+{/if}

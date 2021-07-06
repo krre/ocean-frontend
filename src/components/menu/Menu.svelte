@@ -1,6 +1,7 @@
 <script lang="ts">
     import { stores } from "@sapper/app";
     import { createEventDispatcher } from "svelte";
+    import { isAnonymAllowed } from "utils";
     import * as route from "route";
 
     const { session } = stores();
@@ -25,9 +26,11 @@
     }
 </style>
 
-<nav class={$$props.class} on:click={() => dispatch('itemClicked')}>
+<nav class={$$props.class} on:click={() => dispatch("itemClicked")}>
     <a href=".">Каталог</a>
-    <a href={route.Mandela.Append}>Добавить</a>
+    {#if isAnonymAllowed() || $session.user}
+        <a href={route.Mandela.Append}>Добавить</a>
+    {/if}
     <a href={route.Search}>Поиск</a>
     <a href={route.Rating}>Рейтинг</a>
     <a href={route.Forum.Root}>Форум</a>
