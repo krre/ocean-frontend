@@ -1,16 +1,25 @@
 <script lang="ts">
+    import { errorMessage } from "network";
     import Loader from "./Loader.svelte";
+    import OperationResult from "../components/OperationResult.svelte";
 
     export let title: string;
     export let enabled = true;
     export let sendAction = async () => {};
 
     let sending = false;
+    let error: string;
 
     async function action() {
         let timerId = setTimeout(() => (sending = true), 200);
         enabled = false;
-        await sendAction();
+
+        try {
+            await sendAction();
+        } catch (e) {
+            error = errorMessage(e);
+        }
+
         clearTimeout(timerId);
         sending = false;
     }
@@ -29,4 +38,6 @@
     {#if sending}
         <Loader scale={0.3} />
     {/if}
+
+    <OperationResult {error} />
 </div>

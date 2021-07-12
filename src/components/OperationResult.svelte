@@ -22,5 +22,5 @@
 {/if}
 
 {#if error}
-    <div class="error">{error}</div>
+    <div class="error">Ошибка: {error}</div>
 {/if}

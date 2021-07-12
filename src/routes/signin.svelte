@@ -37,7 +37,7 @@
             setToken(token);
             goto("/");
         } catch (e) {
-            error = errorMessage(e.code);
+            error = errorMessage(e);
         }
     }
 

@@ -16,7 +16,6 @@
 
 <script lang="ts">
     import * as consts from "consts";
-    import * as types from "types";
     import { errorMessage } from "network";
     import type { User } from "types";
     import { stores } from "@sapper/app";
@@ -54,7 +53,7 @@
 
             successProfile = "Профиль успешно обновлён";
         } catch (e) {
-            errorProfile = errorMessage(e.code);
+            errorProfile = errorMessage(e);
         }
     }
 
@@ -84,7 +83,7 @@
             password2 = "";
             successPassword = "Пароль успешно изменён";
         } catch (e) {
-            errorPassword = errorMessage(e.code);
+            errorPassword = errorMessage(e);
         }
     }
 </script>
