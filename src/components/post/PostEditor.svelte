@@ -24,6 +24,10 @@
         areaRef.focus();
     }
 
+    $: if (!post) {
+        isPreview = false;
+    }
+
     function appendBold() {
         replaceSelection((str: string) => `⁅b⁆${str}⁅/b⁆`);
     }
