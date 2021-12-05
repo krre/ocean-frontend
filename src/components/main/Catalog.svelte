@@ -224,7 +224,7 @@
             />
         {/if}
 
-        <span class="tool-bar-item"
+        <span
             >Категория:
             <select bind:value={category}>
                 {#each categories as categoryName, i}
@@ -234,7 +234,7 @@
                 {/each}
             </select>
         </span>
-        <span class="tool-bar-item"
+        <span
             >Сортировать по:
             <select bind:value={sort}>
                 {#each sorts as sortName, i}
