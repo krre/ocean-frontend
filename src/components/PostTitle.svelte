@@ -1,6 +1,7 @@
 <script lang="ts">
     import { createEventDispatcher } from "svelte";
     import { userUrl, dateUrl } from "utils";
+    import { LikeSelection } from "types";
     import * as dialog from "dialog";
 
     const dispatch = createEventDispatcher();
@@ -12,20 +13,44 @@
     export let userId: number;
     export let date: Date;
     export let row = 0;
+
+    export let likes = 0;
+    export let dislikes = 0;
+
+    export let likeSelection = LikeSelection.Disabled;
+
     export let editable = false;
     export let removable = false;
     export let replyable = true;
 
-    function remove() {
-        if (!dialog.remove("Удалить сообщение?")) return;
+    function like() {
+        dispatch("like", {
+            row: row,
+        });
+    }
 
-        dispatch("remove", {
+    function dislike() {
+        dispatch("dislike", {
+            row: row,
+        });
+    }
+
+    function unlike() {
+        dispatch("unlike", {
             row: row,
         });
     }
 
     function edit() {
         dispatch("edit", {
+            row: row,
+        });
+    }
+
+    function remove() {
+        if (!dialog.remove("Удалить сообщение?")) return;
+
+        dispatch("remove", {
             row: row,
         });
     }
@@ -39,9 +64,24 @@
 
 <style>
     .title {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5em;
         color: gray;
         margin-bottom: 1em;
         align-items: center;
+    }
+
+    .like {
+        cursor: pointer;
+    }
+
+    .up {
+        color: red;
+    }
+
+    .down {
+        color: blue;
     }
 
     button {
@@ -58,15 +98,53 @@
         pageNo
     )}
 
-    {#if editable}
-        <button on:click={edit}><i class="fas fa-edit" /></button>
-    {/if}
+    ·
 
-    {#if removable}
-        <button on:click={remove}><i class="fas fa-trash-alt" /></button>
-    {/if}
+    <span>
+        {#if likeSelection == LikeSelection.None}
+            <button on:click={like}><i class="far fa-thumbs-up" /></button>
+        {:else}
+            <i
+                class="far fa-thumbs-up {likeSelection == LikeSelection.Like
+                    ? 'like up'
+                    : ''}"
+                on:click={() => {
+                    likeSelection == LikeSelection.Like ? unlike() : {};
+                }}
+            />
+        {/if}
 
-    {#if replyable}
-        <button on:click={reply}><i class="fas fa-reply" /></button>
-    {/if}
+        {likes}
+
+        {#if likeSelection == LikeSelection.None}
+            <button on:click={dislike}><i class="far fa-thumbs-down" /></button>
+        {:else}
+            &nbsp;
+            <i
+                class="far fa-thumbs-down {likeSelection ==
+                LikeSelection.Dislike
+                    ? 'like down'
+                    : ''}"
+                on:click={() => {
+                    likeSelection == LikeSelection.Dislike ? unlike() : {};
+                }}
+            />
+        {/if}
+
+        {dislikes}
+
+        ·
+
+        {#if editable}
+            <button on:click={edit}><i class="fas fa-edit" /></button>
+        {/if}
+
+        {#if removable}
+            <button on:click={remove}><i class="fas fa-trash-alt" /></button>
+        {/if}
+
+        {#if replyable}
+            <button on:click={reply}><i class="fas fa-reply" /></button>
+        {/if}
+    </span>
 </div>
