@@ -1,7 +1,7 @@
 <script lang="ts">
     import { createEventDispatcher } from "svelte";
     import { userUrl, dateUrl } from "utils";
-    import { LikeSelection } from "types";
+    import { LikeSelection, LikeAction } from "types";
     import * as dialog from "dialog";
 
     const dispatch = createEventDispatcher();
@@ -17,27 +17,16 @@
     export let likes = 0;
     export let dislikes = 0;
 
-    export let likeSelection = LikeSelection.Disabled;
+    export let likeSelection = LikeSelection.None;
 
     export let editable = false;
     export let removable = false;
     export let replyable = true;
 
-    function like() {
+    function like(action: LikeAction) {
         dispatch("like", {
             row: row,
-        });
-    }
-
-    function dislike() {
-        dispatch("dislike", {
-            row: row,
-        });
-    }
-
-    function unlike() {
-        dispatch("unlike", {
-            row: row,
+            action: action,
         });
     }
 
@@ -102,14 +91,20 @@
 
     <span>
         {#if likeSelection == LikeSelection.None}
-            <button on:click={like}><i class="far fa-thumbs-up" /></button>
+            <button
+                on:click={() => {
+                    like(LikeAction.Like);
+                }}><i class="far fa-thumbs-up" /></button
+            >
         {:else}
             <i
                 class="far fa-thumbs-up {likeSelection == LikeSelection.Like
                     ? 'like up'
                     : ''}"
                 on:click={() => {
-                    likeSelection == LikeSelection.Like ? unlike() : {};
+                    likeSelection == LikeSelection.Like
+                        ? like(LikeAction.Unlike)
+                        : {};
                 }}
             />
         {/if}
@@ -117,7 +112,11 @@
         {likes}
 
         {#if likeSelection == LikeSelection.None}
-            <button on:click={dislike}><i class="far fa-thumbs-down" /></button>
+            <button
+                on:click={() => {
+                    like(LikeAction.Dislike);
+                }}><i class="far fa-thumbs-down" /></button
+            >
         {:else}
             &nbsp;
             <i
@@ -126,7 +125,9 @@
                     ? 'like down'
                     : ''}"
                 on:click={() => {
-                    likeSelection == LikeSelection.Dislike ? unlike() : {};
+                    likeSelection == LikeSelection.Dislike
+                        ? like(LikeAction.Unlike)
+                        : {};
                 }}
             />
         {/if}

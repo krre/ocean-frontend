@@ -1,6 +1,7 @@
 <script lang="ts">
     import { createEventDispatcher } from "svelte";
     import type { User } from "types";
+    import type { LikeAction } from "types";
     import * as consts from "consts";
     import * as route from "route";
     import * as bbcode from "bbcode";
@@ -39,6 +40,16 @@
 
         await api.Comment.Create.exec(params);
         dispatch("appended");
+    }
+
+    async function likeComment(row: number, action: LikeAction) {
+        console.log(row, action);
+        const params: api.Comment.Like.Request = {
+            id: +comments[row].id,
+            action: action,
+        };
+
+        await api.Comment.Like.exec(params);
     }
 
     async function editComment(row: number, message: string) {
@@ -104,6 +115,8 @@
                         (user.id === comment.user_id ||
                             user.id === consts.Account.Id.Admin)}
                     replyable={user !== undefined || isAnonymAllowed()}
+                    on:like={(event) =>
+                        likeComment(event.detail.row, event.detail.action)}
                     on:edit={(event) =>
                         (comments[event.detail.row].edit = true)}
                     on:remove={(event) => deleteComment(event.detail.row)}
