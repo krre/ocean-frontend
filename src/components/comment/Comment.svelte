@@ -1,7 +1,7 @@
 <script lang="ts">
     import { createEventDispatcher } from "svelte";
     import type { User } from "types";
-    import type { LikeAction } from "types";
+    import { LikeAction } from "types";
     import * as consts from "consts";
     import * as route from "route";
     import * as bbcode from "bbcode";
@@ -44,12 +44,21 @@
 
     async function likeComment(row: number, action: LikeAction) {
         console.log(row, action);
-        const params: api.Comment.Like.Request = {
-            id: +comments[row].id,
-            action: action,
-        };
 
-        await api.Comment.Like.exec(params);
+        if (action == LikeAction.Like || action == LikeAction.Dislike) {
+            const params: api.Like.Create.Request = {
+                comment_id: +comments[row].id,
+                action: action,
+            };
+
+            await api.Like.Create.exec(params);
+        } else {
+            const params: api.Like.Delete.Request = {
+                comment_id: +comments[row].id,
+            };
+
+            await api.Like.Delete.exec(params);
+        }
     }
 
     async function editComment(row: number, message: string) {
