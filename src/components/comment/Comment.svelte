@@ -52,13 +52,31 @@
             };
 
             await api.Like.Create.exec(params);
+
+            comments[row].like = action;
+
+            if (action === LikeAction.Like) {
+                comments[row].likes += 1;
+            } else if (action === LikeAction.Dislike) {
+                comments[row].dislikes += 1;
+            }
         } else {
             const params: api.Like.Delete.Request = {
                 comment_id: +comments[row].id,
             };
 
             await api.Like.Delete.exec(params);
+
+            if (comments[row].like === LikeAction.Like) {
+                comments[row].likes -= 1;
+            } else if (comments[row].like === LikeAction.Dislike) {
+                comments[row].dislikes -= 1;
+            }
+
+            comments[row].like = null;
         }
+
+        comments = comments;
     }
 
     async function editComment(row: number, message: string) {
