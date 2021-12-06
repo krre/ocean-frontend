@@ -17,7 +17,7 @@
     export let likes = 0;
     export let dislikes = 0;
 
-    export let likeSelection = LikeSelection.None;
+    export let likeSelection: LikeSelection = LikeSelection.None;
 
     export let editable = false;
     export let removable = false;

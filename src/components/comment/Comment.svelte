@@ -1,7 +1,7 @@
 <script lang="ts">
     import { createEventDispatcher } from "svelte";
     import type { User } from "types";
-    import { LikeAction } from "types";
+    import { LikeAction, LikeSelection } from "types";
     import * as consts from "consts";
     import * as route from "route";
     import * as bbcode from "bbcode";
@@ -117,6 +117,17 @@
                     userName={comment.user_name}
                     userId={comment.user_id}
                     date={comment.create_ts}
+                    likeSelection={!user ||
+                    comment.user_id === user.id ||
+                    user.id === consts.Account.Id.Anonym
+                        ? LikeSelection.Disabled
+                        : comment.like == null
+                        ? LikeSelection.None
+                        : comment.like == LikeAction.Like
+                        ? LikeSelection.Like
+                        : LikeSelection.Dislike}
+                    likes={comment.likes}
+                    dislikes={comment.dislikes}
                     editable={user &&
                         (comment.user_id === user.id ||
                             user.id === consts.Account.Id.Admin)}
