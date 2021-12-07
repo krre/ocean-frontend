@@ -31,8 +31,6 @@
     $: removable = isAdmin || (user && !isAnonym && user.id === post.user_id);
 
     async function likePost(row: number, action: LikeAction) {
-        console.log(row, action);
-
         if (action == LikeAction.Like || action == LikeAction.Dislike) {
             const params: api.Like.Create.Request = {
                 post_id: +post.id,
