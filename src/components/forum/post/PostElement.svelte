@@ -1,6 +1,8 @@
 <script lang="ts">
     import * as bbcode from "bbcode";
     import * as api from "api";
+    import * as consts from "consts";
+    import { LikeAction, LikeSelection } from "types";
     import { isAnonymAllowed } from "utils";
     import type { User } from "types";
     import { createEventDispatcher } from "svelte";
@@ -27,6 +29,41 @@
 
     $: editable = isAdmin || (user && !isAnonym && user.id === post.user_id);
     $: removable = isAdmin || (user && !isAnonym && user.id === post.user_id);
+
+    async function likePost(row: number, action: LikeAction) {
+        console.log(row, action);
+
+        if (action == LikeAction.Like || action == LikeAction.Dislike) {
+            const params: api.Like.Create.Request = {
+                post_id: +post.id,
+                action: action,
+            };
+
+            await api.Like.Create.exec(params);
+
+            post.like = action;
+
+            if (action === LikeAction.Like) {
+                post.like_count += 1;
+            } else if (action === LikeAction.Dislike) {
+                post.dislike_count += 1;
+            }
+        } else {
+            const params: api.Like.Delete.Request = {
+                post_id: +post.id,
+            };
+
+            await api.Like.Delete.exec(params);
+
+            if (post.like === LikeAction.Like) {
+                post.like_count -= 1;
+            } else if (post.like === LikeAction.Dislike) {
+                post.dislike_count -= 1;
+            }
+
+            post.like = null;
+        }
+    }
 
     async function editPost(message: string) {
         const params: api.Forum.Post.Update.Request = {
@@ -76,9 +113,21 @@
         userName={post.user_name}
         userId={post.user_id}
         date={post.create_ts}
+        likeSelection={!user ||
+        post.user_id === user.id ||
+        user.id === consts.Account.Id.Anonym
+            ? LikeSelection.Disabled
+            : post.like == null
+            ? LikeSelection.None
+            : post.like == LikeAction.Like
+            ? LikeSelection.Like
+            : LikeSelection.Dislike}
+        likeCount={post.like_count}
+        dislikeCount={post.dislike_count}
         {editable}
         {removable}
         replyable={user !== undefined || isAnonymAllowed()}
+        on:like={(event) => likePost(event.detail.row, event.detail.action)}
         on:edit={() => (post.edit = true)}
         on:remove={() => removePost()}
         on:reply
