@@ -66,5 +66,9 @@
         <div>{user.forum_topic_count}</div>
         <div>Постов на форуме:</div>
         <div>{user.forum_post_count}</div>
+        <div>Получено лайков:</div>
+        <div>{user.like_count}</div>
+        <div>Получено дизлайков:</div>
+        <div>{user.dislike_count}</div>
     </div>
 </Frame>
