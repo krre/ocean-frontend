@@ -56,9 +56,9 @@
             comments[row].like = action;
 
             if (action === LikeAction.Like) {
-                comments[row].likes += 1;
+                comments[row].like_count += 1;
             } else if (action === LikeAction.Dislike) {
-                comments[row].dislikes += 1;
+                comments[row].dislike_count += 1;
             }
         } else {
             const params: api.Like.Delete.Request = {
@@ -68,9 +68,9 @@
             await api.Like.Delete.exec(params);
 
             if (comments[row].like === LikeAction.Like) {
-                comments[row].likes -= 1;
+                comments[row].like_count -= 1;
             } else if (comments[row].like === LikeAction.Dislike) {
-                comments[row].dislikes -= 1;
+                comments[row].dislike_count -= 1;
             }
 
             comments[row].like = null;
@@ -144,8 +144,8 @@
                         : comment.like == LikeAction.Like
                         ? LikeSelection.Like
                         : LikeSelection.Dislike}
-                    likes={comment.likes}
-                    dislikes={comment.dislikes}
+                    likeCount={comment.like_count}
+                    dislikeCount={comment.dislike_count}
                     editable={user &&
                         (comment.user_id === user.id ||
                             user.id === consts.Account.Id.Admin)}

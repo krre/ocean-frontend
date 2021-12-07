@@ -14,8 +14,8 @@
     export let date: Date;
     export let row = 0;
 
-    export let likes = 0;
-    export let dislikes = 0;
+    export let likeCount = 0;
+    export let dislikeCount = 0;
 
     export let likeSelection: LikeSelection = LikeSelection.None;
 
@@ -109,7 +109,7 @@
             />
         {/if}
 
-        {likes}
+        {likeCount}
 
         {#if likeSelection == LikeSelection.None}
             <button
@@ -132,7 +132,7 @@
             />
         {/if}
 
-        {dislikes}
+        {dislikeCount}
 
         ·
 
