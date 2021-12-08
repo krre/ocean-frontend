@@ -109,7 +109,7 @@
             />
         {/if}
 
-        {likeCount}
+        <span class={likeCount ? "up" : ""}>{likeCount}</span>
 
         {#if likeSelection == LikeSelection.None}
             <button
@@ -132,7 +132,7 @@
             />
         {/if}
 
-        {dislikeCount}
+        <span class={dislikeCount ? "down" : ""}>{dislikeCount}</span>
 
         ·
 
