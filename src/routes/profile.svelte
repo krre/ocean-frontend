@@ -21,6 +21,7 @@
     import { stores } from "@sapper/app";
     import Frame from "../components/Frame.svelte";
     import OperationResult from "../components/OperationResult.svelte";
+    import Profile from "../components/Profile.svelte";
 
     export let user: User;
 
@@ -92,35 +93,54 @@
     .grid {
         display: grid;
         grid-gap: 0.5em;
-        max-width: 250px;
+        grid-template-columns: max-content auto;
     }
 </style>
 
 <Frame {title}>
     <div class="grid">
-        <div>ИД: {user.id}</div>
-        <div>Создано: {formatDateTime(user.create_ts)}</div>
-        Имя:<input bind:value={user.name} />
-        Пол:
-        <select bind:value={currentGender}>
-            {#each consts.Genders as gender, i}
-                <option value={i}>{gender}</option>
-            {/each}
-        </select>
-        <OperationResult
-            bind:success={successProfile}
-            bind:error={errorProfile}
-        />
-        <button on:click={update} disabled={!user.name}>Сохранить</button>
+        <div>ИД:</div>
+        <div>{user.id}</div>
+        <div>Имя:</div>
+        <div><input bind:value={user.name} /></div>
+        <div>Пол:</div>
+        <div>
+            <select bind:value={currentGender}>
+                {#each consts.Genders as gender, i}
+                    <option value={i}>{gender}</option>
+                {/each}
+            </select>
+        </div>
 
-        Пароль:
-        <input type="password" bind:value={password1} />
-        Пароль (ещё раз):
-        <input type="password" bind:value={password2} />
-        <OperationResult
-            bind:success={successPassword}
-            bind:error={errorPassword}
-        />
-        <button on:click={changePassword}>Изменить</button>
+        <div />
+        <div>
+            <OperationResult
+                bind:success={successProfile}
+                bind:error={errorProfile}
+            />
+        </div>
+
+        <div />
+        <div>
+            <button on:click={update} disabled={!user.name}>Сохранить</button>
+        </div>
+
+        <div>Пароль:</div>
+        <div><input type="password" bind:value={password1} /></div>
+        <div>Пароль (ещё раз):</div>
+        <div><input type="password" bind:value={password2} /></div>
+
+        <div />
+        <div>
+            <OperationResult
+                bind:success={successPassword}
+                bind:error={errorPassword}
+            />
+        </div>
+
+        <div />
+        <div><button on:click={changePassword}>Изменить</button></div>
+
+        <Profile {user} />
     </div>
 </Frame>
