@@ -19,6 +19,7 @@
 
     export let likeSelection: LikeSelection = LikeSelection.None;
 
+    export let likable = true;
     export let editable = false;
     export let removable = false;
     export let replyable = true;
@@ -87,54 +88,58 @@
         pageNo
     )}
 
-    ·
+    {#if likable}
+        ·
+    {/if}
 
     <span>
-        {#if likeSelection == LikeSelection.None}
-            <button
-                on:click={() => {
-                    like(LikeAction.Like);
-                }}><i class="far fa-thumbs-up" /></button
-            >
-        {:else}
-            <i
-                class="far fa-thumbs-up {likeSelection == LikeSelection.Like
-                    ? 'like up'
-                    : ''}"
-                on:click={() => {
-                    likeSelection == LikeSelection.Like
-                        ? like(LikeAction.Unlike)
-                        : {};
-                }}
-            />
+        {#if likable}
+            {#if likeSelection == LikeSelection.None}
+                <button
+                    on:click={() => {
+                        like(LikeAction.Like);
+                    }}><i class="far fa-thumbs-up" /></button
+                >
+            {:else}
+                <i
+                    class="far fa-thumbs-up {likeSelection == LikeSelection.Like
+                        ? 'like up'
+                        : ''}"
+                    on:click={() => {
+                        likeSelection == LikeSelection.Like
+                            ? like(LikeAction.Unlike)
+                            : {};
+                    }}
+                />
+            {/if}
+
+            <span class={likeCount ? "up" : ""}>{likeCount}</span>
+
+            {#if likeSelection == LikeSelection.None}
+                <button
+                    on:click={() => {
+                        like(LikeAction.Dislike);
+                    }}><i class="far fa-thumbs-down" /></button
+                >
+            {:else}
+                &nbsp;
+                <i
+                    class="far fa-thumbs-down {likeSelection ==
+                    LikeSelection.Dislike
+                        ? 'like down'
+                        : ''}"
+                    on:click={() => {
+                        likeSelection == LikeSelection.Dislike
+                            ? like(LikeAction.Unlike)
+                            : {};
+                    }}
+                />
+            {/if}
+
+            <span class={dislikeCount ? "down" : ""}>{dislikeCount}</span>
+
+            ·
         {/if}
-
-        <span class={likeCount ? "up" : ""}>{likeCount}</span>
-
-        {#if likeSelection == LikeSelection.None}
-            <button
-                on:click={() => {
-                    like(LikeAction.Dislike);
-                }}><i class="far fa-thumbs-down" /></button
-            >
-        {:else}
-            &nbsp;
-            <i
-                class="far fa-thumbs-down {likeSelection ==
-                LikeSelection.Dislike
-                    ? 'like down'
-                    : ''}"
-                on:click={() => {
-                    likeSelection == LikeSelection.Dislike
-                        ? like(LikeAction.Unlike)
-                        : {};
-                }}
-            />
-        {/if}
-
-        <span class={dislikeCount ? "down" : ""}>{dislikeCount}</span>
-
-        ·
 
         {#if editable}
             <button on:click={edit}><i class="fas fa-edit" /></button>
