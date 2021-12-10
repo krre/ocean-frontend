@@ -4,7 +4,7 @@
     export let what = "";
     export let before = "";
     export let after = "";
-    export let mode = consts.Mandela.Title.Simple;
+    export let mode = consts.Mandela.Title.Complex;
 
     let modes = [
         {

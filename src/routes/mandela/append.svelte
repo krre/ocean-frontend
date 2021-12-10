@@ -9,7 +9,7 @@
     const { session } = stores();
     const pageTitle = "Добавить манделу";
 
-    export let titleMode = consts.Mandela.Title.Simple;
+    export let titleMode = consts.Mandela.Title.Complex;
     export let title = "";
     export let what = "";
     export let before = "";

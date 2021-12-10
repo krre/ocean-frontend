@@ -6,7 +6,7 @@
     import PostEditor from "./post/PostEditor.svelte";
     import WaitButton from "./WaitButton.svelte";
 
-    export let titleMode = consts.Mandela.Title.Simple;
+    export let titleMode = consts.Mandela.Title.Complex;
     export let title = "";
     export let what = "";
     export let before = "";
