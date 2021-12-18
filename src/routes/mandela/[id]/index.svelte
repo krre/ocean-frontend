@@ -65,9 +65,11 @@
 
     let totalVotes = 0;
     let votes: api.Mandela.Vote[];
+    let voteUsers: api.Mandela.GetVoteUsers.Response[];
 
     let voteValue = -1;
     let editVote = false;
+    let voteUserVisible = false;
 
     let user: User;
     let isAdmin = false;
@@ -119,6 +121,33 @@
         votes = await api.Mandela.Vote.exec(params);
         vote = voteValue;
         editVote = false;
+    }
+
+    async function getVoteUsers() {
+        if (!voteUserVisible) {
+            const params: api.Mandela.GetVoteUsers.Request = {
+                id: mandela.id,
+            };
+
+            voteUsers = await api.Mandela.GetVoteUsers.exec(params);
+        }
+
+        voteUserVisible = !voteUserVisible;
+    }
+
+    function voteUsersForVote(vote: number): string {
+        let result = "";
+
+        for (const voteUser of voteUsers) {
+            if (voteUser.vote !== vote) continue;
+            result += userUrl(voteUser.name, voteUser.id) + ", ";
+        }
+
+        if (result) {
+            result = result.slice(0, result.length - 2);
+        }
+
+        return result;
     }
 
     async function updateTrash(trash: boolean) {
@@ -317,9 +346,23 @@
             <div class="grid" style="margin-left: 1em">
                 {#each consts.Votes as voteName, i}
                     <div>{voteName}:</div>
-                    <div>{getVoteCount(i)}</div>
+                    <div>
+                        {getVoteCount(i)}
+                        {#if voteUserVisible}
+                            {@html voteUsersForVote(i)}
+                        {/if}
+                    </div>
                 {/each}
             </div>
+
+            {#if isAdmin}
+                <div>
+                    <button on:click={getVoteUsers}
+                        >{voteUserVisible ? "Скрыть" : "Показать"}</button
+                    >
+                </div>
+            {/if}
+
             <div class="grid">
                 <div>Всего голосов:</div>
                 <div>{totalVotes}</div>
