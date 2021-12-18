@@ -11,6 +11,8 @@
             id: mandelaId,
         });
 
+        const automaticTrash = getOneResponse.mandela.automatic_trash;
+
         if (session.user && !getOneResponse.mandela.mark_ts) {
             await api.Mandela.Mark.exec({ id: getOneResponse.mandela.id });
         }
@@ -22,6 +24,7 @@
             commentGetAllResponse,
             url,
             pageNo,
+            automaticTrash,
         };
     }
 
@@ -58,9 +61,17 @@
     export let commentGetAllResponse: api.Comment.GetAll.Response;
     export let url: string;
     export let pageNo: number;
+    export let automaticTrash: boolean;
 
     let totalVotes = 0;
     let votes: api.Mandela.Vote[];
+
+    let voteValue = -1;
+    let editVote = false;
+
+    let user: User;
+    let isAdmin = false;
+    let isAnonym = true;
 
     $: mandela = getOneResponse.mandela;
     $: comments = commentGetAllResponse.comments;
@@ -73,14 +84,6 @@
         mandela.title_mode === consts.Mandela.Title.Simple
             ? mandela.title
             : mandela.what;
-
-    let voteValue = -1;
-    let editVote = false;
-
-    let user: User;
-    let isAdmin = false;
-    let isAnonym = true;
-
     $: votes = getOneResponse.votes;
 
     $: {
@@ -124,6 +127,17 @@
         const params: api.Mandela.UpdateTrash.Request = {
             id: mandela.id,
             trash: trash,
+            automatic_trash: automaticTrash,
+        };
+
+        await api.Mandela.UpdateTrash.exec(params);
+    }
+
+    async function updateAutmaticTrash() {
+        const params: api.Mandela.UpdateTrash.Request = {
+            id: mandela.id,
+            trash: mandela.trash,
+            automatic_trash: automaticTrash,
         };
 
         await api.Mandela.UpdateTrash.exec(params);
@@ -263,6 +277,17 @@
                     {/if}
                 {/if}
             </div>
+        {/if}
+
+        {#if isAdmin}
+            <label>
+                <input
+                    type="checkbox"
+                    bind:checked={automaticTrash}
+                    on:change={(_) => updateAutmaticTrash()}
+                />
+                Автоматическое управление хламом
+            </label>
         {/if}
 
         <details>
