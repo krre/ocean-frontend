@@ -67,11 +67,11 @@
     }
 
     .up {
-        color: red;
+        color: #093;
     }
 
     .down {
-        color: blue;
+        color: red;
     }
 
     button {
