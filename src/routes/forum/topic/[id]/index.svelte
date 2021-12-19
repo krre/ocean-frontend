@@ -38,6 +38,7 @@
     import Navigator from "../../../../components/forum/main/Navigator.svelte";
     import Pagination from "../../../../components/Pagination.svelte";
     import MessageEditor from "../../../../components/post/MessageEditor.svelte";
+    import Check from "../../../../components/Check.svelte";
 
     interface EditedPost extends api.Forum.Post.GetAll.Post {
         edit: boolean;
@@ -167,10 +168,7 @@
                         <div>{answer.count}</div>
                         <div>
                             {#if !isAnonym && answer.voted}
-                                <i
-                                    class="far fa-check-circle"
-                                    style="color: green"
-                                />
+                                <Check />
                             {/if}
                         </div>
                         <div />
