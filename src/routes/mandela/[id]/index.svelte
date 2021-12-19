@@ -56,6 +56,7 @@
     import SessionHub from "../../../components/SessionHub.svelte";
     import Rectangle from "../../../components/Rectangle.svelte";
     import WaitButton from "../../../components/WaitButton.svelte";
+    import Check from "../../../components/Check.svelte";
 
     export let getOneResponse: api.Mandela.GetOne.Response;
     export let commentGetAllResponse: api.Comment.GetAll.Response;
@@ -348,6 +349,10 @@
                     <div>{voteName}:</div>
                     <div>
                         {getVoteCount(i)}
+                        {#if user && vote == i}
+                            <Check />
+                        {/if}
+
                         {#if voteUserVisible}
                             {@html voteUsersForVote(i)}
                         {/if}
@@ -366,10 +371,6 @@
             <div class="grid">
                 <div>Всего голосов:</div>
                 <div>{totalVotes}</div>
-                {#if user}
-                    <div>Выбрано:</div>
-                    <div>{consts.Votes[vote]}</div>
-                {/if}
             </div>
             {#if user}
                 <div>
