@@ -48,9 +48,8 @@
     import * as dialog from "dialog";
     import * as route from "route";
     import type { User } from "types";
-    import { userUrl } from "utils";
     import { goto } from "@sapper/app";
-    import { formatDateTime } from "utils";
+    import { formatDateTime, userUrl } from "utils";
     import Comment from "../../../components/comment/Comment.svelte";
     import Frame from "../../../components/Frame.svelte";
     import SessionHub from "../../../components/SessionHub.svelte";
