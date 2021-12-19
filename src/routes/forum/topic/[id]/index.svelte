@@ -30,7 +30,7 @@
     import * as consts from "consts";
     import * as types from "types";
     import type { PathPart } from "forum";
-    import { isAnonymAllowed } from "utils";
+    import { isAnonymAllowed, userUrl } from "utils";
     import type { User, ForumTopicPoll } from "types";
     import FramePage from "../../../../components/forum/main/ForumFrame.svelte";
     import SessionHub from "../../../../components/SessionHub.svelte";
@@ -49,7 +49,6 @@
     export let pageNo = 1;
 
     let topicName: string;
-    let topicUserId: number;
     let isAdmin = false;
     let isAnonym = true;
     let user: User;
@@ -62,6 +61,8 @@
     let oneVote = -1;
     let severalVote: number[] = [];
     let editVote = false;
+    let voteUserVisible = false;
+    let voteUsers: api.Forum.Topic.GetVoteUsers.Response[];
 
     let postCount = 0;
 
@@ -70,7 +71,6 @@
 
     $: {
         topicName = getAllResponse.topic_name;
-        topicUserId = getAllResponse.topic_user_id;
         postCount = getAllResponse.post_count;
         posts = getAllResponse.posts as EditedPost[];
         poll = getAllResponse.poll;
@@ -133,6 +133,34 @@
         poll = result.poll;
         editVote = false;
     }
+
+    async function getVoteUsers() {
+        if (!voteUserVisible) {
+            const params: api.Forum.Topic.GetVoteUsers.Request = {
+                id: topicId,
+            };
+
+            voteUsers = await api.Forum.Topic.GetVoteUsers.exec(params);
+            console.log(voteUsers);
+        }
+
+        voteUserVisible = !voteUserVisible;
+    }
+
+    function voteUsersForAnswer(answerId: number): string {
+        let result = "";
+
+        for (const voteUser of voteUsers) {
+            if (voteUser.answer_id !== answerId) continue;
+            result += userUrl(voteUser.name, voteUser.id) + ", ";
+        }
+
+        if (result) {
+            result = result.slice(0, result.length - 2);
+        }
+
+        return result;
+    }
 </script>
 
 <style>
@@ -148,6 +176,11 @@
 
     .vote {
         display: block;
+    }
+
+    .buttons {
+        display: flex;
+        gap: 0.5em;
     }
 </style>
 
@@ -170,15 +203,29 @@
                             {#if !isAnonym && answer.voted}
                                 <Check />
                             {/if}
+
+                            {#if voteUserVisible}
+                                {@html voteUsersForAnswer(answer.id)}
+                            {/if}
                         </div>
                         <div />
                     {/each}
                 </div>
 
                 {#if !isAnonym}
-                    <button on:click={() => (editVote = true)}
-                        >Изменить выбор</button
-                    >
+                    <div class="buttons">
+                        <button on:click={() => (editVote = true)}
+                            >Изменить выбор</button
+                        >
+
+                        {#if isAdmin}
+                            <button on:click={getVoteUsers}
+                                >{voteUserVisible
+                                    ? "Скрыть"
+                                    : "Показать"}</button
+                            >
+                        {/if}
+                    </div>
                 {:else}
                     <br />
                     Голосовать могут только зарегистрированные пользователи.
