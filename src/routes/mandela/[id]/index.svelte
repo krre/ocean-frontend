@@ -216,7 +216,7 @@
         margin: 0;
     }
 
-    .edit-buttons {
+    .buttons {
         display: flex;
         gap: 0.5em;
     }
@@ -289,7 +289,7 @@
         {/if}
 
         {#if !isAnonym && (user.id === mandela.user_id || isAdmin)}
-            <div class="edit-buttons">
+            <div class="buttons">
                 {#if user.id === mandela.user_id || isAdmin}
                     <button on:click={edit}>Редактировать</button>
                 {/if}
@@ -343,7 +343,7 @@
 <Rectangle>
     <div class="container">
         {#if !user || (vote != null && !editVote)}
-            <div>Результаты опроса:</div>
+            <div>Результаты опроса ({totalVotes})</div>
             <div class="grid" style="margin-left: 1em">
                 {#each consts.Votes as voteName, i}
                     <div>{voteName}:</div>
@@ -360,23 +360,17 @@
                 {/each}
             </div>
 
-            {#if isAdmin}
-                <div>
-                    <button on:click={getVoteUsers}
-                        >{voteUserVisible ? "Скрыть" : "Показать"}</button
-                    >
-                </div>
-            {/if}
-
-            <div class="grid">
-                <div>Всего голосов:</div>
-                <div>{totalVotes}</div>
-            </div>
             {#if user}
-                <div>
+                <div class="buttons">
                     <button on:click={() => (editVote = true)}
                         >Изменить выбор</button
                     >
+
+                    {#if isAdmin}
+                        <button on:click={getVoteUsers}
+                            >{voteUserVisible ? "Скрыть" : "Показать"}</button
+                        >
+                    {/if}
                 </div>
             {:else}Голосовать могут только зарегистрированные пользователи.{/if}
         {:else}
