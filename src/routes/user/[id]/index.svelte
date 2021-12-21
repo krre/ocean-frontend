@@ -16,8 +16,22 @@
     import * as consts from "consts";
     import Frame from "../../../components/Frame.svelte";
     import Profile from "../../../components/Profile.svelte";
+    import SessionHub from "../../../components/SessionHub.svelte";
 
     export let user: api.User.GetOne.Response;
+    let isAdmin = false;
+
+    async function updateUser() {
+        const params: api.User.Update.Request = {
+            id: user.id,
+            name: user.name,
+            code: user.code,
+            gender: user.gender,
+            blocked: user.blocked,
+        };
+
+        await api.User.Update.exec(params);
+    }
 </script>
 
 <style>
@@ -32,6 +46,8 @@
         gap: 0.5em;
     }
 </style>
+
+<SessionHub bind:isAdmin />
 
 <Frame title="Пользователь">
     {#if user.blocked}
@@ -48,4 +64,16 @@
 
         <Profile {user} />
     </div>
+
+    {#if isAdmin}
+        <br />
+        <label>
+            <input
+                type="checkbox"
+                bind:checked={user.blocked}
+                on:change={(_) => updateUser()}
+            />
+            Заблокировано
+        </label>
+    {/if}
 </Frame>

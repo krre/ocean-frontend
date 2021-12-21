@@ -41,9 +41,11 @@
 
     async function update() {
         const params: api.User.Update.Request = {
+            id: user.id,
             name: user.name,
             code: user.code,
             gender: currentGender,
+            blocked: user.blocked,
         };
 
         try {
