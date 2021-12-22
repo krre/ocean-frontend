@@ -2,7 +2,7 @@
     import * as api from "api";
     import { setToken } from "network";
     import type { Session, Page } from "types";
-    import { formatDateTime, createToken } from "utils";
+    import { createToken } from "utils";
 
     export async function preload(_page: Page, session: Session) {
         const params: api.User.GetOne.Request = {
@@ -40,19 +40,16 @@
     let password2: string;
 
     async function update() {
-        const params: api.User.Update.Request = {
-            id: user.id,
+        const params: api.User.UpdateProfile.Request = {
             name: user.name,
-            code: user.code,
             gender: currentGender,
-            blocked: user.blocked,
         };
 
         try {
-            await api.User.Update.exec(params);
+            await api.User.UpdateProfile.exec(params);
 
             $session.user.name = params.name;
-            $session.user.code = params.code;
+            $session.user.code = user.code;
 
             successProfile = "Профиль успешно обновлён";
         } catch (e) {
