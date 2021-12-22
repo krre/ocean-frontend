@@ -65,7 +65,7 @@
         <Profile {user} />
     </div>
 
-    {#if isAdmin}
+    {#if isAdmin && user.code === consts.Account.User}
         <br />
         <label>
             <input
