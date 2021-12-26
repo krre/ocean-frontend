@@ -26,6 +26,7 @@
     let isAdmin = false;
     let isAnonym = true;
     let user: User;
+    let likeUsers: api.Like.GetUsers.Response[];
 
     $: editable = isAdmin || (user && !isAnonym && user.id === post.user_id);
     $: removable = isAdmin || (user && !isAnonym && user.id === post.user_id);
@@ -61,6 +62,14 @@
 
             post.like = null;
         }
+    }
+
+    async function getLikeUsers(row: number) {
+        const params: api.Like.GetUsers.Request = {
+            post_id: id,
+        };
+
+        likeUsers = await api.Like.GetUsers.exec(params);
     }
 
     async function editPost(message: string) {
@@ -122,10 +131,13 @@
             : LikeSelection.Dislike}
         likeCount={post.like_count}
         dislikeCount={post.dislike_count}
+        likeQuestion={isAdmin}
+        {likeUsers}
         {editable}
         {removable}
         replyable={user !== undefined || isAnonymAllowed()}
         on:like={(event) => likePost(event.detail.row, event.detail.action)}
+        on:getLikeUsers={(event) => getLikeUsers(event.detail.row)}
         on:edit={() => (post.edit = true)}
         on:remove={() => removePost()}
         on:reply

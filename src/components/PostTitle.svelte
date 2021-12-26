@@ -3,6 +3,7 @@
     import { userUrl, dateUrl } from "utils";
     import { LikeSelection, LikeAction } from "types";
     import * as dialog from "dialog";
+    import type * as api from "api";
 
     const dispatch = createEventDispatcher();
 
@@ -18,11 +19,45 @@
     export let dislikeCount = 0;
 
     export let likeSelection: LikeSelection = LikeSelection.None;
+    export let likeQuestion = false;
+    export let likeUsers: api.Like.GetUsers.Response[] = null;
 
     export let likable = true;
     export let editable = false;
     export let removable = false;
     export let replyable = true;
+
+    let likeUsersVisible = false;
+
+    function showLikeUsers() {
+        if (!likeUsersVisible) {
+            dispatch("getLikeUsers", {
+                row: row,
+            });
+        }
+
+        likeUsersVisible = !likeUsersVisible;
+    }
+
+    function usersForAction(
+        users: api.Like.GetUsers.Response[],
+        action: LikeAction
+    ): string {
+        let result = "";
+
+        if (!users) return result;
+
+        for (const user of users) {
+            if (user.action !== action) continue;
+            result += userUrl(user.name, user.id) + ", ";
+        }
+
+        if (result) {
+            result = result.slice(0, result.length - 2);
+        }
+
+        return result;
+    }
 
     function like(action: LikeAction) {
         dispatch("like", {
@@ -115,6 +150,10 @@
 
             <span class={likeCount ? "up" : ""}>{likeCount}</span>
 
+            {#if likeUsersVisible && likeCount}
+                {@html usersForAction(likeUsers, LikeAction.Like)}
+            {/if}
+
             {#if likeSelection == LikeSelection.None}
                 <button
                     on:click={() => {
@@ -137,6 +176,18 @@
             {/if}
 
             <span class={dislikeCount ? "down" : ""}>{dislikeCount}</span>
+
+            {#if likeUsersVisible && dislikeCount}
+                {@html usersForAction(likeUsers, LikeAction.Dislike)}
+            {/if}
+
+            {#if likeQuestion && (likeCount || dislikeCount)}
+                <button
+                    on:click={() => {
+                        showLikeUsers();
+                    }}><i class="fas fa-question" /></button
+                >
+            {/if}
 
             ·
         {/if}

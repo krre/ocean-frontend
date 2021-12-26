@@ -18,6 +18,7 @@
     interface EditedComment extends api.Comment.GetAll.Comment {
         edit?: boolean;
         remove?: boolean;
+        likeUsers: api.Like.GetUsers.Response[];
     }
 
     export let user: User;
@@ -75,6 +76,14 @@
         }
 
         comments = comments;
+    }
+
+    async function getLikeUsers(row: number) {
+        const params: api.Like.GetUsers.Request = {
+            comment_id: +comments[row].id,
+        };
+
+        comments[row].likeUsers = await api.Like.GetUsers.exec(params);
     }
 
     async function editComment(row: number, message: string) {
@@ -144,6 +153,8 @@
                         : LikeSelection.Dislike}
                     likeCount={comment.like_count}
                     dislikeCount={comment.dislike_count}
+                    likeQuestion={user && user.code === consts.Account.Admin}
+                    likeUsers={comment.likeUsers}
                     editable={user &&
                         (comment.user_id === user.id ||
                             user.id === consts.Account.Id.Admin)}
@@ -153,6 +164,7 @@
                     replyable={user !== undefined || isAnonymAllowed()}
                     on:like={(event) =>
                         likeComment(event.detail.row, event.detail.action)}
+                    on:getLikeUsers={(event) => getLikeUsers(event.detail.row)}
                     on:edit={(event) =>
                         (comments[event.detail.row].edit = true)}
                     on:remove={(event) => deleteComment(event.detail.row)}
