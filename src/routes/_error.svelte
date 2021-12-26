@@ -1,12 +1,12 @@
 <script lang="ts">
     import * as route from "route";
     import { goto } from "@sapper/app";
-    import { Code } from "api-error";
+    import { Code, printMessage } from "api-error";
     import Frame from "../components/Frame.svelte";
 
     interface Message {
         code: number;
-        message: String;
+        message: string;
     }
 
     interface Error {
@@ -28,7 +28,7 @@
 </style>
 
 <Frame title={status}>
-    <p>{JSON.stringify(error.message)}</p>
+    <p>{printMessage(error.message.code, error.message.message)}</p>
 
     {#if dev && error.stack}
         <pre>{error.stack}</pre>
