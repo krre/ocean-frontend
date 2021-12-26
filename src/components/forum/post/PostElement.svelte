@@ -122,7 +122,7 @@
         date={post.create_ts}
         likeSelection={!user ||
         post.user_id === user.id ||
-        user.id === consts.Account.Id.Anonym
+        user.code === consts.Account.Anonym
             ? LikeSelection.Disabled
             : post.like == null
             ? LikeSelection.None

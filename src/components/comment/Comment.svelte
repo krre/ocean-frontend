@@ -144,7 +144,7 @@
                     date={comment.create_ts}
                     likeSelection={!user ||
                     comment.user_id === user.id ||
-                    user.id === consts.Account.Id.Anonym
+                    user.code === consts.Account.Anonym
                         ? LikeSelection.Disabled
                         : comment.like == null
                         ? LikeSelection.None
@@ -157,10 +157,10 @@
                     likeUsers={comment.likeUsers}
                     editable={user &&
                         (comment.user_id === user.id ||
-                            user.id === consts.Account.Id.Admin)}
+                            user.code === consts.Account.Admin)}
                     removable={user &&
                         (user.id === comment.user_id ||
-                            user.id === consts.Account.Id.Admin)}
+                            user.code === consts.Account.Admin)}
                     replyable={user !== undefined || isAnonymAllowed()}
                     on:like={(event) =>
                         likeComment(event.detail.row, event.detail.action)}
