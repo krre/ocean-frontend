@@ -14,6 +14,7 @@
 
 <script lang="ts">
     import * as consts from "consts";
+    import * as dialog from "dialog";
     import Frame from "../../../components/Frame.svelte";
     import Profile from "../../../components/Profile.svelte";
     import SessionHub from "../../../components/SessionHub.svelte";
@@ -32,12 +33,28 @@
 
         await api.User.Update.exec(params);
     }
+
+    async function deleteUser() {
+        if (!dialog.remove("Удалить пользователя?")) return;
+
+        const params: api.User.Delete.Request = {
+            id: user.id,
+        };
+
+        await api.User.Delete.exec(params);
+    }
 </script>
 
 <style>
     .blocked {
         color: red;
         margin-top: 0;
+    }
+
+    .column {
+        display: flex;
+        gap: 0.5em;
+        flex-direction: column;
     }
 
     .grid {
@@ -54,26 +71,31 @@
         <h3 class="blocked">Акканут заблокирован!</h3>
     {/if}
 
-    <div class="grid">
-        <div>ИД:</div>
-        <div>{user.id}</div>
-        <div>Имя:</div>
-        <div>{user.name}</div>
-        <div>Пол:</div>
-        <div>{consts.Genders[user.gender]}</div>
+    <div class="column">
+        <div class="grid">
+            <div>ИД:</div>
+            <div>{user.id}</div>
+            <div>Имя:</div>
+            <div>{user.name}</div>
+            <div>Пол:</div>
+            <div>{consts.Genders[user.gender]}</div>
 
-        <Profile {user} />
+            <Profile {user} />
+        </div>
+
+        {#if isAdmin && user.code === consts.Account.User}
+            <label>
+                <input
+                    type="checkbox"
+                    bind:checked={user.blocked}
+                    on:change={(_) => updateUser()}
+                />
+                Заблокировано
+            </label>
+
+            <div>
+                <button on:click={deleteUser}>Удалить</button>
+            </div>
+        {/if}
     </div>
-
-    {#if isAdmin && user.code === consts.Account.User}
-        <br />
-        <label>
-            <input
-                type="checkbox"
-                bind:checked={user.blocked}
-                on:change={(_) => updateUser()}
-            />
-            Заблокировано
-        </label>
-    {/if}
 </Frame>
