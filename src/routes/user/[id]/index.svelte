@@ -21,6 +21,7 @@
 
     export let user: api.User.GetOne.Response;
     let isAdmin = false;
+    let isUserExists = true;
 
     async function updateUser() {
         const params: api.User.Update.Request = {
@@ -42,6 +43,7 @@
         };
 
         await api.User.Delete.exec(params);
+        isUserExists = false;
     }
 </script>
 
@@ -61,6 +63,10 @@
         display: grid;
         grid-template-columns: max-content auto;
         gap: 0.5em;
+    }
+
+    .message {
+        color: red;
     }
 </style>
 
@@ -84,18 +90,22 @@
         </div>
 
         {#if isAdmin && user.code === consts.Account.User}
-            <label>
-                <input
-                    type="checkbox"
-                    bind:checked={user.blocked}
-                    on:change={(_) => updateUser()}
-                />
-                Заблокировано
-            </label>
+            {#if isUserExists}
+                <label>
+                    <input
+                        type="checkbox"
+                        bind:checked={user.blocked}
+                        on:change={(_) => updateUser()}
+                    />
+                    Заблокировано
+                </label>
 
-            <div>
-                <button on:click={deleteUser}>Удалить</button>
-            </div>
+                <div>
+                    <button on:click={deleteUser}>Удалить</button>
+                </div>
+            {:else}
+                <div class="message">Пользователь удалён</div>
+            {/if}
         {/if}
     </div>
 </Frame>
