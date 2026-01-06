@@ -1,6 +1,5 @@
 import sirv from 'sirv';
 import express from 'express';
-import http from 'http';
 import https from 'https';
 import fs from 'fs';
 import compression from 'compression';
@@ -13,7 +12,6 @@ const FileStore = sessionFileStore(session);
 
 const { PORT, NODE_ENV, SSL_KEY, SSL_CERT } = process.env;
 const dev = NODE_ENV === 'development';
-const PORT_HTTP = 8080;
 
 const app = express();
 
@@ -22,16 +20,7 @@ const options = {
 	cert: fs.readFileSync(SSL_CERT)
 };
 
-app.use(function (req, res, next) {
-	if (req.secure) {
-		next();
-	} else {
-		if (req.headers.host) {
-			const url = 'https://' + req.headers.host.replace(":" + PORT_HTTP, "") + req.url
-			res.redirect(url);
-		}
-	}
-}).use(bodyParser.json())
+app.use(bodyParser.json())
 	.use(session({
 		secret: 'conduit',
 		resave: false,
@@ -53,10 +42,6 @@ app.use(function (req, res, next) {
 			})
 		})
 	);
-
-http.createServer(app).listen(PORT_HTTP, _ => {
-	console.info(`> Running on https://localhost:${PORT_HTTP}`)
-});
 
 https.createServer(options, app).listen(PORT, _ => {
 	console.info(`> Running on https://localhost:${PORT}`)
