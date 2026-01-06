@@ -15,9 +15,6 @@ const { PORT, NODE_ENV, SSL_KEY, SSL_CERT } = process.env;
 const dev = NODE_ENV === 'development';
 const PORT_HTTP = 8080;
 
-// Dirty hack to avoid error "unable to verify the first certificate"
-process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = "0"
-
 const app = express();
 
 const options = {
