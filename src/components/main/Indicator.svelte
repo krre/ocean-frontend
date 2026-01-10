@@ -25,6 +25,7 @@
     }
 </style>
 
+<!-- svelte-ignore a11y-click-events-have-key-events -->
 <span
     class="cell"
     class:active

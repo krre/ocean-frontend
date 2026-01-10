@@ -26,6 +26,7 @@
     }
 </style>
 
+<!-- svelte-ignore a11y-click-events-have-key-events -->
 <nav class={$$props.class} on:click={() => dispatch("itemClicked")}>
     <a href=".">Каталог</a>
     {#if isAnonymAllowed() || $session.user}

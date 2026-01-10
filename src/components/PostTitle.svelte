@@ -41,7 +41,7 @@
 
     function usersForAction(
         users: api.Like.GetUsers.Response[],
-        action: LikeAction
+        action: LikeAction,
     ): string {
         let result = "";
 
@@ -120,7 +120,7 @@
         baseUrl,
         date,
         id,
-        pageNo
+        pageNo,
     )}
 
     {#if likable}
@@ -136,6 +136,7 @@
                     }}><i class="far fa-thumbs-up" /></button
                 >
             {:else}
+                <!-- svelte-ignore a11y-click-events-have-key-events -->
                 <i
                     class="far fa-thumbs-up {likeSelection == LikeSelection.Like
                         ? 'like up'
@@ -162,6 +163,7 @@
                 >
             {:else}
                 &nbsp;
+                <!-- svelte-ignore a11y-click-events-have-key-events -->
                 <i
                     class="far fa-thumbs-down {likeSelection ==
                     LikeSelection.Dislike

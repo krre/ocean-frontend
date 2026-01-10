@@ -44,6 +44,7 @@
 
 <div class="container">
     {#each smiles as smile}
+        <!-- svelte-ignore a11y-click-events-have-key-events -->
         <span
             class="smile"
             on:click={() =>

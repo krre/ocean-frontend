@@ -63,7 +63,7 @@
             post = insertText(
                 post,
                 areaRef.selectionStart,
-                `⁅url⁆${link}⁅/url⁆`
+                `⁅url⁆${link}⁅/url⁆`,
             );
         }
     }
@@ -82,13 +82,13 @@
     function onOkSpoiler(description: string) {
         if (areaRef.selectionStart != areaRef.selectionEnd) {
             replaceSelection(
-                (str: string) => `⁅spoiler="${description}"⁆${str}⁅/spoiler⁆`
+                (str: string) => `⁅spoiler="${description}"⁆${str}⁅/spoiler⁆`,
             );
         } else {
             post = insertText(
                 post,
                 areaRef.selectionStart,
-                `⁅spoiler="${description}"⁆Этот текст будет скрыт⁅/spoiler⁆`
+                `⁅spoiler="${description}"⁆Этот текст будет скрыт⁅/spoiler⁆`,
             );
         }
     }
@@ -191,6 +191,7 @@
 
         <div class="toolbar-spacing" />
 
+        <!-- svelte-ignore a11y-click-events-have-key-events -->
         <div class="preview-button" on:click={() => (isPreview = !isPreview)}>
             {#if isPreview}Редактор{:else}Просмотр{/if}
         </div>
