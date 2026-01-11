@@ -1,6 +1,6 @@
 <script module lang="ts">
-    import * as api from "api";
-    import type { Session, Page } from "types";
+    import * as api from "$lib/api";
+    import type { Session, Page } from "$lib/types";
 
     export async function preload(page: Page, session: Session) {
         const url = "https://" + page.host + page.path;
@@ -43,7 +43,7 @@
 </script>
 
 <script lang="ts">
-    import { run } from 'svelte/legacy';
+    import { run } from "svelte/legacy";
 
     import * as consts from "$lib/consts";
     import * as bbcode from "$lib/bbcode";
@@ -72,7 +72,7 @@
         commentGetAllResponse = $bindable(),
         url,
         pageNo,
-        automaticTrash = $bindable()
+        automaticTrash = $bindable(),
     }: Props = $props();
 
     let totalVotes = $state(0);
@@ -94,10 +94,11 @@
     let vote = $derived(getOneResponse.vote);
     let htmlUrl = $derived(`<a href="${url}">Океан. Мандела №${id}</a>`);
     let bbCodeUrl = $derived(`⁅url="${url}"⁆Мандела №${id}⁅/url⁆`);
-    let title =
-        $derived(mandela.title_mode === consts.Mandela.Title.Simple
+    let title = $derived(
+        mandela.title_mode === consts.Mandela.Title.Simple
             ? mandela.title
-            : mandela.what);
+            : mandela.what,
+    );
     run(() => {
         votes = getOneResponse.votes;
     });

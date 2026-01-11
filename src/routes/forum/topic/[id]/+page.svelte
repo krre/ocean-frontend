@@ -13,7 +13,7 @@
 
     async function load(
         topicId: number,
-        pageNo: number
+        pageNo: number,
     ): Promise<api.Forum.Post.GetAll.Response> {
         const params: api.Forum.Post.GetAll.Request = {
             topic_id: topicId,
@@ -26,14 +26,14 @@
 </script>
 
 <script lang="ts">
-    import { run } from 'svelte/legacy';
+    import { run } from "svelte/legacy";
 
-    import * as route from "route";
-    import * as consts from "consts";
-    import * as types from "types";
-    import type { PathPart } from "forum";
-    import { isAnonymAllowed, userUrl } from "utils";
-    import type { User, ForumTopicPoll } from "types";
+    import * as route from "$lib/route";
+    import * as consts from "$lib/consts";
+    import * as types from "$lib/types";
+    import type { PathPart } from "$lib/forum";
+    import { isAnonymAllowed, userUrl } from "$lib/utils";
+    import type { User, ForumTopicPoll } from "$lib/types";
     import FramePage from "../../../../components/forum/main/ForumFrame.svelte";
     import SessionHub from "../../../../components/SessionHub.svelte";
     import PostElement from "../../../../components/forum/post/PostElement.svelte";
@@ -52,7 +52,11 @@
         pageNo?: number;
     }
 
-    let { getAllResponse = $bindable(), topicId = 0, pageNo = 1 }: Props = $props();
+    let {
+        getAllResponse = $bindable(),
+        topicId = 0,
+        pageNo = 1,
+    }: Props = $props();
 
     let topicName: string = $state();
     let isAdmin = $state(false);
@@ -201,7 +205,7 @@
     showContent={posts.length > 0}
 >
     {#snippet poll()}
-        <div >
+        <div>
             {#if poll}
                 {#if (isAnonym || isVoted) && !editVote}
                     <div class="poll">

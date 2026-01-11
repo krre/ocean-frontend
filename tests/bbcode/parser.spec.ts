@@ -1,4 +1,4 @@
-import { name, char, wsp, text, quoted, attr, attrs, open, close, node, doc } from "../../src/node_modules/bbcode/parser"
+import { name, char, wsp, text, quoted, attr, attrs, open, close, node, doc } from "$lib/bbcode/parser"
 
 describe("BBCode parser", () => {
     test("name", () => {
