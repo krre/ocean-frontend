@@ -1,12 +1,12 @@
 <script lang="ts">
     import { createEventDispatcher } from "svelte";
-    import type { User } from "types";
-    import { LikeAction, LikeSelection } from "types";
-    import * as consts from "consts";
-    import * as route from "route";
-    import * as bbcode from "bbcode";
-    import * as api from "api";
-    import { isAnonymAllowed } from "utils";
+    import type { User } from "$lib/types";
+    import { LikeAction, LikeSelection } from "$lib/types";
+    import * as consts from "$lib/consts";
+    import * as route from "$lib/route";
+    import * as bbcode from "$lib/bbcode";
+    import * as api from "$lib/api";
+    import { isAnonymAllowed } from "$lib/utils";
     import Rectangle from "../Rectangle.svelte";
     import PostTitle from "../PostTitle.svelte";
     import MessageEditor from "../post/MessageEditor.svelte";
@@ -147,10 +147,10 @@
                     user.code === consts.Account.Anonym
                         ? LikeSelection.Disabled
                         : comment.like == null
-                        ? LikeSelection.None
-                        : comment.like == LikeAction.Like
-                        ? LikeSelection.Like
-                        : LikeSelection.Dislike}
+                          ? LikeSelection.None
+                          : comment.like == LikeAction.Like
+                            ? LikeSelection.Like
+                            : LikeSelection.Dislike}
                     likeCount={comment.like_count}
                     dislikeCount={comment.dislike_count}
                     likeQuestion={user && user.code === consts.Account.Admin}

@@ -1,10 +1,9 @@
 <script lang="ts">
-    import * as consts from "consts";
-    import { stores } from "@sapper/app";
+    import * as consts from "$lib/consts";
+    import { page } from "$app/stores";
     import Frame from "../components/Frame.svelte";
-    import { Vote } from "types";
+    import { Vote } from "$lib/types";
 
-    const { page } = stores();
     const title = "Справка";
 </script>
 

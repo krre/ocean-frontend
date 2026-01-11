@@ -1,5 +1,5 @@
-import * as consts from "consts";
-import type { MandelaTitle } from "types"
+import * as consts from "$lib/consts";
+import type { MandelaTitle } from "$lib/types"
 import sha1 from "sha1";
 
 export function post(endpoint: string, data?) {

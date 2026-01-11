@@ -1,6 +1,6 @@
 <script context="module" lang="ts">
-    import * as api from "api";
-    import type { Session, Page } from "types";
+    import * as api from "$lib/api";
+    import type { Session, Page } from "$lib/types";
 
     export async function preload(page: Page, _session: Session) {
         const { id } = page.params;
@@ -18,9 +18,9 @@
 </script>
 
 <script lang="ts">
-    import { goto } from "@sapper/app";
-    import type { User } from "types";
-    import * as route from "route";
+    import { goto } from "$app/navigation";
+    import type { User } from "$lib/types";
+    import * as route from "$lib/route";
     import Frame from "../../../../components/Frame.svelte";
     import SessionHub from "../../../../components/SessionHub.svelte";
 

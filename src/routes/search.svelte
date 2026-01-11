@@ -1,6 +1,6 @@
 <script context="module" lang="ts">
-    import * as api from "api";
-    import type { Session, Page } from "types";
+    import * as api from "$lib/api";
+    import type { Session, Page } from "$lib/types";
 
     const PAGE_LIMIT = 30;
 
@@ -13,7 +13,7 @@
     async function load(
         text: string,
         type: Type,
-        page: number
+        page: number,
     ): Promise<api.Search.GetAll.Response> {
         const params: api.Search.GetAll.Request = {
             text,
@@ -42,10 +42,10 @@
 </script>
 
 <script lang="ts">
-    import * as route from "route";
-    import * as consts from "consts";
-    import { pageUrl } from "utils";
-    import { goto } from "@sapper/app";
+    import * as route from "$lib/route";
+    import * as consts from "$lib/consts";
+    import { pageUrl } from "$lib/utils";
+    import { goto } from "$app/navigation";
     import Frame from "../components/Frame.svelte";
     import Rectangle from "../components/Rectangle.svelte";
     import WaitButton from "../components/WaitButton.svelte";
@@ -112,11 +112,11 @@
         titleId: number,
         title: string,
         id: number,
-        row: number
+        row: number,
     ) {
         if (type == Type.Mandela) {
             return `<a target="_blank" href="${route.Mandela.Id(
-                titleId
+                titleId,
             )}">${title}</a>`;
         } else if (type == Type.Comment) {
             const page = Math.ceil(row / consts.Mandela.Comment.PageLimit);
@@ -128,7 +128,7 @@
                 title,
                 id,
                 page,
-                true
+                true,
             );
         }
     }
@@ -190,7 +190,7 @@
                     record.title_id,
                     record.title,
                     record.id,
-                    record.row
+                    record.row,
                 )}
 
                 <div class="content">

@@ -1,13 +1,13 @@
 <script lang="ts">
-    import * as route from "route";
-    import * as api from "api";
-    import * as types from "types";
-    import { goto, stores } from "@sapper/app";
+    import * as route from "$lib/route";
+    import * as api from "$lib/api";
+    import * as types from "$lib/types";
+    import { page } from "$app/stores";
+    import { goto } from "$app/navigation";
     import Frame from "../../../../../components/Frame.svelte";
     import SessionHub from "../../../../../components/SessionHub.svelte";
     import MessageEditor from "../../../../../components/post/MessageEditor.svelte";
 
-    const { page } = stores();
     const sectionId = +$page.params.id;
     const title = "Создать тему";
 

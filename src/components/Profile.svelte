@@ -1,7 +1,7 @@
 <script lang="ts">
-    import * as consts from "consts";
-    import type * as api from "api";
-    import { formatDateTime } from "utils";
+    import * as consts from "$lib/consts";
+    import type * as api from "$lib/api";
+    import { formatDateTime } from "$lib/utils";
 
     export let user: api.User.GetOne.Response;
 

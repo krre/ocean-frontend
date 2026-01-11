@@ -1,9 +1,9 @@
 <script lang="ts">
     import { createEventDispatcher } from "svelte";
-    import { userUrl, dateUrl } from "utils";
-    import { LikeSelection, LikeAction } from "types";
-    import * as dialog from "dialog";
-    import type * as api from "api";
+    import { userUrl, dateUrl } from "$lib/utils";
+    import { LikeSelection, LikeAction } from "$lib/types";
+    import * as dialog from "$lib/dialog";
+    import type * as api from "$lib/api";
 
     const dispatch = createEventDispatcher();
 

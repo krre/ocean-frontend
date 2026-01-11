@@ -1,8 +1,8 @@
 <script context="module" lang="ts">
-    import * as api from "api";
-    import { setToken } from "network";
-    import type { Session, Page } from "types";
-    import { createToken } from "utils";
+    import * as api from "$lib/api";
+    import { setToken } from "$lib/network";
+    import type { Session, Page } from "$lib/types";
+    import { createToken } from "$lib/utils";
 
     export async function preload(_page: Page, session: Session) {
         const params: api.User.GetOne.Request = {
@@ -15,17 +15,16 @@
 </script>
 
 <script lang="ts">
-    import * as consts from "consts";
-    import { errorMessage } from "network";
-    import type { User } from "types";
-    import { stores } from "@sapper/app";
+    import * as consts from "$lib/consts";
+    import { errorMessage } from "$lib/network";
+    import type { User } from "$lib/types";
+    import { page } from "$app/stores";
     import Frame from "../components/Frame.svelte";
     import OperationResult from "../components/OperationResult.svelte";
     import Profile from "../components/Profile.svelte";
 
     export let user: User;
 
-    const { session } = stores();
     const title = "Профиль";
 
     let currentGender = user.gender;
@@ -48,8 +47,8 @@
         try {
             await api.User.UpdateProfile.exec(params);
 
-            $session.user.name = params.name;
-            $session.user.code = user.code;
+            $page.data.session.user.name = params.name;
+            $page.data.session.user.code = user.code;
 
             successProfile = "Профиль успешно обновлён";
         } catch (e) {

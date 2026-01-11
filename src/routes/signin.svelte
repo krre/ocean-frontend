@@ -1,13 +1,13 @@
 <script lang="ts">
-    import * as api from "api";
-    import { goto, stores } from "@sapper/app";
-    import { setToken, errorMessage } from "network";
-    import { post, createToken } from "utils";
+    import * as api from "$lib/api";
+    import { page } from "$app/stores";
+    import { goto } from "$app/navigation";
+    import { setToken, errorMessage } from "$lib/network";
+    import { post, createToken } from "$lib/utils";
     import Frame from "../components/Frame.svelte";
     import BoxForm from "../components/BoxForm.svelte";
     import OperationResult from "../components/OperationResult.svelte";
 
-    const { session } = stores();
     const title = "Войти";
 
     let id = 0;
@@ -33,7 +33,7 @@
             };
 
             await post("auth/login", user);
-            $session.user = user;
+            $page.data.session.user = user;
             setToken(token);
             goto("/");
         } catch (e) {

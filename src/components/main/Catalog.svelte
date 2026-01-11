@@ -1,12 +1,12 @@
 <script lang="ts">
-    import * as consts from "consts";
-    import * as route from "route";
-    import * as api from "api";
-    import type { User } from "types";
+    import * as consts from "$lib/consts";
+    import * as route from "$lib/route";
+    import * as api from "$lib/api";
+    import type { User } from "$lib/types";
     import { onMount } from "svelte";
-    import { Mounted, Vote } from "types";
-    import { goto } from "@sapper/app";
-    import { formatDateTime, zeroLeading, makeTitle } from "utils";
+    import { Mounted, Vote } from "$lib/types";
+    import { goto } from "$app/navigation";
+    import { formatDateTime, zeroLeading, makeTitle } from "$lib/utils";
     import Indicator from "./Indicator.svelte";
     import Pagination from "../Pagination.svelte";
     import Frame from "../Frame.svelte";

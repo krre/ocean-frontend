@@ -1,15 +1,14 @@
 <script lang="ts">
-    import * as api from "api";
-    import { goto, stores } from "@sapper/app";
-    import { setToken } from "network";
-    import { post } from "utils";
-
-    const { session } = stores();
+    import * as api from "$lib/api";
+    import { page } from "$app/stores";
+    import { goto } from "$app/navigation";
+    import { setToken } from "$lib/network";
+    import { post } from "$lib/utils";
 
     async function signout() {
         await api.User.Logout.exec();
         await post("auth/logout");
-        $session.user = null;
+        $page.data.session.user = null;
         setToken("");
         goto("/");
     }

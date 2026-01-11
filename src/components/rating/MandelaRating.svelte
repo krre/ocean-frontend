@@ -1,9 +1,9 @@
 <script lang="ts">
-    import * as consts from "consts";
-    import * as route from "route";
-    import * as api from "api";
-    import type { MandelaVote } from "types";
-    import { makeTitle } from "utils";
+    import * as consts from "$lib/consts";
+    import * as route from "$lib/route";
+    import * as api from "$lib/api";
+    import type { MandelaVote } from "$lib/types";
+    import { makeTitle } from "$lib/utils";
 
     export let pageNo = 1;
     export let pageLimit = 1;
@@ -13,7 +13,7 @@
     function mandelaLink(
         id: number,
         mandela: api.Rating.GetMandels.Mandela,
-        i: number
+        i: number,
     ) {
         const title = makeTitle(mandela);
         return `<a class="row-link" href=${route.Mandela.Id(id)}>${

@@ -9,7 +9,7 @@
     }
 
     async function load(
-        categoryId: number
+        categoryId: number,
     ): Promise<api.Forum.Section.GetAll.Response> {
         const params: api.Forum.Section.GetAll.Request = {
             category_id: categoryId,
@@ -20,9 +20,9 @@
 </script>
 
 <script lang="ts">
-    import * as route from "route";
-    import type { User } from "types";
-    import { goto } from "@sapper/app";
+    import * as route from "$lib/route";
+    import type { User } from "$lib/types";
+    import { goto } from "$app/navigation";
     import FramePage from "../../../../components/forum/main/ForumFrame.svelte";
     import SessionHub from "../../../../components/SessionHub.svelte";
     import SectionElement from "../../../../components/forum/section/SectionElement.svelte";

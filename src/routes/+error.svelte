@@ -1,7 +1,7 @@
 <script lang="ts">
-    import * as route from "route";
-    import { goto } from "@sapper/app";
-    import { Code, printMessage } from "api-error";
+    import * as route from "$lib/route";
+    import { goto } from "$app/navigation";
+    import { Code, printMessage } from "$lib/api-error";
     import Frame from "../components/Frame.svelte";
 
     interface Message {

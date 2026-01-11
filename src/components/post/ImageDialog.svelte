@@ -1,8 +1,8 @@
 <script lang="ts">
     import { onMount } from "svelte";
-    import type { Input } from "types";
+    import type { Input } from "$lib/types";
     import Dialog from "../dialog/Dialog.svelte";
-    import * as dialog from "dialog";
+    import * as dialog from "$lib/dialog";
 
     onMount(() => {
         inputRef.focus();

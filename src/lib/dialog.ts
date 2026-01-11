@@ -1,4 +1,4 @@
-import { modalDialog } from "stores"
+import { modalDialog } from "$lib/stores"
 
 export function remove(message?: string): boolean {
     return confirm(message || "Удалить")

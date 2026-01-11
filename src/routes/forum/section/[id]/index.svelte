@@ -1,6 +1,6 @@
 <script context="module" lang="ts">
-    import * as api from "api";
-    import type { Session, Page } from "types";
+    import * as api from "$lib/api";
+    import type { Session, Page } from "$lib/types";
 
     const PAGE_LIMIT = 20;
 
@@ -13,7 +13,7 @@
 
     async function load(
         sectionId: number,
-        pageNo: number
+        pageNo: number,
     ): Promise<api.Forum.Topic.GetAll.Response> {
         const params: api.Forum.Topic.GetAll.Request = {
             section_id: sectionId,
@@ -26,11 +26,11 @@
 </script>
 
 <script lang="ts">
-    import * as route from "route";
-    import type { User } from "types";
-    import { isAnonymAllowed } from "utils";
-    import { goto } from "@sapper/app";
-    import type { PathPart } from "forum";
+    import * as route from "$lib/route";
+    import type { User } from "$lib/types";
+    import { isAnonymAllowed } from "$lib/utils";
+    import { goto } from "$app/navigation";
+    import type { PathPart } from "$lib/forum";
     import FramePage from "../../../../components/forum/main/ForumFrame.svelte";
     import SessionHub from "../../../../components/SessionHub.svelte";
     import TopicElement from "../../../../components/forum/topic/TopicElement.svelte";

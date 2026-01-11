@@ -1,6 +1,6 @@
 <script context="module" lang="ts">
-    import * as api from "api";
-    import type { Session, Page } from "types";
+    import * as api from "$lib/api";
+    import type { Session, Page } from "$lib/types";
 
     const PAGE_LIMIT = 20;
 
@@ -17,10 +17,10 @@
 </script>
 
 <script lang="ts">
-    import * as consts from "consts";
-    import * as route from "route";
-    import * as bbcode from "bbcode";
-    import { userUrl, dateUrl, formatDateTime } from "utils";
+    import * as consts from "$lib/consts";
+    import * as route from "$lib/route";
+    import * as bbcode from "$lib/bbcode";
+    import { userUrl, dateUrl, formatDateTime } from "$lib/utils";
     import Frame from "../components/Frame.svelte";
     import Rectangle from "../components/Rectangle.svelte";
     import Pagination from "../components/Pagination.svelte";
@@ -60,7 +60,7 @@
         titleId: number,
         feedId: number,
         date: Date,
-        row: number
+        row: number,
     ) {
         if (
             type == api.Feed.TitleType.Mandela ||
@@ -109,7 +109,7 @@
                 feed.title_id,
                 feed.id,
                 feed.create_ts,
-                feed.row
+                feed.row,
             )}
 
             <div class="message">

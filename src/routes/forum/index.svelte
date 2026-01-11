@@ -1,6 +1,6 @@
 <script context="module" lang="ts">
-    import * as api from "api";
-    import type { Session, Page } from "types";
+    import * as api from "$lib/api";
+    import type { Session, Page } from "$lib/types";
 
     export async function preload(_page: Page, _session: Session) {
         const getAllResponse = await api.Forum.GetAll.exec();
@@ -12,9 +12,9 @@
 </script>
 
 <script lang="ts">
-    import * as route from "route";
-    import type { User } from "types";
-    import { goto } from "@sapper/app";
+    import * as route from "$lib/route";
+    import type { User } from "$lib/types";
+    import { goto } from "$app/navigation";
     import FramePage from "../../components/forum/main/ForumFrame.svelte";
     import SessionHub from "../../components/SessionHub.svelte";
     import CategoryElement from "../../components/forum/category/CategoryElement.svelte";

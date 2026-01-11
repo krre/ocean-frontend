@@ -1,6 +1,6 @@
 <script context="module" lang="ts">
-    import * as api from "api";
-    import type { Session, Page } from "types";
+    import * as api from "$lib/api";
+    import type { Session, Page } from "$lib/types";
 
     export async function preload(page: Page, _session: Session) {
         const params: api.User.GetOne.Request = {
@@ -13,8 +13,8 @@
 </script>
 
 <script lang="ts">
-    import * as consts from "consts";
-    import * as dialog from "dialog";
+    import * as consts from "$lib/consts";
+    import * as dialog from "$lib/dialog";
     import Frame from "../../../components/Frame.svelte";
     import Profile from "../../../components/Profile.svelte";
     import SessionHub from "../../../components/SessionHub.svelte";

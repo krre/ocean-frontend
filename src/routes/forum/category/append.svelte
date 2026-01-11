@@ -1,7 +1,7 @@
 <script lang="ts">
-    import { goto } from "@sapper/app";
-    import * as route from "route";
-    import * as api from "api";
+    import { goto } from "$app/navigation";
+    import * as route from "$lib/route";
+    import * as api from "$lib/api";
     import Frame from "../../../components/Frame.svelte";
     import SessionHub from "../../../components/SessionHub.svelte";
     import CategoryEditor from "../../../components/forum/category/CategoryEditor.svelte";

@@ -1,6 +1,6 @@
 <script lang="ts">
     import { onMount } from "svelte";
-    import type { ScreenSize } from "types";
+    import type { ScreenSize } from "$lib/types";
 
     export let size: ScreenSize;
 

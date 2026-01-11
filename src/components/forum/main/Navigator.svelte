@@ -1,6 +1,6 @@
 <script lang="ts">
-    import type { PathPart } from "forum";
-    import * as route from "route";
+    import type { PathPart } from "$lib/forum";
+    import * as route from "$lib/route";
 
     export let category: PathPart = null;
     export let section: PathPart = null;

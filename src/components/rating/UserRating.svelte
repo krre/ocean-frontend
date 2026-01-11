@@ -1,6 +1,6 @@
 <script lang="ts">
-    import { userUrl } from "utils";
-    import * as api from "api";
+    import { userUrl } from "$lib/utils";
+    import * as api from "$lib/api";
 
     export let pageNo = 1;
     export let pageLimit = 1;

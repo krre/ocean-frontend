@@ -1,6 +1,6 @@
 <script context="module" lang="ts">
-    import * as api from "api";
-    import type { Session, Page } from "types";
+    import * as api from "$lib/api";
+    import type { Session, Page } from "$lib/types";
 
     const PAGE_LIMIT = 50;
 
@@ -37,11 +37,11 @@
 </script>
 
 <script lang="ts">
-    import * as route from "route";
-    import * as types from "types";
-    import { goto } from "@sapper/app";
+    import * as route from "$lib/route";
+    import * as types from "$lib/types";
+    import { goto } from "$app/navigation";
     import { onMount } from "svelte";
-    import { Mounted, MandelaVote } from "types";
+    import { Mounted, MandelaVote } from "$lib/types";
     import Frame from "../components/Frame.svelte";
     import MandelaRating from "../components/rating/MandelaRating.svelte";
     import UserRating from "../components/rating/UserRating.svelte";

@@ -18,8 +18,8 @@
 </script>
 
 <script lang="ts">
-    import * as consts from "consts";
-    import { goto } from "@sapper/app";
+    import * as consts from "$lib/consts";
+    import { goto } from "$app/navigation";
     import Frame from "../../../components/Frame.svelte";
     import MandelaEditor from "../../../components/MandelaEditor.svelte";
 

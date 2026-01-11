@@ -1,5 +1,5 @@
 <script lang="ts">
-    import * as consts from "consts";
+    import * as consts from "$lib/consts";
     export let title = "";
     export let what = "";
     export let before = "";

@@ -1,9 +1,9 @@
 <script lang="ts">
-    import * as consts from "consts";
-    import * as forum from "forum";
-    import * as route from "route";
-    import { textCut } from "utils";
-    import type { NewTopic } from "forum";
+    import * as consts from "$lib/consts";
+    import * as forum from "$lib/forum";
+    import * as route from "$lib/route";
+    import { textCut } from "$lib/utils";
+    import type { NewTopic } from "$lib/forum";
     import PostTitle from "../../PostTitle.svelte";
 
     export let topic: NewTopic;

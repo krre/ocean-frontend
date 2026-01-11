@@ -17,8 +17,8 @@
 </script>
 
 <script lang="ts">
-    import { goto } from "@sapper/app";
-    import * as route from "route";
+    import { goto } from "$app/navigation";
+    import * as route from "$lib/route";
     import Frame from "../../../../components/Frame.svelte";
     import SessionHub from "../../../../components/SessionHub.svelte";
     import SectionEditor from "../../../../components/forum/section/SectionEditor.svelte";

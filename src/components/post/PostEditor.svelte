@@ -4,10 +4,10 @@
     import VideoDialog from "./VideoDialog.svelte";
     import SpoilerDialog from "./SpoilerDialog.svelte";
     import SmilePanel from "./SmilePanel.svelte";
-    import { insertText } from "utils";
-    import type { TextArea } from "types";
-    import * as dialog from "dialog";
-    import * as bbcode from "bbcode";
+    import { insertText } from "$lib/utils";
+    import type { TextArea } from "$lib/types";
+    import * as dialog from "$lib/dialog";
+    import * as bbcode from "$lib/bbcode";
 
     export let post = "";
 

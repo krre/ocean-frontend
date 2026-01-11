@@ -1,4 +1,4 @@
-import { send } from "network";
+import { send } from "$lib/network";
 
 export interface Comment {
     id: number;

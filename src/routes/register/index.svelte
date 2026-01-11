@@ -1,9 +1,9 @@
 <script lang="ts">
-    import * as consts from "consts";
-    import * as route from "route";
-    import * as api from "api";
-    import { goto } from "@sapper/app";
-    import { createToken } from "utils";
+    import * as consts from "$lib/consts";
+    import * as route from "$lib/route";
+    import * as api from "$lib/api";
+    import { goto } from "$app/navigation";
+    import { createToken } from "$lib/utils";
     import Frame from "../../components/Frame.svelte";
     import BoxForm from "../../components/BoxForm.svelte";
     import OperationResult from "../../components/OperationResult.svelte";

@@ -1,7 +1,7 @@
 <script context="module" lang="ts">
     import Modal from "../components/dialog/Modal.svelte";
-    import { setToken } from "network";
-    import type { Session, Page } from "types";
+    import { setToken } from "$lib/network";
+    import type { Session, Page } from "$lib/types";
 
     export async function preload(_page: Page, session: Session) {
         setToken(session.user ? session.user.token : "");
@@ -26,8 +26,18 @@
 
     :global(body) {
         margin: 0;
-        font-family: Roboto, -apple-system, BlinkMacSystemFont, Segoe UI, Oxygen,
-            Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+        font-family:
+            Roboto,
+            -apple-system,
+            BlinkMacSystemFont,
+            Segoe UI,
+            Oxygen,
+            Ubuntu,
+            Cantarell,
+            Fira Sans,
+            Droid Sans,
+            Helvetica Neue,
+            sans-serif;
         font-size: 90%;
         background-color: var(--page-background);
     }

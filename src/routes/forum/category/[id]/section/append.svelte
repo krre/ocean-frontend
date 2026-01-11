@@ -1,12 +1,12 @@
 <script lang="ts">
-    import * as route from "route";
-    import * as api from "api";
-    import { goto, stores } from "@sapper/app";
+    import * as route from "$lib/route";
+    import * as api from "$lib/api";
+    import { page } from "$app/stores";
+    import { goto } from "$app/navigation";
     import Frame from "../../../../../components/Frame.svelte";
     import SessionHub from "../../../../../components/SessionHub.svelte";
     import SectionEditor from "../../../../../components/forum/section/SectionEditor.svelte";
 
-    const { page } = stores();
     const title = "Добавить раздел";
 
     let isAdmin = false;

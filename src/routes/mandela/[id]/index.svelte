@@ -30,7 +30,7 @@
 
     function loadComments(
         mandelaId: number,
-        pageNo: number
+        pageNo: number,
     ): Promise<api.Comment.GetAll.Response> {
         const params: api.Comment.GetAll.Request = {
             mandela_id: mandelaId,
@@ -43,13 +43,13 @@
 </script>
 
 <script lang="ts">
-    import * as consts from "consts";
-    import * as bbcode from "bbcode";
-    import * as dialog from "dialog";
-    import * as route from "route";
-    import type { User } from "types";
-    import { goto } from "@sapper/app";
-    import { formatDateTime, userUrl } from "utils";
+    import * as consts from "$lib/consts";
+    import * as bbcode from "$lib/bbcode";
+    import * as dialog from "$lib/dialog";
+    import * as route from "$lib/route";
+    import type { User } from "$lib/types";
+    import { goto } from "$app/navigation";
+    import { formatDateTime, userUrl } from "$lib/utils";
     import Comment from "../../../components/comment/Comment.svelte";
     import Frame from "../../../components/Frame.svelte";
     import SessionHub from "../../../components/SessionHub.svelte";

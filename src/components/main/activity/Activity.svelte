@@ -1,5 +1,5 @@
 <script lang="ts">
-    import type { ActivityMessage } from "types";
+    import type { ActivityMessage } from "$lib/types";
     import Latest from "./Latest.svelte";
     import Feed from "./Feed.svelte";
 

@@ -1,9 +1,9 @@
 <script context="module" lang="ts">
-    import * as api from "api";
-    import * as route from "route";
-    import * as consts from "consts";
-    import type { Session, Page, ActivityMessage } from "types";
-    import { makeTitle } from "utils";
+    import * as api from "$lib/api";
+    import * as route from "$lib/route";
+    import * as consts from "$lib/consts";
+    import type { Session, Page, ActivityMessage } from "$lib/types";
+    import { makeTitle } from "$lib/utils";
 
     const MANDELA_PAGE_LIMIT = 50;
     const ACTIVITY_PAGE_LIMIT = 5;
@@ -59,7 +59,7 @@
                 title: item.name,
                 baseUrl: route.Forum.Topic.Id(item.id),
                 pageNo: Math.ceil(
-                    item.post_count / consts.Forum.Post.PageLimit
+                    item.post_count / consts.Forum.Post.PageLimit,
                 ),
                 date: item.post_create_ts,
                 userName: item.user_name,
@@ -78,7 +78,7 @@
                 title: makeTitle(item),
                 baseUrl: route.Mandela.Id(item.mandela_id),
                 pageNo: Math.ceil(
-                    item.comment_count / consts.Mandela.Comment.PageLimit
+                    item.comment_count / consts.Mandela.Comment.PageLimit,
                 ),
                 date: item.create_ts,
                 userName: item.user_name,

@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { errorMessage } from "network";
+    import { errorMessage } from "$lib/network";
     import Loader from "./Loader.svelte";
     import OperationResult from "../components/OperationResult.svelte";
 

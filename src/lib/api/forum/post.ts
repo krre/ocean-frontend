@@ -1,5 +1,5 @@
-import { send } from "network";
-import type { ForumTopicPoll } from "types";
+import { send } from "$lib/network";
+import type { ForumTopicPoll } from "$lib/types";
 
 export namespace GetAll {
     export interface Request {

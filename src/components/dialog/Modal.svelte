@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { modalDialog } from "stores";
+    import { modalDialog } from "$lib/stores";
 </script>
 
 <style>
@@ -21,6 +21,7 @@
     <div class="bg">
         <svelte:component
             this={$modalDialog.component}
-            {...$modalDialog.params} />
+            {...$modalDialog.params}
+        />
     </div>
 {/if}

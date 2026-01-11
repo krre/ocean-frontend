@@ -1,9 +1,8 @@
 .DS_Store
 /node_modules/
-/src/node_modules/@sapper/
+/.svelte-kit
 yarn-error.log
 /cypress/screenshots/
-/__sapper__/
 /.vscode
 /.sessions
 build.sh

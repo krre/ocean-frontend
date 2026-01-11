@@ -1,10 +1,10 @@
 <script lang="ts">
-    import * as bbcode from "bbcode";
-    import * as api from "api";
-    import * as consts from "consts";
-    import { LikeAction, LikeSelection } from "types";
-    import { isAnonymAllowed } from "utils";
-    import type { User } from "types";
+    import * as bbcode from "$lib/bbcode";
+    import * as api from "$lib/api";
+    import * as consts from "$lib/consts";
+    import { LikeAction, LikeSelection } from "$lib/types";
+    import { isAnonymAllowed } from "$lib/utils";
+    import type { User } from "$lib/types";
     import { createEventDispatcher } from "svelte";
     import SessionHub from "../../SessionHub.svelte";
     import PostTitle from "../../../components/PostTitle.svelte";
@@ -125,10 +125,10 @@
         user.code === consts.Account.Anonym
             ? LikeSelection.Disabled
             : post.like == null
-            ? LikeSelection.None
-            : post.like == LikeAction.Like
-            ? LikeSelection.Like
-            : LikeSelection.Dislike}
+              ? LikeSelection.None
+              : post.like == LikeAction.Like
+                ? LikeSelection.Like
+                : LikeSelection.Dislike}
         likeCount={post.like_count}
         dislikeCount={post.dislike_count}
         likeQuestion={isAdmin}

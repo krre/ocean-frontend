@@ -1,7 +1,7 @@
 <script lang="ts">
-    import type { User } from "types";
-    import * as consts from "consts";
-    import * as utils from "utils";
+    import type { User } from "$lib/types";
+    import * as consts from "$lib/consts";
+    import * as utils from "$lib/utils";
     import MandelaTitle from "./MandelaTitle.svelte";
     import PostEditor from "./post/PostEditor.svelte";
     import WaitButton from "./WaitButton.svelte";

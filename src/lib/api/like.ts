@@ -1,5 +1,5 @@
-import { send } from "network";
-import type { LikeAction } from "types"
+import { send } from "$lib/network";
+import type { LikeAction } from "$lib/types"
 
 export namespace Create {
     export interface Request {

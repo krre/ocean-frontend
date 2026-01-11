@@ -1,12 +1,12 @@
 <script lang="ts">
-    import * as consts from "consts";
-    import * as route from "route";
-    import * as dialog from "dialog";
-    import * as api from "api";
-    import * as types from "types";
-    import type { User } from "types";
-    import { formatDateTime, userUrl, dateUrl } from "utils";
-    import { goto } from "@sapper/app";
+    import * as consts from "$lib/consts";
+    import * as route from "$lib/route";
+    import * as dialog from "$lib/dialog";
+    import * as api from "$lib/api";
+    import * as types from "$lib/types";
+    import type { User } from "$lib/types";
+    import { formatDateTime, userUrl, dateUrl } from "$lib/utils";
+    import { goto } from "$app/navigation";
     import { createEventDispatcher } from "svelte";
     import SessionHub from "../../SessionHub.svelte";
 
@@ -76,7 +76,7 @@
     {/if}
     <div class="info">
         {@html userUrl(topic.user_name, topic.user_id)} · {formatDateTime(
-            topic.create_ts
+            topic.create_ts,
         )}
     </div>
     <div class="info">
@@ -86,7 +86,7 @@
                 route.Forum.Topic.Id(topic.id),
                 topic.last_post_create_ts,
                 topic.last_post_id,
-                Math.ceil(topic.post_count / consts.Forum.Post.PageLimit)
+                Math.ceil(topic.post_count / consts.Forum.Post.PageLimit),
             )}
         {/if}
     </div>

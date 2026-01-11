@@ -1,5 +1,5 @@
-import * as route from "route";
-import * as consts from "consts";
+import * as route from "$lib/route";
+import * as consts from "$lib/consts";
 
 export interface PathPart {
     id?: number;

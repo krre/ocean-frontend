@@ -1,7 +1,7 @@
 <script lang="ts">
-    import type { ActivityMessage } from "types";
-    import { textCut } from "utils";
-    import { userUrl, dateUrl } from "utils";
+    import type { ActivityMessage } from "$lib/types";
+    import { textCut } from "$lib/utils";
+    import { userUrl, dateUrl } from "$lib/utils";
     import Rectangle from "../../Rectangle.svelte";
 
     export let title = "";
@@ -46,7 +46,7 @@
                 message.baseUrl,
                 message.date,
                 message.id,
-                message.pageNo
+                message.pageNo,
             )}
             <div class="message-body">
                 {textCut(message.message, 200)}

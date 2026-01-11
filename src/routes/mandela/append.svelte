@@ -1,12 +1,12 @@
 <script lang="ts">
-    import * as consts from "consts";
-    import * as route from "route";
-    import * as api from "api";
-    import { goto, stores } from "@sapper/app";
+    import * as consts from "$lib/consts";
+    import * as route from "$lib/route";
+    import * as api from "$lib/api";
+    import { page } from "$app/stores";
+    import { goto } from "$app/navigation";
     import Frame from "../../components/Frame.svelte";
     import MandelaEditor from "../../components/MandelaEditor.svelte";
 
-    const { session } = stores();
     const pageTitle = "Добавить манделу";
 
     export let titleMode = consts.Mandela.Title.Complex;
@@ -42,7 +42,7 @@
         bind:after
         bind:description
         bind:categories
-        bind:user={$session.user}
+        bind:user={$page.data.session?.user}
         sendAction={append}
     />
 </Frame>

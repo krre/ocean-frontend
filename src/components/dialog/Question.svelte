@@ -1,6 +1,6 @@
 <script lang="ts">
     import Dialog from "./Dialog.svelte";
-    import * as dialog from "dialog";
+    import * as dialog from "$lib/dialog";
     export let title: string;
     export let text: string;
 </script>
