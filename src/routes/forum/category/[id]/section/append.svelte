@@ -1,7 +1,7 @@
 <script lang="ts">
     import * as route from "$lib/route";
     import * as api from "$lib/api";
-    import { page } from "$app/stores";
+    import { page } from "$app/state";
     import { goto } from "$app/navigation";
     import Frame from "../../../../../components/Frame.svelte";
     import SessionHub from "../../../../../components/SessionHub.svelte";
@@ -15,7 +15,7 @@
 
     const action = async () => {
         const params: api.Forum.Section.Create.Request = {
-            category_id: +$page.params.id,
+            category_id: +page.params.id,
             name: name,
             order_index: order,
         };
