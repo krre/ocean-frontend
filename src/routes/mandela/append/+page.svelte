@@ -6,8 +6,8 @@ https://svelte.dev/e/bind_invalid_expression -->
     import * as api from "$lib/api";
     import { page } from "$app/stores";
     import { goto } from "$app/navigation";
-    import Frame from "../../components/Frame.svelte";
-    import MandelaEditor from "../../components/MandelaEditor.svelte";
+    import Frame from "../../../components/Frame.svelte";
+    import MandelaEditor from "../../../components/MandelaEditor.svelte";
 
     const pageTitle = "Добавить манделу";
 

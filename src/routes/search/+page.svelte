@@ -48,10 +48,10 @@
     import * as consts from "$lib/consts";
     import { pageUrl } from "$lib/utils";
     import { goto } from "$app/navigation";
-    import Frame from "../components/Frame.svelte";
-    import Rectangle from "../components/Rectangle.svelte";
-    import WaitButton from "../components/WaitButton.svelte";
-    import Pagination from "../components/Pagination.svelte";
+    import Frame from "../../components/Frame.svelte";
+    import Rectangle from "../../components/Rectangle.svelte";
+    import WaitButton from "../../components/WaitButton.svelte";
+    import Pagination from "../../components/Pagination.svelte";
 
     interface Props {
         searchGetAllResponse: api.Search.GetAll.Response;

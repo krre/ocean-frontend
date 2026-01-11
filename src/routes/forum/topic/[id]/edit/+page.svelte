@@ -21,8 +21,8 @@
     import { goto } from "$app/navigation";
     import type { User } from "$lib/types";
     import * as route from "$lib/route";
-    import Frame from "../../../../components/Frame.svelte";
-    import SessionHub from "../../../../components/SessionHub.svelte";
+    import Frame from "../../../../../components/Frame.svelte";
+    import SessionHub from "../../../../../components/SessionHub.svelte";
 
     const title = "Редактировать тему";
 

@@ -4,9 +4,9 @@
     import { goto } from "$app/navigation";
     import { setToken, errorMessage } from "$lib/network";
     import { post, createToken } from "$lib/utils";
-    import Frame from "../components/Frame.svelte";
-    import BoxForm from "../components/BoxForm.svelte";
-    import OperationResult from "../components/OperationResult.svelte";
+    import Frame from "../../components/Frame.svelte";
+    import BoxForm from "../../components/BoxForm.svelte";
+    import OperationResult from "../../components/OperationResult.svelte";
 
     const title = "Войти";
 

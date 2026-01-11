@@ -1,29 +1,33 @@
 <!-- @migration-task Error while migrating Svelte code: `$session` is an illegal variable name. To reference a global variable called `$session`, use `globalThis.$session`
 https://svelte.dev/e/global_reference_invalid -->
 <script context="module" lang="ts">
-    import * as api from "$lib/api";
-    import { setToken } from "$lib/network";
-    import type { Session, Page } from "$lib/types";
-    import { createToken } from "$lib/utils";
+    throw new Error("@migration task: Check code was safely removed (https://github.com/sveltejs/kit/discussions/5774#discussioncomment-3292722)");
 
-    export async function preload(_page: Page, session: Session) {
-        const params: api.User.GetOne.Request = {
-            id: +session.user.id,
-        };
+    // import * as api from "$lib/api";
+    // import { setToken } from "$lib/network";
+    // import type { Session, Page } from "$lib/types";
+    // import { createToken } from "$lib/utils";
 
-        const user = await api.User.GetOne.exec(params);
-        return { user };
-    }
+    // export async function preload(_page: Page, session: Session) {
+    //     const params: api.User.GetOne.Request = {
+    //         id: +session.user.id,
+    //     };
+
+    //     const user = await api.User.GetOne.exec(params);
+    //     return { user };
+    // }
 </script>
 
 <script lang="ts">
+    throw new Error("@migration task: Add data prop (https://github.com/sveltejs/kit/discussions/5774#discussioncomment-3292707)");
+
     import * as consts from "$lib/consts";
     import { errorMessage } from "$lib/network";
     import type { User } from "$lib/types";
     import { page } from "$app/stores";
-    import Frame from "../components/Frame.svelte";
-    import OperationResult from "../components/OperationResult.svelte";
-    import Profile from "../components/Profile.svelte";
+    import Frame from "../../components/Frame.svelte";
+    import OperationResult from "../../components/OperationResult.svelte";
+    import Profile from "../../components/Profile.svelte";
 
     export let user: User;
 

@@ -2,9 +2,9 @@
     import { goto } from "$app/navigation";
     import * as route from "$lib/route";
     import * as api from "$lib/api";
-    import Frame from "../../../components/Frame.svelte";
-    import SessionHub from "../../../components/SessionHub.svelte";
-    import CategoryEditor from "../../../components/forum/category/CategoryEditor.svelte";
+    import Frame from "../../../../components/Frame.svelte";
+    import SessionHub from "../../../../components/SessionHub.svelte";
+    import CategoryEditor from "../../../../components/forum/category/CategoryEditor.svelte";
 
     const title = "Добавить категорию";
 

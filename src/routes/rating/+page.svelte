@@ -44,10 +44,10 @@
     import { goto } from "$app/navigation";
     import { onMount } from "svelte";
     import { Mounted, MandelaVote } from "$lib/types";
-    import Frame from "../components/Frame.svelte";
-    import MandelaRating from "../components/rating/MandelaRating.svelte";
-    import UserRating from "../components/rating/UserRating.svelte";
-    import Pagination from "../components/Pagination.svelte";
+    import Frame from "../../components/Frame.svelte";
+    import MandelaRating from "../../components/rating/MandelaRating.svelte";
+    import UserRating from "../../components/rating/UserRating.svelte";
+    import Pagination from "../../components/Pagination.svelte";
 
     interface Props {
         type?: any;

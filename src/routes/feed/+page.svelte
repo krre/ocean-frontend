@@ -23,9 +23,9 @@
     import * as route from "$lib/route";
     import * as bbcode from "$lib/bbcode";
     import { userUrl, dateUrl, formatDateTime } from "$lib/utils";
-    import Frame from "../components/Frame.svelte";
-    import Rectangle from "../components/Rectangle.svelte";
-    import Pagination from "../components/Pagination.svelte";
+    import Frame from "../../components/Frame.svelte";
+    import Rectangle from "../../components/Rectangle.svelte";
+    import Pagination from "../../components/Pagination.svelte";
 
     interface Props {
         getAllResponse: api.Feed.GetAll.Response;
