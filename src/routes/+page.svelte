@@ -1,4 +1,4 @@
-<script module lang="ts">
+<!-- <script module lang="ts">
     import * as api from "$lib/api";
     import * as route from "$lib/route";
     import * as consts from "$lib/consts";
@@ -91,12 +91,11 @@
 
         return [topics, comments];
     }
-</script>
+</script> -->
 
-<script lang="ts">
+<!-- <script lang="ts">
     import Catalog from "../components/main/Catalog.svelte";
     import Activity from "../components/main/activity/Activity.svelte";
-
 
     interface Props {
         getAllResponse: api.Mandela.GetAll.Response;
@@ -117,9 +116,9 @@
         filter = 0,
         category = 0,
         sort = 0,
-        userId = 0
+        userId = 0,
     }: Props = $props();
-</script>
+</script> -->
 
 <style>
     .container {
@@ -144,7 +143,7 @@
 </style>
 
 <div class="container">
-    <div class="catalog">
+    <!-- <div class="catalog">
         <Catalog
             {pageNo}
             {filter}
@@ -156,5 +155,5 @@
         />
     </div>
 
-    <Activity {topics} {comments} />
+    <Activity {topics} {comments} /> -->
 </div>

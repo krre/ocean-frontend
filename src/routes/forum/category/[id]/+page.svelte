@@ -1,6 +1,6 @@
 <script module lang="ts">
-    import * as api from "api";
-    import type { Session, Page } from "types";
+    import * as api from "$lib/api";
+    import type { Session, Page } from "$lib/types";
 
     export async function preload(page: Page, _session: Session) {
         const categoryId = +page.params.id;
@@ -20,7 +20,7 @@
 </script>
 
 <script lang="ts">
-    import { run } from 'svelte/legacy';
+    import { run } from "svelte/legacy";
 
     import * as route from "$lib/route";
     import type { User } from "$lib/types";

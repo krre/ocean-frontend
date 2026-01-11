@@ -3,16 +3,14 @@
     "version": "1.0.0",
     "type": "module",
     "scripts": {
-        "dev": "svelte-kit sync && vite dev",
-        "build": "svelte-kit sync && vite build",
+        "dev": "vite dev",
+        "build": "vite build",
         "preview": "vite preview",
-        "prepare": "svelte-kit sync || echo ''"
+        "prepare": "svelte-kit sync || echo ''",
+        "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+        "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch"
     },
     "dependencies": {
-        "body-parser": "^2.2.2",
-        "compression": "^1.7.4",
-        "express": "^5.2.1",
-        "express-session": "^1.17.3",
         "session-file-store": "^1.5.0",
         "sha1": "^1.1.1",
         "sirv": "^3.0.2"

@@ -1,7 +1,7 @@
 <script module lang="ts">
-    import * as route from "route";
-    import * as api from "api";
-    import type { Session, Page } from "types";
+    import * as route from "$lib/route";
+    import * as api from "$lib/api";
+    import type { Session, Page } from "$lib/types";
 
     export async function preload(page: Page, session: Session) {
         const { id } = page.params;
@@ -36,7 +36,7 @@
         id,
         mandela = $bindable(),
         categories = $bindable([]),
-        session = $bindable()
+        session = $bindable(),
     }: Props = $props();
 
     async function edit() {
