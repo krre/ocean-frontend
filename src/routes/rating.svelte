@@ -1,4 +1,4 @@
-<script context="module" lang="ts">
+<script module lang="ts">
     import * as api from "$lib/api";
     import type { Session, Page } from "$lib/types";
 
@@ -37,6 +37,8 @@
 </script>
 
 <script lang="ts">
+    import { run } from 'svelte/legacy';
+
     import * as route from "$lib/route";
     import * as types from "$lib/types";
     import { goto } from "$app/navigation";
@@ -47,11 +49,21 @@
     import UserRating from "../components/rating/UserRating.svelte";
     import Pagination from "../components/Pagination.svelte";
 
-    export let type = types.RatingType.Mandels;
-    export let vote = MandelaVote.Yes;
-    export let getMandelsResponse: api.Rating.GetMandels.Response;
-    export let getUsersResponse: api.Rating.GetUsers.Response;
-    export let pageNo = 1;
+    interface Props {
+        type?: any;
+        vote?: any;
+        getMandelsResponse: api.Rating.GetMandels.Response;
+        getUsersResponse: api.Rating.GetUsers.Response;
+        pageNo?: number;
+    }
+
+    let {
+        type = $bindable(types.RatingType.Mandels),
+        vote = $bindable(MandelaVote.Yes),
+        getMandelsResponse,
+        getUsersResponse,
+        pageNo = 1
+    }: Props = $props();
 
     let mounted = new Mounted();
 
@@ -59,38 +71,44 @@
         mounted.setDone();
     });
 
-    let baseQuery = new URLSearchParams();
+    let baseQuery = $state(new URLSearchParams());
 
-    let mandels: api.Rating.GetMandels.Mandela[] = [];
-    let mandelsCount = 0;
+    let mandels: api.Rating.GetMandels.Mandela[] = $state([]);
+    let mandelsCount = $state(0);
 
-    let users: api.Rating.GetUsers.User[] = [];
-    let usersCount = 0;
+    let users: api.Rating.GetUsers.User[] = $state([]);
+    let usersCount = $state(0);
 
-    $: if (getUsersResponse) {
-        users = getUsersResponse.users;
-        usersCount = getUsersResponse.user_count;
-    }
-
-    $: if (getMandelsResponse) {
-        mandels = getMandelsResponse.mandels;
-        mandelsCount = getMandelsResponse.total_count;
-    }
-
-    $: if (mounted.done()) {
-        const params = new URLSearchParams();
-
-        if (type == types.RatingType.Users) {
-            params.append("type", type.toString());
-        } else if (vote > MandelaVote.Yes) {
-            params.append("vote", vote.toString());
+    run(() => {
+        if (getUsersResponse) {
+            users = getUsersResponse.users;
+            usersCount = getUsersResponse.user_count;
         }
+    });
 
-        baseQuery = params;
+    run(() => {
+        if (getMandelsResponse) {
+            mandels = getMandelsResponse.mandels;
+            mandelsCount = getMandelsResponse.total_count;
+        }
+    });
 
-        const query = baseQuery.toString();
-        goto(route.Rating + (query ? "?" + query : ""));
-    }
+    run(() => {
+        if (mounted.done()) {
+            const params = new URLSearchParams();
+
+            if (type == types.RatingType.Users) {
+                params.append("type", type.toString());
+            } else if (vote > MandelaVote.Yes) {
+                params.append("vote", vote.toString());
+            }
+
+            baseQuery = params;
+
+            const query = baseQuery.toString();
+            goto(route.Rating + (query ? "?" + query : ""));
+        }
+    });
 </script>
 
 <Frame title="Рейтинг">
@@ -108,7 +126,7 @@
         Пользователи
     </label>
 
-    <p />
+    <p></p>
 
     {#if type === types.RatingType.Mandels}
         <MandelaRating bind:vote {mandels} {pageNo} pageLimit={PAGE_LIMIT} />

@@ -1,3 +1,5 @@
+<!-- @migration-task Error while migrating Svelte code: `$session` is an illegal variable name. To reference a global variable called `$session`, use `globalThis.$session`
+https://svelte.dev/e/global_reference_invalid -->
 <script context="module" lang="ts">
     import * as api from "$lib/api";
     import { setToken } from "$lib/network";

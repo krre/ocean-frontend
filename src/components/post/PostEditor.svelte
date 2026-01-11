@@ -1,4 +1,6 @@
 <script lang="ts">
+    import { run } from 'svelte/legacy';
+
     import LinkDialog from "./LinkDialog.svelte";
     import ImageDialog from "./ImageDialog.svelte";
     import VideoDialog from "./VideoDialog.svelte";
@@ -9,11 +11,15 @@
     import * as dialog from "$lib/dialog";
     import * as bbcode from "$lib/bbcode";
 
-    export let post = "";
+    interface Props {
+        post?: string;
+    }
 
-    let areaRef: TextArea;
-    let isPreview = false;
-    let isSmilePanelActive = false;
+    let { post = $bindable("") }: Props = $props();
+
+    let areaRef: TextArea = $state();
+    let isPreview = $state(false);
+    let isSmilePanelActive = $state(false);
 
     export function appendReply(userName: string, text: string) {
         const selection = window.getSelection().toString();
@@ -24,9 +30,11 @@
         areaRef.focus();
     }
 
-    $: if (!post) {
-        isPreview = false;
-    }
+    run(() => {
+        if (!post) {
+            isPreview = false;
+        }
+    });
 
     function appendBold() {
         replaceSelection((str: string) => `⁅b⁆${str}⁅/b⁆`);
@@ -148,51 +156,51 @@
 <div class="container">
     <div class="toolbar">
         <div>
-            <button on:click={appendBold}><i class="fas fa-bold" /></button>
+            <button onclick={appendBold}><i class="fas fa-bold"></i></button>
 
-            <button on:click={appendItalic}><i class="fas fa-italic" /></button>
+            <button onclick={appendItalic}><i class="fas fa-italic"></i></button>
 
-            <button on:click={appendUnderline}
-                ><i class="fas fa-underline" /></button
+            <button onclick={appendUnderline}
+                ><i class="fas fa-underline"></i></button
             >
 
-            <button on:click={appendStrikethrough}
-                ><i class="fas fa-strikethrough" /></button
+            <button onclick={appendStrikethrough}
+                ><i class="fas fa-strikethrough"></i></button
             >
 
-            <button on:click={() => dialog.open(LinkDialog, { onOk: onOkLink })}
-                ><i class="fas fa-link" /></button
+            <button onclick={() => dialog.open(LinkDialog, { onOk: onOkLink })}
+                ><i class="fas fa-link"></i></button
             >
 
             <button
-                on:click={() =>
+                onclick={() =>
                     dialog.open(ImageDialog, {
                         onOk: onOkImage,
-                    })}><i class="fas fa-image" /></button
+                    })}><i class="fas fa-image"></i></button
             >
 
             <button
-                on:click={() =>
+                onclick={() =>
                     dialog.open(VideoDialog, {
                         onOk: onOkVideo,
-                    })}><i class="fab fa-youtube" /></button
+                    })}><i class="fab fa-youtube"></i></button
             >
 
             <button
-                on:click={() =>
+                onclick={() =>
                     dialog.open(SpoilerDialog, { onOk: onOkSpoiler })}
-                ><i class="fas fa-eye-slash" /></button
+                ><i class="fas fa-eye-slash"></i></button
             >
 
-            <button on:click={() => (isSmilePanelActive = !isSmilePanelActive)}
-                ><i class="far fa-smile" /></button
+            <button onclick={() => (isSmilePanelActive = !isSmilePanelActive)}
+                ><i class="far fa-smile"></i></button
             >
         </div>
 
-        <div class="toolbar-spacing" />
+        <div class="toolbar-spacing"></div>
 
-        <!-- svelte-ignore a11y-click-events-have-key-events -->
-        <div class="preview-button" on:click={() => (isPreview = !isPreview)}>
+        <!-- svelte-ignore a11y_click_events_have_key_events -->
+        <div class="preview-button" onclick={() => (isPreview = !isPreview)}>
             {#if isPreview}Редактор{:else}Просмотр{/if}
         </div>
     </div>
@@ -210,7 +218,7 @@
             rows="10"
             bind:value={post}
             bind:this={areaRef}
-        />
+></textarea>
     {:else}
         <div class="preview">
             {@html bbcode.parse(post)}

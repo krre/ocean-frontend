@@ -1,6 +1,10 @@
 <!-- https://loading.io/css/ -->
 <script lang="ts">
-    export let scale = 1.0;
+    interface Props {
+        scale?: number;
+    }
+
+    let { scale = 1.0 }: Props = $props();
 </script>
 
 <style>
@@ -85,16 +89,16 @@
 </style>
 
 <div class="lds-spinner" style="zoom: {scale}">
-    <div />
-    <div />
-    <div />
-    <div />
-    <div />
-    <div />
-    <div />
-    <div />
-    <div />
-    <div />
-    <div />
-    <div />
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
 </div>

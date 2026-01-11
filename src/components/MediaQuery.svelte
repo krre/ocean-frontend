@@ -2,11 +2,16 @@
     import { onMount } from "svelte";
     import type { ScreenSize } from "$lib/types";
 
-    export let size: ScreenSize;
+    interface Props {
+        size: ScreenSize;
+        children?: import('svelte').Snippet<[any]>;
+    }
+
+    let { size, children }: Props = $props();
 
     let mql: MediaQueryList;
     let mqlListener: (this: MediaQueryList, ev: MediaQueryListEvent) => any;
-    let matches = false;
+    let matches = $state(false);
 
     onMount(() => {
         addNewListener(size);
@@ -38,4 +43,4 @@
     }
 </script>
 
-<slot {matches} />
+{@render children?.({ matches, })}

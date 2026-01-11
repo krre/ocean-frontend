@@ -1,6 +1,10 @@
 <script lang="ts">
     import Menu from "./Menu.svelte";
-    export let open = false;
+    interface Props {
+        open?: boolean;
+    }
+
+    let { open = false }: Props = $props();
 </script>
 
 <style>

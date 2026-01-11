@@ -1,4 +1,6 @@
 <script lang="ts">
+    import { run } from 'svelte/legacy';
+
     import * as bbcode from "$lib/bbcode";
     import * as api from "$lib/api";
     import * as consts from "$lib/consts";
@@ -16,20 +18,33 @@
         edit: boolean;
     }
 
-    export let post: EditedPost;
-    export let editable = false;
-    export let row = 0;
-    export let id = 0;
-    export let baseUrl = "";
-    export let pageNo: number;
+    interface Props {
+        post: EditedPost;
+        editable?: boolean;
+        row?: number;
+        id?: number;
+        baseUrl?: string;
+        pageNo: number;
+    }
 
-    let isAdmin = false;
-    let isAnonym = true;
-    let user: User;
-    let likeUsers: api.Like.GetUsers.Response[];
+    let {
+        post = $bindable(),
+        editable = $bindable(false),
+        row = 0,
+        id = 0,
+        baseUrl = "",
+        pageNo
+    }: Props = $props();
 
-    $: editable = isAdmin || (user && !isAnonym && user.id === post.user_id);
-    $: removable = isAdmin || (user && !isAnonym && user.id === post.user_id);
+    let isAdmin = $state(false);
+    let isAnonym = $state(true);
+    let user: User = $state();
+    let likeUsers: api.Like.GetUsers.Response[] = $state();
+
+    run(() => {
+        editable = isAdmin || (user && !isAnonym && user.id === post.user_id);
+    });
+    let removable = $derived(isAdmin || (user && !isAnonym && user.id === post.user_id));
 
     async function likePost(row: number, action: LikeAction) {
         if (action == LikeAction.Like || action == LikeAction.Dislike) {

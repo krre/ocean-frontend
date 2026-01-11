@@ -1,4 +1,4 @@
-<script context="module" lang="ts">
+<script module lang="ts">
     import * as api from "api";
     import type { Session, Page } from "types";
 
@@ -25,11 +25,15 @@
 
     const title = "Редактировать раздел";
 
-    export let id: number;
-    export let name: string;
-    export let order: number;
+    interface Props {
+        id: number;
+        name: string;
+        order: number;
+    }
 
-    let isAdmin = false;
+    let { id, name = $bindable(), order = $bindable() }: Props = $props();
+
+    let isAdmin = $state(false);
 
     const action = async () => {
         const params: api.Forum.Section.Update.Request = {

@@ -44,10 +44,10 @@
 
 <div class="container">
     {#each smiles as smile}
-        <!-- svelte-ignore a11y-click-events-have-key-events -->
+        <!-- svelte-ignore a11y_click_events_have_key_events -->
         <span
             class="smile"
-            on:click={() =>
+            onclick={() =>
                 dispatch("selected", {
                     smile: smile,
                 })}>{smile}</span

@@ -7,27 +7,48 @@
 
     const dispatch = createEventDispatcher();
 
-    export let baseUrl: string;
-    export let pageNo: number;
-    export let id: number;
-    export let userName: string;
-    export let userId: number;
-    export let date: Date;
-    export let row = 0;
 
-    export let likeCount = 0;
-    export let dislikeCount = 0;
 
-    export let likeSelection: LikeSelection = LikeSelection.None;
-    export let likeQuestion = false;
-    export let likeUsers: api.Like.GetUsers.Response[] = null;
 
-    export let likable = true;
-    export let editable = false;
-    export let removable = false;
-    export let replyable = true;
+    interface Props {
+        baseUrl: string;
+        pageNo: number;
+        id: number;
+        userName: string;
+        userId: number;
+        date: Date;
+        row?: number;
+        likeCount?: number;
+        dislikeCount?: number;
+        likeSelection?: LikeSelection;
+        likeQuestion?: boolean;
+        likeUsers?: api.Like.GetUsers.Response[];
+        likable?: boolean;
+        editable?: boolean;
+        removable?: boolean;
+        replyable?: boolean;
+    }
 
-    let likeUsersVisible = false;
+    let {
+        baseUrl,
+        pageNo,
+        id,
+        userName,
+        userId,
+        date,
+        row = 0,
+        likeCount = 0,
+        dislikeCount = 0,
+        likeSelection = LikeSelection.None,
+        likeQuestion = false,
+        likeUsers = null,
+        likable = true,
+        editable = false,
+        removable = false,
+        replyable = true
+    }: Props = $props();
+
+    let likeUsersVisible = $state(false);
 
     function showLikeUsers() {
         if (!likeUsersVisible) {
@@ -131,22 +152,22 @@
         {#if likable}
             {#if likeSelection == LikeSelection.None}
                 <button
-                    on:click={() => {
+                    onclick={() => {
                         like(LikeAction.Like);
-                    }}><i class="far fa-thumbs-up" /></button
+                    }}><i class="far fa-thumbs-up"></i></button
                 >
             {:else}
-                <!-- svelte-ignore a11y-click-events-have-key-events -->
+                <!-- svelte-ignore a11y_click_events_have_key_events -->
                 <i
                     class="far fa-thumbs-up {likeSelection == LikeSelection.Like
                         ? 'like up'
                         : ''}"
-                    on:click={() => {
+                    onclick={() => {
                         likeSelection == LikeSelection.Like
                             ? like(LikeAction.Unlike)
                             : {};
                     }}
-                />
+></i>
             {/if}
 
             <span class={likeCount ? "up" : ""}>{likeCount}</span>
@@ -157,24 +178,24 @@
 
             {#if likeSelection == LikeSelection.None}
                 <button
-                    on:click={() => {
+                    onclick={() => {
                         like(LikeAction.Dislike);
-                    }}><i class="far fa-thumbs-down" /></button
+                    }}><i class="far fa-thumbs-down"></i></button
                 >
             {:else}
                 &nbsp;
-                <!-- svelte-ignore a11y-click-events-have-key-events -->
+                <!-- svelte-ignore a11y_click_events_have_key_events -->
                 <i
                     class="far fa-thumbs-down {likeSelection ==
                     LikeSelection.Dislike
                         ? 'like down'
                         : ''}"
-                    on:click={() => {
+                    onclick={() => {
                         likeSelection == LikeSelection.Dislike
                             ? like(LikeAction.Unlike)
                             : {};
                     }}
-                />
+></i>
             {/if}
 
             <span class={dislikeCount ? "down" : ""}>{dislikeCount}</span>
@@ -185,9 +206,9 @@
 
             {#if likeQuestion && (likeCount || dislikeCount)}
                 <button
-                    on:click={() => {
+                    onclick={() => {
                         showLikeUsers();
-                    }}><i class="fas fa-question" /></button
+                    }}><i class="fas fa-question"></i></button
                 >
             {/if}
 
@@ -195,15 +216,15 @@
         {/if}
 
         {#if editable}
-            <button on:click={edit}><i class="fas fa-edit" /></button>
+            <button onclick={edit}><i class="fas fa-edit"></i></button>
         {/if}
 
         {#if removable}
-            <button on:click={remove}><i class="fas fa-trash-alt" /></button>
+            <button onclick={remove}><i class="fas fa-trash-alt"></i></button>
         {/if}
 
         {#if replyable}
-            <button on:click={reply}><i class="fas fa-reply" /></button>
+            <button onclick={reply}><i class="fas fa-reply"></i></button>
         {/if}
     </span>
 </div>

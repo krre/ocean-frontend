@@ -1,4 +1,4 @@
-<script context="module" lang="ts">
+<script module lang="ts">
     import * as api from "$lib/api";
     import type { Session, Page } from "$lib/types";
 
@@ -27,11 +27,15 @@
     import NewPost from "../../components/forum/main/NewPost.svelte";
     import Pagination from "../../components/Pagination.svelte";
 
-    export let pageNo = 1;
-    export let getNewResponse: api.Forum.GetNew.Response;
+    interface Props {
+        pageNo?: number;
+        getNewResponse: api.Forum.GetNew.Response;
+    }
 
-    $: topics = getNewResponse.topics;
-    $: topicCount = getNewResponse.topic_count;
+    let { pageNo = 1, getNewResponse }: Props = $props();
+
+    let topics = $derived(getNewResponse.topics);
+    let topicCount = $derived(getNewResponse.topic_count);
 </script>
 
 <style>

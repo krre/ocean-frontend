@@ -1,8 +1,18 @@
 <script lang="ts">
     import Rectangle from "./Rectangle.svelte";
-    export let title: string;
-    export let showHeader = true;
-    export let showContent = true;
+    interface Props {
+        title: string;
+        showHeader?: boolean;
+        showContent?: boolean;
+        children?: import('svelte').Snippet;
+    }
+
+    let {
+        title,
+        showHeader = true,
+        showContent = true,
+        children
+    }: Props = $props();
 </script>
 
 <style>
@@ -22,6 +32,6 @@
 
 {#if showContent}
     <Rectangle>
-        <slot />
+        {@render children?.()}
     </Rectangle>
 {/if}

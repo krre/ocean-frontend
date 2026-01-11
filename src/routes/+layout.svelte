@@ -1,4 +1,4 @@
-<script context="module" lang="ts">
+<script module lang="ts">
     import Modal from "../components/dialog/Modal.svelte";
     import { setToken } from "$lib/network";
     import type { Session, Page } from "$lib/types";
@@ -11,8 +11,13 @@
 <script lang="ts">
     import Navbar from "../components/menu/Navbar.svelte";
     import Sidebar from "../components/menu/Sidebar.svelte";
+    interface Props {
+        children?: import('svelte').Snippet;
+    }
 
-    let open = false;
+    let { children }: Props = $props();
+
+    let open = $state(false);
 </script>
 
 <style>
@@ -75,6 +80,6 @@
 <Navbar bind:sidebar={open} />
 
 <main>
-    <slot />
+    {@render children?.()}
     <Modal />
 </main>

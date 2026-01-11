@@ -4,12 +4,16 @@
     import SessionHub from "../SessionHub.svelte";
     import WaitButton from "../WaitButton.svelte";
 
-    export let message = "";
-    export let sendButtonEnabled = true;
-    export let sendAction = async () => {};
+    interface Props {
+        message?: string;
+        sendButtonEnabled?: boolean;
+        sendAction?: any;
+    }
 
-    let userName: string;
-    let postEditorRef: PostEditor;
+    let { message = $bindable(""), sendButtonEnabled = true, sendAction = async () => {} }: Props = $props();
+
+    let userName: string = $state();
+    let postEditorRef: PostEditor = $state();
 
     export function appendReply(userName: string, text: string) {
         postEditorRef.appendReply(userName, text);

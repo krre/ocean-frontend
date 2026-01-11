@@ -8,11 +8,11 @@
         inputRef.focus();
     });
 
-    export let onOk = (_link: string) => {};
+    let { onOk = (_link: string) => {} } = $props();
 
-    let link: string;
+    let link: string = $state();
 
-    let inputRef: Input;
+    let inputRef: Input = $state();
 
     function pressOk() {
         onOk(link);
@@ -29,8 +29,10 @@
         bind:this={inputRef}
         placeholder="Введите ссылку"
     />
-    <div slot="buttons">
-        <button disabled={!link} on:click={pressOk}>ОК</button>
-        <button on:click={() => dialog.close()}>Отменить</button>
-    </div>
+    {#snippet buttons()}
+        <div >
+            <button disabled={!link} onclick={pressOk}>ОК</button>
+            <button onclick={() => dialog.close()}>Отменить</button>
+        </div>
+    {/snippet}
 </Dialog>

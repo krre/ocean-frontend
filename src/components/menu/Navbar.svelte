@@ -2,7 +2,11 @@
     import Menu from "./Menu.svelte";
     import Burger from "./Burger.svelte";
 
-    export let sidebar = false;
+    interface Props {
+        sidebar?: boolean;
+    }
+
+    let { sidebar = $bindable(false) }: Props = $props();
 </script>
 
 <style>

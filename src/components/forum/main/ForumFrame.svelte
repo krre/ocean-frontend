@@ -1,9 +1,24 @@
 <script lang="ts">
     import Rectangle from "../../Rectangle.svelte";
-    export let title: string;
-    export let showHeader = true;
-    export let showPoll = false;
-    export let showContent = true;
+    interface Props {
+        title: string;
+        showHeader?: boolean;
+        showPoll?: boolean;
+        showContent?: boolean;
+        button?: import('svelte').Snippet;
+        poll?: import('svelte').Snippet;
+        children?: import('svelte').Snippet;
+    }
+
+    let {
+        title,
+        showHeader = true,
+        showPoll = false,
+        showContent = true,
+        button,
+        poll,
+        children
+    }: Props = $props();
 </script>
 
 <style>
@@ -28,17 +43,17 @@
 {/if}
 
 <div class="btn">
-    <slot name="button" />
+    {@render button?.()}
 </div>
 
 {#if showPoll}
     <Rectangle>
-        <slot name="poll" />
+        {@render poll?.()}
     </Rectangle>
 {/if}
 
 {#if showContent}
     <Rectangle padding={false}>
-        <slot />
+        {@render children?.()}
     </Rectangle>
 {/if}

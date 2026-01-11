@@ -1,4 +1,6 @@
 <script lang="ts">
+    import { run } from 'svelte/legacy';
+
     import * as consts from "$lib/consts";
     import * as route from "$lib/route";
     import * as api from "$lib/api";
@@ -21,13 +23,25 @@
         Category,
     }
 
-    export let pageLimit = 1;
-    export let pageNo = 1;
-    export let filter = Filter.All;
-    export let category = 0;
-    export let sort = 0;
-    export let userId = 0;
-    export let getAllResponse: api.Mandela.GetAll.Response;
+    interface Props {
+        pageLimit?: number;
+        pageNo?: number;
+        filter?: any;
+        category?: number;
+        sort?: number;
+        userId?: number;
+        getAllResponse: api.Mandela.GetAll.Response;
+    }
+
+    let {
+        pageLimit = 1,
+        pageNo = $bindable(1),
+        filter = $bindable(Filter.All),
+        category = $bindable(0),
+        sort = $bindable(0),
+        userId = 0,
+        getAllResponse
+    }: Props = $props();
 
     let mounted = new Mounted();
 
@@ -35,68 +49,29 @@
         mounted.setDone();
     });
 
-    let baseQuery = new URLSearchParams();
-    let user: User;
+    let baseQuery = $state(new URLSearchParams());
+    let user: User = $state();
 
-    let mandels: api.Mandela.GetAll.Mandela[] = [];
+    let mandels: api.Mandela.GetAll.Mandela[] = $state([]);
     let categories = ["Все"].concat(consts.Categories);
-    let totalCount = 0;
-    let newCount = 0;
-    let mineCount = 0;
-    let pollCount = 0;
-    let trashCount = 0;
-    let categoryCount = 0;
-    let userCount = 0;
+    let totalCount = $state(0);
+    let newCount = $state(0);
+    let mineCount = $state(0);
+    let pollCount = $state(0);
+    let trashCount = $state(0);
+    let categoryCount = $state(0);
+    let userCount = $state(0);
 
-    let currentCount = 0;
-    let pageQuery = new URLSearchParams();
+    let currentCount = $state(0);
+    let pageQuery = $state(new URLSearchParams());
 
     const sorts = ["Манделам", "Комментариям"];
     const zeroLeadingCount = 4;
 
-    $: {
-        mandels = getAllResponse.mandels;
-        totalCount = getAllResponse.total_count;
-        newCount = getAllResponse.new_count;
-        mineCount = getAllResponse.mine_count;
-        pollCount = getAllResponse.poll_count;
-        trashCount = getAllResponse.trash_count;
-        categoryCount = getAllResponse.category_count;
-        userCount = getAllResponse.user_count;
 
-        if (userId) {
-            currentCount = userCount;
-        } else if (filter === Filter.All) {
-            currentCount = totalCount;
-        } else if (filter === Filter.New) {
-            currentCount = newCount;
-        } else if (filter === Filter.Mine) {
-            currentCount = mineCount;
-        } else if (filter === Filter.Poll) {
-            currentCount = pollCount;
-        } else if (filter === Filter.Trash) {
-            currentCount = trashCount;
-        } else if (filter === Filter.Category) {
-            currentCount = categoryCount;
-        }
-    }
 
-    $: if (mounted.done()) {
-        filter = category > 0 ? Filter.Category : Filter.All;
-    }
 
-    $: if (mounted.done() && filter >= 0 && category >= 0) {
-        pageNo = 1;
-        makeQueryAndGoto(false);
-    }
 
-    $: if (mounted.done() && sort >= 0) {
-        makeQueryAndGoto();
-    }
-
-    $: if (userId) {
-        makeBaseQuery();
-    }
 
     function makeBaseQuery() {
         const params = new URLSearchParams();
@@ -152,6 +127,53 @@
 
         return consts.VoteColors[maxVote];
     }
+    run(() => {
+        if (mounted.done()) {
+            filter = category > 0 ? Filter.Category : Filter.All;
+        }
+    });
+    run(() => {
+        mandels = getAllResponse.mandels;
+        totalCount = getAllResponse.total_count;
+        newCount = getAllResponse.new_count;
+        mineCount = getAllResponse.mine_count;
+        pollCount = getAllResponse.poll_count;
+        trashCount = getAllResponse.trash_count;
+        categoryCount = getAllResponse.category_count;
+        userCount = getAllResponse.user_count;
+
+        if (userId) {
+            currentCount = userCount;
+        } else if (filter === Filter.All) {
+            currentCount = totalCount;
+        } else if (filter === Filter.New) {
+            currentCount = newCount;
+        } else if (filter === Filter.Mine) {
+            currentCount = mineCount;
+        } else if (filter === Filter.Poll) {
+            currentCount = pollCount;
+        } else if (filter === Filter.Trash) {
+            currentCount = trashCount;
+        } else if (filter === Filter.Category) {
+            currentCount = categoryCount;
+        }
+    });
+    run(() => {
+        if (mounted.done() && filter >= 0 && category >= 0) {
+            pageNo = 1;
+            makeQueryAndGoto(false);
+        }
+    });
+    run(() => {
+        if (mounted.done() && sort >= 0) {
+            makeQueryAndGoto();
+        }
+    });
+    run(() => {
+        if (userId) {
+            makeBaseQuery();
+        }
+    });
 </script>
 
 <style>

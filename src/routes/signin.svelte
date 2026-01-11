@@ -10,11 +10,12 @@
 
     const title = "Войти";
 
-    let id = 0;
-    let password = "";
+    let id = $state(0);
+    let password = $state("");
 
-    $: signinButtonEnabled = id && password;
-    $: error = "";
+    let signinButtonEnabled = $derived(id && password);
+    let error = $state("");
+    
 
     async function signin() {
         const token = createToken(id, password);
@@ -51,10 +52,10 @@
 <Frame {title}>
     <BoxForm>
         ИД:
-        <input type="number" bind:value={id} on:keyup={keyPressed} />
+        <input type="number" bind:value={id} onkeyup={keyPressed} />
         Пароль:
-        <input type="password" bind:value={password} on:keyup={keyPressed} />
+        <input type="password" bind:value={password} onkeyup={keyPressed} />
         <OperationResult {error} />
-        <button on:click={signin} disabled={!signinButtonEnabled}>Войти</button>
+        <button onclick={signin} disabled={!signinButtonEnabled}>Войти</button>
     </BoxForm>
 </Frame>

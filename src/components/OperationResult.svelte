@@ -1,10 +1,18 @@
 <script lang="ts">
-    export let success = "";
-    export let error = "";
+    import { run } from 'svelte/legacy';
 
-    $: if (success) {
-        error = "";
+    interface Props {
+        success?: string;
+        error?: string;
     }
+
+    let { success = "", error = $bindable("") }: Props = $props();
+
+    run(() => {
+        if (success) {
+            error = "";
+        }
+    });
 </script>
 
 <style>

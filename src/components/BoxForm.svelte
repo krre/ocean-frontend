@@ -1,3 +1,11 @@
+<script lang="ts">
+    interface Props {
+        children?: import('svelte').Snippet;
+    }
+
+    let { children }: Props = $props();
+</script>
+
 <style>
     .form {
         display: grid;
@@ -7,5 +15,5 @@
 </style>
 
 <div class="form">
-    <slot />
+    {@render children?.()}
 </div>

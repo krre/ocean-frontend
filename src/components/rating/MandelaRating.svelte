@@ -5,10 +5,19 @@
     import type { MandelaVote } from "$lib/types";
     import { makeTitle } from "$lib/utils";
 
-    export let pageNo = 1;
-    export let pageLimit = 1;
-    export let vote: MandelaVote;
-    export let mandels: api.Rating.GetMandels.Mandela[] = [];
+    interface Props {
+        pageNo?: number;
+        pageLimit?: number;
+        vote: MandelaVote;
+        mandels?: api.Rating.GetMandels.Mandela[];
+    }
+
+    let {
+        pageNo = 1,
+        pageLimit = 1,
+        vote = $bindable(),
+        mandels = []
+    }: Props = $props();
 
     function mandelaLink(
         id: number,
@@ -28,7 +37,7 @@
     {/each}
 </select>
 
-<p />
+<p></p>
 
 {#each mandels as mandela, i}
     {@html mandelaLink(mandela.id, mandela, i)}

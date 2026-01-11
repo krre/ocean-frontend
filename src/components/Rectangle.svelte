@@ -1,6 +1,11 @@
 <script lang="ts">
-    export let padding = true;
-    export let solid = true;
+    interface Props {
+        padding?: boolean;
+        solid?: boolean;
+        children?: import('svelte').Snippet;
+    }
+
+    let { padding = true, solid = true, children }: Props = $props();
 </script>
 
 <style>
@@ -25,5 +30,5 @@
 </style>
 
 <div class="rect" class:solid class:padding>
-    <slot />
+    {@render children?.()}
 </div>

@@ -4,8 +4,12 @@
     import { userUrl, dateUrl } from "$lib/utils";
     import Rectangle from "../../Rectangle.svelte";
 
-    export let title = "";
-    export let messages: ActivityMessage[] = [];
+    interface Props {
+        title?: string;
+        messages?: ActivityMessage[];
+    }
+
+    let { title = "", messages = [] }: Props = $props();
 </script>
 
 <style>

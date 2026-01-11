@@ -4,4 +4,4 @@
     }
 </style>
 
-<i class="far fa-check-circle custom" />
+<i class="far fa-check-circle custom"></i>

@@ -1,4 +1,6 @@
 <script lang="ts">
+    import { run } from 'svelte/legacy';
+
     import * as route from "$lib/route";
     import { goto } from "$app/navigation";
     import { Code, printMessage } from "$lib/api-error";
@@ -14,14 +16,20 @@
         stack: string;
     }
 
-    export let status: string;
-    export let error: Error;
+    interface Props {
+        status: string;
+        error: Error;
+    }
+
+    let { status, error }: Props = $props();
 
     const dev = process.env.NODE_ENV === "development";
 
-    $: if (process.browser && error.message.code == Code.AccountBlocked) {
-        goto(route.Signout);
-    }
+    run(() => {
+        if (process.browser && error.message.code == Code.AccountBlocked) {
+            goto(route.Signout);
+        }
+    });
 </script>
 
 <style>

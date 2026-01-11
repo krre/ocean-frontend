@@ -3,8 +3,12 @@
     import Latest from "./Latest.svelte";
     import Feed from "./Feed.svelte";
 
-    export let comments: ActivityMessage[] = [];
-    export let topics: ActivityMessage[] = [];
+    interface Props {
+        comments?: ActivityMessage[];
+        topics?: ActivityMessage[];
+    }
+
+    let { comments = [], topics = [] }: Props = $props();
 </script>
 
 <style>

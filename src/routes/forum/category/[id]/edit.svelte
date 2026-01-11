@@ -1,4 +1,4 @@
-<script context="module" lang="ts">
+<script module lang="ts">
     import * as api from "$lib/api";
     import type { Session, Page } from "$lib/types";
 
@@ -24,11 +24,15 @@
     import CategoryEditor from "../../../../components/forum/category/CategoryEditor.svelte";
 
     const title = "Редактировать категорию";
-    let isAdmin = false;
+    let isAdmin = $state(false);
 
-    export let id: number;
-    export let name: string;
-    export let order: number;
+    interface Props {
+        id: number;
+        name: string;
+        order: number;
+    }
+
+    let { id, name = $bindable(), order = $bindable() }: Props = $props();
 
     const action = async () => {
         const params: api.Forum.Category.Update.Request = {

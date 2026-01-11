@@ -2,9 +2,13 @@
     import { userUrl } from "$lib/utils";
     import * as api from "$lib/api";
 
-    export let pageNo = 1;
-    export let pageLimit = 1;
-    export let users: api.Rating.GetUsers.User[] = [];
+    interface Props {
+        pageNo?: number;
+        pageLimit?: number;
+        users?: api.Rating.GetUsers.User[];
+    }
+
+    let { pageNo = 1, pageLimit = 1, users = [] }: Props = $props();
 </script>
 
 <p>Количество мандел, добавленных пользователями.</p>

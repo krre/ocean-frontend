@@ -1,5 +1,9 @@
 <script lang="ts">
-    export let open = false;
+    interface Props {
+        open?: boolean;
+    }
+
+    let { open = $bindable(false) }: Props = $props();
 </script>
 
 <style>
@@ -37,8 +41,8 @@
     }
 </style>
 
-<!-- svelte-ignore a11y-click-events-have-key-events -->
-<div class="lines" class:open on:click={() => (open = !open)}>
+<!-- svelte-ignore a11y_click_events_have_key_events -->
+<div class="lines" class:open onclick={() => (open = !open)}>
     <svg width="32" height="24">
         <line id="top" x1="0" y1="2" x2="32" y2="2" />
         <line id="middle" x1="0" y1="12" x2="32" y2="12" />

@@ -1,9 +1,13 @@
 <script lang="ts">
-    export let name = "";
-    export let order = 0;
-    export let action = () => {};
+    interface Props {
+        name?: string;
+        order?: number;
+        action?: any;
+    }
 
-    $: buttonEnabled = name && order;
+    let { name = $bindable(""), order = $bindable(0), action = () => {} }: Props = $props();
+
+    let buttonEnabled = $derived(name && order);
 </script>
 
 <style>
@@ -25,4 +29,4 @@
     <input type="number" bind:value={order} />
 </div>
 
-<button on:click={action} disabled={!buttonEnabled}>Отправить</button>
+<button onclick={action} disabled={!buttonEnabled}>Отправить</button>

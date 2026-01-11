@@ -1,4 +1,4 @@
-<script context="module" lang="ts">
+<script module lang="ts">
     import * as api from "$lib/api";
     import * as route from "$lib/route";
     import * as consts from "$lib/consts";
@@ -97,15 +97,28 @@
     import Catalog from "../components/main/Catalog.svelte";
     import Activity from "../components/main/activity/Activity.svelte";
 
-    export let getAllResponse: api.Mandela.GetAll.Response;
-    export let topics: ActivityMessage[];
-    export let comments: ActivityMessage[];
 
-    export let pageNo = 1;
-    export let filter = 0;
-    export let category = 0;
-    export let sort = 0;
-    export let userId = 0;
+    interface Props {
+        getAllResponse: api.Mandela.GetAll.Response;
+        topics: ActivityMessage[];
+        comments: ActivityMessage[];
+        pageNo?: number;
+        filter?: number;
+        category?: number;
+        sort?: number;
+        userId?: number;
+    }
+
+    let {
+        getAllResponse,
+        topics,
+        comments,
+        pageNo = 1,
+        filter = 0,
+        category = 0,
+        sort = 0,
+        userId = 0
+    }: Props = $props();
 </script>
 
 <style>

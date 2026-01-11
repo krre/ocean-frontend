@@ -1,4 +1,4 @@
-<script context="module" lang="ts">
+<script module lang="ts">
     import * as api from "$lib/api";
     import type { Session, Page } from "$lib/types";
 
@@ -17,6 +17,8 @@
 </script>
 
 <script lang="ts">
+    import { run } from 'svelte/legacy';
+
     import * as consts from "$lib/consts";
     import * as route from "$lib/route";
     import * as bbcode from "$lib/bbcode";
@@ -25,18 +27,24 @@
     import Rectangle from "../components/Rectangle.svelte";
     import Pagination from "../components/Pagination.svelte";
 
-    export let getAllResponse: api.Feed.GetAll.Response;
-    export let pageNo = 1;
+    interface Props {
+        getAllResponse: api.Feed.GetAll.Response;
+        pageNo?: number;
+    }
+
+    let { getAllResponse, pageNo = 1 }: Props = $props();
 
     const title = "Лента новостей";
 
-    let feeds: api.Feed.Feed[] = [];
-    let total_count = 0;
+    let feeds: api.Feed.Feed[] = $state([]);
+    let total_count = $state(0);
 
-    $: if (getAllResponse) {
-        feeds = getAllResponse.feeds;
-        total_count = getAllResponse.total_count;
-    }
+    run(() => {
+        if (getAllResponse) {
+            feeds = getAllResponse.feeds;
+            total_count = getAllResponse.total_count;
+        }
+    });
 
     function description(type: string): string {
         if (type == api.Feed.TitleType.Mandela) return "Мандела";

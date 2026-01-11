@@ -3,7 +3,11 @@
     import type * as api from "$lib/api";
     import { formatDateTime } from "$lib/utils";
 
-    export let user: api.User.GetOne.Response;
+    interface Props {
+        user: api.User.GetOne.Response;
+    }
+
+    let { user }: Props = $props();
 
     function openUrl() {
         const params = new URLSearchParams();

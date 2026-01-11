@@ -1,4 +1,4 @@
-<script context="module" lang="ts">
+<script module lang="ts">
     import * as api from "$lib/api";
     import type { Session, Page } from "$lib/types";
 
@@ -19,9 +19,13 @@
     import Profile from "../../../components/Profile.svelte";
     import SessionHub from "../../../components/SessionHub.svelte";
 
-    export let user: api.User.GetOne.Response;
-    let isAdmin = false;
-    let isUserExists = true;
+    interface Props {
+        user: api.User.GetOne.Response;
+    }
+
+    let { user = $bindable() }: Props = $props();
+    let isAdmin = $state(false);
+    let isUserExists = $state(true);
 
     async function updateUser() {
         const params: api.User.Update.Request = {
@@ -95,13 +99,13 @@
                     <input
                         type="checkbox"
                         bind:checked={user.blocked}
-                        on:change={(_) => updateUser()}
+                        onchange={(_) => updateUser()}
                     />
                     Заблокировано
                 </label>
 
                 <div>
-                    <button on:click={deleteUser}>Удалить</button>
+                    <button onclick={deleteUser}>Удалить</button>
                 </div>
             {:else}
                 <div class="message">Пользователь удалён</div>

@@ -1,4 +1,4 @@
-<script context="module" lang="ts">
+<script module lang="ts">
     import * as api from "$lib/api";
     import type { Session, Page } from "$lib/types";
 
@@ -26,6 +26,8 @@
 </script>
 
 <script lang="ts">
+    import { run } from 'svelte/legacy';
+
     import * as route from "$lib/route";
     import type { User } from "$lib/types";
     import { isAnonymAllowed } from "$lib/utils";
@@ -37,19 +39,23 @@
     import Navigator from "../../../../components/forum/main/Navigator.svelte";
     import Pagination from "../../../../components/Pagination.svelte";
 
-    export let getAllResponse: api.Forum.Topic.GetAll.Response;
-    export let sectionId = 0;
-    export let pageNo = 1;
+    interface Props {
+        getAllResponse: api.Forum.Topic.GetAll.Response;
+        sectionId?: number;
+        pageNo?: number;
+    }
 
-    let topics: api.Forum.Topic.GetAll.Topic[];
-    let topicCount = 0;
-    let sectionName: string;
-    let categoryNav: PathPart;
+    let { getAllResponse = $bindable(), sectionId = 0, pageNo = 1 }: Props = $props();
 
-    let isAdmin = false;
-    let user: User;
+    let topics: api.Forum.Topic.GetAll.Topic[] = $state();
+    let topicCount = $state(0);
+    let sectionName: string = $state();
+    let categoryNav: PathPart = $state();
 
-    $: {
+    let isAdmin = $state(false);
+    let user: User = $state();
+
+    run(() => {
         sectionName = getAllResponse.section_name;
         topics = getAllResponse.topics;
         topicCount = getAllResponse.topic_count;
@@ -58,7 +64,7 @@
             id: getAllResponse.category_id,
             name: getAllResponse.category_name,
         };
-    }
+    });
 
     function append() {
         if (user || isAnonymAllowed()) {
@@ -78,7 +84,9 @@
 <Navigator category={categoryNav} />
 
 <FramePage title={sectionName}>
-    <button slot="button" on:click={append}>Создать тему</button>
+    {#snippet button()}
+        <button  onclick={append}>Создать тему</button>
+    {/snippet}
 
     {#each topics as topic}
         <TopicElement {topic} on:removed={() => reload()} />

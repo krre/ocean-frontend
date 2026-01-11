@@ -1,15 +1,46 @@
 <script lang="ts">
-    export let baseRoute = "";
-    export let baseQuery = new URLSearchParams();
-    export let pageQuery = new URLSearchParams();
-    export let limit = 1;
-    export let count = 1;
-    export let offset = 1;
-    let pages = [];
+    import { run } from 'svelte/legacy';
 
-    $: last = Math.ceil(count / limit);
-    $: pageQuery = query(offset);
-    $: {
+    interface Props {
+        baseRoute?: string;
+        baseQuery?: any;
+        pageQuery?: any;
+        limit?: number;
+        count?: number;
+        offset?: number;
+    }
+
+    let {
+        baseRoute = "",
+        baseQuery = new URLSearchParams(),
+        pageQuery = $bindable(new URLSearchParams()),
+        limit = 1,
+        count = 1,
+        offset = 1
+    }: Props = $props();
+    let pages = $state([]);
+
+
+    function query(page: number, qry?: URLSearchParams): URLSearchParams {
+        let result = new URLSearchParams(qry);
+
+        if (page <= 1) {
+            return result;
+        }
+
+        result.append("page", page.toString());
+        return result;
+    }
+
+    function makeLink(page: number, qry: URLSearchParams): string {
+        let params = query(page, qry).toString();
+        return baseRoute + (params ? "?" + params : "");
+    }
+    let last = $derived(Math.ceil(count / limit));
+    run(() => {
+        pageQuery = query(offset);
+    });
+    run(() => {
         const maxPageSelectors = 5;
         pages = Array(Math.min(last, maxPageSelectors));
 
@@ -31,23 +62,7 @@
         }
 
         pages = pages;
-    }
-
-    function query(page: number, qry?: URLSearchParams): URLSearchParams {
-        let result = new URLSearchParams(qry);
-
-        if (page <= 1) {
-            return result;
-        }
-
-        result.append("page", page.toString());
-        return result;
-    }
-
-    function makeLink(page: number, qry: URLSearchParams): string {
-        let params = query(page, qry).toString();
-        return baseRoute + (params ? "?" + params : "");
-    }
+    });
 </script>
 
 <style>

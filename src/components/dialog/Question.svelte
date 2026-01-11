@@ -1,8 +1,12 @@
 <script lang="ts">
     import Dialog from "./Dialog.svelte";
     import * as dialog from "$lib/dialog";
-    export let title: string;
-    export let text: string;
+    interface Props {
+        title: string;
+        text: string;
+    }
+
+    let { title, text }: Props = $props();
 </script>
 
 <style>
@@ -10,5 +14,7 @@
 
 <Dialog {title}>
     <div>{text}</div>
-    <button slot="buttons" on:click={() => dialog.close()}>Закрыть</button>
+    {#snippet buttons()}
+        <button  onclick={() => dialog.close()}>Закрыть</button>
+    {/snippet}
 </Dialog>

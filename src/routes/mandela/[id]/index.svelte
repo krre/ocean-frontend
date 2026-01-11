@@ -1,4 +1,4 @@
-<script context="module" lang="ts">
+<script module lang="ts">
     import * as api from "api";
     import type { Session, Page } from "types";
 
@@ -43,6 +43,8 @@
 </script>
 
 <script lang="ts">
+    import { run } from 'svelte/legacy';
+
     import * as consts from "$lib/consts";
     import * as bbcode from "$lib/bbcode";
     import * as dialog from "$lib/dialog";
@@ -57,44 +59,56 @@
     import WaitButton from "../../../components/WaitButton.svelte";
     import Check from "../../../components/Check.svelte";
 
-    export let getOneResponse: api.Mandela.GetOne.Response;
-    export let commentGetAllResponse: api.Comment.GetAll.Response;
-    export let url: string;
-    export let pageNo: number;
-    export let automaticTrash: boolean;
+    interface Props {
+        getOneResponse: api.Mandela.GetOne.Response;
+        commentGetAllResponse: api.Comment.GetAll.Response;
+        url: string;
+        pageNo: number;
+        automaticTrash: boolean;
+    }
 
-    let totalVotes = 0;
-    let votes: api.Mandela.Vote[];
+    let {
+        getOneResponse,
+        commentGetAllResponse = $bindable(),
+        url,
+        pageNo,
+        automaticTrash = $bindable()
+    }: Props = $props();
+
+    let totalVotes = $state(0);
+    let votes: api.Mandela.Vote[] = $state();
     let voteUsers: api.Mandela.GetVoteUsers.Response[];
 
-    let voteValue = -1;
-    let editVote = false;
-    let voteUserVisible = false;
+    let voteValue = $state(-1);
+    let editVote = $state(false);
+    let voteUserVisible = $state(false);
 
-    let user: User;
-    let isAdmin = false;
-    let isAnonym = true;
+    let user: User = $state();
+    let isAdmin = $state(false);
+    let isAnonym = $state(true);
 
-    $: mandela = getOneResponse.mandela;
-    $: comments = commentGetAllResponse.comments;
-    $: id = mandela.id;
-    $: categories = getOneResponse.categories;
-    $: vote = getOneResponse.vote;
-    $: htmlUrl = `<a href="${url}">Океан. Мандела №${id}</a>`;
-    $: bbCodeUrl = `⁅url="${url}"⁆Мандела №${id}⁅/url⁆`;
-    $: title =
-        mandela.title_mode === consts.Mandela.Title.Simple
+    let mandela = $derived(getOneResponse.mandela);
+    let comments = $derived(commentGetAllResponse.comments);
+    let id = $derived(mandela.id);
+    let categories = $derived(getOneResponse.categories);
+    let vote = $derived(getOneResponse.vote);
+    let htmlUrl = $derived(`<a href="${url}">Океан. Мандела №${id}</a>`);
+    let bbCodeUrl = $derived(`⁅url="${url}"⁆Мандела №${id}⁅/url⁆`);
+    let title =
+        $derived(mandela.title_mode === consts.Mandela.Title.Simple
             ? mandela.title
-            : mandela.what;
-    $: votes = getOneResponse.votes;
+            : mandela.what);
+    run(() => {
+        votes = getOneResponse.votes;
+    });
 
-    $: {
+    run(() => {
         totalVotes = 0;
 
         for (let v of votes) {
             totalVotes += v.count;
         }
-    }
+    });
 
     function edit() {
         goto(route.Mandela.Edit(id));
@@ -290,17 +304,17 @@
         {#if !isAnonym && (user.id === mandela.user_id || isAdmin)}
             <div class="buttons">
                 {#if user.id === mandela.user_id || isAdmin}
-                    <button on:click={edit}>Редактировать</button>
+                    <button onclick={edit}>Редактировать</button>
                 {/if}
 
                 {#if isAdmin}
-                    <button on:click={remove}>Удалить</button>
+                    <button onclick={remove}>Удалить</button>
                     {#if mandela.trash}
-                        <button on:click={() => updateTrash(false)}
+                        <button onclick={() => updateTrash(false)}
                             >Переместить в каталог</button
                         >
                     {:else}
-                        <button on:click={() => updateTrash(true)}
+                        <button onclick={() => updateTrash(true)}
                             >Переместить в хлам</button
                         >
                     {/if}
@@ -313,7 +327,7 @@
                 <input
                     type="checkbox"
                     bind:checked={automaticTrash}
-                    on:change={(_) => updateAutmaticTrash()}
+                    onchange={(_) => updateAutmaticTrash()}
                 />
                 Автоматическое управление хламом
             </label>
@@ -323,16 +337,16 @@
             <summary>Ссылка на манделу</summary>
             <div class="mandela-link-grid">
                 <input readonly value={url} />
-                <button on:click={() => copyLink(url)}
-                    ><i class="far fa-copy" /></button
+                <button onclick={() => copyLink(url)}
+                    ><i class="far fa-copy"></i></button
                 >
                 <input readonly value={htmlUrl} />
-                <button on:click={() => copyLink(htmlUrl)}
-                    ><i class="far fa-copy" /></button
+                <button onclick={() => copyLink(htmlUrl)}
+                    ><i class="far fa-copy"></i></button
                 >
                 <input readonly value={bbCodeUrl} />
-                <button on:click={() => copyLink(bbCodeUrl)}
-                    ><i class="far fa-copy" /></button
+                <button onclick={() => copyLink(bbCodeUrl)}
+                    ><i class="far fa-copy"></i></button
                 >
             </div>
         </details>
@@ -361,12 +375,12 @@
 
             {#if user}
                 <div class="buttons">
-                    <button on:click={() => (editVote = true)}
+                    <button onclick={() => (editVote = true)}
                         >Изменить выбор</button
                     >
 
                     {#if isAdmin}
-                        <button on:click={getVoteUsers}
+                        <button onclick={getVoteUsers}
                             >{voteUserVisible ? "Скрыть" : "Показать"}</button
                         >
                     {/if}

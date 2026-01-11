@@ -8,9 +8,9 @@
 
     const title = "Добавить категорию";
 
-    let isAdmin = false;
-    let name: string;
-    let order: number;
+    let isAdmin = $state(false);
+    let name: string = $state();
+    let order: number = $state();
 
     const action = async () => {
         const params: api.Forum.Category.Create.Request = {

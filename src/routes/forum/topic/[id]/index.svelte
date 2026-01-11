@@ -1,4 +1,4 @@
-<script context="module" lang="ts">
+<script module lang="ts">
     import * as api from "api";
     import type { Session, Page } from "types";
 
@@ -26,6 +26,8 @@
 </script>
 
 <script lang="ts">
+    import { run } from 'svelte/legacy';
+
     import * as route from "route";
     import * as consts from "consts";
     import * as types from "types";
@@ -44,32 +46,36 @@
         edit: boolean;
     }
 
-    export let getAllResponse: api.Forum.Post.GetAll.Response;
-    export let topicId = 0;
-    export let pageNo = 1;
+    interface Props {
+        getAllResponse: api.Forum.Post.GetAll.Response;
+        topicId?: number;
+        pageNo?: number;
+    }
 
-    let topicName: string;
-    let isAdmin = false;
-    let isAnonym = true;
-    let user: User;
-    let posts: EditedPost[] = [];
-    let post = "";
-    let messageEditorRef: MessageEditor;
-    let pollSelectionType: types.ForumPollAnswerSelection;
-    let poll: ForumTopicPoll[];
-    let isVoted = false;
-    let oneVote = -1;
-    let severalVote: number[] = [];
-    let editVote = false;
-    let voteUserVisible = false;
+    let { getAllResponse = $bindable(), topicId = 0, pageNo = 1 }: Props = $props();
+
+    let topicName: string = $state();
+    let isAdmin = $state(false);
+    let isAnonym = $state(true);
+    let user: User = $state();
+    let posts: EditedPost[] = $state([]);
+    let post = $state("");
+    let messageEditorRef: MessageEditor = $state();
+    let pollSelectionType: types.ForumPollAnswerSelection = $state();
+    let poll: ForumTopicPoll[] = $state();
+    let isVoted = $state(false);
+    let oneVote = $state(-1);
+    let severalVote: number[] = $state([]);
+    let editVote = $state(false);
+    let voteUserVisible = $state(false);
     let voteUsers: api.Forum.Topic.GetVoteUsers.Response[];
 
-    let postCount = 0;
+    let postCount = $state(0);
 
-    let categoryNav: PathPart;
-    let sectionNav: PathPart;
+    let categoryNav: PathPart = $state();
+    let sectionNav: PathPart = $state();
 
-    $: {
+    run(() => {
         topicName = getAllResponse.topic_name;
         postCount = getAllResponse.post_count;
         posts = getAllResponse.posts as EditedPost[];
@@ -85,16 +91,18 @@
             id: getAllResponse.section_id,
             name: getAllResponse.section_name,
         };
-    }
+    });
 
-    $: if (poll) {
-        for (const answer of poll) {
-            if (answer.voted) {
-                isVoted = true;
-                break;
+    run(() => {
+        if (poll) {
+            for (const answer of poll) {
+                if (answer.voted) {
+                    isVoted = true;
+                    break;
+                }
             }
         }
-    }
+    });
 
     async function reload() {
         getAllResponse = await load(topicId, pageNo);
@@ -192,82 +200,84 @@
     showPoll={poll && poll.length > 0}
     showContent={posts.length > 0}
 >
-    <div slot="poll">
-        {#if poll}
-            {#if (isAnonym || isVoted) && !editVote}
-                <div class="poll">
-                    {#each poll as answer}
-                        <div>{answer.answer}:</div>
-                        <div>{answer.count}</div>
-                        <div>
-                            {#if !isAnonym && answer.voted}
-                                <Check />
-                            {/if}
+    {#snippet poll()}
+        <div >
+            {#if poll}
+                {#if (isAnonym || isVoted) && !editVote}
+                    <div class="poll">
+                        {#each poll as answer}
+                            <div>{answer.answer}:</div>
+                            <div>{answer.count}</div>
+                            <div>
+                                {#if !isAnonym && answer.voted}
+                                    <Check />
+                                {/if}
 
-                            {#if voteUserVisible}
-                                {@html voteUsersForAnswer(answer.id)}
+                                {#if voteUserVisible}
+                                    {@html voteUsersForAnswer(answer.id)}
+                                {/if}
+                            </div>
+                            <div></div>
+                        {/each}
+                    </div>
+
+                    {#if !isAnonym}
+                        <div class="buttons">
+                            <button onclick={() => (editVote = true)}
+                                >Изменить выбор</button
+                            >
+
+                            {#if isAdmin}
+                                <button onclick={getVoteUsers}
+                                    >{voteUserVisible
+                                        ? "Скрыть"
+                                        : "Показать"}</button
+                                >
                             {/if}
                         </div>
-                        <div />
-                    {/each}
-                </div>
-
-                {#if !isAnonym}
-                    <div class="buttons">
-                        <button on:click={() => (editVote = true)}
-                            >Изменить выбор</button
-                        >
-
-                        {#if isAdmin}
-                            <button on:click={getVoteUsers}
-                                >{voteUserVisible
-                                    ? "Скрыть"
-                                    : "Показать"}</button
-                            >
-                        {/if}
-                    </div>
-                {:else}
-                    <br />
-                    Голосовать могут только зарегистрированные пользователи.
-                {/if}
-            {:else}
-                {#each poll as answer}
-                    {#if pollSelectionType === types.ForumPollAnswerSelection.One}
-                        <label class="vote">
-                            <input
-                                type="radio"
-                                bind:group={oneVote}
-                                value={answer.id}
-                            />
-                            {answer.answer}
-                        </label>
                     {:else}
-                        <label class="vote">
-                            <input
-                                type="checkbox"
-                                bind:group={severalVote}
-                                value={answer.id}
-                            />
-                            {answer.answer}
-                        </label>
+                        <br />
+                        Голосовать могут только зарегистрированные пользователи.
                     {/if}
-                {/each}
+                {:else}
+                    {#each poll as answer}
+                        {#if pollSelectionType === types.ForumPollAnswerSelection.One}
+                            <label class="vote">
+                                <input
+                                    type="radio"
+                                    bind:group={oneVote}
+                                    value={answer.id}
+                                />
+                                {answer.answer}
+                            </label>
+                        {:else}
+                            <label class="vote">
+                                <input
+                                    type="checkbox"
+                                    bind:group={severalVote}
+                                    value={answer.id}
+                                />
+                                {answer.answer}
+                            </label>
+                        {/if}
+                    {/each}
 
-                <div style="margin: 0.5em" />
+                    <div style="margin: 0.5em"></div>
 
-                <button
-                    on:click={castVote}
-                    disabled={pollSelectionType ==
-                    types.ForumPollAnswerSelection.One
-                        ? oneVote < 0
-                        : severalVote.length == 0}>Выбрать</button
-                >
+                    <button
+                        onclick={castVote}
+                        disabled={pollSelectionType ==
+                        types.ForumPollAnswerSelection.One
+                            ? oneVote < 0
+                            : severalVote.length == 0}>Выбрать</button
+                    >
+                {/if}
             {/if}
-        {/if}
-    </div>
+        </div>
+    {/snippet}
 
     {#each posts as post, i}
-        <div id={post.id.toString()} />
+        <div id={post.id.toString()}></div>
         <PostElement
             id={post.id}
             row={i}

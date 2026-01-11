@@ -7,8 +7,12 @@
 
     const dispatch = createEventDispatcher();
 
-    export let section: api.Forum.Section.GetAll.Section;
-    export let editable = false;
+    interface Props {
+        section: api.Forum.Section.GetAll.Section;
+        editable?: boolean;
+    }
+
+    let { section, editable = false }: Props = $props();
 
     function editSection() {
         goto(route.Forum.Section.Edit(section.id));
@@ -49,8 +53,8 @@
 <div class="section">
     <a href={route.Forum.Section.Id(section.id)}>{section.name}</a>
     {#if editable}
-        <button on:click={editSection}><i class="fas fa-edit" /></button>
-        <button on:click={removeSection}><i class="fas fa-trash-alt" /></button>
+        <button onclick={editSection}><i class="fas fa-edit"></i></button>
+        <button onclick={removeSection}><i class="fas fa-trash-alt"></i></button>
     {/if}
     <div class="info">
         Тем: {section.topic_count} · Постов: {section.post_count}

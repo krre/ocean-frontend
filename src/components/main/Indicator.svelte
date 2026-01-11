@@ -3,10 +3,19 @@
 
     const dispatch = createEventDispatcher();
 
-    export let title: string;
-    export let count = 0;
-    export let active = false;
-    export let highlightNew = false;
+    interface Props {
+        title: string;
+        count?: number;
+        active?: boolean;
+        highlightNew?: boolean;
+    }
+
+    let {
+        title,
+        count = 0,
+        active = false,
+        highlightNew = false
+    }: Props = $props();
 </script>
 
 <style>
@@ -25,12 +34,12 @@
     }
 </style>
 
-<!-- svelte-ignore a11y-click-events-have-key-events -->
+<!-- svelte-ignore a11y_click_events_have_key_events -->
 <span
     class="cell"
     class:active
     class:hightlight={highlightNew && count}
-    on:click={() => dispatch("clicked")}
+    onclick={() => dispatch("clicked")}
     >{title}:
     {count}</span
 >

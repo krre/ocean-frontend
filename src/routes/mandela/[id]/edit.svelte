@@ -1,4 +1,4 @@
-<script context="module" lang="ts">
+<script module lang="ts">
     import * as route from "route";
     import * as api from "api";
     import type { Session, Page } from "types";
@@ -25,10 +25,19 @@
 
     const title = "Редактировать манделу";
 
-    export let id: number;
-    export let mandela: api.Mandela.GetOne.Mandela;
-    export let categories: number[] = [];
-    export let session: Session;
+    interface Props {
+        id: number;
+        mandela: api.Mandela.GetOne.Mandela;
+        categories?: number[];
+        session: Session;
+    }
+
+    let {
+        id,
+        mandela = $bindable(),
+        categories = $bindable([]),
+        session = $bindable()
+    }: Props = $props();
 
     async function edit() {
         const params: api.Mandela.Update.Request = {

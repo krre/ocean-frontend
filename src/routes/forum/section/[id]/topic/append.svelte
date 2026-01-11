@@ -11,13 +11,13 @@
     const sectionId = +page.params.id;
     const title = "Создать тему";
 
-    let isAdmin = false;
-    let name = "";
+    let isAdmin = $state(false);
+    let name = $state("");
 
-    let type = types.ForumTopicType.Common;
-    let answerSelection = types.ForumPollAnswerSelection.One;
-    let answers: string[] = [];
-    let post = "";
+    let type = $state(types.ForumTopicType.Common);
+    let answerSelection = $state(types.ForumPollAnswerSelection.One);
+    let answers: string[] = $state([]);
+    let post = $state("");
 
     const action = async () => {
         if (type == types.ForumTopicType.Poll) {
@@ -107,7 +107,7 @@
                 <div class="answer">
                     <input bind:value={answer} />
                     <button
-                        on:click={() => {
+                        onclick={() => {
                             answers.splice(i, 1);
                             answers = answers;
                         }}>Удалить</button
@@ -117,7 +117,7 @@
 
             <div>
                 <button
-                    on:click={() => {
+                    onclick={() => {
                         answers.push("");
                         answers = answers;
                     }}>Добавить</button

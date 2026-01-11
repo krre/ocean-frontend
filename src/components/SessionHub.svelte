@@ -1,17 +1,36 @@
 <script lang="ts">
+    import { run } from 'svelte/legacy';
+
     import * as consts from "$lib/consts";
     import type { User } from "$lib/types";
     import { page } from "$app/stores";
 
-    export let user: User = null;
-    export let userName: string;
-    export let isAdmin = false;
-    export let isAnonym = true;
+    interface Props {
+        user?: User;
+        userName: string;
+        isAdmin?: boolean;
+        isAnonym?: boolean;
+    }
 
-    $: userName = user
-        ? user.name
-        : consts.Account.ModeNames[consts.Account.Anonym];
-    $: user = $page.data.session?.user as User;
-    $: isAdmin = user ? user.code === consts.Account.Admin : false;
-    $: isAnonym = !user || user.code === consts.Account.Anonym;
+    let {
+        user = $bindable(null),
+        userName = $bindable(),
+        isAdmin = $bindable(false),
+        isAnonym = $bindable(true)
+    }: Props = $props();
+
+    run(() => {
+        userName = user
+            ? user.name
+            : consts.Account.ModeNames[consts.Account.Anonym];
+    });
+    run(() => {
+        user = $page.data.session?.user as User;
+    });
+    run(() => {
+        isAdmin = user ? user.code === consts.Account.Admin : false;
+    });
+    run(() => {
+        isAnonym = !user || user.code === consts.Account.Anonym;
+    });
 </script>

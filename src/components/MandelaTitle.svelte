@@ -1,10 +1,20 @@
 <script lang="ts">
     import * as consts from "$lib/consts";
-    export let title = "";
-    export let what = "";
-    export let before = "";
-    export let after = "";
-    export let mode = consts.Mandela.Title.Complex;
+    interface Props {
+        title?: string;
+        what?: string;
+        before?: string;
+        after?: string;
+        mode?: any;
+    }
+
+    let {
+        title = $bindable(""),
+        what = $bindable(""),
+        before = $bindable(""),
+        after = $bindable(""),
+        mode = $bindable(consts.Mandela.Title.Complex)
+    }: Props = $props();
 
     let modes = [
         {

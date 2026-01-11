@@ -10,15 +10,16 @@
 
     const title = "Регистрация";
 
-    $: error = "";
-    $: code = "";
+    let error = $state("");
+    
+    
 
-    let name = "";
-    let password1 = "";
-    let password2 = "";
+    let name = $state("");
+    let password1 = $state("");
+    let password2 = $state("");
 
-    $: singupButtonEnabled =
-        password1 && password2 && (code === consts.Account.User ? name : true);
+    let singupButtonEnabled =
+        $derived(password1 && password2 && (code === consts.Account.User ? name : true));
 
     async function signup() {
         if (password1 !== password2) {
@@ -50,7 +51,7 @@
         Пароль (ещё раз):
         <input type="password" bind:value={password2} />
         <OperationResult {error} />
-        <button on:click={signup} disabled={!singupButtonEnabled}>
+        <button onclick={signup} disabled={!singupButtonEnabled}>
             Зарегистрироваться
         </button>
     </BoxForm>

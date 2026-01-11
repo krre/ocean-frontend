@@ -1,4 +1,6 @@
 <script lang="ts">
+    import { run } from 'svelte/legacy';
+
     import * as consts from "$lib/consts";
     import * as route from "$lib/route";
     import * as dialog from "$lib/dialog";
@@ -12,14 +14,20 @@
 
     const dispatch = createEventDispatcher();
 
-    export let topic: api.Forum.Topic.GetAll.Topic;
-    export let editable = false;
+    interface Props {
+        topic: api.Forum.Topic.GetAll.Topic;
+        editable?: boolean;
+    }
 
-    let isAdmin = false;
-    let isAnonym = true;
-    let user: User;
+    let { topic, editable = $bindable(false) }: Props = $props();
 
-    $: editable = isAdmin || (user && user.id === topic.user_id && !isAnonym);
+    let isAdmin = $state(false);
+    let isAnonym = $state(true);
+    let user: User = $state();
+
+    run(() => {
+        editable = isAdmin || (user && user.id === topic.user_id && !isAnonym);
+    });
 
     function editTopic() {
         goto(route.Forum.Topic.Edit(topic.id));
@@ -62,15 +70,15 @@
 <div class="topic">
     <a href={route.Forum.Topic.Id(topic.id)}>
         {#if topic.type == types.ForumTopicType.Poll}
-            <i class="fas fa-poll" />
+            <i class="fas fa-poll"></i>
         {/if}
         {topic.name}</a
     >
     {#if editable}
         <span>
-            <button on:click={editTopic}><i class="fas fa-edit" /></button>
-            <button on:click={removeTopic}
-                ><i class="fas fa-trash-alt" /></button
+            <button onclick={editTopic}><i class="fas fa-edit"></i></button>
+            <button onclick={removeTopic}
+                ><i class="fas fa-trash-alt"></i></button
             >
         </span>
     {/if}

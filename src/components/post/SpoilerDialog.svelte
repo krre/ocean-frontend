@@ -8,11 +8,11 @@
         inputRef.focus();
     });
 
-    export let onOk = (_description: string) => {};
+    let { onOk = (_description: string) => {} } = $props();
 
-    let description = "Спойлер";
+    let description = $state("Спойлер");
 
-    let inputRef: Input;
+    let inputRef: Input = $state();
 
     function pressOk() {
         onOk(description);
@@ -29,8 +29,10 @@
         bind:this={inputRef}
         placeholder="Введите описание"
     />
-    <div slot="buttons">
-        <button disabled={!description} on:click={pressOk}>ОК</button>
-        <button on:click={() => dialog.close()}>Отменить</button>
-    </div>
+    {#snippet buttons()}
+        <div >
+            <button disabled={!description} onclick={pressOk}>ОК</button>
+            <button onclick={() => dialog.close()}>Отменить</button>
+        </div>
+    {/snippet}
 </Dialog>

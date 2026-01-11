@@ -1,5 +1,11 @@
 <script lang="ts">
-    export let title: string;
+    interface Props {
+        title: string;
+        children?: import('svelte').Snippet;
+        buttons?: import('svelte').Snippet;
+    }
+
+    let { title, children, buttons }: Props = $props();
 </script>
 
 <style>
@@ -43,10 +49,10 @@
     <div class="window" role="dialog" aria-modal="true">
         <h2 class="title">{title}</h2>
         <div class="content">
-            <slot />
+            {@render children?.()}
         </div>
         <div class="buttons">
-            <slot name="buttons">Кнопки не добавлены</slot>
+            {#if buttons}{@render buttons()}{:else}Кнопки не добавлены{/if}
         </div>
     </div>
 </div>

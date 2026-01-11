@@ -9,8 +9,12 @@
 
     const dispatch = createEventDispatcher();
 
-    export let category: api.Forum.GetAll.Category;
-    export let editable = false;
+    interface Props {
+        category: api.Forum.GetAll.Category;
+        editable?: boolean;
+    }
+
+    let { category, editable = false }: Props = $props();
 
     function editCategory() {
         goto(route.Forum.Category.Edit(category.id));
@@ -51,11 +55,11 @@
 <div class="header">
     <h3>{category.name}</h3>
     {#if editable}
-        <button on:click={appendSection}
-            ><i class="far fa-plus-square" /></button
+        <button onclick={appendSection}
+            ><i class="far fa-plus-square"></i></button
         >
-        <button on:click={editCategory}><i class="fas fa-edit" /></button>
-        <button on:click={removeCategory}><i class="fas fa-trash-alt" /></button
+        <button onclick={editCategory}><i class="fas fa-edit"></i></button>
+        <button onclick={removeCategory}><i class="fas fa-trash-alt"></i></button
         >
     {/if}
 </div>

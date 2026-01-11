@@ -6,24 +6,37 @@
     import PostEditor from "./post/PostEditor.svelte";
     import WaitButton from "./WaitButton.svelte";
 
-    export let titleMode = consts.Mandela.Title.Complex;
-    export let title = "";
-    export let what = "";
-    export let before = "";
-    export let after = "";
-    export let description = "";
-    export let categories = [];
-    export let user: User;
-    export let sendAction = async () => {};
+    interface Props {
+        titleMode?: any;
+        title?: string;
+        what?: string;
+        before?: string;
+        after?: string;
+        description?: string;
+        categories?: any;
+        user: User;
+        sendAction?: any;
+    }
 
-    let buttonEnabled: boolean;
+    let {
+        titleMode = $bindable(consts.Mandela.Title.Complex),
+        title = $bindable(""),
+        what = $bindable(""),
+        before = $bindable(""),
+        after = $bindable(""),
+        description = $bindable(""),
+        categories = $bindable([]),
+        user,
+        sendAction = async () => {}
+    }: Props = $props();
 
-    $: buttonEnabled =
-        (titleMode === consts.Mandela.Title.Simple && title.length > 0) ||
+    let buttonEnabled: boolean = $derived((titleMode === consts.Mandela.Title.Simple && title.length > 0) ||
         (titleMode === consts.Mandela.Title.Complex &&
             what.length > 0 &&
             before.length > 0 &&
-            after.length > 0);
+            after.length > 0));
+
+    
     let userName = utils.sessionUserName(user);
 </script>
 

@@ -1,4 +1,4 @@
-<script context="module" lang="ts">
+<script module lang="ts">
     import * as api from "$lib/api";
     import type { Session, Page } from "$lib/types";
 
@@ -42,6 +42,8 @@
 </script>
 
 <script lang="ts">
+    import { run } from 'svelte/legacy';
+
     import * as route from "$lib/route";
     import * as consts from "$lib/consts";
     import { pageUrl } from "$lib/utils";
@@ -51,21 +53,32 @@
     import WaitButton from "../components/WaitButton.svelte";
     import Pagination from "../components/Pagination.svelte";
 
-    export let searchGetAllResponse: api.Search.GetAll.Response;
-    export let type = Type.Mandela;
-    export let text = "";
-    export let pageNo = 1;
-
-    let baseQuery = new URLSearchParams();
-    let records: api.Search.GetAll.Record[] = [];
-    let start = true;
-    let buttonEnabled = true;
-    let totalCount = 0;
-
-    $: if (searchGetAllResponse) {
-        records = searchGetAllResponse.records;
-        totalCount = searchGetAllResponse.total_count;
+    interface Props {
+        searchGetAllResponse: api.Search.GetAll.Response;
+        type?: any;
+        text?: string;
+        pageNo?: number;
     }
+
+    let {
+        searchGetAllResponse = $bindable(),
+        type = $bindable(Type.Mandela),
+        text = $bindable(""),
+        pageNo = $bindable(1)
+    }: Props = $props();
+
+    let baseQuery = $state(new URLSearchParams());
+    let records: api.Search.GetAll.Record[] = $state([]);
+    let start = $state(true);
+    let buttonEnabled = $state(true);
+    let totalCount = $state(0);
+
+    run(() => {
+        if (searchGetAllResponse) {
+            records = searchGetAllResponse.records;
+            totalCount = searchGetAllResponse.total_count;
+        }
+    });
 
     function clear() {
         start = true;
@@ -171,7 +184,7 @@
         </div>
 
         Введите текст:
-        <input bind:value={text} on:keyup={keyPressed} />
+        <input bind:value={text} onkeyup={keyPressed} />
         <div>
             <WaitButton
                 title="Найти"

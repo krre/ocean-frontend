@@ -1,4 +1,4 @@
-<script context="module" lang="ts">
+<script module lang="ts">
     import type { Session, Page } from "types";
     export async function preload(page: Page, _session: Session) {
         const { id } = page.params;
@@ -9,7 +9,11 @@
 <script lang="ts">
     import Frame from "../../components/Frame.svelte";
     const title = "Регистрация окончена";
-    export let id: number;
+    interface Props {
+        id: number;
+    }
+
+    let { id }: Props = $props();
 </script>
 
 <Frame {title}>

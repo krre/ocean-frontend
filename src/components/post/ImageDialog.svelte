@@ -8,12 +8,12 @@
         inputRef.focus();
     });
 
-    export let onOk = (_link: string, _width?: number) => {};
+    let { onOk = (_link: string, _width?: number) => {} } = $props();
 
-    let link: string;
-    let width: number;
+    let link: string = $state();
+    let width: number = $state();
 
-    let inputRef: Input;
+    let inputRef: Input = $state();
 
     function pressOk() {
         onOk(link, width);
@@ -31,8 +31,10 @@
         placeholder="Введите ссылку"
     />
     <input bind:value={width} placeholder="Введите ширину (не обязательно)" />
-    <div slot="buttons">
-        <button disabled={!link} on:click={pressOk}>ОК</button>
-        <button on:click={() => dialog.close()}>Отменить</button>
-    </div>
+    {#snippet buttons()}
+        <div >
+            <button disabled={!link} onclick={pressOk}>ОК</button>
+            <button onclick={() => dialog.close()}>Отменить</button>
+        </div>
+    {/snippet}
 </Dialog>

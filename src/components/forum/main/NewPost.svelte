@@ -6,7 +6,11 @@
     import type { NewTopic } from "$lib/forum";
     import PostTitle from "../../PostTitle.svelte";
 
-    export let topic: NewTopic;
+    interface Props {
+        topic: NewTopic;
+    }
+
+    let { topic }: Props = $props();
 </script>
 
 <style>

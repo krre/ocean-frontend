@@ -3,12 +3,16 @@
     import Loader from "./Loader.svelte";
     import OperationResult from "../components/OperationResult.svelte";
 
-    export let title: string;
-    export let enabled = true;
-    export let sendAction = async () => {};
+    interface Props {
+        title: string;
+        enabled?: boolean;
+        sendAction?: any;
+    }
 
-    let sending = false;
-    let error: string;
+    let { title, enabled = $bindable(true), sendAction = async () => {} }: Props = $props();
+
+    let sending = $state(false);
+    let error: string = $state();
 
     async function action() {
         let timerId = setTimeout(() => (sending = true), 200);
@@ -33,7 +37,7 @@
 </style>
 
 <div class="container">
-    <button on:click={action} disabled={!enabled}>{title}</button>
+    <button onclick={action} disabled={!enabled}>{title}</button>
 
     {#if sending}
         <Loader scale={0.3} />

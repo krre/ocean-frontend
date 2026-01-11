@@ -1,4 +1,4 @@
-<script context="module" lang="ts">
+<script module lang="ts">
     import * as api from "$lib/api";
     import type { Session, Page } from "$lib/types";
 
@@ -12,6 +12,8 @@
 </script>
 
 <script lang="ts">
+    import { run } from 'svelte/legacy';
+
     import * as route from "$lib/route";
     import type { User } from "$lib/types";
     import { goto } from "$app/navigation";
@@ -19,14 +21,18 @@
     import SessionHub from "../../components/SessionHub.svelte";
     import CategoryElement from "../../components/forum/category/CategoryElement.svelte";
 
-    export let getAllResponse: api.Forum.GetAll.Response;
+    interface Props {
+        getAllResponse: api.Forum.GetAll.Response;
+    }
 
-    let isAdmin = false;
-    let editable = false;
-    let user: User;
-    let categories: api.Forum.GetAll.Category[] = [];
+    let { getAllResponse = $bindable() }: Props = $props();
 
-    $: {
+    let isAdmin = $state(false);
+    let editable = $state(false);
+    let user: User = $state();
+    let categories: api.Forum.GetAll.Category[] = $state([]);
+
+    run(() => {
         categories = [];
 
         for (let category of getAllResponse.categories) {
@@ -43,7 +49,7 @@
         }
 
         categories = categories;
-    }
+    });
 
     async function reload() {
         getAllResponse = await api.Forum.GetAll.exec();
@@ -83,11 +89,11 @@
 
 {#if isAdmin}
     <div style="margin-left: 1em">
-        {#if editable}<button on:click={append}
-                ><i class="far fa-plus-square" /></button
+        {#if editable}<button onclick={append}
+                ><i class="far fa-plus-square"></i></button
             >{/if}
-        <button on:click={() => (editable = !editable)}
-            ><i class="fas fa-edit" /></button
+        <button onclick={() => (editable = !editable)}
+            ><i class="fas fa-edit"></i></button
         >
     </div>
 {/if}

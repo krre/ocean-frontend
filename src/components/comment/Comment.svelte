@@ -21,17 +21,28 @@
         likeUsers: api.Like.GetUsers.Response[];
     }
 
-    export let user: User;
-    export let mandelaId: number;
-    export let comments: EditedComment[] = [];
-    export let pageNo = 1;
-    export let commentCount = 0;
-    export let pageLimit = 1;
+    interface Props {
+        user: User;
+        mandelaId: number;
+        comments?: EditedComment[];
+        pageNo?: number;
+        commentCount?: number;
+        pageLimit?: number;
+    }
 
-    let message: string;
-    let messageEditorRef: MessageEditor;
+    let {
+        user,
+        mandelaId,
+        comments = $bindable([]),
+        pageNo = 1,
+        commentCount = 0,
+        pageLimit = 1
+    }: Props = $props();
 
-    $: baseRoute = route.Mandela.Id(mandelaId);
+    let message: string = $state();
+    let messageEditorRef: MessageEditor = $state();
+
+    let baseRoute = $derived(route.Mandela.Id(mandelaId));
 
     async function append() {
         const params: api.Comment.Create.Request = {
@@ -170,7 +181,7 @@
                     on:remove={(event) => deleteComment(event.detail.row)}
                     on:reply={(event) => replyComment(event.detail.row)}
                 />
-                <div />
+                <div></div>
 
                 {#if comment.edit}
                     <EditComment

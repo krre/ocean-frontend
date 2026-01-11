@@ -1,4 +1,4 @@
-<script context="module" lang="ts">
+<script module lang="ts">
     import * as api from "$lib/api";
     import type { Session, Page } from "$lib/types";
 
@@ -26,16 +26,25 @@
 
     const title = "Редактировать тему";
 
-    export let id: number;
-    export let sectionId: number;
-    export let name: string;
-    export let userId: number;
+    interface Props {
+        id: number;
+        sectionId: number;
+        name: string;
+        userId: number;
+    }
 
-    let isAdmin = false;
-    let isAnonym = true;
-    let user: User;
+    let {
+        id,
+        sectionId,
+        name = $bindable(),
+        userId
+    }: Props = $props();
 
-    $: editable = isAdmin || (user && user.id === userId && !isAnonym);
+    let isAdmin = $state(false);
+    let isAnonym = $state(true);
+    let user: User = $state();
+
+    let editable = $derived(isAdmin || (user && user.id === userId && !isAnonym));
 
     const action = async () => {
         const params: api.Forum.Topic.Update.Request = {
@@ -65,7 +74,7 @@
             Название: <input type="text" bind:value={name} />
 
             <div>
-                <button on:click={action} disabled={!name}>Отправить</button>
+                <button onclick={action} disabled={!name}>Отправить</button>
             </div>
         </div>
     {/if}

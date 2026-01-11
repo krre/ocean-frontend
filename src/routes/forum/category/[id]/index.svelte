@@ -1,4 +1,4 @@
-<script context="module" lang="ts">
+<script module lang="ts">
     import * as api from "api";
     import type { Session, Page } from "types";
 
@@ -20,6 +20,8 @@
 </script>
 
 <script lang="ts">
+    import { run } from 'svelte/legacy';
+
     import * as route from "$lib/route";
     import type { User } from "$lib/types";
     import { goto } from "$app/navigation";
@@ -28,19 +30,23 @@
     import SectionElement from "../../../../components/forum/section/SectionElement.svelte";
     import Navigator from "../../../../components/forum/main/Navigator.svelte";
 
-    export let getAllResponse: api.Forum.Section.GetAll.Response;
-    export let categoryId = 0;
+    interface Props {
+        getAllResponse: api.Forum.Section.GetAll.Response;
+        categoryId?: number;
+    }
 
-    let categoryName: string;
+    let { getAllResponse = $bindable(), categoryId = 0 }: Props = $props();
 
-    let isAdmin = false;
-    let user: User;
-    let sections: api.Forum.Section.GetAll.Section[] = [];
+    let categoryName: string = $state();
 
-    $: {
+    let isAdmin = $state(false);
+    let user: User = $state();
+    let sections: api.Forum.Section.GetAll.Section[] = $state([]);
+
+    run(() => {
         categoryName = getAllResponse.category_name;
         sections = getAllResponse.sections;
-    }
+    });
 
     function append() {
         goto(route.Forum.Section.Append(categoryId));
@@ -68,5 +74,5 @@
 </FramePage>
 
 {#if isAdmin}
-    <button on:click={append}><i class="far fa-plus-square" /></button>
+    <button onclick={append}><i class="far fa-plus-square"></i></button>
 {/if}

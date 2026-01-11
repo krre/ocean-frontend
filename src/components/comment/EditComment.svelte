@@ -4,8 +4,12 @@
     import WaitButton from "../../components/WaitButton.svelte";
 
     const dispatch = createEventDispatcher();
-    export let text: string;
-    export let sendAction = async (_text: string) => {};
+    interface Props {
+        text: string;
+        sendAction?: any;
+    }
+
+    let { text = $bindable(), sendAction = async (_text: string) => {} }: Props = $props();
 
     function cancel() {
         dispatch("cancel");
@@ -32,5 +36,5 @@
         enabled={text.length > 0}
         sendAction={() => sendAction(text)}
     />
-    <button on:click={cancel}>Отменить</button>
+    <button onclick={cancel}>Отменить</button>
 </div>
