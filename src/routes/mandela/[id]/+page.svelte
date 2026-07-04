@@ -31,7 +31,7 @@
 	let vote = $derived(data.getOneResponse.vote);
 	let votes = $derived(data.getOneResponse.votes);
 	let htmlUrl = $derived(`<a href="${data.url}">Океан. Мандела №${id}</a>`);
-	let bbCodeUrl = $derived(`⁅url="${data.url}"⁆Мандела №${id}⁅/url⁆`);
+	let bbCodeUrl = $derived(`⁅url="${data.path}"⁆Мандела №${id}⁅/url⁆`);
 	let title = $derived(
 		mandela.title_mode === consts.Mandela.Title.Simple ? mandela.title : mandela.what
 	);

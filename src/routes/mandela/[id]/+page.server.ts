@@ -22,6 +22,7 @@ export const load: PageServerLoad = async ({ url, locals, params }) => {
 		getOneResponse,
 		commentGetAllResponse,
 		url: url.href,
+		path: url.pathname,
 		pageNo,
 		automaticTrash
 	};
